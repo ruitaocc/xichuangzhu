@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import render_template, request, redirect, url_for, json
 
 from xichuangzhu import app
@@ -15,10 +17,24 @@ import re
 # page home
 @app.route('/')
 def index():
-	works = Work.get_works_by_random(4)
+
+	shi = Work.get_work_by_random('shi')
+	shi['type'] = '诗'
+
+	wen = Work.get_work_by_random('wen')
+	wen['type'] = '文'
+
+	ge = Work.get_work_by_random('ge')
+	ge['type'] = '歌'
+
+	ci = Work.get_work_by_random('ci')
+	ci['type'] = '词'
+
+	works = (shi, wen, ge, ci)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+
 	reviews = Review.get_reviews_by_random(5)
 	authors = Author.get_authors_by_random(5)
 	dynasties = Dynasty.get_dynasties()

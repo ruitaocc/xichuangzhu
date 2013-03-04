@@ -7,7 +7,7 @@ class Work:
 	# get a single work
 	@staticmethod
 	def get_work(workID):
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.AuthorID, work.DynastyID, work.CollectionID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
+		query = '''SELECT work.WorkID, work.Title, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.CollectionID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
 			FROM work, author, dynasty, collection\n
 			WHERE work.workID = %d\n
 			AND work.AuthorID = author.AuthorID\n
@@ -19,13 +19,25 @@ class Work:
 	# get works by random
 	@staticmethod
 	def get_works_by_random(worksNum):
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
+		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM work, author\n
 			WHERE work.AuthorID = author.AuthorID\n
 			ORDER BY RAND()\n
 			LIMIT %d''' % worksNum
 		cursor.execute(query)
 		return cursor.fetchall()
+
+	# get works by random
+	@staticmethod
+	def get_work_by_random(work_type):
+		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
+			FROM work, author\n
+			WHERE work.AuthorID = author.AuthorID\n
+			AND work.Type = '%s'\n
+			ORDER BY RAND()\n
+			LIMIT 1''' % work_type
+		cursor.execute(query)
+		return cursor.fetchone()
 
 	# get all works
 	@staticmethod
