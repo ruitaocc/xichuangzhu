@@ -8,16 +8,16 @@ from xichuangzhu.models.author_model import Author
 # page single dynasty
 #--------------------------------------------------
 
-@app.route('/dynasty/<int:dynasty_id>')
-def single_dynasty(dynasty_id):
+@app.route('/dynasty/<dynasty_abbr>')
+def single_dynasty(dynasty_abbr):
 	# gene html code
-	dynasty = Dynasty.get_dynasty(dynasty_id)
-	authors = Author.get_authors_by_dynasty(dynasty_id)
+	dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)
+	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'])
 	dynasty_html = render_template('single_dynasty.widget', dynasty=dynasty, authors=authors)
 
 	# render view
 	dynasties = Dynasty.get_dynasties()
-	return render_template('dynasty.html', dynasty_html=dynasty_html, dynasty_id=dynasty_id, dynasties=dynasties)
+	return render_template('dynasty.html', dynasty_html=dynasty_html, dynasty_id=dynasty['DynastyID'], dynasties=dynasties)
 
 # page add dynasty
 #--------------------------------------------------

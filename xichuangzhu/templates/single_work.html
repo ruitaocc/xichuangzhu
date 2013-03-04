@@ -22,7 +22,7 @@ $(document).ready(function(){
 		<div class="work-title">{{ work.Title }}</div>
 
 		<div class="work-author">
-			〔<a href="{{ url_for('single_dynasty', dynasty_id = work.DynastyID) }}">{{ work.Dynasty }}</a>〕<a href="{{ url_for('single_author', authorID=work.AuthorID) }}">{{ work.Author }}</a>
+			〔<a href="{{ url_for('single_dynasty', dynasty_abbr = work.DynastyAbbr) }}">{{ work.Dynasty }}</a>〕<a href="{{ url_for('single_author', authorID=work.AuthorID) }}">{{ work.Author }}</a>
 		</div>
 		
 		{% if work.Type == 'ci' %}
@@ -36,7 +36,7 @@ $(document).ready(function(){
 
 		{% endif %}
 
-		<div class="work-content work-type-{{ work.Type }}" {% if work.Type == 'geci' %}style="padding-left: {{ geci_padding_left }}em"{% endif %}>{{ work.Content|safe }}</div>
+		<div class="work-content work-type-{{ work.Type }}" {% if work.Type == 'ge' %}style="padding-left: {{ geci_padding_left }}em"{% endif %}>{{ work.Content|safe }}</div>
 		
 		{% if session.user_id %}
 		<div class="btn-group pull-right">

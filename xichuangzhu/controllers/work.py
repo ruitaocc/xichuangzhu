@@ -32,7 +32,7 @@ def single_work(work_id):
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 
 	# count the geci's padding left
-	if work['Type'] == "geci":
+	if work['Type'] == "ge":
 		paras = work['Content'].split('/')[0].split('\r\n\r\n')
 		total_word_len = 0
 		total_row_num = 0

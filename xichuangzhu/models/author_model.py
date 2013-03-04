@@ -6,12 +6,12 @@ class Author:
 
 	# get authors by random
 	@staticmethod
-	def get_authors_by_random(authorsNum):
-		query = '''SELECT *\n
+	def get_authors_by_random(authors_num):
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			ORDER BY RAND()\n
-			LIMIT %d''' % authorsNum
+			LIMIT %d''' % authors_num
 		cursor.execute(query)
 		return cursor.fetchall()
 
@@ -36,7 +36,7 @@ class Author:
 	# get single author info
 	@staticmethod
 	def get_author(authorID):
-		query = '''SELECT *\n
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			AND author.AuthorID = %d''' % authorID

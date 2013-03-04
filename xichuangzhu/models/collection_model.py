@@ -14,7 +14,8 @@ class Collection:
 	# get single collection
 	@staticmethod
 	def get_collection(collectionID):
-		query = '''SELECT * FROM collection, author, dynasty\n
+		query = '''SELECT collection.CollectionID, collection.Collection, collection.Introduction, author.AuthorID, author.Author, author.Abbr AS AuthorAbbr, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
+			FROM collection, author, dynasty\n
 			WHERE collection.AuthorID = author.AuthorID\n
 			AND author.DynastyID = dynasty.dynastyID
 			AND collectionID = %d''' % collectionID

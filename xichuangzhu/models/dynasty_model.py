@@ -11,10 +11,17 @@ class Dynasty:
 		cursor.execute(query)
 		return cursor.fetchall()
 
-	# get single dyansty
+	# get a dyansty by id
 	@staticmethod
 	def get_dynasty(dynastyID):
 		query = "SELECT * FROM dynasty WHERE DynastyID = %d" % dynastyID
+		cursor.execute(query)
+		return cursor.fetchone()
+
+	# get a dynasty by abbr
+	@staticmethod
+	def get_dynasty_by_abbr(dynasty_abbr):
+		query = "SELECT * FROM dynasty WHERE Abbr = '%s'" % dynasty_abbr
 		cursor.execute(query)
 		return cursor.fetchone()
 
