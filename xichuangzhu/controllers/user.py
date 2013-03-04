@@ -56,14 +56,15 @@ def auth():
 		user_info = eval(response.read().replace('\\', ''))	# remove '\' and convert str to dict
 
 		# add user
-		user_id = int(user_info['id'])
-		user_name = user_info['name']
-		avatar = user_info['avatar']
-		signature = user_info['signature']
-		desc = user_info['desc']
+		user_id     = int(user_info['id'])
+		user_name   = user_info['name']
+		abbr   = user_info['uid']
+		avatar      = user_info['avatar']
+		signature   = user_info['signature']
+		desc        = user_info['desc']
 		location_id = int(user_info['loc_id'])
-		location = user_info['loc_name']
-		User.add_user(user_id, user_name, avatar, signature, desc, location_id, location)
+		location    = user_info['loc_name']
+		User.add_user(user_id, user_name, abbr, avatar, signature, desc, location_id, location)
 
 		# go to the verify email page
 		return redirect(url_for('send_verify_email', user_id=user_id))
@@ -111,10 +112,12 @@ def send_verify_email():
 @app.route('/verify_email/douban/<int:user_id>/<verify_code>')
 def verify_email(user_id, verify_code):
 	user_name = User.get_name(user_id)
+	user_abbr = User.get_abbr(user_id)
 	if verify_code == hashlib.sha1(user_name).hexdigest():
 		User.active_user(user_id)
 		session['user_id'] = user_id
 		session['user_name'] = user_name
+		session['user_abbr'] = user_abbr
 		return redirect(url_for('verify_email_callback', state='active_succ'))
 	else:
 		return redirect(url_for('verify_email_callback', state='active_failed'))
@@ -134,11 +137,12 @@ def logout():
 	return redirect(url_for('index'))
 
 # page - personal page
-@app.route('/people/<int:user_id>')
-def people(user_id):
-	people = User.get_people(user_id)
-	works = Love.get_works_by_user_love(user_id)
+@app.route('/people/<user_abbr>')
+def people(user_abbr):
+	people = User.get_people_by_abbr(user_abbr)
+	works = Love.get_works_by_user_love(people['UserID'])
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-	reviews = Review.get_reviews_by_user(user_id)
+		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+	reviews = Review.get_reviews_by_user(people['UserID'])
 	return render_template('people.html', people=people, works=works, reviews=reviews)

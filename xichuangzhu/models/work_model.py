@@ -7,7 +7,7 @@ class Work:
 	# get a single work
 	@staticmethod
 	def get_work(workID):
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.AuthorID, work.DynastyID, work.CollectionID, author.Author, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
+		query = '''SELECT work.WorkID, work.Title, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.AuthorID, work.DynastyID, work.CollectionID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
 			FROM work, author, dynasty, collection\n
 			WHERE work.workID = %d\n
 			AND work.AuthorID = author.AuthorID\n
@@ -19,7 +19,7 @@ class Work:
 	# get works by random
 	@staticmethod
 	def get_works_by_random(worksNum):
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Author, dynasty.Dynasty\n
+		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Abbr AS AuthorAbbr, author.Author, dynasty.Dynasty\n
 			FROM work, author, dynasty\n
 			WHERE work.AuthorID = author.AuthorID\n
 			AND work.DynastyID = dynasty.DynastyID\n

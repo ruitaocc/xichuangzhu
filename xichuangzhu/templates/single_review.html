@@ -11,7 +11,7 @@
 		<a class="btn btn-small pull-right" href="{{ url_for('edit_review', review_id=review.ReviewID) }}">编辑 <span class="icon-edit"></span></a>
 		{% endif %}
 		
-		<a href="{{ url_for('people', user_id=review.UserID) }}" class="user-avatar">
+		<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}" class="user-avatar">
 			<img src="{{ review.Avatar }}">
 		</a>
 
@@ -19,7 +19,7 @@
 			<h1 class="review-title">{{ review.Title }}</h1>
 
 			<div class="review-extra-info">
-				<a href="{{ url_for('people', user_id=review.UserID) }}">{{ review.Name }}</a>
+				<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
 				评论
 				<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
 				{{ review.Time }}
@@ -31,13 +31,13 @@
 
 			{% for comment in comments %}
 			<div class="comment-item clearfix">
-				<a class="comment-user-avatar" href="{{ url_for('people', user_id=comment.UserID) }}">
+				<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">
 					<img src="{{ comment.Avatar }}">
 				</a>
 
 				<div class="comment-wap">
 					<div class="comment-extra-info">
-						<a href="{{ url_for('people', user_id=comment.UserID) }}">{{ comment.Name }}</a>
+						<a href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">{{ comment.Name }}</a>
 						{{ comment.Time }}
 					</div>
 
@@ -47,7 +47,7 @@
 			{% endfor %}
 
 			{% if session.user_id %}
-			<form id="add-review-comment" method="post" action="{{ url_for('add_comment', review_id=review.ReviewID, user_id=session.user_id) }}">
+			<form id="add-review-comment" method="post" action="{{ url_for('add_comment', review_id=review.ReviewID, replyer_id=session.user_id) }}">
 				<textarea name="comment" class="input-xxlarge" rows="4"></textarea>
 				<input type="submit" class="btn btn-small" value="提交" />
 			</form>

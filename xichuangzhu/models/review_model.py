@@ -7,7 +7,7 @@ class Review:
 	# get a review
 	@staticmethod
 	def get_review(review_id):
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.ReviewID = %d\n
 			AND review.UserID = user.UserID\n
@@ -19,7 +19,7 @@ class Review:
 	# get reviews by random
 	@staticmethod
 	def get_reviews_by_random(reviews_num):
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
@@ -32,7 +32,7 @@ class Review:
 	# get hot reviews
 	@staticmethod
 	def get_hot_reviews():
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
@@ -43,7 +43,7 @@ class Review:
 	# get reviews of a work
 	@staticmethod
 	def get_reviews_by_work(work_id):
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.WorkID = %d\n
 			AND review.UserID = user.UserID\n

@@ -7,7 +7,7 @@ from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.comment_model import Comment
+from xichuangzhu.models.review_comment_model import Review_comment
 
 import markdown2
 
@@ -19,14 +19,15 @@ import markdown2
 def single_review(review_id):
 	review = Review.get_review(review_id)
 	review['Content'] = markdown2.markdown(review['Content'])
-	comments = Comment.get_comments_by_review(review_id)
+	comments = Review_comment.get_comments_by_review(review_id)
 	return render_template('single_review.html', review=review, comments=comments)
 
 # proc - add comment
-@app.route('/review/add_comment/<int:user_id>/<int:review_id>', methods=['POST'])
-def add_comment(user_id, review_id):
+@app.route('/review/add_comment/<int:review_id>/<int:replyer_id>', methods=['POST'])
+def add_comment(review_id, replyer_id):
+	#replyer_id = request.form['replyer_id']
 	comment = request.form['comment']
-	Comment.add_comment(user_id, review_id, comment, 0, 0)
+	Review_comment.add_comment(review_id, replyer_id, 0, comment)
 	return redirect(url_for('single_review', review_id=review_id))
 
 # page all reviews

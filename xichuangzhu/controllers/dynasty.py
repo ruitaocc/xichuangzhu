@@ -17,7 +17,7 @@ def single_dynasty(dynasty_abbr):
 
 	# render view
 	dynasties = Dynasty.get_dynasties()
-	return render_template('dynasty.html', dynasty_html=dynasty_html, dynasty_id=dynasty['DynastyID'], dynasties=dynasties)
+	return render_template('single_dynasty.html', dynasty_html=dynasty_html, dynasty_id=dynasty['DynastyID'], dynasties=dynasties)
 
 # page add dynasty
 #--------------------------------------------------
@@ -27,11 +27,12 @@ def add_dynasty():
 		return render_template('add_dynasty.html')
 	elif request.method == 'POST':
 		dynasty      = request.form['dynasty']
+		abbr         = request.form['abbr']
 		introduction = request.form['introduction']
 		startYear    = int(request.form['startYear'])
 		endYear      = int(request.form['endYear'])
-		new_dynasty_id = Dynasty.add_dynasty(dynasty, introduction, startYear, endYear)
-		return redirect(url_for('dynasty', dynasty_id=new_dynasty_id))
+		Dynasty.add_dynasty(dynasty, abbr, introduction, startYear, endYear)
+		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
 
 # page edit dynasty
 #--------------------------------------------------
@@ -42,11 +43,12 @@ def edit_dynasty(dynasty_id):
 		return render_template('edit_dynasty.html', dynasty=dynasty)
 	elif request.method == 'POST':
 		dynasty      = request.form['dynasty']
+		abbr         = request.form['abbr']
 		introduction = request.form['introduction']
 		startYear    = int(request.form['startYear'])
 		endYear      = int(request.form['endYear'])
-		Dynasty.edit_dynasty(dynasty, introduction, startYear, endYear, dynasty_id)
-		return redirect(url_for('dynasty', dynasty_id=dynasty_id))
+		Dynasty.edit_dynasty(dynasty, abbr, introduction, startYear, endYear, dynasty_id)
+		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
 
 # json - get single dynasty info
 #--------------------------------------------------

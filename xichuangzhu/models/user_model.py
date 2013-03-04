@@ -3,6 +3,20 @@ from xichuangzhu import conn, cursor
 class User:
 
 # GET
+
+	# get people by id
+	@staticmethod
+	def get_people_by_id(user_id):
+		query = "SELECT * FROM user WHERE UserID = %d" % user_id
+		cursor.execute(query)
+		return cursor.fetchone()
+
+	# get people by abbr
+	@staticmethod
+	def get_people_by_abbr(user_abbr):
+		query = "SELECT * FROM user WHERE Abbr = '%s'" % user_abbr
+		cursor.execute(query)
+		return cursor.fetchone()
 	
 	# get name by id
 	@staticmethod
@@ -11,12 +25,12 @@ class User:
 		cursor.execute(query)
 		return cursor.fetchone()['Name']
 
-	# get people's all info
+	# get abbr by id
 	@staticmethod
-	def get_people(user_id):
-		query = "SELECT * FROM user WHERE UserID = %d" % user_id
+	def get_abbr(user_id):
+		query = "SELECT Abbr FROM user WHERE UserID = %d" % user_id
 		cursor.execute(query)
-		return cursor.fetchone()
+		return cursor.fetchone()['Abbr']
 
 # UPDATE
 
@@ -38,9 +52,9 @@ class User:
 
 	# add a new user
 	@staticmethod
-	def add_user(userID, name, avatar, signature, desc, locationID, location):
-		query = '''INSERT INTO user (UserID, Name, Avatar, Signature, Description, LocationID, Location)\n
-			VALUES (%d, '%s', '%s', '%s', '%s', %d, '%s')''' % (userID, name, avatar, signature, desc, locationID, location)
+	def add_user(userID, name, abbr, avatar, signature, desc, locationID, location):
+		query = '''INSERT INTO user (UserID, Name, Abbr, Avatar, Signature, Description, LocationID, Location)\n
+			VALUES (%d, '%s', '%s', '%s', '%s', '%s', %d, '%s')''' % (userID, name, abbr, avatar, signature, desc, locationID, location)
 		cursor.execute(query)
 		return conn.commit()
 

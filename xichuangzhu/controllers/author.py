@@ -13,7 +13,7 @@ import re
 #--------------------------------------------------
 
 @app.route('/author')
-def author():
+def authors():
 	dynasties = Dynasty.get_dynasties()
 	for dyn in dynasties:
 		dyn['authors'] = Author.get_authors_by_dynasty(dyn['DynastyID'])
@@ -22,11 +22,11 @@ def author():
 # page single author
 #--------------------------------------------------
 
-@app.route('/author/<int:authorID>')
-def single_author(authorID):
-	author = Author.get_author(authorID)
-	collections = Collection.get_collections_by_author(authorID)
-	works = Work.get_works_by_author(authorID)
+@app.route('/author/<author_abbr>')
+def single_author(author_abbr):
+	author = Author.get_author_by_abbr(author_abbr)
+	collections = Collection.get_collections_by_author(author['AuthorID'])
+	works = Work.get_works_by_author(author['AuthorID'])
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')
@@ -43,13 +43,14 @@ def add_author():
 		return render_template('add_author.html', dynasties=dynasties)
 	elif request.method == 'POST':
 		author       = request.form['author']
+		abbr         = request.form['abbr']
 		quote        = request.form['quote']
 		introduction = request.form['introduction']
 		birthYear    = int(request.form['birthYear'])
 		deathYear    = int(request.form['deathYear'])
 		dynastyID    = int(request.form['dynastyID'])
-		newAuthorID  = Author.add_author(author, quote, introduction, birthYear, deathYear, dynastyID)
-		return redirect(url_for('single_author', authorID=newAuthorID))
+		Author.add_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
+		return redirect(url_for('single_author', author_abbr=abbr))
 
 # page edit author
 #--------------------------------------------------
@@ -58,14 +59,15 @@ def add_author():
 def edit_author(authorID):
 	if request.method == 'GET':
 		dynasties = Dynasty.get_dynasties()
-		author = Author.get_author(authorID)
+		author = Author.get_author_by_id(authorID)
 		return render_template('edit_author.html', dynasties=dynasties, author=author)
 	elif request.method == 'POST':
 		author       = request.form['author']
+		abbr         = request.form['abbr']
 		quote        = request.form['quote']
 		introduction = request.form['introduction']
 		birthYear    = int(request.form['birthYear'])
 		deathYear    = int(request.form['deathYear'])
 		dynastyID    = int(request.form['dynastyID'])		
-		Author.edit_author(author, quote, introduction, birthYear, deathYear, dynastyID, authorID)
-		return redirect(url_for('single_author', authorID=authorID))
+		Author.edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
+		return redirect(url_for('single_author', author_abbr=abbr))

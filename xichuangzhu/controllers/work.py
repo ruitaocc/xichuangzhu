@@ -27,11 +27,14 @@ import math
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
-	# add comment
+
+	# 1 - add comment
 	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])
+
+	# 2 - split ci
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 
-	# count the geci's padding left
+	# 3 - count the geci's padding left
 	if work['Type'] == "ge":
 		paras = work['Content'].split('/')[0].split('\r\n\r\n')
 		total_word_len = 0
@@ -44,10 +47,10 @@ def single_work(work_id):
 	else:
 		geci_padding_left = '0'
 
-	# gene paragraph
+	# 4 - gene paragraph
 	work['Content'] = markdown2.markdown(work['Content'])
 
-	# add bank row
+	# 5 - add bank row
 	work['Content'] = work['Content'].replace('<p>/</p>', "<div class='bank'></div>")
 
 	reviews = Review.get_reviews_by_work(work_id)

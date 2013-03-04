@@ -33,13 +33,23 @@ class Author:
 		cursor.execute(query)
 		return cursor.fetchall()
 
-	# get single author info
+	# get a author by id
 	@staticmethod
-	def get_author(authorID):
+	def get_author_by_id(authorID):
 		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			AND author.AuthorID = %d''' % authorID
+		cursor.execute(query)
+		return cursor.fetchone()
+
+	# get a author by abbr
+	@staticmethod
+	def get_author_by_abbr(author_abbr):
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
+			FROM author, dynasty\n
+			WHERE author.Abbr = '%s'\n
+			AND author.DynastyID = dynasty.DynastyID''' % author_abbr
 		cursor.execute(query)
 		return cursor.fetchone()
 
@@ -54,9 +64,8 @@ class Author:
 
 	# add a new author and return its AuthorID
 	@staticmethod
-	def add_author(author, quote, introduction, birthYear, deathYear, dynastyID):
-		query = '''INSERT INTO author (Author, Quote, Introduction, BirthYear, DeathYear, DynastyID) VALUES\n
-			('%s', '%s', '%s', %d, %d, %d)''' % (author, quote, introduction, birthYear, deathYear, dynastyID)
+	def add_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID):
+		query = '''INSERT INTO author (Author, Abbr, Quote, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', %d, %d, %d)''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
 		cursor.execute(query)
 		conn.commit()
 		return cursor.lastrowid
@@ -65,9 +74,8 @@ class Author:
 
 	# edit an author
 	@staticmethod
-	def edit_author(author,quote, introduction, birthYear, deathYear, dynastyID, authorID):
+	def edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID):
 		query = '''UPDATE author\n
-			SET Author='%s', Quote='%s', Introduction='%s', BirthYear=%d, DeathYear=%d, DynastyID=%d\n
-			WHERE AuthorID = %d''' % (author, quote, introduction, birthYear, deathYear, dynastyID, authorID)
+			SET Author='%s', Abbr='%s', Quote='%s', Introduction='%s', BirthYear=%d, DeathYear=%d, DynastyID=%d WHERE AuthorID = %d''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
 		cursor.execute(query)
 		return conn.commit()

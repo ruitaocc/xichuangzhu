@@ -7,7 +7,7 @@ class Love:
 	# get all works loved by user
 	@staticmethod
 	def get_works_by_user_love(user_id):
-		query = '''SELECT work.WorkID, work.Title, work.Content, author.AuthorID, author.Author\n
+		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM love, user, work, author\n
 			WHERE love.UserID = %d\n
 			AND love.UserID = user.UserID\n
