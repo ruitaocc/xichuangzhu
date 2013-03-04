@@ -26,6 +26,7 @@ def authors():
 def single_author(author_abbr):
 	author = Author.get_author_by_abbr(author_abbr)
 	collections = Collection.get_collections_by_author(author['AuthorID'])
+	#return str(author['AuthorID'])
 	works = Work.get_works_by_author(author['AuthorID'])
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])

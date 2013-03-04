@@ -82,8 +82,7 @@ body{
 		margin-bottom: 15px;
 
 		.work-type{
-			background-color: darkred;
-			color: white;
+			background-color: lighten(darkred, 5%);
 			padding: 3px 3px 4px 4px;
 			font-size: 12px;
 			line-height: 12px;
@@ -92,7 +91,15 @@ body{
 			margin: 0 3px 0 0;
 			display: inline-block;
 			vertical-align: text-top;
-			text-shadow: -1px -1px 1px gray;
+			cursor: pointer;
+
+			a{
+				text-decoration: none;
+				color: #FBFBFB;
+			}
+
+			&:hover{
+			}
 		}
 
 		.work-title{
