@@ -19,10 +19,9 @@ class Work:
 	# get works by random
 	@staticmethod
 	def get_works_by_random(worksNum):
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Abbr AS AuthorAbbr, author.Author, dynasty.Dynasty\n
-			FROM work, author, dynasty\n
+		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
+			FROM work, author\n
 			WHERE work.AuthorID = author.AuthorID\n
-			AND work.DynastyID = dynasty.DynastyID\n
 			ORDER BY RAND()\n
 			LIMIT %d''' % worksNum
 		cursor.execute(query)
@@ -31,10 +30,9 @@ class Work:
 	# get all works
 	@staticmethod
 	def get_works():
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Author, dynasty.Dynasty\n
-			FROM work, author, dynasty\n
-			WHERE work.AuthorID = author.AuthorID\n
-			AND work.DynastyID = dynasty.DynastyID'''
+		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
+			FROM work, author\n
+			WHERE work.AuthorID = author.AuthorID'''
 		cursor.execute(query)
 		return cursor.fetchall()		
 

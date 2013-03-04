@@ -7,11 +7,11 @@
 
 <div class="row">
 	<div class="span8">
-		<h2>最受欢迎的评论</h2>
+		<h2>最受欢迎的点评</h2>
 
 		{% for review in reviews %}
 		<div class="review-item">
-			<a class="user-avatar" href="#" >
+			<a class="user-avatar" href="{{ url_for('people', user_abbr=review.UserAbbr) }}" >
 				<img src="{{ review.Avatar }}" />
 			</a>
 
@@ -23,8 +23,8 @@
 				<div class="review-content">{{ review.Content|truncate(38, True) }}</div>
 
 				<div class="review-extra-info">
-					<a href="#">{{ review.Name }}</a>
-					评论
+					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
+					评
 					<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
 					{{ review.Time }}
 				</div>

@@ -17,7 +17,7 @@ def authors():
 	dynasties = Dynasty.get_dynasties()
 	for dyn in dynasties:
 		dyn['authors'] = Author.get_authors_by_dynasty(dyn['DynastyID'])
-	return render_template('author.html', dynasties=dynasties)
+	return render_template('authors.html', dynasties=dynasties)
 
 # page single author
 #--------------------------------------------------

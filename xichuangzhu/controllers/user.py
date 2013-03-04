@@ -46,6 +46,7 @@ def auth():
 			# set session
 			session['user_id'] = user_id
 			session['user_name'] = User.get_name(user_id)
+			session['user_abbr'] = User.get_abbr(user_id)
 			return redirect(url_for('index'))
 	# if not exist
 	else:

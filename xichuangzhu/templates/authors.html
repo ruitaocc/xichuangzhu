@@ -8,9 +8,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	$('.author a').tooltip({
-		//'placement': 'right'
-	});
+	$('.author a').tooltip();
 });
 
 </script>
@@ -18,7 +16,7 @@ $(document).ready(function(){
 <div class="row">
 	<div class="span8">
 
-		<h2>历代文学家</h2>
+		<h2>历代创作者</h2>
 
 		{% for dynasty in dynasties %}
 		{% if dynasty.authors|length != 0 %}
@@ -30,7 +28,7 @@ $(document).ready(function(){
 			<ul class="author-group clearfix">
 				{% for author in dynasty.authors %}
 				<li class='author'>
-					<a title="{{ author.Quote }}" href="{{ url_for('single_author', authorID=author.AuthorID) }}">{{ author.Author }}</a>
+					<a title="{{ author.Quote }}" href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a>
 				</li>
 				{% endfor %}
 			</ul>

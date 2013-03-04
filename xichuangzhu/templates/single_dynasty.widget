@@ -14,7 +14,7 @@
 <div class='dynasty-introduction'>{{ dynasty.Introduction }}</div>
 
 <h2>
-	文学家
+	创作者
 	<!-- <sup><span class="badge badge-inverse">{{ authors|length }}</span></sup> -->
 </h2>
 
