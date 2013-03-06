@@ -29,7 +29,8 @@ class Author:
 	def get_authors_by_dynasty(dynastyID):
 		query = '''SELECT *\n
 			FROM author\n
-			WHERE author.DynastyID = %d''' % dynastyID
+			WHERE DynastyID = %d
+			ORDER BY BirthYear''' % dynastyID
 		cursor.execute(query)
 		return cursor.fetchall()
 

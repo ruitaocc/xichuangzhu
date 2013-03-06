@@ -24,7 +24,7 @@ $(document).ready(function(){
 			});
 
 			// allow work having no collection
-			var option = "<option value=10000>无</option>";
+			var option = "<option value=0>无</option>";
 			$(option).appendTo('#select-collection');
 		}
 	})
@@ -97,7 +97,7 @@ $(document).ready(function(){
 					<option value='shi' {% if work.Type == 'shi' %}selected="selected"{% endif %}>诗</option>
 					<option value='ci' {% if work.Type == 'ci' %}selected="selected"{% endif %}>词</option>
 					<option value='wen' {% if work.Type == 'wen' %}selected="selected"{% endif %}>文</option>
-					<option value='geci' {% if work.Type == 'ge' %}selected="selected"{% endif %}>歌</option>
+					<option value='ge' {% if work.Type == 'ge' %}selected="selected"{% endif %}>歌</option>
 				</select>
 			</div>
 		</div>

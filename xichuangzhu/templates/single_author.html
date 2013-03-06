@@ -30,7 +30,7 @@
 		{% for collection in collections %}
 		<div class="collection-item">
 			<div class="collection"><a href="{{ url_for('single_collection', collectionID=collection.CollectionID) }}">{{ collection.Collection }}</a></div>
-			<div class="collection-introduction">{{ collection.Introduction|truncate(50, True) }}</div>
+			<div class="collection-introduction">{{ collection.Introduction|truncate(75, True) }}</div>
 		</div>
 		{% endfor %}
 
@@ -47,9 +47,9 @@
 		</h2>
 
 		{% for work in works %}
-		<div class="work-item">
+		<div class="work-item" title="{{ work.Title }}">
 			<div class='work-title'><a href="{{url_for('single_work', work_id=work.WorkID)}}">{{ work.Title }}</a></div>
-			<div class='work-content'>{{ work.Content|truncate(30, True) }}</div>
+			<div class='work-content'>{{ work.Content|truncate(22, True) }}</div>
 		</div>
 		{% endfor %}
 	</div>
