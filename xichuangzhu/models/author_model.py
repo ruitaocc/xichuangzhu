@@ -30,7 +30,7 @@ class Author:
 		query = '''SELECT *\n
 			FROM author\n
 			WHERE DynastyID = %d
-			ORDER BY BirthYear''' % dynastyID
+			ORDER BY BirthYear ASC''' % dynastyID
 		cursor.execute(query)
 		return cursor.fetchall()
 

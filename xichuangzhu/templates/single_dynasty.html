@@ -10,40 +10,40 @@
 $(document).ready(function(){
 
 	$('#dyn-selector a').each(function(){
-		$(this).tooltip({
-			'placement': 'bottom'
-		});
+		// $(this).tooltip({
+		// 	'placement': 'bottom'
+		// });
 
 		$(this).click(function(){
-			$('#dyn-selector a').css({
-				'margin-top': '0px'
-			});
+			// $('#dyn-selector a').css({
+			// 	'margin-top': '0px'
+			// });
 
-			$(this).css({
-				'margin-top': '11px'
-			});
+			// $(this).css({
+			// 	'margin-top': '11px'
+			// });
 
-			// change tooltip top
-			var tooltip_top = parseInt($('.tooltip').first().css('top').replace('px', ''));
+			// // change tooltip top
+			// var tooltip_top = parseInt($('.tooltip').first().css('top').replace('px', ''));
 
-			$('.tooltip').first().css({
-				'top': tooltip_top + 11 + 'px'
-			});
+			// $('.tooltip').first().css({
+			// 	'top': tooltip_top + 11 + 'px'
+			// });
 
-			$.ajax({
-				url: "{{ url_for('get_dynasty_by_json') }}",
-				type: 'POST',
-				data: {
-					dynasty_id: $(this).attr('data-dynasty-id')
-				},
-				success: function(data){
-					$('#dynasty-wap').html(data);
-				}
-			});
+			// $.ajax({
+			// 	url: "{{ url_for('get_dynasty_by_json') }}",
+			// 	type: 'POST',
+			// 	data: {
+			// 		dynasty_id: $(this).attr('data-dynasty-id')
+			// 	},
+			// 	success: function(data){
+			// 		$('#dynasty-wap').html(data);
+			// 	}
+			// });
 		});
 
 		// set random color
-		var color = 'rgb(' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*255+1) + ')';
+		var color = 'rgb(' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*200+1) + ',' + Math.floor(Math.random()*200+1) + ')';
 
 		var bar_width = $(window).width() / 17;
 
@@ -74,9 +74,9 @@ $(document).ready(function(){
 </script>
 
 <ul id="dyn-selector" class="clearfix">
-	{% for dynasty in dynasties %}
+	{% for dyn in dynasties %}
 	<li>
-		<a id="dyn-{{ dynasty.DynastyID }}" title="{{ dynasty.StartYear|replace('-', '前') }}-{{ dynasty.EndYear|replace('-', '前') }}" data-width="{{ (dynasty.EndYear - dynasty.StartYear) }}" data-dynasty-id="{{ dynasty.DynastyID }}" style="{% if dynasty.DynastyID == dynasty_id %}margin-top: 11px{% endif %}">{{ dynasty.Dynasty }}</a>
+		<a href="{{ url_for('single_dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" title="{{ dyn.StartYear|replace('-', '前') }}-{{ dyn.EndYear|replace('-', '前') }}" data-width="{{ (dyn.EndYear - dyn.StartYear) }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 11px{% endif %}">{{ dyn.Dynasty }}</a>
 	</li>
 	{% endfor %}
 </ul>
@@ -84,7 +84,7 @@ $(document).ready(function(){
 <div class="row">
 	<div class="span8">
 		<div id="dynasty-wap">
-			{{ dynasty_html|safe }}
+			{% include "single_dynasty.widget" %}
 		</div>
 	</div>
 

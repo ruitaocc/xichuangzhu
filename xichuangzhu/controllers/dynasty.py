@@ -10,14 +10,10 @@ from xichuangzhu.models.author_model import Author
 
 @app.route('/dynasty/<dynasty_abbr>')
 def single_dynasty(dynasty_abbr):
-	# gene html code
 	dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)
 	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'])
-	dynasty_html = render_template('single_dynasty.widget', dynasty=dynasty, authors=authors)
-
-	# render view
 	dynasties = Dynasty.get_dynasties()
-	return render_template('single_dynasty.html', dynasty_html=dynasty_html, dynasty_id=dynasty['DynastyID'], dynasties=dynasties)
+	return render_template('single_dynasty.html', dynasty=dynasty, authors=authors, dynasties=dynasties)
 
 # page add dynasty
 #--------------------------------------------------
