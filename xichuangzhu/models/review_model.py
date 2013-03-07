@@ -24,7 +24,6 @@ class Review:
 			WHERE review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
-			ORDER BY RAND()\n
 			LIMIT %d''' % reviews_num
 		cursor.execute(query)
 		return cursor.fetchall()

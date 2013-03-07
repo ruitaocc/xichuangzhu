@@ -43,7 +43,7 @@ def single_work(work_id):
 			if len(para) != 0:
 				total_word_len += len(para)
 				total_row_num += 1
-		geci_padding_left = (36 - total_word_len / total_row_num) / 2 + 1
+		geci_padding_left = (36 - total_word_len / total_row_num) / 2 + 0.6
 	else:
 		geci_padding_left = '0'
 

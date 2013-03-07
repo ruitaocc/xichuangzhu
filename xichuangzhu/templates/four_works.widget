@@ -1,0 +1,10 @@
+{% for work in works %}
+<div class="work-item">
+	<div class="work-title">
+		<span class="work-type"><a href="#">{{ work.type }}</a></span>
+		<a href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title }}</a><sup class="work-author">〔<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>〕</sup>
+	</div>
+	
+	<div class="work-content">{{ work.Content|truncate(35, True) }}</div>
+</div>
+{% endfor %}

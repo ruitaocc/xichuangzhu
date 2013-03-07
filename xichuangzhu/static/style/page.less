@@ -8,10 +8,6 @@ body{
 		line-height: 26px;
 		min-height: 700px;
 
-		// a:not[class='btn']{
-		// 	color: #37a;
-		// }
-
 		h1{
 			font-size: 25px;
 			line-height: 25px;
@@ -33,6 +29,8 @@ body{
 					font-size: 12px;
 					font-family: '微软雅黑';
 					font-weight: normal;
+					color: #37a;
+					cursor: pointer;
 				}
 			}
 		}
@@ -78,17 +76,43 @@ body{
 // page index
 //-----------------------------------------------------
 #page-index{
+
+	.refresh-btn{
+		vertical-align: middle;
+		opacity: 0.6;
+		cursor: pointer;
+		margin-left: 3px;
+	}
+
 	.work-item{
-		margin-bottom: 15px;
+		margin-bottom: 8px;
+		margin-right: 50px;
+		border-bottom: 1px solid #F4F4F4;
+		border-bottom: 1px dashed #EEE;
+		padding-bottom: 8px;
+
+		// border-top: 1px dashed #DDD;
+		// padding-top: 10px;
+
+		// float: left;
+		// margin-bottom: 15px;
+		// width: 120px;
+		// border: 1px solid #E8E8E8;
+		// padding: 5px 5px 5px 10px;
+		// margin-right: 15px;
+		// height: 150px;
+		// overflow: hidden;
+		// cursor: pointer;
 
 		.work-type{
 			background-color: lighten(darkred, 5%);
-			padding: 3px 3px 4px 4px;
+			padding: 2px 2px 3px 3px;
+			border: 1px solid lighten(darkred, 5%);
 			font-size: 12px;
 			line-height: 12px;
 			font-weight: normal;
 			border-radius: 2px;
-			margin: 0 3px 0 0;
+			margin: 0 5px 0 0;
 			display: inline-block;
 			vertical-align: text-top;
 			cursor: pointer;
@@ -99,18 +123,28 @@ body{
 			}
 
 			&:hover{
+				background-color: white;
+
+				a{
+					color: lighten(darkred, 5%);
+				}
 			}
 		}
 
 		.work-title{
 			font-size: 16px;
-			line-height: 30px;
+			line-height: 32px;
 			font-weight: bold;
+
+			&:hover{
+
+			}
 		}
 
 		.work-author{
 			font-size: 12px;
 			font-weight: normal;
+			margin-left: 3px;
 
 			a{
 				color: #333;
@@ -119,6 +153,7 @@ body{
 
 		.work-content{
 			line-height: 22px;
+			font-size: 14px;
 		}
 	}
 
@@ -151,16 +186,17 @@ body{
 	}
 
 	.author-item{
-		margin-bottom: 12px;
+		margin-bottom: 8px;
 
 		.author{
 			font-size: 16px;
-			line-height: 20px;
+			line-height: 24px;
 			font-weight: bold;
 
 			.author-dynasty{
 				font-size: 12px;
 				font-weight: normal;
+				margin-left: 3px;
 
 				a{
 					color: #333;
@@ -278,6 +314,7 @@ body{
 		p{
 			margin-bottom: 6px;
 			line-height: 24px;
+			font-family: 'arial', '宋体';
 		}
 
 		.bank{

@@ -76,7 +76,7 @@ $(document).ready(function(){
 <ul id="dyn-selector" class="clearfix">
 	{% for dyn in dynasties %}
 	<li>
-		<a href="{{ url_for('single_dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" title="{{ dyn.StartYear|replace('-', '前') }}-{{ dyn.EndYear|replace('-', '前') }}" data-width="{{ (dyn.EndYear - dyn.StartYear) }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 11px{% endif %}">{{ dyn.Dynasty }}</a>
+		<a href="{{ url_for('single_dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" data-width="{{ (dyn.EndYear - dyn.StartYear) }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 11px{% endif %}">{{ dyn.Dynasty }}</a>
 	</li>
 	{% endfor %}
 </ul>
