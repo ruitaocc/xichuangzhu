@@ -103,7 +103,7 @@ def add_work():
 		foreword     = request.form['foreword']
 		intro        = request.form['introduction']
 		authorID     = int(request.form['authorID'])
-		dynastyID    = Dynasty.get_dynastyID_by_author(authorID)
+		dynastyID    = int(Dynasty.get_dynastyID_by_author(authorID))
 		collectionID = int(request.form['collectionID'])
 		type = request.form['type']
 		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, collectionID, type)
@@ -123,7 +123,7 @@ def edit_work(work_id):
 		foreword     = request.form['foreword']
 		intro        = request.form['introduction']
 		authorID     = int(request.form['authorID'])
-		dynastyID    = Dynasty.get_dynastyID_by_author(authorID)
+		dynastyID    = int(Dynasty.get_dynastyID_by_author(authorID))
 		collectionID = int(request.form['collectionID'])
 		type         = request.form['type']
 		Work.edit_work(title, content, foreword, intro ,authorID, dynastyID, collectionID, type, work_id)

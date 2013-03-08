@@ -47,8 +47,8 @@ def add_author():
 		abbr         = request.form['abbr']
 		quote        = request.form['quote']
 		introduction = request.form['introduction']
-		birthYear    = int(request.form['birthYear'])
-		deathYear    = int(request.form['deathYear'])
+		birthYear    = request.form['birthYear']
+		deathYear    = request.form['deathYear']
 		dynastyID    = int(request.form['dynastyID'])
 		Author.add_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
 		return redirect(url_for('single_author', author_abbr=abbr))
@@ -67,8 +67,8 @@ def edit_author(authorID):
 		abbr         = request.form['abbr']
 		quote        = request.form['quote']
 		introduction = request.form['introduction']
-		birthYear    = int(request.form['birthYear'])
-		deathYear    = int(request.form['deathYear'])
+		birthYear    = request.form['birthYear']
+		deathYear    = request.form['deathYear']
 		dynastyID    = int(request.form['dynastyID'])		
 		Author.edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
 		return redirect(url_for('single_author', author_abbr=abbr))

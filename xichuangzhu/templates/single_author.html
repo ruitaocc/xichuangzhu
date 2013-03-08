@@ -47,10 +47,10 @@
 		</h2>
 
 		{% for work in works %}
-		<div class="work-item" title="{{ work.Title }}">
-			<div class='work-title'><a href="{{url_for('single_work', work_id=work.WorkID)}}">{{ work.Title }}</a></div>
+		<a href="{{url_for('single_work', work_id=work.WorkID)}}" class="work-item" title="{{ work.Title }}">
+			<div class='work-title'>{{ work.Title }}</div>
 			<div class='work-content'>{{ work.Content|truncate(24, True) }}</div>
-		</div>
+		</a>
 		{% endfor %}
 	</div>
 

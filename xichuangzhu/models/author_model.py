@@ -66,7 +66,7 @@ class Author:
 	# add a new author and return its AuthorID
 	@staticmethod
 	def add_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID):
-		query = '''INSERT INTO author (Author, Abbr, Quote, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', %d, %d, %d)''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
+		query = '''INSERT INTO author (Author, Abbr, Quote, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
 		cursor.execute(query)
 		conn.commit()
 		return cursor.lastrowid
@@ -77,6 +77,6 @@ class Author:
 	@staticmethod
 	def edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID):
 		query = '''UPDATE author\n
-			SET Author='%s', Abbr='%s', Quote='%s', Introduction='%s', BirthYear=%d, DeathYear=%d, DynastyID=%d WHERE AuthorID = %d''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
+			SET Author='%s', Abbr='%s', Quote='%s', Introduction='%s', BirthYear='%s', DeathYear='%s', DynastyID=%d WHERE AuthorID = %d''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
 		cursor.execute(query)
 		return conn.commit()
