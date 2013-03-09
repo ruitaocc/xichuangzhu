@@ -64,28 +64,27 @@ class Work:
 		cursor.execute(query)
 		return cursor.fetchall()
 
-	# get the number of shi, wen, ci in an author's works
+	# get all work types
 	@staticmethod
-	def get_works_num(works):
-		works_num = {}
-		works_num['shi'] = {'type_name':'诗', 'num': 0}
-		works_num['ci'] = {'type_name':'词', 'num': 0}
-		works_num['wen'] = {'type_name':'文', 'num': 0}
-		works_num['ge'] = {'type_name':'歌', 'num': 0}
+	def get_types():
+		query = "SELECT * FROM work_type"
+		cursor.execute(query)
+		return cursor.fetchall()
 
-		# count num of different type work
-		for work in works:
-			work_type = work['Type']  
-			works_num[work_type]['num'] += 1
-		return works_num
+	# get chinese name of a work type
+	@staticmethod
+	def get_type_name(work_type):
+		query = "SELECT TypeName From work_type WHERE WorkType = '%s'" % work_type
+		cursor.execute(query)
+		return cursor.fetchone()['TypeName']
 
 # NEW
 
 	# add a work
 	@staticmethod
-	def add_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, type):
-		query = '''INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, CollectionID, Type)\n
-			VALUES ('%s', '%s', '%s','%s', %d, %d, %d, '%s')''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, type)
+	def add_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name):
+		query = '''INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, CollectionID, Type, TypeName)\n
+			VALUES ('%s', '%s', '%s','%s', %d, %d, %d, '%s', '%s')''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name)
 		cursor.execute(query)
 		conn.commit()
 		return cursor.lastrowid
@@ -94,8 +93,8 @@ class Work:
 
 	# edit a Work
 	@staticmethod
-	def edit_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, type, workID):
-		query = '''UPDATE work SET Title = '%s', Content = '%s', Foreword = '%s', Introduction = '%s', AuthorID = %d, DynastyID = %d, CollectionID = %d, Type = '%s' WHERE WorkID=%d''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, type, workID)
+	def edit_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name, work_id):
+		query = '''UPDATE work SET Title = '%s', Content = '%s', Foreword = '%s', Introduction = '%s', AuthorID = %d, DynastyID = %d, CollectionID = %d, Type = '%s', TypeName = '%s' WHERE WorkID=%d''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name, work_id)
 		cursor.execute(query)
 		return conn.commit()
 

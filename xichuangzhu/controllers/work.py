@@ -98,6 +98,7 @@ def add_work():
 	if request.method == 'GET':
 		return render_template('add_work.html')
 	elif request.method == 'POST':
+		
 		title        = request.form['title']
 		content      = request.form['content']
 		foreword     = request.form['foreword']
@@ -105,8 +106,10 @@ def add_work():
 		authorID     = int(request.form['authorID'])
 		dynastyID    = int(Dynasty.get_dynastyID_by_author(authorID))
 		collectionID = int(request.form['collectionID'])
-		type = request.form['type']
-		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, collectionID, type)
+		work_type    = request.form['type']
+		type_name    = Work.get_type_name(work_type)
+		
+		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, collectionID, work_type, type_name)
 		return redirect(url_for('single_work', work_id=new_work_id))
 
 # page - edit work
@@ -125,8 +128,10 @@ def edit_work(work_id):
 		authorID     = int(request.form['authorID'])
 		dynastyID    = int(Dynasty.get_dynastyID_by_author(authorID))
 		collectionID = int(request.form['collectionID'])
-		type         = request.form['type']
-		Work.edit_work(title, content, foreword, intro ,authorID, dynastyID, collectionID, type, work_id)
+		work_type    = request.form['type']
+		type_name    = Work.get_type_name(work_type)
+
+		Work.edit_work(title, content, foreword, intro ,authorID, dynastyID, collectionID, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
 
 # proc - delete work

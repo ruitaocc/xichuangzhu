@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import render_template, request, redirect, url_for, json
 
 from xichuangzhu import app
@@ -26,12 +28,22 @@ def authors():
 def single_author(author_abbr):
 	author = Author.get_author_by_abbr(author_abbr)
 	collections = Collection.get_collections_by_author(author['AuthorID'])
-	#return str(author['AuthorID'])
+
 	works = Work.get_works_by_author(author['AuthorID'])
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')
-	works_num = Work.get_works_num(works)
+
+	# count num of different type work
+	# return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}
+	work_types = Work.get_types()
+	works_num = {}
+	for wt in work_types:
+		works_num[wt['WorkType']] = {'type_name': wt['TypeName'], 'num': 0}
+	for work in works:
+		work_type = work['Type']  
+		works_num[work_type]['num'] += 1
+
 	return render_template('single_author.html', author=author, collections=collections, works=works, works_num=works_num)
 
 # page add author
