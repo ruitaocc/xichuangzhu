@@ -82,13 +82,49 @@ $(document).ready(function(){
 </ul>
 
 <div class="row">
+	
 	<div class="span8">
 		<div id="dynasty-wap">
-			{% include "single_dynasty.widget" %}
+			{% if session.user_id == 45197381 %}
+			<a class="btn btn-small pull-right" href="{{ url_for('edit_dynasty', dynasty_id=dynasty.DynastyID) }}">编辑  <span class="icon-edit"></span></a>
+			{% endif %}
+
+			<h1 class='dynasty'>{{ dynasty.Dynasty }}</h1>
+
+			{% if dynasty.EndYear == 2012 %}
+			<div class="dynasty-period">{{ dynasty.StartYear }}年 ~ 至今</div>
+			{% else %}
+			<div class="dynasty-period">{{ dynasty.StartYear|replace('-', '前') }}年 ~ {{ dynasty.EndYear|replace('-', '前') }}年</div>
+			{% endif %}
+
+			<h2>简介</h2>
+			<div class='dynasty-introduction'>{{ dynasty.Introduction }}</div>
+
+			<h2>
+				创作者
+				<!-- <sup><span class="badge badge-inverse">{{ authors|length }}</span></sup> -->
+			</h2>
+
+			<table class="table ">
+				{% for author in authors %}
+				<tr class="author-item">
+					<td class='author'>
+						<a href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a>
+					</td>
+					<td>
+						<span class='author-introduction'>{{ author.Quote|truncate(30, True) }}</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+
 		</div>
 	</div>
 
-	<div class="span4"></div>
+	<div class="span4">
+
+
+	</div>
 </div>
 
 {% endblock %}

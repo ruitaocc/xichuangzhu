@@ -4,6 +4,34 @@
 {% block page_id%}page-single-author{% endblock %}
 
 {% block body %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('.works-num-wap span').click(function(){
+		$('.works-num-wap span').removeClass('active');
+		$(this).addClass('active');
+
+		// show works of certain type
+		type = $(this).attr('data-work-type');
+		if(type == 'all'){
+			$('.work-item').show();
+		}
+		else{
+			$('.work-item').each(function(){
+				if($(this).attr('data-work-type') == type){
+					$(this).show();
+				}
+				else{
+					$(this).hide();
+				}
+			});
+		}
+	});
+});
+
+</script>
+
 <div class="row">
 	<div class="span8">
 		{% if session.user_id == 45197381 %}
@@ -22,10 +50,7 @@
 		<div class='author-introduction'>{{ author.Introduction }}</div>
 
 		{% if collections|length != 0 %}
-		<h2>
-			作品集
-			<!-- <sup><span class="badge badge-inverse">{{ collections|length }}</span></sup> -->
-		</h2>
+		<h2>作品集</h2>
 
 		{% for collection in collections %}
 		<div class="collection-item">
@@ -33,21 +58,23 @@
 			<div class="collection-introduction">{{ collection.Introduction|truncate(75, True) }}</div>
 		</div>
 		{% endfor %}
-
 		{% endif %}
 
 		<h2>
 			作品
-			<!-- <sup>
-				<span class="badge badge-inverse">
-					诗{{ worksNum.shi }}/词{{ worksNum.ci }}/文{{ worksNum.wen }}
-					{{ works|length }}
-				</span>
-			</sup> -->
+			<div class="works-num-wap">
+				<span data-work-type="all" class="active">全部</span>
+
+				{% for key, value in works_num.items() %}
+				{% if value.num != 0 %}
+				<span data-work-type="{{key}}">{{ value.type_name }} {{ value.num }}</span>
+				{% endif %}
+				{% endfor %}
+			</div>
 		</h2>
 
 		{% for work in works %}
-		<a href="{{url_for('single_work', work_id=work.WorkID)}}" class="work-item" title="{{ work.Title }}">
+		<a href="{{url_for('single_work', work_id=work.WorkID)}}" data-work-type="{{ work.Type }}" class="work-item">
 			<div class='work-title'>{{ work.Title }}</div>
 			<div class='work-content'>{{ work.Content|truncate(24, True) }}</div>
 		</a>

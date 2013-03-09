@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from xichuangzhu import conn, cursor
 
 class Work:
@@ -7,7 +9,7 @@ class Work:
 	# get a single work
 	@staticmethod
 	def get_work(workID):
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.CollectionID, author.AuthorID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.CollectionID, author.AuthorID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
 			FROM work, author, dynasty, collection\n
 			WHERE work.workID = %d\n
 			AND work.AuthorID = author.AuthorID\n
@@ -19,7 +21,7 @@ class Work:
 	# get works by random
 	@staticmethod
 	def get_works_by_random(worksNum):
-		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM work, author\n
 			WHERE work.AuthorID = author.AuthorID\n
 			ORDER BY RAND()\n
@@ -30,7 +32,7 @@ class Work:
 	# get works by random
 	@staticmethod
 	def get_work_by_random(work_type):
-		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM work, author\n
 			WHERE work.AuthorID = author.AuthorID\n
 			AND work.Type = '%s'\n
@@ -42,7 +44,7 @@ class Work:
 	# get all works
 	@staticmethod
 	def get_works():
-		query = '''SELECT work.WorkID, work.Title, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM work, author\n
 			WHERE work.AuthorID = author.AuthorID'''
 		cursor.execute(query)
@@ -65,15 +67,17 @@ class Work:
 	# get the number of shi, wen, ci in an author's works
 	@staticmethod
 	def get_works_num(works):
-		worksNum = {'shi':0, 'ci':0, 'wen':0}
+		works_num = {}
+		works_num['shi'] = {'type_name':'诗', 'num': 0}
+		works_num['ci'] = {'type_name':'词', 'num': 0}
+		works_num['wen'] = {'type_name':'文', 'num': 0}
+		works_num['ge'] = {'type_name':'歌', 'num': 0}
+
+		# count num of different type work
 		for work in works:
-			if work['Type'] == 'shi':
-				worksNum['shi'] += 1
-			elif work['Type'] == 'ci':
-				worksNum['ci'] += 1
-			elif work['Type'] == 'wen':
-				worksNum['wen'] += 1
-		return worksNum
+			work_type = work['Type']  
+			works_num[work_type]['num'] += 1
+		return works_num
 
 # NEW
 

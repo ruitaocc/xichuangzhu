@@ -442,6 +442,26 @@ body{
 		margin-bottom: 10px;
 	}
 
+	.works-num-wap{
+		display: inline-block;
+		margin-left: 15px;
+
+		span{
+			font-size: 12px;
+			line-height: 12px;
+			cursor: pointer;
+			margin-right: 5px;
+			padding: 0px 6px 1px 8px;
+			border-radius: 2px;
+			color: #666;
+
+			&.active{
+				background-color: #0088cc;
+				color: white;				
+			}
+		}
+	}
+
 	.author-introduction{
 		font-size: 14px;
 		line-height: 25px;	
@@ -529,28 +549,39 @@ body{
 				cursor: pointer;
 
 				&:hover{
-					//background-color: gray;
 				}
 			}
 		}
 	}
 
-	#dynasty-wap{
-		margin-top: 35px;
-		
-		.dynasty-period{
-			font-size: 16px;
+	.row{
+		margin-top: 20px;
+
+		#dynasty-wap{
+			
+			.dynasty-period{
+				font-size: 16px;
+			}
 		}
 
 		.author-item{
-			margin-bottom: 10px;
+			//margin-bottom: 10px;
 
 			.author{
-				font-size: 16px;
+				//font-size: 16px;
+				width: 80px;
+				box-sizing: border-box;
+				line-height: 26px;
+				//text-align: center;
 				font-weight: bold;
+				//padding-left: 25px;
+				//width: 100px;
+				//display: inline-block;
 			}
 
 			.author-introduction{
+				font-size: 14px;
+				line-height: 24px;
 			}
 		}
 	}

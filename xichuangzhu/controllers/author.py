@@ -31,8 +31,8 @@ def single_author(author_abbr):
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')
-	worksNum = Work.get_works_num(works)
-	return render_template('single_author.html', author=author, collections=collections, works=works, worksNum=worksNum)
+	works_num = Work.get_works_num(works)
+	return render_template('single_author.html', author=author, collections=collections, works=works, works_num=works_num)
 
 # page add author
 #--------------------------------------------------
