@@ -5,9 +5,21 @@
 
 {% block body %}
 
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var dynasty = $("#dynasty-selector li[class='active']").text();
+	$('#dynasty_tag').text(dynasty);
+
+	var work_type = $("#type-selector li[class='active']").text();
+	$('#work_type_tag').text(work_type);
+});
+
+</script>
+
 <div class="row">
 	<div class="span8">
-		<h2>作品</h2>
+		<h2><span id="dynasty_tag"></span> / <span id="work_type_tag"></span> / {{ works_num }}</h2>
 
 		{% for work in works %}
 		<div class="work-item">
@@ -19,22 +31,35 @@
 		</div>
 		{% endfor %}
 
+		<div class="pagination">
+			<ul>
+				<li><a href="{{ url_for('works') }}?page={{ pre_page }}&work_type={{ work_type }}&dynasty_id={{ dynasty_id }}"><<</a></li>
+				<li><a>{{ page }} / {{ total_page }}</a></li>
+				<li><a href="{{ url_for('works') }}?page={{ next_page }}&work_type={{ work_type }}&dynasty_id={{ dynasty_id }}">>></a></li>
+			</ul>
+		</div>
 	</div>
 
 	<div class="span4">
-		<h2>体裁</h2>
-		<ul class="type-selector">
-			<li class="active">全部</li>
-			{% for type in work_types %}
-			<li>{{ type.TypeName }}</li>
+		<h2>年代</h2>
+		<ul id="dynasty-selector">
+			<li {% if dynasty_id == 0 %}class="active"{% endif %}
+			><a href="{{ url_for('works') }}?page=1&work_type={{ work_type }}&dynasty_id=0">全部</a></li>
+
+			{% for dynasty in dynasties %}
+			<li {% if dynasty_id == dynasty.DynastyID %}class="active"{% endif %}
+			><a href="{{ url_for('works') }}?page=1&work_type={{ work_type }}&dynasty_id={{ dynasty.DynastyID }}">{{ dynasty.Dynasty }}</a></li>
 			{% endfor %}
 		</ul>
 
-		<h2>年代</h2>
-		<ul class="dynasty-selector">
-			<li>全部</li>
-			{% for dynasty in dynasties %}
-			<li>{{ dynasty.Dynasty }}</li>
+		<h2>体裁</h2>
+		<ul id="type-selector">
+			<li {% if work_type == 'all' %}class="active"{% endif %}
+			><a href="{{ url_for('works') }}?page=1&work_type=all&dynasty_id={{ dynasty_id }}">全部</a></li>
+
+			{% for type in work_types %}
+			<li {% if work_type == type.WorkType %}class="active"{% endif %}
+			><a href="{{ url_for('works') }}?page=1&work_type={{ type.WorkType }}&dynasty_id={{ dynasty_id }}">{{ type.TypeName }}</a></li>
 			{% endfor %}
 		</ul>
 	</div>

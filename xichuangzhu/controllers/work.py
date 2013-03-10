@@ -84,15 +84,25 @@ def unlove_work(work_id):
 # view
 @app.route('/works')
 def works():
-	works = Work.get_works()
+	num_per_page = 15
+
+	work_type  = request.args['work_type'] if 'work_type' in request.args else 'all'
+	dynasty_id = int(request.args['dynasty_id'] if 'dynasty_id' in request.args else 0)
+	page       = int(request.args['page'] if 'page' in request.args else 1)
+
+	works = Work.get_works(work_type, dynasty_id, page, num_per_page)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')
 
+	works_num  = Work.get_works_num(work_type, dynasty_id)
+	total_page = int(math.ceil(works_num) / num_per_page)
+	pre_page   = (page - 1) if page > 1 else 1
+	next_page  = (page + 1) if page < total_page else total_page
+
 	work_types = Work.get_types()
 	dynasties = Dynasty.get_dynasties()
-
-	return render_template('works.html', works=works, work_types=work_types, dynasties=dynasties)
+	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page,total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_id=dynasty_id)
 
 # page - add work
 #--------------------------------------------------

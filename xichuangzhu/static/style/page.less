@@ -249,29 +249,38 @@ body{
 		}
 	}
 
-	.type-selector,
-	.dynasty-selector{
+	#type-selector,
+	#dynasty-selector{
 		list-style: none;
 		margin: 0;
 
 		li{
-			background-color: #EEE;
-			padding: 2px 12px;
+
 			margin-bottom: 5px;
-			font-size: 12px;
-			color: #777;
-			cursor: pointer;
-			display: inline-block;
 			margin-right: 2px;
+			display: inline-block;
+
+			a{
+				font-size: 12px;
+				background-color: #EEE;
+				padding: 4px 12px;
+				text-decoration: none;
+				color: #777;
+			}
 
 			&:hover{
 				background-color: #DDD;
-				color: #333;
+				a{
+					color: #333;
+				}
 			}
 
 			&.active{
-				background-color: #0088cc;
-				color: white;
+				
+				a{
+					background-color: #0088cc;
+					color: white;
+				}
 			}
 		}
 	}

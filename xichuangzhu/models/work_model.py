@@ -43,12 +43,39 @@ class Work:
 
 	# get all works
 	@staticmethod
-	def get_works():
+	def get_works(work_type, dynasty_id, page, num):
 		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM work, author\n
-			WHERE work.AuthorID = author.AuthorID'''
+			WHERE work.AuthorID = author.AuthorID\n'''
+
+		if work_type != 'all':
+			query += "AND work.Type = '%s'\n" % work_type
+
+		if dynasty_id != 0:
+			query += "AND work.DynastyID = %d\n" % dynasty_id
+
+		query += "LIMIT %d, %d" % ((page-1)*num, num)
+
+		#return query
+
 		cursor.execute(query)
-		return cursor.fetchall()		
+		return cursor.fetchall()
+
+	# get all works
+	@staticmethod
+	def get_works_num(work_type, dynasty_id):
+		query = '''SELECT COUNT(*) AS WorksNum\n
+			FROM work, author\n
+			WHERE work.AuthorID = author.AuthorID\n'''
+
+		if work_type != 'all':
+			query += "AND work.Type = '%s'\n" % work_type
+
+		if dynasty_id != 0:
+			query += "AND work.DynastyID = %d\n" % dynasty_id
+
+		cursor.execute(query)
+		return cursor.fetchone()['WorksNum']
 
 	# get an author's all works
 	@staticmethod
