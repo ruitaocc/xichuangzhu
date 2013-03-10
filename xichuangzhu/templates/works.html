@@ -44,22 +44,22 @@ $(document).ready(function(){
 		<h2>年代</h2>
 		<ul id="dynasty-selector">
 			<li {% if dynasty_id == 0 %}class="active"{% endif %}
-			><a href="{{ url_for('works') }}?page=1&work_type={{ work_type }}&dynasty_id=0">全部</a></li>
+			><a href="{{ url_for('works') }}?work_type={{ work_type }}&dynasty_id=0">全部</a></li>
 
 			{% for dynasty in dynasties %}
 			<li {% if dynasty_id == dynasty.DynastyID %}class="active"{% endif %}
-			><a href="{{ url_for('works') }}?page=1&work_type={{ work_type }}&dynasty_id={{ dynasty.DynastyID }}">{{ dynasty.Dynasty }}</a></li>
+			><a href="{{ url_for('works') }}?work_type={{ work_type }}&dynasty_id={{ dynasty.DynastyID }}">{{ dynasty.Dynasty }}</a></li>
 			{% endfor %}
 		</ul>
 
 		<h2>体裁</h2>
 		<ul id="type-selector">
 			<li {% if work_type == 'all' %}class="active"{% endif %}
-			><a href="{{ url_for('works') }}?page=1&work_type=all&dynasty_id={{ dynasty_id }}">全部</a></li>
+			><a href="{{ url_for('works') }}?work_type=all&dynasty_id={{ dynasty_id }}">全部</a></li>
 
 			{% for type in work_types %}
 			<li {% if work_type == type.WorkType %}class="active"{% endif %}
-			><a href="{{ url_for('works') }}?page=1&work_type={{ type.WorkType }}&dynasty_id={{ dynasty_id }}">{{ type.TypeName }}</a></li>
+			><a href="{{ url_for('works') }}?work_type={{ type.WorkType }}&dynasty_id={{ dynasty_id }}">{{ type.TypeName }}</a></li>
 			{% endfor %}
 		</ul>
 	</div>

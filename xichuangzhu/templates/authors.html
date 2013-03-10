@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block page_title %}作者{% endblock %}
-{% block page_id%}page-author{% endblock %}
+{% block page_id%}page-authors{% endblock %}
 
 {% block body %}
 
@@ -41,7 +41,15 @@ $(document).ready(function(){
 
 	<div class="span4">
 		<h2>近期热门</h2>
-
+		
+		{% for hot_author in hot_authors %}
+		<div class='hot-author-item'>
+			<div class='hot-author'>
+				<a href="{{ url_for('single_author', author_abbr=hot_author.Abbr) }}">{{ hot_author.Author }}</a><sup class='hot-author-dynasty'>〔<a href="{{ url_for('single_dynasty', dynasty_abbr=hot_author.DynastyAbbr) }}">{{ hot_author.Dynasty }}</a>〕</sup>
+			</div>
+			<div class='hot-author-quote'>{{ hot_author.Quote }}</div>
+		</div>
+		{% endfor %}
 	</div>
 </div>
 

@@ -24,6 +24,20 @@ class Author:
 		cursor.execute(query)
 		return cursor.fetchall()
 
+	# get hot authors
+	@staticmethod
+	def get_hot_authors(num):
+		query = '''SELECT author.Author, author.Abbr, author.Quote, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, count(*) AS LoveNum\n
+			FROM love, work, author, dynasty\n
+			WHERE love.WorkID = work.WorkID\n
+			AND work.AuthorID = author.AuthorID\n
+			AND author.DynastyID = dynasty.DynastyID\n
+			GROUP BY author.AuthorID\n
+			ORDER BY LoveNum DESC\n
+			LIMIT %d''' % num
+		cursor.execute(query)
+		return cursor.fetchall()
+
 	# get certain dynasty's authors
 	@staticmethod
 	def get_authors_by_dynasty(dynasty_id, num = 10000):

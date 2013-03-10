@@ -107,19 +107,12 @@ body{
 			margin: 0 5px 0 0;
 			display: inline-block;
 			vertical-align: text-top;
-			cursor: pointer;
-
-			a{
-				text-decoration: none;
-				color: #FBFBFB;
-			}
+			text-decoration: none;
+			color: #FBFBFB;
 
 			&:hover{
 				background-color: white;
-
-				a{
-					color: lighten(darkred, 5%);
-				}
+				color: lighten(darkred, 5%);
 			}
 		}
 
@@ -237,6 +230,7 @@ body{
 		.work-author{
 			font-size: 12px;
 			font-weight: normal;
+			margin-left: 3px;
 
 			a{
 				color: #333;
@@ -425,9 +419,9 @@ body{
 }
 
 
-// page author
+// page authors
 //-----------------------------------------------------
-#page-author{
+#page-authors{
 
 	.author-wap{
 		border-top: 1px dashed lightgray;
@@ -457,6 +451,30 @@ body{
 					width: 100px;
 				}
 			}
+		}
+	}
+
+	.hot-author-item{
+		margin-bottom: 8px;
+
+		.hot-author{
+			font-size: 16px;
+			line-height: 24px;
+			font-weight: bold;
+
+			.hot-author-dynasty{
+				font-size: 12px;
+				font-weight: normal;
+				margin-left: 3px;
+
+				a{
+					color: #333;
+				}
+			}					
+		}
+
+		.hot-author-quote{
+			font-size: 12px;
 		}
 	}
 }
@@ -781,6 +799,7 @@ body{
 			.reviews-num{
 				color: #666;
 				font-size: 12px;
+				line-height: 24px;
 			}
 		}
 

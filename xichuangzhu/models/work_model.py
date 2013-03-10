@@ -44,7 +44,7 @@ class Work:
 	# get all works
 	@staticmethod
 	def get_works(work_type, dynasty_id, page, num):
-		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.AuthorID, work.DynastyID, author.Author, author.Abbr AS AuthorAbbr\n
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.AuthorID, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM work, author\n
 			WHERE work.AuthorID = author.AuthorID\n'''
 
