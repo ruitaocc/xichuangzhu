@@ -34,24 +34,8 @@ def single_work(work_id):
 	# 2 - split ci
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 
-	# 3 - count the geci's padding left
-	if work['Type'] == "ge":
-		paras = work['Content'].split('/')[0].split('\r\n\r\n')
-		total_word_len = 0
-		total_row_num = 0
-		for para in paras:
-			if len(para) != 0:
-				total_word_len += len(para)
-				total_row_num += 1
-		geci_padding_left = (36 - total_word_len / total_row_num) / 2 + 0.6
-	else:
-		geci_padding_left = '0'
-
-	# 4 - gene paragraph
+	# 3 - gene paragraph
 	work['Content'] = markdown2.markdown(work['Content'])
-
-	# 5 - add bank row
-	work['Content'] = work['Content'].replace('<p>/</p>', "<div class='bank'></div>")
 
 	reviews = Review.get_reviews_by_work(work_id)
 	
@@ -93,7 +77,7 @@ def works():
 	works = Work.get_works(work_type, dynasty_id, page, num_per_page)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+		work['Content'] = work['Content'].replace('%', '')
 
 	works_num  = Work.get_works_num(work_type, dynasty_id)
 	total_page = int(math.ceil(works_num / num_per_page))

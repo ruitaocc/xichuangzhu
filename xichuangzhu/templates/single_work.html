@@ -36,15 +36,7 @@ $(document).ready(function(){
 
 		{% endif %}
 
-		<div class="work-content work-type-{{ work.Type }}" 
-
-		{% if work.Type == 'ge' %}
-		style="padding-left: {{ geci_padding_left }}em"
-		{% elif work.Type == 'wen' and work.Content|length < 32 %}
-		style="text-indent:0; text-align:center;"
-		{% endif %}
-
-		>{{ work.Content|safe }}</div>
+		<div class="work-content work-type-{{ work.Type }}">{{ work.Content|safe }}</div>
 		
 		{% if session.user_id %}
 		<div class="btn-group pull-right">
