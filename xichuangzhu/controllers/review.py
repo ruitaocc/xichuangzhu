@@ -37,7 +37,8 @@ def add_comment(review_id, replyer_id):
 @app.route('/reviews')
 def reviews():
 	reviews = Review.get_hot_reviews()
-	return render_template('reviews.html', reviews=reviews)
+	reviewers = Review.get_hot_reviewers(8)
+	return render_template('reviews.html', reviews=reviews, reviewers=reviewers)
 
 # page add review
 #--------------------------------------------------

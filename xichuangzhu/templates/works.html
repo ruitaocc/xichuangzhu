@@ -22,11 +22,21 @@
 	</div>
 
 	<div class="span4">
-		<h2>标签</h2>
-
 		<h2>体裁</h2>
+		<ul class="type-selector">
+			<li class="active">全部</li>
+			{% for type in work_types %}
+			<li>{{ type.TypeName }}</li>
+			{% endfor %}
+		</ul>
 
 		<h2>年代</h2>
+		<ul class="dynasty-selector">
+			<li>全部</li>
+			{% for dynasty in dynasties %}
+			<li>{{ dynasty.Dynasty }}</li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
 

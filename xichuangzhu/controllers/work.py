@@ -88,7 +88,11 @@ def works():
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')
-	return render_template('works.html', works=works)
+
+	work_types = Work.get_types()
+	dynasties = Dynasty.get_dynasties()
+
+	return render_template('works.html', works=works, work_types=work_types, dynasties=dynasties)
 
 # page - add work
 #--------------------------------------------------

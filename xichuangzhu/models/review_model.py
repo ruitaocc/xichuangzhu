@@ -63,6 +63,17 @@ class Review:
 		cursor.execute(query)
 		return cursor.fetchall()
 
+	# get hot reviewers
+	@staticmethod
+	def get_hot_reviewers(num):
+		query = '''SELECT review.UserID, user.Avatar, user.Name, user.Abbr, user.Signature, COUNT(*) AS ReviewNum\n
+			FROM review, user\n
+			WHERE review.UserID = user.UserID\n
+			GROUP BY review.UserID\n
+			ORDER BY ReviewNum DESC\n
+			LIMIT %d''' % num
+		cursor.execute(query)
+		return cursor.fetchall()
 # NEW
 
 	# add a review to a work
