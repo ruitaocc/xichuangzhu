@@ -96,7 +96,7 @@ def works():
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')
 
 	works_num  = Work.get_works_num(work_type, dynasty_id)
-	total_page = int(math.ceil(works_num) / num_per_page)
+	total_page = int(math.ceil(works_num / num_per_page))
 	pre_page   = (page - 1) if page > 1 else 1
 	next_page  = (page + 1) if page < total_page else total_page
 
