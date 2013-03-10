@@ -21,9 +21,10 @@ $(document).ready(function(){
 		{% for dynasty in dynasties %}
 		{% if dynasty.authors|length != 0 %}
 
-		<div class="author-wap">
+		<a name="{{ dynasty.Abbr }}"></a>
 
-			<div class='author-dynasty'>{{ dynasty.Dynasty }}</div>
+		<div class="author-wap">
+			<a class='author-dynasty' href="{{ url_for('single_dynasty', dynasty_abbr=dynasty.Abbr) }}">{{ dynasty.Dynasty }}</a>
 
 			<ul class="author-group clearfix">
 				{% for author in dynasty.authors %}
@@ -39,13 +40,8 @@ $(document).ready(function(){
 	</div>
 
 	<div class="span4">
-		<h2>诗人</h2>
+		<h2>本周热点</h2>
 
-		<h2>词人</h2>
-
-		<h2>散文家</h2>
-
-		<h2>歌手</h2>
 	</div>
 </div>
 

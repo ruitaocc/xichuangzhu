@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">拼音缩写</label>
+			<label class="control-label">拼音</label>
 			<div class="controls">
 				<input type="text" name="abbr" value="{{ dynasty.Abbr }}" />
 			</div>
@@ -42,7 +42,14 @@
 		<div class="control-group">
 			<label class="control-label" for="input-intro">简介</label>
 			<div class="controls">
-				<textarea rows="10" class="input-xxlarge" name="introduction" id="input-intro" >{{ dynasty.Introduction }}</textarea>
+				<textarea rows="8" class="input-xxlarge" name="introduction" id="input-intro" >{{ dynasty.Introduction }}</textarea>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="input-intro">历史</label>
+			<div class="controls">
+				<textarea rows="20" class="input-xxlarge" name="history" id="input-intro" >{{ dynasty.History }}</textarea>
 			</div>
 		</div>
 

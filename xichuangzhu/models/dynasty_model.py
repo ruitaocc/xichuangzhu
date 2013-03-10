@@ -47,8 +47,8 @@ class Dynasty:
 
 	# edit a dynasty
 	@staticmethod
-	def edit_dynasty(dynasty, abbr, intro, startYear, endYear, dynastyID):
-		query = '''UPDATE dynasty SET Dynasty='%s', Abbr='%s', Introduction='%s', StartYear=%d, EndYear=%d\n
-			WHERE DynastyID = %d''' % (dynasty, abbr, intro, startYear, endYear, dynastyID)
+	def edit_dynasty(dynasty, abbr, intro, history, startYear, endYear, dynastyID):
+		query = '''UPDATE dynasty SET Dynasty='%s', Abbr='%s', Introduction='%s', History='%s', StartYear=%d, EndYear=%d\n
+			WHERE DynastyID = %d''' % (dynasty, abbr, intro, history, startYear, endYear, dynastyID)
 		cursor.execute(query)
 		return conn.commit()

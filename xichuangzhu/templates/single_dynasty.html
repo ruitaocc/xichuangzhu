@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
-{% block page_title %}五千年{% endblock %}
-{% block page_id%}page-dynasty{% endblock %}
+{% block page_title %}{{ dynasty.Dynasty }}{% endblock %}
+{% block page_id%}page-single-dynasty{% endblock %}
 
 {% block body %}
 
@@ -76,13 +76,12 @@ $(document).ready(function(){
 <ul id="dyn-selector" class="clearfix">
 	{% for dyn in dynasties %}
 	<li>
-		<a href="{{ url_for('single_dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" data-width="{{ (dyn.EndYear - dyn.StartYear) }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 11px{% endif %}">{{ dyn.Dynasty }}</a>
+		<a href="{{ url_for('single_dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" data-width="{{ (dyn.EndYear - dyn.StartYear) }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 10px{% endif %}">{{ dyn.Dynasty }}</a>
 	</li>
 	{% endfor %}
 </ul>
 
 <div class="row">
-	
 	<div class="span8">
 		<div id="dynasty-wap">
 			{% if session.user_id == 45197381 %}
@@ -100,12 +99,9 @@ $(document).ready(function(){
 			<h2>简介</h2>
 			<div class='dynasty-introduction'>{{ dynasty.Introduction }}</div>
 
-			<h2>
-				创作者
-				<!-- <sup><span class="badge badge-inverse">{{ authors|length }}</span></sup> -->
-			</h2>
+			<div class="dynasty-extra">{{ dynasty.History|safe }}</div>
 
-			<table class="table ">
+			<!-- <table class="table ">
 				{% for author in authors %}
 				<tr class="author-item">
 					<td class='author'>
@@ -116,14 +112,27 @@ $(document).ready(function(){
 					</td>
 				</tr>
 				{% endfor %}
-			</table>
-
+			</table> -->
 		</div>
 	</div>
 
 	<div class="span4">
+		<h2>
+			创作者
+			<!-- <sup><span class="badge badge-inverse">{{ authors|length }}</span></sup> -->
+			<span class='link-more'>
+				<a href="{{ url_for('authors') }}#{{dynasty.Abbr}}">更多 ({{ authors_num }}) »</a>
+			</span>
+		</h2>
 
-
+		{% for author in authors %}
+		<div class='author-item'>
+			<div class='author'>
+				<a href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a>
+			</div>
+			<div class='author-quote'>{{ author.Quote }}</div>
+		</div>
+		{% endfor %}
 	</div>
 </div>
 

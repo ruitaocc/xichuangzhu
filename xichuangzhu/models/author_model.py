@@ -26,13 +26,21 @@ class Author:
 
 	# get certain dynasty's authors
 	@staticmethod
-	def get_authors_by_dynasty(dynastyID):
+	def get_authors_by_dynasty(dynasty_id, num = 10000):
 		query = '''SELECT *\n
 			FROM author\n
 			WHERE DynastyID = %d
-			ORDER BY BirthYear ASC''' % dynastyID
+			ORDER BY BirthYear ASC\n
+			LIMIT %d''' % (dynasty_id, num)
 		cursor.execute(query)
 		return cursor.fetchall()
+
+	# get authors num of certain dynasty's
+	@staticmethod
+	def get_authors_num_by_dynasty(dynasty_id):
+		query = "SELECT COUNT(*) AS authors_num FROM author WHERE DynastyID = '%d'" % dynasty_id
+		cursor.execute(query)
+		return cursor.fetchone()['authors_num']
 
 	# get a author by id
 	@staticmethod

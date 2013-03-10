@@ -1,8 +1,7 @@
 body{
-	margin: 55px 0 0 0;
+	//margin: 55px 0 0 0;
 	font-family: 'arial', '宋体';
 
-	
 	#main-wap{
 		font-size: 14px;
 		line-height: 26px;
@@ -67,6 +66,9 @@ body{
 //-----------------------------------------------------
 .navbar-search .search-query{
 	line-height: 1.2;
+	font-size: 12px;
+	padding: 2px 0px 2px 16px;
+	margin-top: 2px;
 }
 
 .form-horizontal .input-append{
@@ -195,7 +197,7 @@ body{
 			}					
 		}
 
-		.author-introduction{
+		.author-quote{
 			font-size: 12px;
 		}
 	}
@@ -526,13 +528,13 @@ body{
 
 }
 
-// page dynasty
+// page single dynasty
 //-----------------------------------------------------
-#page-dynasty{
+#page-single-dynasty{
 
 	#dyn-selector{
 		margin: 0;
-		position: fixed;
+		position: absolute;
 		top: 40px;
 		left: 0px;
 		list-style: none;
@@ -557,33 +559,74 @@ body{
 	}
 
 	.row{
-		margin-top: 20px;
+		margin-top: 25px;
 
 		#dynasty-wap{
 			
 			.dynasty-period{
 				font-size: 16px;
+				//margin-bottom: 15px;
+			}
+
+			.dynasty-introduction{
+				padding-right: 1.5em;
+			}
+
+			.dynasty-extra{
+
+				h3{
+					font-size: 15px;
+					font-family: '微软雅黑';
+				}
+				
+				p{
+					margin-bottom: 15px;
+				}
 			}
 		}
 
+		// .author-item{
+		// 	//margin-bottom: 10px;
+
+		// 	.author{
+		// 		//font-size: 16px;
+		// 		width: 80px;
+		// 		box-sizing: border-box;
+		// 		line-height: 26px;
+		// 		//text-align: center;
+		// 		font-weight: bold;
+		// 		//padding-left: 25px;
+		// 		//width: 100px;
+		// 		//display: inline-block;
+		// 	}
+
+		// 	.author-introduction{
+		// 		font-size: 14px;
+		// 		line-height: 24px;
+		// 	}
+		// }
+
 		.author-item{
-			//margin-bottom: 10px;
+			margin-bottom: 8px;
 
 			.author{
-				//font-size: 16px;
-				width: 80px;
-				box-sizing: border-box;
-				line-height: 26px;
-				//text-align: center;
+				font-size: 16px;
+				line-height: 24px;
 				font-weight: bold;
-				//padding-left: 25px;
-				//width: 100px;
-				//display: inline-block;
+
+				.author-dynasty{
+					font-size: 12px;
+					font-weight: normal;
+					margin-left: 3px;
+
+					a{
+						color: #333;
+					}
+				}					
 			}
 
-			.author-introduction{
-				font-size: 14px;
-				line-height: 24px;
+			.author-quote{
+				font-size: 12px;
 			}
 		}
 	}
