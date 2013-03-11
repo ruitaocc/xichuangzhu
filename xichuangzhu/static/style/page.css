@@ -7,7 +7,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 .navbar-search .search-query{line-height:1.2;font-size:12px;padding:2px 0px 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
 #page-index .refresh-btn{vertical-align:middle;opacity:0.6;cursor:pointer;margin-left:3px;}
-#page-index .work-item{margin-bottom:8px;margin-right:50px;border-bottom:1px dashed #EEE;padding-bottom:8px;}#page-index .work-item:last-child{border:none;padding-bottom:5px;}
+#page-index .work-item{margin-bottom:8px;margin-right:50px;border-bottom:1px dashed #DDD;padding-bottom:8px;}#page-index .work-item:last-child{border:none;padding-bottom:5px;}
 #page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin:0 5px 0 0;display:inline-block;vertical-align:text-top;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
 #page-index .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
 #page-index .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .work-item .work-author a{color:#333;}
@@ -20,7 +20,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-index .author-item .author-quote{font-size:12px;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
-#page-works .work-item{margin-bottom:8px;margin-right:25px;border-bottom:1px dashed #EEE;padding-bottom:8px;}#page-works .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
+#page-works .work-item{margin-bottom:8px;margin-right:25px;border-bottom:1px dashed #DDD;padding-bottom:8px;}#page-works .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
 #page-works .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-works .work-item .work-author a{color:#333;}
 #page-works .work-item .work-content{font-size:14px;line-height:22px;}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block;}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}
