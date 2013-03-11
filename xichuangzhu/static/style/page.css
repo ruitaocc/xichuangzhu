@@ -82,10 +82,10 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-people .user-avatar{float:left;margin-top:15px;}
 #page-people .user-info{margin-left:60px;}#page-people .user-info .user-name{font-size:30px;line-height:30px;margin-top:15px;font-weight:bold;}
 #page-people .user-info .user-signature{font-size:12px;color:#666;}
-#page-people .work-item{margin-bottom:15px;}#page-people .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;}
+#page-people .work-item{margin-bottom:10px;}#page-people .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;}
 #page-people .work-item .work-author{font-size:12px;font-weight:normal;}#page-people .work-item .work-author a{color:#333;}
 #page-people .work-item .work-content{line-height:22px;}
-#page-people .review-item{margin-bottom:15px;}#page-people .review-item .review-title{font-size:16px;font-weight:bold;}
+#page-people .review-item{margin-bottom:10px;}#page-people .review-item .review-title{font-size:16px;font-weight:bold;}
 #page-people .review-item .review-extra-info{font-size:12px;line-height:22px;}
 #page-people .review-item .review-content{font-size:12px;line-height:22px;}
 #page-shop .products-wap{margin-top:15px;position:relative;}#page-shop .products-wap .product-item .product-image{opacity:0.9;}#page-shop .products-wap .product-item .product-image:hover{opacity:1;}
