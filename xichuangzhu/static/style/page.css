@@ -12,7 +12,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-index .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
 #page-index .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .work-item .work-author a{color:#333;}
 #page-index .work-item .work-content{line-height:22px;font-size:14px;}
-#page-index .review-item{margin-bottom:15px;}#page-index .review-item .user-avatar{float:left;margin-top:5px;}
+#page-index .review-item{margin-bottom:15px;}#page-index .review-item .user-avatar{float:left;margin-top:4px;}
 #page-index .review-item .review-wap{margin-left:60px;}#page-index .review-item .review-wap .review-title{font-size:16px;font-weight:bold;}
 #page-index .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 #page-index .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
@@ -20,7 +20,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-index .author-item .author-quote{font-size:12px;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
-#page-works .work-item{margin-bottom:8px;margin-right:25px;border-bottom:1px dashed #DDD;padding-bottom:8px;}#page-works .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
+#page-works .work-item{margin-bottom:8px;margin-right:30px;border-bottom:1px dashed #DDD;padding-bottom:8px;}#page-works .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
 #page-works .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-works .work-item .work-author a{color:#333;}
 #page-works .work-item .work-content{font-size:14px;line-height:22px;}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block;}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}
@@ -64,7 +64,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:24px;font-weight:bold;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
 #page-single-dynasty .row .author-item .author-quote{font-size:12px;}
 #page-single-review .review-extra-info{margin-bottom:10px;}
-#page-single-review .user-avatar{float:left;margin-top:15px;}
+#page-single-review .user-avatar{float:left;margin-top:20px;}
 #page-single-review .review-wap{margin-left:65px;}#page-single-review .review-wap .review-content{margin-bottom:20px;}
 #page-single-review .review-wap .comment-item{margin-bottom:15px;clear:both;}#page-single-review .review-wap .comment-item .comment-user-avatar{float:left;margin-top:5px;}
 #page-single-review .review-wap .comment-item .comment-wap{margin-left:60px;font-size:12px;}#page-single-review .review-wap .comment-item .comment-wap .comment-extra-info{line-height:22px;}

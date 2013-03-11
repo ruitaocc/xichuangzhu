@@ -27,7 +27,7 @@
 				<a href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title }}</a><sup class="work-author">〔<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>〕</sup>
 			</div>
 			
-			<div class="work-content">{{ work.Content|truncate(38, True) }}</div>
+			<div class="work-content">{{ work.Content|truncate(35, True) }}</div>
 		</div>
 		{% endfor %}
 
@@ -37,7 +37,7 @@
 		<div class="review-item">
 			<a class="review-title" href="{{ url_for('single_review', review_id=review.ReviewID) }}">{{ review.Title }}</a>
 
-			<div class="review-content">{{ review.Content }}</div>
+			<div class="review-content">{{ review.Content|truncate(40, True) }}</div>
 
 			<div class="review-extra-info">
 				评
