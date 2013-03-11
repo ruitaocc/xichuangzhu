@@ -20,7 +20,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-index .author-item .author-quote{font-size:12px;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
-#page-works .work-item{margin-bottom:15px;}#page-works .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;}
+#page-works .work-item{margin-bottom:8px;margin-right:25px;border-bottom:1px dashed #EEE;padding-bottom:8px;}#page-works .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
 #page-works .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-works .work-item .work-author a{color:#333;}
 #page-works .work-item .work-content{font-size:14px;line-height:22px;}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block;}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}

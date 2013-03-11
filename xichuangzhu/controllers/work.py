@@ -38,7 +38,6 @@ def single_work(work_id):
 	work['Content'] = markdown2.markdown(work['Content'])
 
 	reviews = Review.get_reviews_by_work(work_id)
-	
 	widgets = Widget.get_widgets('work', work_id)
 
 	# check is loved
@@ -46,7 +45,7 @@ def single_work(work_id):
 		is_loved = Love.check_love(session['user_id'], work_id)
 	else:
 		is_loved = False
-	return render_template('single_work.html', work=work, reviews=reviews, widgets=widgets, is_loved=is_loved, geci_padding_left=geci_padding_left)
+	return render_template('single_work.html', work=work, reviews=reviews, widgets=widgets, is_loved=is_loved)
 
 # proc - love work
 #--------------------------------------------------
@@ -68,25 +67,32 @@ def unlove_work(work_id):
 # view
 @app.route('/works')
 def works():
-	num_per_page = 15
+	num_per_page = 10
 
-	work_type  = request.args['work_type'] if 'work_type' in request.args else 'all'
-	dynasty_id = int(request.args['dynasty_id'] if 'dynasty_id' in request.args else 0)
+	work_type  = request.args['type'] if 'type' in request.args else 'all'
+	dynasty_abbr = request.args['dynasty'] if 'dynasty' in request.args else 'all'
 	page       = int(request.args['page'] if 'page' in request.args else 1)
 
-	works = Work.get_works(work_type, dynasty_id, page, num_per_page)
+	works = Work.get_works(work_type, dynasty_abbr, page, num_per_page)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
 
-	works_num  = Work.get_works_num(work_type, dynasty_id)
+	works_num  = Work.get_works_num(work_type, dynasty_abbr)
+
+	# page paras
 	total_page = int(math.ceil(works_num / num_per_page))
 	pre_page   = (page - 1) if page > 1 else 1
-	next_page  = (page + 1) if page < total_page else total_page
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
 
 	work_types = Work.get_types()
 	dynasties = Dynasty.get_dynasties()
-	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page,total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_id=dynasty_id)
+	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page,total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
 
 # page - add work
 #--------------------------------------------------
@@ -94,9 +100,9 @@ def works():
 @app.route('/work/add', methods=['GET', 'POST'])
 def add_work():
 	if request.method == 'GET':
-		return render_template('add_work.html')
+		work_types = Work.get_types()
+		return render_template('add_work.html', work_types=work_types)
 	elif request.method == 'POST':
-		
 		title        = request.form['title']
 		content      = request.form['content']
 		foreword     = request.form['foreword']
@@ -117,7 +123,8 @@ def add_work():
 def edit_work(work_id):
 	if request.method == 'GET':
 		work = Work.get_work(work_id)
-		return render_template('edit_work.html', work=work)
+		work_types = Work.get_types()
+		return render_template('edit_work.html', work=work, work_types=work_types)
 	elif request.method == 'POST':
 		title        = request.form['title']
 		content      = request.form['content']

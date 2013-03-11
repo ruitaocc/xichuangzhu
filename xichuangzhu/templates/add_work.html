@@ -71,10 +71,9 @@ $(document).ready(function(){
 			<label class="control-label">类别</label>
 			<div class="controls">
 				<select name='type'>
-					<option value='shi'>诗</option>
-					<option value='ci'>词</option>
-					<option value='wen'>文</option>
-					<option value='ge'>歌</option>
+					{% for type in work_types %}
+					<option value='{{ type.WorkType }}'>{{ type.TypeName }}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>

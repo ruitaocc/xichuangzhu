@@ -94,10 +94,9 @@ $(document).ready(function(){
 			<label class="control-label">类别</label>
 			<div class="controls">
 				<select name='type'>
-					<option value='shi' {% if work.Type == 'shi' %}selected="selected"{% endif %}>诗</option>
-					<option value='ci' {% if work.Type == 'ci' %}selected="selected"{% endif %}>词</option>
-					<option value='wen' {% if work.Type == 'wen' %}selected="selected"{% endif %}>文</option>
-					<option value='ge' {% if work.Type == 'ge' %}selected="selected"{% endif %}>歌</option>
+					{% for type in work_types %}
+					<option value='{{ type.WorkType }}' {% if work.Type == type.WorkType %}selected="selected"{% endif %}>{{ type.TypeName }}</option>
+					{% endfor %}
 				</select>
 			</div>
 		</div>

@@ -41,38 +41,35 @@ class Work:
 		cursor.execute(query)
 		return cursor.fetchone()
 
-	# get all works
+	# get works of certain type in certain dynasty
 	@staticmethod
-	def get_works(work_type, dynasty_id, page, num):
+	def get_works(work_type, dynasty_abbr, page, num):
 		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.AuthorID, author.Author, author.Abbr AS AuthorAbbr\n
-			FROM work, author\n
-			WHERE work.AuthorID = author.AuthorID\n'''
+			FROM work, author, dynasty\n
+			WHERE work.AuthorID = author.AuthorID
+			AND work.DynastyID = dynasty.DynastyID\n'''
 
 		if work_type != 'all':
 			query += "AND work.Type = '%s'\n" % work_type
-
-		if dynasty_id != 0:
-			query += "AND work.DynastyID = %d\n" % dynasty_id
+		if dynasty_abbr != 'all':
+			query += "AND dynasty.Abbr = '%s'\n" % dynasty_abbr
 
 		query += "LIMIT %d, %d" % ((page-1)*num, num)
-
-		#return query
 
 		cursor.execute(query)
 		return cursor.fetchall()
 
-	# get all works
+	# get works num of certain type in certain dynasty
 	@staticmethod
-	def get_works_num(work_type, dynasty_id):
+	def get_works_num(work_type, dynasty_abbr):
 		query = '''SELECT COUNT(*) AS WorksNum\n
-			FROM work, author\n
-			WHERE work.AuthorID = author.AuthorID\n'''
+			FROM work, dynasty\n
+			WHERE work.DynastyID = dynasty.DynastyID\n'''
 
 		if work_type != 'all':
 			query += "AND work.Type = '%s'\n" % work_type
-
-		if dynasty_id != 0:
-			query += "AND work.DynastyID = %d\n" % dynasty_id
+		if dynasty_abbr != 'all':
+			query += "AND dynasty.Abbr = '%s'\n" % dynasty_abbr
 
 		cursor.execute(query)
 		return cursor.fetchone()['WorksNum']
