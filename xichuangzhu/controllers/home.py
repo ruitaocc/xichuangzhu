@@ -11,33 +11,14 @@ from xichuangzhu.models.review_model import Review
 
 import re
 
-# Home Controller
-#--------------------------------------------------
-
 # page home
+#--------------------------------------------------
 @app.route('/')
 def index():
-	# shi = Work.get_work_by_random('shi')
-	# shi['type'] = '诗'
-
-	# wen = Work.get_work_by_random('wen')
-	# wen['type'] = '文'
-
-	# ge = Work.get_work_by_random('ge')
-	# ge['type'] = '歌'
-
-	# ci = Work.get_work_by_random('ci')
-	# ci['type'] = '词'
-
-	# works = (shi, wen, ge, ci)
-	# for work in works:
-	# 	work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-	# 	work['Content'] = work['Content'].replace('%', '').replace('/', '')
-	
 	works = Work.get_works_by_random(4)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+		work['Content'] = work['Content'].replace('%', '')
 
 	reviews = Review.get_reviews_by_random(5)
 	authors = Author.get_authors_by_random(5)
@@ -47,25 +28,14 @@ def index():
 # json - gene 4 works of different type
 @app.route('/4works', methods=['POST'])
 def four_works():
-	# shi = Work.get_work_by_random('shi')
-	# shi['type'] = '诗'
-
-	# wen = Work.get_work_by_random('wen')
-	# wen['type'] = '文'
-
-	# ge = Work.get_work_by_random('ge')
-	# ge['type'] = '歌'
-
-	# ci = Work.get_work_by_random('ci')
-	# ci['type'] = '词'
-
-	# works = (shi, wen, ge, ci)
-	# for work in works:
-	# 	work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-	# 	work['Content'] = work['Content'].replace('%', '').replace('/', '')
-
 	works = Work.get_works_by_random(4)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+		work['Content'] = work['Content'].replace('%', '')
 	return render_template('four_works.widget', works=works)
+
+# page about
+#--------------------------------------------------
+@app.route('/about')
+def about():
+	return render_template('about.html')
