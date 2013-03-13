@@ -523,23 +523,15 @@
 			"file": "xichuangzhu/static/style/page.less",
 			"settings":
 			{
-				"buffer_size": 13107,
+				"buffer_size": 12594,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "xichuangzhu/templates/about.html",
+			"file": "xichuangzhu/templates/layout.html",
 			"settings":
 			{
-				"buffer_size": 288,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "xichuangzhu/controllers/home.py",
-			"settings":
-			{
-				"buffer_size": 1297,
+				"buffer_size": 3170,
 				"line_ending": "Unix"
 			}
 		}
@@ -580,9 +572,9 @@
 	},
 	"file_history":
 	[
+		"/var/www/xichuangzhu/xichuangzhu/templates/about.html",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/home.py",
 		"/var/www/xichuangzhu/xichuangzhu/templates/layout.html",
-		"/var/www/xichuangzhu/xichuangzhu/templates/about.html",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/author.py",
 		"/var/www/xichuangzhu/xichuangzhu/templates/about",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/work.py",
@@ -814,7 +806,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -822,15 +814,15 @@
 					"file": "xichuangzhu/static/style/page.less",
 					"settings":
 					{
-						"buffer_size": 13107,
+						"buffer_size": 12594,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								908,
-								908
+								7225,
+								7225
 							]
 						],
 						"settings":
@@ -839,56 +831,30 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 265.0,
+						"translation.y": 8506.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "xichuangzhu/templates/about.html",
+					"file": "xichuangzhu/templates/layout.html",
 					"settings":
 					{
-						"buffer_size": 288,
+						"buffer_size": 3170,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								96,
-								96
+								1028,
+								1028
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "xichuangzhu/controllers/home.py",
-					"settings":
-					{
-						"buffer_size": 1297,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -942,6 +908,10 @@
 		"selected_items":
 		[
 			[
+				"lay",
+				"xichuangzhu/templates/layout.html"
+			],
+			[
 				"ho",
 				"xichuangzhu/controllers/home.py"
 			],
@@ -980,10 +950,6 @@
 			[
 				"works",
 				"xichuangzhu/templates/works.html"
-			],
-			[
-				"lay",
-				"xichuangzhu/templates/layout.html"
 			],
 			[
 				"peo",

@@ -856,23 +856,13 @@ body{
 		}
 	}
 
-	.review-item{
-		margin-bottom: 10px;
+	.review-item{margin-bottom: 10px;
 		
-		.review-title{
-			font-size: 16px;
-			font-weight: bold;
-		}
+		.review-title{font-size: 16px;font-weight: bold;}
 
-		.review-extra-info{
-			font-size: 12px;
-			line-height: 22px;
-		}
+		.review-extra-info{font-size: 12px;line-height: 22px;}
 
-		.review-content{
-			font-size: 12px;
-			line-height: 22px;
-		}
+		.review-content{font-size: 12px;line-height: 22px;}
 	}
 }
 
@@ -880,14 +870,11 @@ body{
 //-----------------------------------------------------
 #page-shop{
 
-	.products-wap{
-		margin-top: 15px;
-		position: relative;
-
+	.products-wap{margin-top: 15px;position: relative;
+		
 		.product-item{
-
-			.product-image{
-				opacity: 0.9;
+		
+			.product-image{ opacity: 0.9;
 
 				&:hover{
 					opacity: 1;
@@ -913,3 +900,31 @@ body{
 	}
 }
 
+// page single product
+//-----------------------------------------------------
+#page-forum{
+	.topic-item{border-bottom: 1px dashed #CCC;margin-top: 10px;padding-bottom: 15px;position: relative;
+
+		.user-avatar{float: left;margin-top: 4px;}
+
+		.topic-info{margin-left: 60px;
+
+			.topic-title{font-size: 16px;margin-bottom: 6px;font-family: 'yahei';}
+
+			.topic-extra-info{font-size: 13px;line-height: 12px;
+
+				.topic-node{font-size: 12px;background-color: #f5f5f5;display: inline-block;padding: 4px 5px;border-radius: 2px;text-decoration: none;color: #999;margin-right: 5px;
+
+					&:hover{background-color: #EAEAEA}
+				}
+
+				.topic-launcher{margin-right: 5px;color: gray;font-weight: bold;}
+
+				.topic-time{color: #999;}
+			}
+		}
+
+		.topic-comment-num{position: absolute;top: 20px;right: 10px;font-size: 12px;line-height: 12px;font-weight: bold;color: gray;background-color: #e5e5e5;display: inline-block;padding: 3px 12px;border-radius: 12px;cursor: pointer;}
+	}
+
+}

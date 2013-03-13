@@ -1,1 +1,1 @@
-import home, work, collection, author, dynasty, user, review, love, product, widget
+import home, work, collection, author, dynasty, user, review, love, product, widget, forum
