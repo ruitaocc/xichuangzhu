@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 
-{% block page_title %}论坛{% endblock %}
-{% block page_id%}page-forum{% endblock %}
+{% block page_title %}{{ node.Name }}{% endblock %}
+{% block page_id%}page-node{% endblock %}
 
 {% block body %}
 
 <div class="row">
 	<div class="span8">
+		
+
 		<h2>
-			西窗烛
+			<a href="{{ url_for('forum') }}" class="root-node">西窗烛</a> › {{ node.Name }}
 			<a class="btn btn-small new-topic" href="">发起新话题</a>
 		</h2>
 
@@ -19,9 +21,10 @@
 			<div class="topic-info">
 				<div class="topic-title"><a href="">{{ t.Title }}</a></div>
 				<div class="topic-extra-info">
-					<a class="topic-node" href="{{ url_for('node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a>
+					<a class="topic-node" href="">{{ t.NodeName }}</a>
 					<a class="topic-launcher" href="{{ url_for('people', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
 					<span class="topic-time">{{ t.Time }}</span>
+					
 				</div>
 				<div class="topic-comment-num">{{ t.CommentNum }}</div>
 			</div>

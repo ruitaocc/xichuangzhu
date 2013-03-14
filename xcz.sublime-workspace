@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"bo",
+				"border-radius"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"pa",
+				"padding-top"
+			],
+			[
+				"marg",
+				"margin-left"
+			],
+			[
+				"Topic",
+				"TopicID"
+			],
+			[
+				"topic",
+				"topic_comment"
+			],
+			[
 				"dy",
 				"dynasty"
 			],
@@ -48,10 +80,6 @@
 				"font-size"
 			],
 			[
-				"mar",
-				"margin-top"
-			],
-			[
 				"fetc",
 				"fetchall"
 			],
@@ -66,10 +94,6 @@
 			[
 				"nav",
 				"navbar-search"
-			],
-			[
-				"border",
-				"border-top"
 			],
 			[
 				"authors",
@@ -98,10 +122,6 @@
 			[
 				"bor",
 				"border-radius"
-			],
-			[
-				"pa",
-				"padding"
 			],
 			[
 				"te",
@@ -380,10 +400,6 @@
 				"font-weight"
 			],
 			[
-				"font",
-				"font-size"
-			],
-			[
 				"reviews",
 				"reviews_num"
 			],
@@ -498,22 +514,6 @@
 			[
 				"colle",
 				"Collections"
-			],
-			[
-				"delete",
-				"delete_work"
-			],
-			[
-				"edit",
-				"edit_work"
-			],
-			[
-				"auth",
-				"authorID"
-			],
-			[
-				"col",
-				"collection"
 			]
 		]
 	},
@@ -523,15 +523,50 @@
 			"file": "xichuangzhu/static/style/page.less",
 			"settings":
 			{
-				"buffer_size": 12594,
+				"buffer_size": 14173,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "xichuangzhu/templates/layout.html",
+			"file": "xichuangzhu/controllers/forum.py",
 			"settings":
 			{
-				"buffer_size": 3170,
+				"buffer_size": 816,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{% extends \"layout.html\" %}\n\n{% block page_title %}{{ node.Name }}{% endblock %}\n{% block page_id%}page-node{% endblock %}\n\n{% block body %}\n\n<div class=\"row\">\n	<div class=\"span8\">\n		<h2>\n			<a href=\"{{ url_for('forum') }}\" class=\"root-node\">西窗烛</a> › {{ node.Name }}\n			<a class=\"btn btn-small new-topic\" href=\"\">发起新话题</a>\n		</h2>\n\n		{% for t in topics %}\n		<div class=\"topic-item\">\n			<a class=\"user-avatar\" href=\"{{ url_for('people', user_abbr=t.UserAbbr) }}\"><img src=\"{{ t.Avatar }}\"></a>\n\n			<div class=\"topic-info\">\n				<div class=\"topic-title\"><a href=\"\">{{ t.Title }}</a></div>\n				<div class=\"topic-extra-info\">\n					<a class=\"topic-node\" href=\"\">{{ t.NodeName }}</a>\n					<a class=\"topic-launcher\" href=\"{{ url_for('people', user_abbr=t.UserAbbr) }}\">{{ t.UserName }}</a>\n					<span class=\"topic-time\">{{ t.Time }}</span>\n					\n				</div>\n				<div class=\"topic-comment-num\">{{ t.CommentNum }}</div>\n			</div>\n		</div>\n		{% endfor %}\n	</div>\n\n	<div class=\"span4\">\n		<h2>节点导航</h2>\n\n		<ul class=\"node-list\">\n		{% for n in nodes %}\n		<li class=\"node\"><a href=\"{{ url_for('node', node_abbr=n.Abbr) }}\">{{ n.Name }}</a></li>\n		{% endfor %}\n		</ul>\n	</div>\n</div>\n\n{% endblock %}",
+			"file": "xichuangzhu/templates/node.html",
+			"file_size": 1213,
+			"file_write_time": 1363275474000000,
+			"settings":
+			{
+				"buffer_size": 1183,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "xichuangzhu/models/topic_model.py",
+			"settings":
+			{
+				"buffer_size": 984,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "xichuangzhu/models/node_model.py",
+			"settings":
+			{
+				"buffer_size": 371,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "xichuangzhu/templates/topics.html",
+			"settings":
+			{
+				"buffer_size": 1135,
 				"line_ending": "Unix"
 			}
 		}
@@ -572,9 +607,12 @@
 	},
 	"file_history":
 	[
+		"/var/www/xichuangzhu/xichuangzhu/templates/layout.html",
+		"/var/www/xichuangzhu/xichuangzhu/templates/forum.html",
+		"/var/www/xichuangzhu/xichuangzhu/controllers/__init__.py",
+		"/var/www/xichuangzhu/xichuangzhu/models/Topic",
 		"/var/www/xichuangzhu/xichuangzhu/templates/about.html",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/home.py",
-		"/var/www/xichuangzhu/xichuangzhu/templates/layout.html",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/author.py",
 		"/var/www/xichuangzhu/xichuangzhu/templates/about",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/work.py",
@@ -616,7 +654,6 @@
 		"/var/www/xichuangzhu/xichuangzhu/templates/admin_widgets.html",
 		"/var/www/xichuangzhu/xichuangzhu/models/widget_model.py",
 		"/var/www/xichuangzhu/xichuangzhu/templates/edit_widget.html",
-		"/var/www/xichuangzhu/xichuangzhu/controllers/__init__.py",
 		"/var/www/xichuangzhu/xichuangzhu/templates/shop.html",
 		"/var/www/xichuangzhu/xichuangzhu/controllers/collection.py",
 		"/var/www/xichuangzhu/xcz.sublime-project",
@@ -697,9 +734,7 @@
 		"/var/www/beforeidie/static/browser_warning.php",
 		"/var/www/beforeidie/application/controllers/home.php",
 		"/var/www/beforeidie/application/views/person/person.php",
-		"/var/www/beforeidie/application/controllers/account.php",
-		"/var/www/beforeidie/application/controllers/discover.php",
-		"/var/www/beforeidie/application/controllers/common.php"
+		"/var/www/beforeidie/application/controllers/account.php"
 	],
 	"find":
 	{
@@ -806,7 +841,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -814,15 +849,15 @@
 					"file": "xichuangzhu/static/style/page.less",
 					"settings":
 					{
-						"buffer_size": 12594,
+						"buffer_size": 14173,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7225,
-								7225
+								13079,
+								13079
 							]
 						],
 						"settings":
@@ -831,25 +866,51 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8506.0,
+						"translation.y": 15003.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "xichuangzhu/templates/layout.html",
+					"file": "xichuangzhu/controllers/forum.py",
 					"settings":
 					{
-						"buffer_size": 3170,
+						"buffer_size": 816,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1028,
-								1028
+								375,
+								375
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "xichuangzhu/templates/node.html",
+					"settings":
+					{
+						"buffer_size": 1183,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
 							]
 						],
 						"settings":
@@ -858,7 +919,87 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 51.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "xichuangzhu/models/topic_model.py",
+					"settings":
+					{
+						"buffer_size": 984,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								686,
+								686
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "xichuangzhu/models/node_model.py",
+					"settings":
+					{
+						"buffer_size": 371,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								56
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "xichuangzhu/templates/topics.html",
+					"settings":
+					{
+						"buffer_size": 1135,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53,
+								53
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
