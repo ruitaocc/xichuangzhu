@@ -5,8 +5,10 @@
 
 {% block body %}
 
-<h2>关于</h2>
+<h2><span style="font-family:'yahei'">『</span>西窗烛<span style="font-family:'yahei'">』</span></h2>
 
-<p>何当共剪西窗烛，却话巴山夜雨时。&nbsp;——&nbsp;&nbsp;<a href="{{ url_for('single_author', author_abbr='lishangyin') }}">李商隐</a>&nbsp;《夜雨寄北》</p>
+<p>何当共剪西窗烛，却话巴山夜雨时。</p>
+
+<p>——&nbsp;李商隐&nbsp;《<a href="{{ url_for('single_work', work_id=10024) }}">夜雨寄北</a>》</p>
 
 {% endblock %}
