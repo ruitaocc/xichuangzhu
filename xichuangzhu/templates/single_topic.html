@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block page_title %}{{ topic.Title }}{% endblock %}
+{% block page_id%}page-single-topic{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="span8">
+		<h2 class="node-info">
+			<a href="{{ url_for('forum') }}" class="root-node">西窗烛</a> › <a href="{{ url_for('node', node_abbr=topic.NodeAbbr)}}" class="sub-node">{{ topic.NodeName }}</a>
+		</h2>
+
+		<div class="topic-wap">
+			<a class="user-avatar" href="{{ url_for('people', user_abbr=topic.UserAbbr) }}"><img src="{{ topic.Avatar }}"></a>
+			<div class="topic-title">{{ topic.Title }}</div>
+			<div class="topic-extra-info">
+				<!-- <a class="topic-node" href="{{ url_for('node', node_abbr=topic.NodeAbbr) }}">{{ topic.NodeName }}</a> -->
+				By
+				<a class="topic-launcher" href="{{ url_for('people', user_abbr=topic.UserAbbr) }}">{{ topic.UserName }}</a>
+				<span class="topic-time">{{ topic.Time }}</span>
+			</div>
+			<div class="topic-content">{{ topic.Content }}</div>
+			<!-- <div class="topic-comment-num">{{ topic.CommentNum }}</div> -->
+		</div>
+	</div>
+
+	<div class="span4">
+		<h2>节点导航</h2>
+
+		<ul class="node-list">
+		{% for n in nodes %}
+		<li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

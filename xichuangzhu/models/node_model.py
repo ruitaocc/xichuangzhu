@@ -17,3 +17,10 @@ class Node:
 		query = "SELECT * FROM node WHERE Abbr = '%s'" % node_abbr
 		cursor.execute(query)
 		return cursor.fetchone()
+
+	# get node by id
+	@staticmethod
+	def get_node_by_id(node_id):
+		query = "SELECT * FROM node WHERE NodeID = %d" % node_id
+		cursor.execute(query)
+		return cursor.fetchone()

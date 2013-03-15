@@ -19,6 +19,11 @@ def forum():
 # page topic
 #--------------------------------------------------
 
+@app.route('/topic/<int:topic_id>')
+def single_topic(topic_id):
+	topic = Topic.get_topic(topic_id)
+	nodes = Node.get_nodes()
+	return render_template('single_topic.html', topic=topic, nodes=nodes)
 
 # page node
 #--------------------------------------------------
