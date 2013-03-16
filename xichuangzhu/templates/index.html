@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}文库{% endblock %}
+{% block page_title %}首页{% endblock %}
 {% block page_id%}page-index{% endblock %}
 
 {% block body %}
@@ -54,19 +54,35 @@ $(document).ready(function(){
 					<a href="{{ url_for('single_review', review_id = review.ReviewID) }}">{{ review.Title }}</a>
 				</div>
 
-				<div class="review-content">{{ review.Content|truncate(38, True) }}</div>
+				<div class="review-content">{{ review.Content|truncate(35, True) }}</div>
 
 				<div class="review-extra-info">
 					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
 					评
 					<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
-					{{ review.Time }}
+					<!-- {{ review.Time }} -->
 				</div>
 			</div>
 		</div>
 		{% endfor %}
 
-		<!-- <h2>话题</h2> -->
+<!-- 		<h2>热议话题</h2>
+
+		{% for t in topics %}
+		<div class="topic-item">
+			<a class="user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+
+			<div class="topic-info">
+				<div class="topic-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>
+				<div class="topic-extra-info">
+					<a class="topic-node" href="{{ url_for('node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a>
+					<a class="topic-launcher" href="{{ url_for('people', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
+					<span class="topic-time">{{ t.Time }}</span>
+				</div>
+				<div class="topic-comment-num">{{ t.CommentNum }}</div>
+			</div>
+		</div>
+		{% endfor %} -->
 
 	</div>
 

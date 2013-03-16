@@ -106,3 +106,4 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-topic .topic-extra-info{font-size:13px;line-height:12px;margin-bottom:15px;border-bottom:1px solid #eee;padding-bottom:12px;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
 #page-single-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999;}
 #page-single-topic .topic-extra-info .topic-time{color:#999;}
+#node-info{margin-bottom:20px;}

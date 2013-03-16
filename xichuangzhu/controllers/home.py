@@ -8,22 +8,24 @@ from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
+from xichuangzhu.models.topic_model import Topic
 
 import re
 
 # page home
 #--------------------------------------------------
-@app.route('/library')
+@app.route('/')
 def index():
 	works = Work.get_works_by_random(4)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
 
-	reviews = Review.get_reviews_by_random(5)
+	reviews = Review.get_reviews_by_random(4)
 	authors = Author.get_authors_by_random(5)
 	dynasties = Dynasty.get_dynasties()
-	return render_template('index.html', works=works, reviews=reviews, authors=authors, dynasties=dynasties)
+	topics = Topic.get_topics(8)
+	return render_template('index.html', works=works, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
 
 # json - gene 4 works of different type
 @app.route('/4works', methods=['POST'])

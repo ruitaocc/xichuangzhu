@@ -10,10 +10,10 @@ from xichuangzhu.models.node_model import Node
 # page forum
 #--------------------------------------------------
 
-@app.route('/')
+@app.route('/forum')
 def forum():
 	topics = Topic.get_topics(15)
-	nodes = Node.get_nodes()
+	nodes = Node.get_nodes(20)
 	return render_template('topics.html', topics=topics, nodes=nodes)
 
 # page topic
@@ -22,7 +22,7 @@ def forum():
 @app.route('/topic/<int:topic_id>')
 def single_topic(topic_id):
 	topic = Topic.get_topic(topic_id)
-	nodes = Node.get_nodes()
+	nodes = Node.get_nodes(20)
 	return render_template('single_topic.html', topic=topic, nodes=nodes)
 
 # page node
@@ -30,6 +30,6 @@ def single_topic(topic_id):
 @app.route('/node/<node_abbr>')
 def node(node_abbr):
 	node = Node.get_node_by_abbr(node_abbr)
-	nodes = Node.get_nodes()
+	nodes = Node.get_nodes(20)
 	topcis = Topic.get_topics_by_node(node_abbr)
 	return render_template('node.html', node=node, nodes=nodes, topics=topcis)

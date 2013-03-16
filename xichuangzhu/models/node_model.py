@@ -6,8 +6,8 @@ class Node:
 
 	# get all nodes
 	@staticmethod
-	def get_nodes():
-		query = "SELECT * FROM node"
+	def get_nodes(num):
+		query = "SELECT * FROM node LIMIT %d" % num
 		cursor.execute(query)
 		return cursor.fetchall()
 
