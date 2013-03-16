@@ -10,7 +10,7 @@ from xichuangzhu.models.node_model import Node
 # page forum
 #--------------------------------------------------
 
-@app.route('/forum')
+@app.route('/')
 def forum():
 	topics = Topic.get_topics(15)
 	nodes = Node.get_nodes()

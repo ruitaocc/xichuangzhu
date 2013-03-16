@@ -8,8 +8,13 @@
 <div class="row">
 	<div class="span8">
 		<h2 class="node-info">
-			<a href="{{ url_for('forum') }}" class="root-node">西窗烛</a> › <a href="{{ url_for('node', node_abbr=topic.NodeAbbr)}}" class="sub-node">{{ topic.NodeName }}</a>
+			<a href="{{ url_for('forum') }}" class="root-node">话题</a> › <a href="{{ url_for('node', node_abbr=topic.NodeAbbr)}}" class="sub-node">{{ topic.NodeName }}</a>
 		</h2>
+
+<!-- 		<ul class="breadcrumb">
+			<li><a href="#">话题</a> <span class="divider">/</span></li>
+			<li><a href="#">{{ topic.NodeName }}</a> <span class="divider">/</span></li>
+		</ul> -->
 
 		<div class="topic-wap">
 			<a class="user-avatar" href="{{ url_for('people', user_abbr=topic.UserAbbr) }}"><img src="{{ topic.Avatar }}"></a>

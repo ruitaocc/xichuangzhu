@@ -16,7 +16,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-index .review-item .review-wap{margin-left:60px;}#page-index .review-item .review-wap .review-title{font-size:16px;font-weight:bold;}
 #page-index .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 #page-index .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
-#page-index .author-item{margin-bottom:8px;}#page-index .author-item .author{font-size:16px;line-height:24px;font-weight:bold;}#page-index .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .author-item .author .author-dynasty a{color:#333;}
+#page-index .author-item{margin-bottom:8px;}#page-index .author-item .author{font-size:16px;line-height:22px;font-weight:bold;}#page-index .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .author-item .author .author-dynasty a{color:#333;}
 #page-index .author-item .author-quote{font-size:12px;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
@@ -61,7 +61,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-dynasty .row #dynasty-wap .dynasty-introduction{padding-right:1.5em;}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra h3{font-size:15px;font-family:'微软雅黑';}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra p{margin-bottom:15px;}
-#page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:24px;font-weight:bold;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
+#page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:22px;font-weight:bold;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
 #page-single-dynasty .row .author-item .author-quote{font-size:12px;}
 #page-single-review .review-extra-info{margin-bottom:10px;}
 #page-single-review .user-avatar{float:left;margin-top:20px;}
@@ -91,7 +91,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-shop .products-wap{margin-top:15px;position:relative;}#page-shop .products-wap .product-item .product-image{opacity:0.9;}#page-shop .products-wap .product-item .product-image:hover{opacity:1;}
 #page-single-product .product-image{margin-top:15px;}
 #page-single-product .product-introduction{margin-bottom:10px;}
-.root-node{color:#aaa;text-decoration:none;}.root-node:hover{color:darkred;}
+.root-node{color:#888;text-decoration:none;}.root-node:hover{color:darkred;}
 .new-topic{float:right;margin:0 10px 0 0;color:#888;}.new-topic:hover{color:#333;}
 .topic-item{border-bottom:1px solid #EAEAEA;margin-top:10px;padding-bottom:15px;position:relative;clear:both;}.topic-item .user-avatar{float:left;margin-top:3px;}.topic-item .user-avatar img{border-radius:4px;}
 .topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:3px;font-family:'yahei';}

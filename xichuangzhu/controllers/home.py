@@ -13,7 +13,7 @@ import re
 
 # page home
 #--------------------------------------------------
-@app.route('/')
+@app.route('/library')
 def index():
 	works = Work.get_works_by_random(4)
 	for work in works:
