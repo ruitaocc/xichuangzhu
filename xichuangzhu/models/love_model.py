@@ -6,13 +6,14 @@ class Love:
 
 	# get all works loved by user
 	@staticmethod
-	def get_works_by_user_love(user_id):
+	def get_works_by_user_love(user_id, num):
 		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM love, user, work, author\n
 			WHERE love.UserID = %d\n
 			AND love.UserID = user.UserID\n
 			AND love.WorkID = work.WorkID\n
-			AND work.AuthorID = author.AuthorID''' % user_id
+			AND work.AuthorID = author.AuthorID\n
+			ORDER BY love.Time DESC LIMIT %d''' % (user_id, num)
 		cursor.execute(query)
 		return cursor.fetchall()
 

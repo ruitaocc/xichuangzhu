@@ -60,7 +60,7 @@ $(document).ready(function(){
 					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
 					评
 					<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
-					<!-- {{ review.Time }} -->
+					{{ review.Time }}
 				</div>
 			</div>
 		</div>

@@ -20,8 +20,8 @@
 					<ul class="nav">
 						<li><a href="{{ url_for('index') }}">首页</a></li>
 						<li><a href="{{ url_for('forum') }}">社区</a></li>
-						<!-- <li><a href="{{ url_for('my_love') }}">收藏</a></li> -->
-						<li><a href="{{ url_for('shop') }}">物</a></li>
+						<li><a href="{{ url_for('shop') }}">物品</a></li>
+						<li><a href="{{ url_for('people', user_abbr=session.user_abbr) }}">主页</a></li>
 					</ul>
 
 					<form class="navbar-search">

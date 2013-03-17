@@ -13,7 +13,7 @@ body{
 		}
 
 		h2{
-			font-size: 16px;
+			font-size: 15px;
 			line-height: 16px;
 			font-family: '微软雅黑';
 			font-weight: normal;
@@ -821,10 +821,11 @@ body{
 		margin-left: 60px;
 
 		.user-name{
-			font-size: 30px;
+			font-size: 25px;
 			line-height: 30px;
 			margin-top: 15px;
 			font-weight: bold;
+			font-family: '微软雅黑';
 		}
 
 		.user-signature{
@@ -834,7 +835,14 @@ body{
 	}
 
 	.work-item{
-		margin-bottom: 10px;
+		margin-bottom: 8px;
+		padding-bottom: 8px;
+		border-bottom: 1px dashed #DDD;
+
+		&:last-child{
+			border-bottom: none;
+			padding-bottom: 5px;
+		}
 
 		.work-title{
 			font-size: 16px;
@@ -845,6 +853,7 @@ body{
 		.work-author{
 			font-size: 12px;
 			font-weight: normal;
+			margin-left: 3px;
 
 			a{
 				color: #333;
@@ -857,6 +866,8 @@ body{
 	}
 
 	.review-item{margin-bottom: 10px;
+		//padding-bottom: 8px;
+		//border-bottom: 1px dashed #DDD;
 		
 		.review-title{font-size: 16px;font-weight: bold;}
 
@@ -911,24 +922,26 @@ body{
 	&:hover{color:#333;}
 }
 
-.topic-item{border-bottom: 1px solid #EAEAEA;margin-top: 10px;padding-bottom: 15px;position: relative;clear: both;
+.topic-item{border-bottom: 1px dashed #DDD;margin-top: 10px;padding-bottom: 18px;position: relative;clear: both;
 
-	.user-avatar{float: left;margin-top: 3px;
-		img{border-radius: 4px;}
+	.user-avatar{float: left;margin-top: 2px;img{border-radius: 0px;}
 	}
 
 	.topic-info{margin-left: 60px;
 
-		.topic-title{font-size: 16px;margin-bottom: 3px;font-family: 'yahei';}
+		.topic-title{font-size: 16px;margin-bottom: 5px;
+			//font-family: 'yahei';
+			font-weight: bold;
+		}
 
-		.topic-extra-info{font-size: 13px;line-height: 12px;
+		.topic-extra-info{font-size: 12px;line-height: 12px;
 
-			.topic-node{font-size: 12px;background-color: #f5f5f5;display: inline-block;padding: 4px 5px;border-radius: 2px;text-decoration: none;color: #999;margin-right: 5px;
+			.topic-node{font-size: 12px;/*background-color: #f5f5f5;*/display: inline-block;padding: 0px 0px;border-radius: 2px;color: #999;margin-right: 5px;
 
-				&:hover{background-color: #EAEAEA}
+				//&:hover{background-color: #EAEAEA}
 			}
 
-			.topic-launcher{margin-right: 5px;color: gray;font-weight: bold;}
+			.topic-launcher{margin-right: 5px;color: gray;font-weight: bold;font-size: 13px;}
 
 			.topic-time{color: #999;}
 		}
@@ -941,10 +954,32 @@ body{
 //----------------------------------------------------- 
 .node-list{list-style: none;margin: 0;
 
-	.node{font-size:12px;line-height:12px;display: inline-block;margin:0 5px 5px 0;padding: 4px 10px;background-color: #f3f3f3;border-radius: 2px;border: 1px solid #e5e5e5;
+	.node{
+		// font-size:12px;line-height:12px;display: inline-block;margin:0 5px 5px 0;padding: 4px 10px;background-color: #f3f3f3;border-radius: 2px;border: 1px solid #e5e5e5;
 
-		a{color:gray;text-decoration: none;
-			&:hover{color:#4d5256;}
+		// a{color:gray;text-decoration: none;
+		// 	&:hover{color:#4d5256;}
+		// }
+
+
+		margin-bottom: 8px;
+		margin-right: 2px;
+		display: inline-block;
+
+		a{
+			font-size: 12px;
+			line-height: 12px;
+			background-color: #EEE;
+			padding: 4px 12px 5px 12px;
+			text-decoration: none;
+			color: #777;
+		}
+
+		&:hover{
+			background-color: #DDD;
+			a{
+				color: #333;
+			}
 		}
 	}
 }

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ people.Name }}的主页{% endblock %}
+{% block page_title %}{{ people.Name }}的空间{% endblock %}
 {% block page_id%}page-people{% endblock %}
 
 {% block body %}
@@ -19,7 +19,11 @@
 			</div>
 		</div>
 		
-		<h2>TA的收藏</h2>
+		<h2>{{ title_name }}收藏的作品
+			<span class='link-more'>
+				<a href="#">全部»</a>
+			</span>
+		</h2>
 
 		{% for work in works %}
 		<div class="work-item">
@@ -31,7 +35,11 @@
 		</div>
 		{% endfor %}
 
-		<h2>TA的点评</h2>
+		<h2>{{ title_name }}的点评
+			<span class='link-more'>
+				<a href="#">全部»</a>
+			</span>
+		</h2>
 
 		{% for review in reviews %}
 		<div class="review-item">
@@ -47,9 +55,34 @@
 		</div>
 		{% endfor %}
 
+		<h2>{{ title_name }}喜欢的物品
+			<span class='link-more'>
+				<a href="#">全部»</a>
+			</span>
+		</h2>
 	</div>
 
-	<div class="span4"></div>
+	<div class="span4">
+
+		<h2>{{ title_name }}发起的话题
+			<span class='link-more'>
+				<a href="#">全部»</a>
+			</span>
+		</h2>
+
+		<h2>{{ title_name }}收藏的话题
+			<span class='link-more'>
+				<a href="#">全部»</a>
+			</span>
+		</h2>
+
+		<h2>
+			{{ title_name }}的回复
+			<span class='link-more'>
+				<a href="#">全部»</a>
+			</span>
+		</h2>
+	</div>
 </div>
 
 {% endblock %}
