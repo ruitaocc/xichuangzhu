@@ -45,7 +45,6 @@
 								{{ session.user_name }} <b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="{{ url_for('people', user_abbr=session.user_abbr) }}">主页</a></li>
 								<li><a href="{{ url_for('logout') }}">退出</a></li>
 							</ul>
 						</li>
