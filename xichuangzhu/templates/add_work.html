@@ -25,7 +25,7 @@ $(document).ready(function(){
 				$('#select-author').empty();
 
 				$.each(authors, function(index, author){
-					var option = "<option value=" + author['AuthorID'] + ">" + author['Author'] + "</option>";
+					var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
 					$(option).appendTo('#select-author');
 				});
 

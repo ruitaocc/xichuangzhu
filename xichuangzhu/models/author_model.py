@@ -79,7 +79,10 @@ class Author:
 	# get authors by name
 	@staticmethod
 	def get_authors_by_name(name):
-		query = "SELECT AuthorID, Author FROM author WHERE Author LIKE '%%%s%%'" % name
+		query = '''SELECT author.AuthorID, author.Author, dynasty.Dynasty\n
+			FROM author, dynasty\n
+			WHERE Author LIKE '%%%s%%'\n
+			AND author.DynastyID = dynasty.DynastyID''' % name
 		cursor.execute(query)
 		return cursor.fetchall()
 

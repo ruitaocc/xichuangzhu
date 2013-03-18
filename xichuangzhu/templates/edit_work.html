@@ -49,7 +49,7 @@ $(document).ready(function(){
 				$('#select-author').empty();
 
 				$.each(authors, function(index, author){
-					var option = "<option value=" + author['AuthorID'] + ">" + author['Author'] + "</option>";
+					var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
 					$(option).appendTo('#select-author');
 				});
 
@@ -114,7 +114,7 @@ $(document).ready(function(){
 				<input id="input-author" type="text" class="span2" value="{{ work.Author }}" />
 				<input id="btn-search-author" type="button" class="btn" value="搜索" />
 				<select id="select-author" name="authorID" class="span2">
-					<option value="{{ work.AuthorID }}">{{ work.Author }}</option>
+					<option value="{{ work.AuthorID }}">〔{{ work.Dynasty }}〕{{ work.Author }}</option>
 				</select>
 				<select id="select-collection" name="collectionID" class="span2"></select>
 			</div>

@@ -8,8 +8,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	var authors = [];
-
 	// search authors
 	$('#btn-search-author').click(function(){
 		var author = $('#input-author').val();
@@ -20,13 +18,12 @@ $(document).ready(function(){
 			'data': {
 				'author': author
 			},
-			'success': function(data){
-				authors = data;
+			'success': function(authors){
 
 				// add possible authors to the select tag
 				$('#select-author').empty();
-				$.each(data, function(index, element){
-					var option = "<option value=" + element['AuthorID'] + ">" + element['Author'] + "</option>";
+				$.each(authors, function(index, author){
+					var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
 					$(option).appendTo('#select-author');
 				});
 			}

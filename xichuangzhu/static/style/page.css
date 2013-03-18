@@ -100,8 +100,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:13px;}
 .topic-item .topic-info .topic-extra-info .topic-time{color:#999;}
 .topic-item .topic-comment-num{position:absolute;top:20px;right:15px;font-size:12px;line-height:12px;font-weight:bold;color:gray;background-color:#e5e5e5;display:inline-block;padding:3px 12px;border-radius:12px;cursor:pointer;}
-.node-list{list-style:none;margin:0;}.node-list .node{margin-bottom:8px;margin-right:2px;display:inline-block;}.node-list .node a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}
-.node-list .node:hover{background-color:#DDD;}.node-list .node:hover a{color:#333;}
+.node-list{list-style:none;margin:0;}.node-list .node{font-size:12px;line-height:12px;display:inline-block;margin:0 5px 5px 0;padding:4px 10px;background-color:#f3f3f3;border-radius:2px;border:1px solid #e5e5e5;}.node-list .node a{color:gray;text-decoration:none;}.node-list .node a:hover{color:#4d5256;}
 #page-single-topic .node-info{color:#aaa;}#page-single-topic .node-info a{color:#aaa;}#page-single-topic .node-info a:hover{color:darkred;}
 #page-single-topic .user-avatar{float:right;margin-right:5px;}
 #page-single-topic .topic-title{font-size:25px;line-height:30px;font-weight:bold;margin-bottom:10px;}
