@@ -78,6 +78,45 @@ body{
 	display: block;
 }
 
+// component work item
+//-----------------------------------------------------
+
+.work-item{
+	margin-bottom: 8px;
+	border-bottom: 1px dashed #DDD;
+	padding-bottom: 8px;
+
+	&:last-child{
+		border: none;
+		padding-bottom: 5px;
+	}
+
+	.work-header{
+		.work-title{
+			font-size: 16px;
+			line-height: 32px;
+			font-weight: bold;
+			letter-spacing: 1px;
+		}
+
+		.work-author{
+			font-size: 12px;
+			font-weight: normal;
+			margin-left: 3px;
+
+			a{
+				color: #333;
+			}
+		}
+	}
+
+	.work-content{
+		font-size: 14px;
+		line-height: 22px;
+	}
+}
+
+
 // page index
 //-----------------------------------------------------
 #page-index{
@@ -90,59 +129,30 @@ body{
 	}
 
 	.work-item{
-		margin-bottom: 8px;
 		margin-right: 50px;
-		border-bottom: 1px dashed #DDD;
-		padding-bottom: 8px;
 
-		&:last-child{
-			border: none;
-			padding-bottom: 5px;
-		}
-
-		.work-type{
-			background-color: lighten(darkred, 5%);
-			padding: 2px 2px 3px 3px;
-			border: 1px solid lighten(darkred, 5%);
-			font-size: 12px;
-			line-height: 12px;
-			font-weight: normal;
-			border-radius: 2px;
-			margin: 0 5px 0 0;
-			display: inline-block;
-			vertical-align: text-top;
-			text-decoration: none;
-			color: #FBFBFB;
-
-			&:hover{
-				background-color: white;
-				color: lighten(darkred, 5%);
-			}
-		}
-
-		.work-title{
-			font-size: 16px;
+		.work-header{
 			line-height: 32px;
-			font-weight: bold;
 
-			&:hover{
+			.work-type{
+				background-color: lighten(darkred, 5%);
+				padding: 2px 2px 3px 3px;
+				border: 1px solid lighten(darkred, 5%);
+				font-size: 12px;
+				line-height: 12px;
+				font-weight: normal;
+				border-radius: 2px;
+				margin-right: 5px;
+				display: inline-block;
+				vertical-align: text-top;
+				text-decoration: none;
+				color: #FBFBFB;
 
+				&:hover{
+					background-color: white;
+					color: lighten(darkred, 5%);
+				}
 			}
-		}
-
-		.work-author{
-			font-size: 12px;
-			font-weight: normal;
-			margin-left: 3px;
-
-			a{
-				color: #333;
-			}
-		}
-
-		.work-content{
-			line-height: 22px;
-			font-size: 14px;
 		}
 	}
 
@@ -159,7 +169,8 @@ body{
 
 			.review-title{
 				font-size: 16px;
-				font-weight: bold;			
+				font-weight: bold;
+				letter-spacing: 1px;	
 			}
 
 			.review-content{
@@ -181,6 +192,7 @@ body{
 			font-size: 16px;
 			line-height: 22px;
 			font-weight: bold;
+			letter-spacing: 1px;
 
 			.author-dynasty{
 				font-size: 12px;
@@ -223,31 +235,7 @@ body{
 //-----------------------------------------------------
 #page-works{
 	.work-item{
-		margin-bottom: 8px;
 		margin-right: 30px;
-		border-bottom: 1px dashed #DDD;
-		padding-bottom: 8px;
-
-		.work-title{
-			font-size: 16px;
-			line-height: 32px;
-			font-weight: bold;
-		}
-
-		.work-author{
-			font-size: 12px;
-			font-weight: normal;
-			margin-left: 3px;
-
-			a{
-				color: #333;
-			}
-		}
-
-		.work-content{
-			font-size: 14px;
-			line-height: 22px;
-		}
 	}
 
 	#type-selector,
@@ -385,6 +373,7 @@ body{
 			.review-title{
 				font-size: 16px;
 				font-weight: bold;
+				letter-spacing: 1px;
 			}
 
 			.review-extra-info{
@@ -408,21 +397,8 @@ body{
 // page single collection
 //-----------------------------------------------------
 #page-single-collection{
-	.collection{
-	}
-
 	.collection-author{
 		font-size: 16px;
-	}
-
-	.work-item{
-		margin-bottom: 10px;
-
-		.work-title{
-			font-size: 16px;
-			font-weight: bold;
-			line-height: 30px;
-		}
 	}
 }
 
@@ -514,7 +490,7 @@ body{
 			line-height: 12px;
 			cursor: pointer;
 			margin-right: 3px;
-			padding: 0px 6px 1px 8px;
+			padding: 0px 7px 1px 8px;
 			background-color: #eee;
 			color: #666;
 
@@ -649,6 +625,7 @@ body{
 				font-size: 16px;
 				line-height: 22px;
 				font-weight: bold;
+				letter-spacing: 1px;
 
 				.author-dynasty{
 					font-size: 12px;
@@ -735,7 +712,8 @@ body{
 
 			.review-title{
 				font-size: 16px;
-				font-weight: bold;			
+				font-weight: bold;
+				letter-spacing: 1px;	
 			}
 
 			.review-content{
@@ -778,7 +756,6 @@ body{
 				line-height: 24px;
 			}
 		}
-
 	}
 }
 
@@ -792,6 +769,7 @@ body{
 			font-size: 16px;
 			line-height: 30px;
 			font-weight: bold;
+			letter-spacing: 1px;
 		}
 
 		.work-author{
@@ -848,6 +826,7 @@ body{
 			font-size: 16px;
 			line-height: 30px;
 			font-weight: bold;
+			letter-spacing: 1px;
 		}
 
 		.work-author{
@@ -869,7 +848,7 @@ body{
 		//padding-bottom: 8px;
 		//border-bottom: 1px dashed #DDD;
 		
-		.review-title{font-size: 16px;font-weight: bold;}
+		.review-title{font-size: 16px;font-weight: bold;letter-spacing: 1px;}
 
 		.review-extra-info{font-size: 12px;line-height: 22px;}
 
@@ -932,6 +911,7 @@ body{
 		.topic-title{font-size: 16px;margin-bottom: 5px;
 			//font-family: 'yahei';
 			font-weight: bold;
+			letter-spacing: 1px;
 		}
 
 		.topic-extra-info{font-size: 12px;line-height: 12px;

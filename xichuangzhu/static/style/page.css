@@ -6,23 +6,21 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #footer{text-align:center;font-size:12px;font-family:'微软雅黑';margin:60px 0 10px 0;}#footer a{color:#37a;}
 .navbar-search .search-query{line-height:1.2;font-size:12px;padding:2px 0px 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
+.work-item{margin-bottom:8px;border-bottom:1px dashed #DDD;padding-bottom:8px;}.work-item:last-child{border:none;padding-bottom:5px;}
+.work-item .work-header .work-title{font-size:16px;line-height:32px;font-weight:bold;letter-spacing:1px;}
+.work-item .work-header .work-author{font-size:12px;font-weight:normal;margin-left:3px;}.work-item .work-header .work-author a{color:#333;}
+.work-item .work-content{font-size:14px;line-height:22px;}
 #page-index .refresh-btn{vertical-align:middle;opacity:0.6;cursor:pointer;margin-left:3px;}
-#page-index .work-item{margin-bottom:8px;margin-right:50px;border-bottom:1px dashed #DDD;padding-bottom:8px;}#page-index .work-item:last-child{border:none;padding-bottom:5px;}
-#page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin:0 5px 0 0;display:inline-block;vertical-align:text-top;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
-#page-index .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
-#page-index .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .work-item .work-author a{color:#333;}
-#page-index .work-item .work-content{line-height:22px;font-size:14px;}
+#page-index .work-item{margin-right:50px;}#page-index .work-item .work-header{line-height:32px;}#page-index .work-item .work-header .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:text-top;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-header .work-type:hover{background-color:white;color:#a40000;}
 #page-index .review-item{margin-bottom:15px;}#page-index .review-item .user-avatar{float:left;margin-top:4px;}
-#page-index .review-item .review-wap{margin-left:60px;}#page-index .review-item .review-wap .review-title{font-size:16px;font-weight:bold;}
+#page-index .review-item .review-wap{margin-left:60px;}#page-index .review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 #page-index .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 #page-index .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
-#page-index .author-item{margin-bottom:8px;}#page-index .author-item .author{font-size:16px;line-height:22px;font-weight:bold;}#page-index .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .author-item .author .author-dynasty a{color:#333;}
+#page-index .author-item{margin-bottom:8px;}#page-index .author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}#page-index .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .author-item .author .author-dynasty a{color:#333;}
 #page-index .author-item .author-quote{font-size:12px;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
-#page-works .work-item{margin-bottom:8px;margin-right:30px;border-bottom:1px dashed #DDD;padding-bottom:8px;}#page-works .work-item .work-title{font-size:16px;line-height:32px;font-weight:bold;}
-#page-works .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-works .work-item .work-author a{color:#333;}
-#page-works .work-item .work-content{font-size:14px;line-height:22px;}
+#page-works .work-item{margin-right:30px;}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block;}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}
 #page-works #type-selector li:hover,#page-works #dynasty-selector li:hover{background-color:#DDD;}#page-works #type-selector li:hover a,#page-works #dynasty-selector li:hover a{color:#333;}
 #page-works #type-selector li.active a,#page-works #dynasty-selector li.active a{background-color:#0088cc;color:white;}
@@ -38,18 +36,17 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-work .work-collection{font-weight:bold;font-size:16px;margin-bottom:5px;}
 #page-single-work .work-collection-introduction{font-size:14px;}
 #page-single-work .review-item{margin-bottom:15px;}#page-single-work .review-item .user-avatar{float:left;margin-top:5px;}
-#page-single-work .review-item .review-wap{margin-left:60px;}#page-single-work .review-item .review-wap .review-title{font-size:16px;font-weight:bold;}
+#page-single-work .review-item .review-wap{margin-left:60px;}#page-single-work .review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 #page-single-work .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
 #page-single-work .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 #page-single-collection .collection-author{font-size:16px;}
-#page-single-collection .work-item{margin-bottom:10px;}#page-single-collection .work-item .work-title{font-size:16px;font-weight:bold;line-height:30px;}
 #page-authors .author-wap{border-top:1px dashed lightgray;padding-top:15px;}#page-authors .author-wap .author-dynasty{font-size:16px;line-height:16px;color:darkblue;font-family:'微软雅黑';width:100px;float:left;display:inline-block;}
 #page-authors .author-wap .author-group{list-style:none;margin:0 0 0 100px;}#page-authors .author-wap .author-group li{float:left;margin-bottom:15px;}#page-authors .author-wap .author-group li.author{font-size:16px;line-height:20px;width:100px;}
 #page-authors .hot-author-item{margin-bottom:8px;}#page-authors .hot-author-item .hot-author{font-size:16px;line-height:24px;font-weight:bold;}#page-authors .hot-author-item .hot-author .hot-author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-authors .hot-author-item .hot-author .hot-author-dynasty a{color:#333;}
 #page-authors .hot-author-item .hot-author-quote{font-size:12px;}
 #page-single-author .author .author-quote{font-size:12px;font-weight:normal;color:gray;margin-left:15px;}
 #page-single-author .author-period{font-size:16px;margin-bottom:10px;}
-#page-single-author .works-num-wap{display:inline-block;margin-left:10px;}#page-single-author .works-num-wap span{font-size:12px;line-height:12px;cursor:pointer;margin-right:3px;padding:0px 6px 1px 8px;background-color:#eee;color:#666;}#page-single-author .works-num-wap span.active{background-color:#0088cc;color:white;}
+#page-single-author .works-num-wap{display:inline-block;margin-left:10px;}#page-single-author .works-num-wap span{font-size:12px;line-height:12px;cursor:pointer;margin-right:3px;padding:0px 7px 1px 8px;background-color:#eee;color:#666;}#page-single-author .works-num-wap span.active{background-color:#0088cc;color:white;}
 #page-single-author .author-introduction{font-size:14px;line-height:25px;}
 #page-single-author .collection-item{margin-bottom:10px;}#page-single-author .collection-item .collection{font-weight:bold;font-size:16px;}
 #page-single-author .collection-item .collection-introduction{font-size:14px;}
@@ -61,7 +58,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-dynasty .row #dynasty-wap .dynasty-introduction{padding-right:1.5em;}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra h3{font-size:15px;font-family:'微软雅黑';}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra p{margin-bottom:15px;}
-#page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:22px;font-weight:bold;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
+#page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
 #page-single-dynasty .row .author-item .author-quote{font-size:12px;}
 #page-single-review .review-extra-info{margin-bottom:10px;}
 #page-single-review .user-avatar{float:left;margin-top:20px;}
@@ -69,24 +66,24 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-review .review-wap .comment-item{margin-bottom:15px;clear:both;}#page-single-review .review-wap .comment-item .comment-user-avatar{float:left;margin-top:5px;}
 #page-single-review .review-wap .comment-item .comment-wap{margin-left:60px;font-size:12px;}#page-single-review .review-wap .comment-item .comment-wap .comment-extra-info{line-height:22px;}
 #page-reviews .review-item{margin-bottom:15px;}#page-reviews .review-item .user-avatar{float:left;margin-top:4px;}
-#page-reviews .review-item .review-wap{margin-left:60px;}#page-reviews .review-item .review-wap .review-title{font-size:16px;font-weight:bold;}
+#page-reviews .review-item .review-wap{margin-left:60px;}#page-reviews .review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 #page-reviews .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 #page-reviews .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
 #page-reviews .reviewer-item{margin-bottom:10px;}#page-reviews .reviewer-item .reviewer-avatar{float:left;display:block;margin-top:6px;}
 #page-reviews .reviewer-item .reviewer-info{margin-left:60px;}#page-reviews .reviewer-item .reviewer-info .reviewer{font-size:13px;}
 #page-reviews .reviewer-item .reviewer-info .reviewer-signature{color:#666;font-size:12px;line-height:14px;}
 #page-reviews .reviewer-item .reviewer-info .reviews-num{color:#666;font-size:12px;line-height:24px;}
-#page-my-love .work-item{margin-bottom:15px;}#page-my-love .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;}
+#page-my-love .work-item{margin-bottom:15px;}#page-my-love .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;letter-spacing:1px;}
 #page-my-love .work-item .work-author{font-size:12px;font-weight:normal;}#page-my-love .work-item .work-author a{color:#333;}
 #page-my-love .work-item .work-content{line-height:22px;}
 #page-people .user-avatar{float:left;margin-top:15px;}
 #page-people .user-info{margin-left:60px;}#page-people .user-info .user-name{font-size:25px;line-height:30px;margin-top:15px;font-weight:bold;font-family:'微软雅黑';}
 #page-people .user-info .user-signature{font-size:12px;color:#666;}
 #page-people .work-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #DDD;}#page-people .work-item:last-child{border-bottom:none;padding-bottom:5px;}
-#page-people .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;}
+#page-people .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;letter-spacing:1px;}
 #page-people .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-people .work-item .work-author a{color:#333;}
 #page-people .work-item .work-content{line-height:22px;}
-#page-people .review-item{margin-bottom:10px;}#page-people .review-item .review-title{font-size:16px;font-weight:bold;}
+#page-people .review-item{margin-bottom:10px;}#page-people .review-item .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 #page-people .review-item .review-extra-info{font-size:12px;line-height:22px;}
 #page-people .review-item .review-content{font-size:12px;line-height:22px;}
 #page-shop .products-wap{margin-top:15px;position:relative;}#page-shop .products-wap .product-item .product-image{opacity:0.9;}#page-shop .products-wap .product-item .product-image:hover{opacity:1;}
@@ -95,7 +92,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 .root-node{color:#888;text-decoration:none;}.root-node:hover{color:darkred;}
 .new-topic{float:right;margin:0 10px 0 0;color:#888;}.new-topic:hover{color:#333;}
 .topic-item{border-bottom:1px dashed #DDD;margin-top:10px;padding-bottom:18px;position:relative;clear:both;}.topic-item .user-avatar{float:left;margin-top:2px;}.topic-item .user-avatar img{border-radius:0px;}
-.topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:5px;font-weight:bold;}
+.topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:5px;font-weight:bold;letter-spacing:1px;}
 .topic-item .topic-info .topic-extra-info{font-size:12px;line-height:12px;}.topic-item .topic-info .topic-extra-info .topic-node{font-size:12px;display:inline-block;padding:0px 0px;border-radius:2px;color:#999;margin-right:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:13px;}
 .topic-item .topic-info .topic-extra-info .topic-time{color:#999;}
