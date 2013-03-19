@@ -39,7 +39,7 @@ $(document).ready(function(){
 		{% endif %}
 	
 		<div class="author">
-			<h1>{{ author.Author }}</h1><!-- <span class="author-quote">{{ author.Quote }}</span> -->
+			<h1>{{ author.Author }}</h1><span class="author-quote">{{ author.Quote }}</span>
 		</div>
 		
 		<div class='author-period'>
@@ -67,7 +67,7 @@ $(document).ready(function(){
 
 				{% for key, value in works_num.items() %}
 				{% if value.num != 0 %}
-				<span data-work-type="{{key}}">{{ value.type_name }} {{ value.num }}</span>
+				<span data-work-type="{{key}}">{{ value.type_name }}{{ value.num }}</span>
 				{% endif %}
 				{% endfor %}
 			</div>
@@ -78,6 +78,12 @@ $(document).ready(function(){
 			<div class='work-title'>{{ work.Title }}</div>
 			<div class='work-content'>{{ work.Content|truncate(24, True) }}</div>
 		</a>
+		<!-- <div data-work-type="{{ work.Type }}" class="work-item">
+			<div class="work-header">
+				<a href="{{url_for('single_work', work_id=work.WorkID)}}" class='work-title'>{{ work.Title }}</a>
+			</div>
+			<div class='work-content'>{{ work.Content|truncate(38, True) }}</div>
+		</div> -->
 		{% endfor %}
 	</div>
 

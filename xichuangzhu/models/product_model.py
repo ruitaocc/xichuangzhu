@@ -11,6 +11,13 @@ class Product:
 		cursor.execute(query)
 		return cursor.fetchone()
 
+	# get a product by random
+	@staticmethod
+	def get_product_by_random():
+		query = "SELECT * FROM product ORDER BY RAND() LIMIT 1"
+		cursor.execute(query)
+		return cursor.fetchone()
+
 	# get products by num
 	@staticmethod
 	def get_products(num):

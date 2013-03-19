@@ -132,6 +132,7 @@ body{
 		margin-right: 50px;
 
 		.work-header{
+			font-size: 16px;
 			line-height: 32px;
 
 			.work-type{
@@ -279,6 +280,11 @@ body{
 // page single work
 //-----------------------------------------------------
 #page-single-work{
+	.span8{
+		width: 600px;
+		margin-right: 20px;
+	}
+
 	.work-title{
 		font-size: 25px;
 		line-height: 35px;
@@ -387,6 +393,64 @@ body{
 			}		
 		}
 	}
+
+	.ad{
+		display: block;
+		margin-top: 20px;
+		max-height: 200px;
+		overflow: hidden;
+	}
+
+	.other-work-item{
+		margin-bottom: 5px;
+		border-bottom: 1px dashed #DDD;
+		padding-bottom: 5px;
+
+		&:last-child{
+			border: 0;
+		}
+
+		.other-work-title{
+		}
+
+		.other-work-content{
+			font-size: 12px;
+			margin-left: 5px;
+			color: gray;
+		}
+	}
+
+	.btn-group{margin-right: 20px;}
+
+	.lover-item{
+		margin-bottom: 10px;
+
+		.lover-avatar{
+			float: left;
+			display: block;
+			margin-top: 6px;
+		}
+
+		.lover-info{
+			margin-left: 60px;
+
+			.lover{
+				font-size: 13px;
+			}
+
+			.lover-signature{
+				color: #666;
+				font-size: 12px;
+				line-height: 14px;
+			}
+
+			.lover-reviews-num{
+				color: #666;
+				font-size: 12px;
+				line-height: 24px;
+			}
+		}
+	}
 }
 
 // page add work
@@ -406,7 +470,6 @@ body{
 // page authors
 //-----------------------------------------------------
 #page-authors{
-
 	.author-wap{
 		border-top: 1px dashed lightgray;
 		padding-top: 15px;
@@ -467,6 +530,7 @@ body{
 //-----------------------------------------------------
 #page-single-author{
 	.author{
+		h1{display: inline-block;}
 
 		.author-quote{
 			font-size: 12px;
@@ -491,8 +555,8 @@ body{
 			cursor: pointer;
 			margin-right: 3px;
 			padding: 0px 7px 1px 8px;
-			background-color: #eee;
-			color: #666;
+			color: gray;
+			letter-spacing: 1px;
 
 			&.active{
 				background-color: #0088cc;
@@ -501,21 +565,12 @@ body{
 		}
 	}
 
-	.author-introduction{
-		font-size: 14px;
-		line-height: 25px;	
-	}
-
 	.collection-item{
 		margin-bottom: 10px;
 		
 		.collection{
 			font-weight: bold;
 			font-size: 16px;
-		}
-
-		.collection-introduction{
-			font-size: 14px;
 		}
 	}
 

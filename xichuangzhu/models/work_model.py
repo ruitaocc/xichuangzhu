@@ -81,6 +81,17 @@ class Work:
 		cursor.execute(query)
 		return cursor.fetchall()
 
+	# get an author's other works
+	@staticmethod
+	def get_other_works_by_author(author_id, work_id, num):
+		query = '''SELECT * FROM work\n
+			WHERE AuthorID = %d\n
+			AND WorkID != %d\n
+			ORDER BY RAND()\n
+			LIMIT %d''' % (author_id, work_id, num)
+		cursor.execute(query)
+		return cursor.fetchall()		
+
 	# get an collection's all works
 	@staticmethod
 	def get_works_by_collection(collectionID):

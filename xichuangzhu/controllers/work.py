@@ -13,6 +13,7 @@ from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.love_model import Love
 from xichuangzhu.models.widget_model import Widget
+from xichuangzhu.models.product_model import Product
 
 import markdown2
 
@@ -27,17 +28,13 @@ import math
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
-
-	# 1 - add comment
-	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])
-
-	# 2 - split ci
+	# 1 - add comment, 2 - split ci, 3 - gene paragraph
+	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])	
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
-
-	# 3 - gene paragraph
 	work['Content'] = markdown2.markdown(work['Content'])
 
 	reviews = Review.get_reviews_by_work(work_id)
+
 	widgets = Widget.get_widgets('work', work_id)
 
 	# check is loved
@@ -45,7 +42,14 @@ def single_work(work_id):
 		is_loved = Love.check_love(session['user_id'], work_id)
 	else:
 		is_loved = False
-	return render_template('single_work.html', work=work, reviews=reviews, widgets=widgets, is_loved=is_loved)
+
+	product = Product.get_product_by_random()
+
+	other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
+
+	lovers = Love.get_users_love_work(work_id, 4)
+
+	return render_template('single_work.html', work=work, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
 
 # proc - love work
 #--------------------------------------------------

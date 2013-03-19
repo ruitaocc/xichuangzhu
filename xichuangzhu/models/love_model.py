@@ -19,11 +19,13 @@ class Love:
 
 	# get all users who love a work
 	@staticmethod
-	def get_users_love_work(work_id):
-		query = '''SELECT user.UserID, user.Name, user.Avatar\n
-			FROM love, user\n
+	def get_users_love_work(work_id, num):
+		query = '''SELECT user.UserID, user.Name, user.Signature, user.Avatar, COUNT(*) AS ReviewNum\n
+			FROM love, user, review\n
 			WHERE love.WorkID = %d\n
-			AND love.UserID = user.UserID\n''' % work_id
+			AND love.UserID = user.UserID\n
+			GROUP BY user.UserID
+			LIMIT %d''' % (work_id, num)
 		cursor.execute(query)
 		return cursor.fetchall()
 

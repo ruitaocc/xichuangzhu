@@ -41,7 +41,7 @@ $(document).ready(function(){
 		{% if session.user_id %}
 		<div class="btn-group pull-right">
 			{% if is_loved %}
-			<a class="btn btn-small" title="点击取消收藏" href="{{ url_for('unlove_work', work_id=work.WorkID) }}">已收藏 <span class="icon-heart"></span></a>
+			<a class="btn btn-small" title="取消收藏" href="{{ url_for('unlove_work', work_id=work.WorkID) }}">已收藏 <span class="icon-heart"></span></a>
 			{% else %}
 			<a class="btn btn-small" title="点击收藏" href="{{ url_for('love_work', work_id=work.WorkID) }}">收藏 <span class="icon-heart"></span></a>
 			{% endif %}
@@ -78,12 +78,12 @@ $(document).ready(function(){
 			
 			<div class="review-wap">
 				<a class="review-title" href="{{ url_for('single_review', review_id=review.ReviewID) }}">{{ review.Title }}</a>
+				<div class="review-content">{{ review.Content|truncate(35, True) }}</div>
 				<div class="review-extra-info">
-					来自
+					By
 					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
 					{{ review.Time }}
 				</div>
-				<div class="review-content">{{ review.Content }}</div>
 			</div>
 		</div>
 		{% endfor %}
@@ -99,6 +99,34 @@ $(document).ready(function(){
 		<div>{{ w.Content|safe }}</div>
 		
 		{% endfor %}
+
+		<h2>作者简介</h2>
+		<div>{{ work.AuthorIntroduction|truncate(55, True) }}</div>
+
+		<h2>其他作品</h2>
+
+		{% for work in other_works %}
+		<div class="other-work-item">
+			<a class="other-work-title" href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title }}</a>
+			<span class="other-work-content">{{ work.Content|truncate(10, True) }}</span>
+		</div>
+		{% endfor %}
+		
+		<a class="ad" href="{{ url_for('single_product', product_id=product.ProductID) }}"><img src="{{ product.ImageUrl }}"></a>
+
+		<h2>谁收藏了它？</h2>
+
+		{% for lover in lovers %}
+		<div class="lover-item">
+			<a class="lover-avatar" href="{{ url_for('people', user_abbr=lover.Abbr) }}"><img src="{{ lover.Avatar }}" /></a>
+			<div class="lover-info">
+				<div class="lover"><a href="{{ url_for('people', user_abbr=lover.Abbr) }}">{{ lover.Name }}</a></div>
+				<div class="lover-signature">{{ lover.Signature }}</div>
+				<div class="lover-reviews-num">点评 {{ lover.ReviewNum }}</div>
+			</div>
+		</div>
+		{% endfor %}
+
 	</div>
 </div>
 
