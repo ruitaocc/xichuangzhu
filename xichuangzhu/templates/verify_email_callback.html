@@ -8,16 +8,16 @@
 <h2>提示</h2>
 
 {% if state == 'send_succ' %}
-<div>邮件已发送，请进入邮箱完成绑定。</div>
+<p>邮件已发送，请进入邮箱完成绑定（可能要去垃圾箱找找哦）。</p>
 
 {% elif state == 'send_failed' %}
-<div>邮件发送失败。</div>
+<p>邮件发送失败。</p>
 
 {% elif state == 'unactive' %}
-<div>您尚未绑定邮箱，请进入邮箱完成绑定（或 <a href="{{ url_for('send_verify_email', user_id=user_id) }}">再发一次</a>）。</div>
+<p>您尚未绑定邮箱，请进入邮箱完成绑定（或 <a href="{{ url_for('send_verify_email', user_id=user_id) }}">再发一次</a>）。</p>
 
 {% elif state == 'active_succ' %}
-<div>邮箱绑定成功！<span id="second-count"></span>秒后进入首页。</div>
+<p>邮箱绑定成功！<span id="second-count"></span>秒后进入首页。</p>
 <script type="text/javascript">
 	
 	// 倒计时
@@ -32,7 +32,6 @@
 			$('#second-count').text(count);
 			t = setTimeout("countDown()", 1000);			
 		}
-
 		count--;
 	}
 
@@ -41,7 +40,7 @@
 </script>
 
 {% elif state == 'active_failed' %}
-<div>邮箱绑定失败！</div>
+<p>邮箱绑定失败！</p>
 
 {% endif %}
 

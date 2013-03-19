@@ -15,7 +15,7 @@
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="{{ url_for('forum') }}">西窗烛</a>
+					<a class="brand" href="{{ url_for('index') }}">西窗烛</a>
 
 					<ul class="nav">
 						<li><a href="{{ url_for('index') }}">首页</a></li>
@@ -70,7 +70,7 @@
 
 					{% else %}
 
-					<a href="https://www.douban.com/service/auth2/auth?client_id=0cf909cba46ce67526eb1d62ed46b35f&redirect_uri=http://localhost:5000/login/douban&response_type=code"><img id="douban-icon" title="使用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/favicon_24x24.png" /></a>
+					<a href="{{ douban_login_url }}"><img id="douban-icon" title="使用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/favicon_24x24.png" /></a>
 
 					{% endif %}
 				</div>

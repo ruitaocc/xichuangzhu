@@ -1,13 +1,21 @@
+import config
+
 from flask import Flask
 app = Flask(__name__)
+app.config.update(DEBUG=config.DEBUG, SECRET_KEY=config.SECRET_KEY
+)
 
-app.secret_key = 'A0ZfwefdefHH!jmN]LWXewfw,RT'
+
+# inject douban_login_url into template context
+@app.context_processor
+def inject_user():
+	return dict(douban_login_url=config.DOUBAN_LOGIN_URL)
 
 # mysql
 import MySQLdb
 import MySQLdb.cursors
 
-conn = MySQLdb.connect(host='localhost', user='root', passwd='xiaowangzi', db='xichuangzhu', use_unicode=True, charset='utf8', cursorclass=MySQLdb.cursors.DictCursor)
+conn = MySQLdb.connect(host=config.DB_HOST, user=config.DB_USER, passwd=config.DB_PASSWD, db=config.DB_NAME, use_unicode=True, charset='utf8', cursorclass=MySQLdb.cursors.DictCursor)
 cursor = conn.cursor()
 
 # convert python's encoding to utf8
