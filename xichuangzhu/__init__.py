@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/var/www')
 import config
 
 from flask import Flask

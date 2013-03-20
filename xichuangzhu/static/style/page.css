@@ -99,8 +99,8 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-product .product-introduction{margin-bottom:10px;}
 .root-node{color:#888;text-decoration:none;}.root-node:hover{color:darkred;}
 .new-topic{float:right;margin:0 10px 0 0;color:#888;}.new-topic:hover{color:#333;}
-.topic-item{border-bottom:1px dashed #DDD;margin-top:10px;padding-bottom:18px;position:relative;clear:both;}.topic-item .user-avatar{float:left;margin-top:2px;}.topic-item .user-avatar img{border-radius:0px;}
-.topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:5px;font-weight:bold;letter-spacing:1px;}
+.topic-item{border-bottom:1px dashed #DDD;margin-top:10px;padding-bottom:15px;position:relative;clear:both;}.topic-item .user-avatar{float:left;margin-top:0px;}.topic-item .user-avatar img{border-radius:0px;}
+.topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:6px;font-weight:bold;letter-spacing:1px;}
 .topic-item .topic-info .topic-extra-info{font-size:12px;line-height:12px;}.topic-item .topic-info .topic-extra-info .topic-node{font-size:12px;display:inline-block;padding:0px 0px;border-radius:2px;color:#999;margin-right:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:13px;}
 .topic-item .topic-info .topic-extra-info .topic-time{color:#999;}

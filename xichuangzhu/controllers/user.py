@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for, json, session
 
 from xichuangzhu import app
 
-from xichuangzhu import config
+import config
 
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.love_model import Love
