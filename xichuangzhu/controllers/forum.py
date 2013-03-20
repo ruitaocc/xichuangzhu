@@ -14,7 +14,8 @@ from xichuangzhu.models.node_model import Node
 def forum():
 	topics = Topic.get_topics(15)
 	nodes = Node.get_nodes(20)
-	return render_template('topics.html', topics=topics, nodes=nodes)
+	hot_topics = Topic.get_hot_topics(10)
+	return render_template('topics.html', topics=topics, nodes=nodes, hot_topics=hot_topics)
 
 # page topic
 #--------------------------------------------------

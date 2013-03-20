@@ -24,16 +24,12 @@ $(document).ready(function(){
 		<div class="work-author">
 			〔<a href="{{ url_for('single_dynasty', dynasty_abbr = work.DynastyAbbr) }}">{{ work.Dynasty }}</a>〕<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>
 		</div>
-		
-		{% if work.Type == 'ci' %}
 
 		<!-- 32 is a experienced value -->
 		{% if work.Foreword|length > 32 %}
 		<div class="work-foreword" style="text-indent:2em; padding:0 2em;">{{ work.Foreword }}</div>
 		{% else %}
 		<div class="work-foreword" style="text-align:center;">{{ work.Foreword }}</div>
-		{% endif %}
-
 		{% endif %}
 
 		<div class="work-content work-type-{{ work.Type }}">{{ work.Content|safe }}</div>
@@ -90,7 +86,6 @@ $(document).ready(function(){
 		{% if w.Title and w.Title != '' %}
 		<h2>{{ w.Title }}</h2>
 		{% endif %}
-		
 		<div>{{ w.Content|safe }}</div>
 		
 		{% endfor %}

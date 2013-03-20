@@ -16,7 +16,7 @@
 
 		{% for t in topics %}
 		<div class="topic-item">
-			<a class="user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+			<a class="topic-user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
 
 			<div class="topic-info">
 				<div class="topic-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>
@@ -41,6 +41,13 @@
 		</ul>
 
 		<h2>本日热议</h2>
+
+		{% for t in hot_topics %}
+		<div class="ht-item">
+			<a class="ht-user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+			<span class="ht-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></span>
+		</div>
+		{% endfor %}
 	</div>
 </div>
 
