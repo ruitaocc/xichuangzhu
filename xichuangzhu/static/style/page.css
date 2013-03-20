@@ -103,7 +103,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 .topic-item .topic-info .topic-extra-info{font-size:12px;line-height:12px;}.topic-item .topic-info .topic-extra-info .topic-node{font-size:12px;display:inline-block;padding:0px 0px;border-radius:2px;color:#999;margin-right:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:12px;}
 .topic-item .topic-info .topic-extra-info .topic-time{color:#999;}
-.topic-item .topic-comment-num{position:absolute;top:20px;right:15px;font-size:12px;line-height:12px;font-weight:bold;color:gray;background-color:#e5e5e5;display:inline-block;padding:3px 12px;border-radius:12px;cursor:pointer;}
+.topic-item .topic-comment-num{position:absolute;top:15px;right:15px;font-size:12px;line-height:12px;font-weight:bold;color:gray;background-color:#e5e5e5;display:inline-block;padding:3px 12px;border-radius:12px;cursor:pointer;}
 .node-list{list-style:none;margin:0;}.node-list .node{font-size:12px;line-height:12px;display:inline-block;margin:0 5px 5px 0;background-color:#f3f3f3;border-radius:2px;border:1px solid #e5e5e5;}.node-list .node a{color:gray;text-decoration:none;padding:4px 10px;display:inline-block;}.node-list .node a:hover{color:#4d5256;}
 #page-forum .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd;}#page-forum .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px;}
 #page-forum .ht-item .ht-title{margin-left:6px;font-size:14px;}
