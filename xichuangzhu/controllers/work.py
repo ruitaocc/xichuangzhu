@@ -46,6 +46,9 @@ def single_work(work_id):
 	product = Product.get_product_by_random()
 
 	other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
+	for ow in other_works:
+		ow['Content'] = re.sub(r'<([^<]+)>', '', ow['Content'])
+		ow['Content'] = ow['Content'].replace('%', '')
 
 	lovers = Love.get_users_love_work(work_id, 4)
 

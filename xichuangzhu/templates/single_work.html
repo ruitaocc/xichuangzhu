@@ -50,7 +50,7 @@ $(document).ready(function(){
 
 			{% if session.user_id == 45197381 %}
 			<a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.WorkID) }}">编辑 <span class="icon-edit"></span></a>
-			<a class="btn btn-small" href="{{ url_for('admin_widgets', target_type='work', target_id=work.WorkID) }}">挂件 <span class="icon-th"></span></a>
+			<!-- <a class="btn btn-small" href="{{ url_for('admin_widgets', target_type='work', target_id=work.WorkID) }}">挂件 <span class="icon-th"></span></a> -->
 			{% endif %}
 		</div>
 		{% endif %}
@@ -102,12 +102,12 @@ $(document).ready(function(){
 
 		{% for work in other_works %}
 		<div class="other-work-item">
-			<a class="other-work-title" href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title }}</a>
-			<span class="other-work-content">{{ work.Content|truncate(10, True) }}</span>
+			<a class="other-work-title" href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title|truncate(12, True, '') }}</a>
+			<span class="other-work-content">{{ work.Content|truncate(8, True) }}</span>
 		</div>
 		{% endfor %}
 		
-		<a class="ad" href="{{ url_for('single_product', product_id=product.ProductID) }}"><img src="{{ product.ImageUrl }}"></a>
+		<a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}"><img src="{{ product.ImageUrl }}"></a>
 
 		<h2>谁收藏了它？</h2>
 

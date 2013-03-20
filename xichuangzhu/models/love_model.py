@@ -20,7 +20,7 @@ class Love:
 	# get all users who love a work
 	@staticmethod
 	def get_users_love_work(work_id, num):
-		query = '''SELECT user.UserID, user.Name, user.Signature, user.Avatar, COUNT(*) AS ReviewNum\n
+		query = '''SELECT user.UserID, user.Name, user.Signature, user.Abbr, user.Avatar, COUNT(*) AS ReviewNum\n
 			FROM love, user, review\n
 			WHERE love.WorkID = %d\n
 			AND love.UserID = user.UserID\n

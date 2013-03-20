@@ -9,7 +9,9 @@
 	<div class="span8">
 		<h2>
 			<a href="{{ url_for('forum') }}" class="root-node">话题</a>
+			{% if session.user_id %}
 			<a class="btn btn-small new-topic" href="#">发起新话题</a>
+			{% endif %}
 		</h2>
 
 		{% for t in topics %}
