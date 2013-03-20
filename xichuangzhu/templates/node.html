@@ -16,7 +16,7 @@
 
 		{% for t in topics %}
 		<div class="topic-item">
-			<a class="user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+			<a class="topic-user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
 
 			<div class="topic-info">
 				<div class="topic-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>

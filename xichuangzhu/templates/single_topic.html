@@ -15,7 +15,6 @@
 			<a class="topic-user-avatar" href="{{ url_for('people', user_abbr=topic.UserAbbr) }}"><img src="{{ topic.Avatar }}"></a>
 			<div class="topic-title">{{ topic.Title }}</div>
 			<div class="topic-extra-info">
-				<!-- <a class="topic-node" href="{{ url_for('node', node_abbr=topic.NodeAbbr) }}">{{ topic.NodeName }}</a> -->
 				By
 				<a class="topic-launcher" href="{{ url_for('people', user_abbr=topic.UserAbbr) }}">{{ topic.UserName }}</a>
 				<span class="topic-time">{{ topic.Time }}</span>
