@@ -45,7 +45,7 @@
 		<div class="review-item">
 			<a class="review-title" href="{{ url_for('single_review', review_id=review.ReviewID) }}">{{ review.Title }}</a>
 
-			<div class="review-content">{{ review.Content|truncate(40, True) }}</div>
+			<div class="review-content">{{ review.Content|truncate(35, True) }}</div>
 
 			<div class="review-extra-info">
 				评
