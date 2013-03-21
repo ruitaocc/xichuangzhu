@@ -50,7 +50,7 @@
 			<div class="review-extra-info">
 				评
 				<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
-				{{ review.Time }}
+				<span class="review-time">{{ review.Time }}</span>
 			</div>
 		</div>
 		{% endfor %}
