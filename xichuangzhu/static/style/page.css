@@ -58,7 +58,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-author .works-num-wap{display:inline-block;margin-left:10px;}#page-single-author .works-num-wap span{font-size:12px;line-height:12px;cursor:pointer;margin-right:3px;padding:0px 7px 1px 8px;color:gray;letter-spacing:1px;}#page-single-author .works-num-wap span.active{background-color:#0088cc;color:white;}
 #page-single-author .collection-item{margin-bottom:10px;}#page-single-author .collection-item .collection{font-weight:bold;font-size:16px;}
 #page-single-author .work-item{float:left;display:block;width:120px;height:120px;border:1px solid #E8E8E8;margin:5px 15px 10px 0;padding:5px 5px 5px 10px;overflow:hidden;text-decoration:none;}#page-single-author .work-item:hover{background-color:#FBFBFB;}#page-single-author .work-item:hover .work-content{color:#333;}
-#page-single-author .work-item .work-title{font-size:14px;padding-bottom:3px;font-family:'微软雅黑';color:#0078ff;line-height:24px;}
+#page-single-author .work-item .work-title{font-size:14px;padding-bottom:3px;font-family:'微软雅黑';color:#277ddd;line-height:24px;}
 #page-single-author .work-item .work-content{font-size:13px;line-height:22px;color:#777;}
 #page-single-dynasty #dyn-selector{margin:0;position:absolute;top:40px;left:0px;list-style:none;}#page-single-dynasty #dyn-selector li{float:left;}#page-single-dynasty #dyn-selector li a{display:block;text-align:center;color:white;font-size:12px;line-height:22px;opacity:1;text-decoration:none;cursor:pointer;}
 #page-single-dynasty .row{margin-top:22px;}#page-single-dynasty .row #dynasty-wap .dynasty-period{font-size:16px;}
@@ -90,7 +90,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-people .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;letter-spacing:1px;}
 #page-people .work-item .work-author{font-size:12px;font-weight:normal;margin-left:3px;}#page-people .work-item .work-author a{color:#333;}
 #page-people .work-item .work-content{line-height:22px;}
-#page-people .review-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #DDD;}#page-people .review-item .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
+#page-people .review-item{margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #DDD;}#page-people .review-item .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 #page-people .review-item .review-extra-info{font-size:12px;line-height:22px;}#page-people .review-item .review-extra-info .review-time{color:gray;}
 #page-people .review-item .review-content{font-size:12px;line-height:22px;}
 #page-shop .products-wap{margin-top:15px;position:relative;}#page-shop .products-wap .product-item .product-image{opacity:0.9;}#page-shop .products-wap .product-item .product-image:hover{opacity:1;}
@@ -102,7 +102,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 .topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:6px;font-weight:bold;letter-spacing:1px;}
 .topic-item .topic-info .topic-extra-info{font-size:12px;line-height:12px;}.topic-item .topic-info .topic-extra-info .topic-node{font-size:12px;display:inline-block;padding:0px 0px;border-radius:2px;color:#999;margin-right:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:12px;}
-.topic-item .topic-info .topic-extra-info .topic-time{color:#999;}
+.topic-item .topic-info .topic-extra-info .topic-time{color:#999;vertical-align:bottom;}
 .topic-item .topic-comment-num{position:absolute;top:15px;right:15px;font-size:12px;line-height:12px;font-weight:bold;color:gray;background-color:#e5e5e5;display:inline-block;padding:3px 12px;border-radius:12px;cursor:pointer;}
 .node-list{list-style:none;margin:0;}.node-list .node{font-size:12px;line-height:12px;display:inline-block;margin:0 5px 5px 0;background-color:#f3f3f3;border-radius:2px;border:1px solid #e5e5e5;}.node-list .node a{color:gray;text-decoration:none;padding:4px 10px;display:inline-block;}.node-list .node a:hover{color:#4d5256;}
 #page-forum .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd;}#page-forum .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px;}
@@ -112,5 +112,5 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-topic .topic-title{font-size:25px;line-height:30px;font-weight:bold;margin-bottom:10px;}
 #page-single-topic .topic-extra-info{font-size:13px;line-height:12px;margin-bottom:15px;border-bottom:1px solid #eee;padding-bottom:12px;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
 #page-single-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999;}
-#page-single-topic .topic-extra-info .topic-time{color:#999;}
+#page-single-topic .topic-extra-info .topic-time{color:#999;vertical-align:bottom;}
 #node-info{margin-bottom:20px;}
