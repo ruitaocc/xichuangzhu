@@ -10,38 +10,6 @@
 $(document).ready(function(){
 
 	$('#dyn-selector a').each(function(){
-		// $(this).tooltip({
-		// 	'placement': 'bottom'
-		// });
-
-		$(this).click(function(){
-			// $('#dyn-selector a').css({
-			// 	'margin-top': '0px'
-			// });
-
-			// $(this).css({
-			// 	'margin-top': '11px'
-			// });
-
-			// // change tooltip top
-			// var tooltip_top = parseInt($('.tooltip').first().css('top').replace('px', ''));
-
-			// $('.tooltip').first().css({
-			// 	'top': tooltip_top + 11 + 'px'
-			// });
-
-			// $.ajax({
-			// 	url: "{{ url_for('get_dynasty_by_json') }}",
-			// 	type: 'POST',
-			// 	data: {
-			// 		dynasty_id: $(this).attr('data-dynasty-id')
-			// 	},
-			// 	success: function(data){
-			// 		$('#dynasty-wap').html(data);
-			// 	}
-			// });
-		});
-
 		// set random color
 		var color = 'rgb(' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*200+1) + ',' + Math.floor(Math.random()*200+1) + ')';
 
@@ -64,10 +32,6 @@ $(document).ready(function(){
 			});
 		});
 	});
-
-	// $('#dyn-12').css({
-	// 	'width': $('#dyn-12').width() + $(window).width() - $('#dyn-selector').width() - 1 + "px"
-	// });
 });
 
 </script>
@@ -98,7 +62,7 @@ $(document).ready(function(){
 			<h2>简介</h2>
 			<div class='dynasty-introduction'>{{ dynasty.Introduction }}</div>
 
-			<div class="dynasty-extra">{{ dynasty.History|safe }}</div>
+			<!-- <div class="dynasty-extra">{{ dynasty.History|safe }}</div> -->
 
 			<!-- <table class="table ">
 				{% for author in authors %}
@@ -118,7 +82,6 @@ $(document).ready(function(){
 	<div class="span4">
 		<h2>
 			文学家
-			<!-- <sup><span class="badge badge-inverse">{{ authors|length }}</span></sup> -->
 			<span class='link-more'>
 				<a href="{{ url_for('authors') }}#{{dynasty.Abbr}}">更多 ({{ authors_num }}) »</a>
 			</span>

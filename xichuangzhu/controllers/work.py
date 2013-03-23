@@ -11,7 +11,7 @@ from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.love_model import Love
+from xichuangzhu.models.love_work_model import Love_Work
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
@@ -43,7 +43,7 @@ def single_work(work_id):
 
 	# check is loved
 	if 'user_id' in session:
-		is_loved = Love.check_love(session['user_id'], work_id)
+		is_loved = Love_Work.check_love(session['user_id'], work_id)
 	else:
 		is_loved = False
 
@@ -54,7 +54,7 @@ def single_work(work_id):
 		ow['Content'] = re.sub(r'<([^<]+)>', '', ow['Content'])
 		ow['Content'] = ow['Content'].replace('%', '')
 
-	lovers = Love.get_users_love_work(work_id, 4)
+	lovers = Love_Work.get_users_love_work(work_id, 4)
 
 	return render_template('single_work.html', work=work, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
 
@@ -71,8 +71,8 @@ def love_work(work_id):
 			new_tags.append(t)
 	new_tags = list(set(new_tags))
 
-	# add love
-	Love.add_love(session['user_id'], work_id, ' '.join(new_tags))
+	# add love work
+	Love_Work.add(session['user_id'], work_id, ' '.join(new_tags))
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -85,7 +85,7 @@ def love_work(work_id):
 #--------------------------------------------------
 @app.route('/work/unlove/<int:work_id>')
 def unlove_work(work_id):
-	Love.remove_love(session['user_id'], work_id)
+	Love_Work.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works

@@ -7,7 +7,7 @@ from xichuangzhu import app
 import config
 
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.love_model import Love
+from xichuangzhu.models.love_work_model import Love_Work
 from xichuangzhu.models.review_model import Review
 
 import urllib, urllib2
@@ -144,7 +144,7 @@ def logout():
 def people(user_abbr):
 	people = User.get_people_by_abbr(user_abbr)
 
-	works = Love.get_works_by_user_love(people['UserID'], 4)
+	works = Love_Work.get_works_by_user_love(people['UserID'], 4)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '').replace('/', '')

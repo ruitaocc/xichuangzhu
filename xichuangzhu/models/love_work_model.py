@@ -1,6 +1,6 @@
 from xichuangzhu import conn, cursor
 
-class Love:
+class Love_Work:
 
 # GET
 
@@ -8,12 +8,12 @@ class Love:
 	@staticmethod
 	def get_works_by_user_love(user_id, num):
 		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
-			FROM love, user, work, author\n
-			WHERE love.UserID = %d\n
-			AND love.UserID = user.UserID\n
-			AND love.WorkID = work.WorkID\n
+			FROM love_work, user, work, author\n
+			WHERE love_work.UserID = %d\n
+			AND love_work.UserID = user.UserID\n
+			AND love_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
-			ORDER BY love.Time DESC LIMIT %d''' % (user_id, num)
+			ORDER BY love_work.Time DESC LIMIT %d''' % (user_id, num)
 		cursor.execute(query)
 		return cursor.fetchall()
 
@@ -21,9 +21,9 @@ class Love:
 	@staticmethod
 	def get_users_love_work(work_id, num):
 		query = '''SELECT user.UserID, user.Name, user.Signature, user.Abbr, user.Avatar, COUNT(*) AS ReviewNum\n
-			FROM love, user, review\n
-			WHERE love.WorkID = %d\n
-			AND love.UserID = user.UserID\n
+			FROM love_work, user, review\n
+			WHERE love_work.WorkID = %d\n
+			AND love_work.UserID = user.UserID\n
 			GROUP BY user.UserID
 			LIMIT %d''' % (work_id, num)
 		cursor.execute(query)
@@ -34,7 +34,7 @@ class Love:
 	# check if user loves work
 	@staticmethod
 	def check_love(user_id, work_id):
-		query = "SELECT * FROM love WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
+		query = "SELECT * FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
 		cursor.execute(query)
 		return cursor.rowcount > 0
 
@@ -42,8 +42,8 @@ class Love:
 	
 	# a user love a work
 	@staticmethod
-	def add_love(user_id, work_id, tags):
-		query = "INSERT INTO love (UserID, WorkID, Tags) VALUES (%d, %d, '%s')" % (user_id, work_id, tags)
+	def add(user_id, work_id, tags):
+		query = "INSERT INTO love_work (UserID, WorkID, Tags) VALUES (%d, %d, '%s')" % (user_id, work_id, tags)
 		cursor.execute(query)
 		return conn.commit()
 
@@ -51,8 +51,8 @@ class Love:
 
 	# a user dislove a work
 	@staticmethod
-	def remove_love(user_id, work_id):
-		query = "DELETE FROM love WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
+	def remove(user_id, work_id):
+		query = "DELETE FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
 		cursor.execute(query)
 		return conn.commit()
 
