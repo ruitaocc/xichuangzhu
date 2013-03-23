@@ -14,6 +14,7 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.love_model import Love
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
+from xichuangzhu.models.tag_model import Tag
 
 import markdown2
 
@@ -32,6 +33,9 @@ def single_work(work_id):
 	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])	
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 	work['Content'] = markdown2.markdown(work['Content'])
+
+	my_tags = Tag.get_user_tags(session['user_id'], 20)
+	popular_tags = Tag.get_work_tags(work_id, 20)
 
 	reviews = Review.get_reviews_by_work(work_id)
 
@@ -52,12 +56,14 @@ def single_work(work_id):
 
 	lovers = Love.get_users_love_work(work_id, 4)
 
-	return render_template('single_work.html', work=work, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
+	return render_template('single_work.html', work=work, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
 
 # proc - love work
 #--------------------------------------------------
-@app.route('/work/love/<int:work_id>')
+@app.route('/work/love/<int:work_id>', methods=['POST'])
 def love_work(work_id):
+	tags = request.form['tags']
+	# split, rm empty tag, rm repeat tag 
 	Love.add_love(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 

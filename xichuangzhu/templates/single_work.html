@@ -8,14 +8,67 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+	// comments
+
 	$('.work-content sup').tooltip();
 
 	$('.work-content sup').each(function(index){
 		$(this).text('〔' + (index + 1) + '〕');
-	})
+	});
+
+	// tag
+
+	$('#modal-add-tags').modal({
+		backdrop: false,
+		show: false
+	});
+
+	$('#btn-add-tags').click(function(){
+		$('#form-add-tags').submit();
+	});
+
+	$('.tags-wap li').click(function(){
+		tags = $("#input-tags").val()
+		$("#input-tags").val(tags + $(this).text() + " ");
+		$("#input-tags").focus();
+	});
 });
 
 </script>
+
+<div class="modal hide fade" id="modal-add-tags">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h4>添加收藏《{{ work.Title }}》</h4>
+	</div>
+	<div class="modal-body">
+		<form id="form-add-tags" method="post" action="{{ url_for('love_work', work_id=work.WorkID) }}">
+			<p>标签（多个标签用空格分隔）:</p>
+			<input name="tags" id="input-tags" class="input-xlarge" type="text" />
+			<div class="tags-wap clearfix">
+				<label class="tags-title">我的标签 :</label>
+				<ul>
+					{% for t in my_tags %}
+					<li>{{ t.Tag }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div class="tags-wap clearfix">
+				<label class="tags-title">常用标签 :</label>
+				<ul>
+					{% for t in popular_tags %}
+					<li>{{ t.Tag }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a id="btn-add-tags" class="btn btn-small">保存</a>
+	</div>
+</div>
 
 <div class="row">
 	<div class="span8">
@@ -36,17 +89,24 @@ $(document).ready(function(){
 		
 		{% if session.user_id %}
 		<div class="btn-group pull-right">
-			{% if is_loved %}
-			<a class="btn btn-small" title="取消收藏" href="{{ url_for('unlove_work', work_id=work.WorkID) }}">已收藏 <span class="icon-heart"></span></a>
-			{% else %}
-			<a class="btn btn-small" title="点击收藏" href="{{ url_for('love_work', work_id=work.WorkID) }}">收藏 <span class="icon-heart"></span></a>
-			{% endif %}
-			
-			<a class="btn btn-small" href="{{ url_for('add_review', work_id=work.WorkID) }}">点评 <span class="icon-file"></span></a>
-
 			{% if session.user_id == 45197381 %}
-			<a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.WorkID) }}">编辑 <span class="icon-edit"></span></a>
+			<a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.WorkID) }}"><span class="icon-edit"></span> 编辑</a>
 			<!-- <a class="btn btn-small" href="{{ url_for('admin_widgets', target_type='work', target_id=work.WorkID) }}">挂件 <span class="icon-th"></span></a> -->
+			{% endif %}
+
+			<a class="btn btn-small" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
+
+			{% if is_loved %}
+			<a class="btn btn-small" title="取消收藏"  href="{{ url_for('unlove_work', work_id=work.WorkID) }}"><span class="icon-heart"></span> 已收藏</a>
+
+			<!-- <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">取消收藏</a></li>
+			</ul> -->
+			{% else %}
+			<a class="btn btn-small" title="点击收藏" href="#modal-add-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
 			{% endif %}
 		</div>
 		{% endif %}

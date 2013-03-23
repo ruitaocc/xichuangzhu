@@ -35,7 +35,7 @@ $(document).ready(function(){
 <div class="row">
 	<div class="span8">
 		{% if session.user_id == 45197381 %}
-		<a class="btn btn-small pull-right" href="{{ url_for('edit_author', authorID=author.AuthorID) }}">编辑  <span class="icon-edit"></span></a>
+		<a class="btn btn-small pull-right" href="{{ url_for('edit_author', authorID=author.AuthorID) }}"><span class="icon-edit"></span> 编辑</a>
 		{% endif %}
 	
 		<div class="author">

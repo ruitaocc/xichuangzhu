@@ -422,7 +422,13 @@ body{
 		}
 	}
 
-	.btn-group{margin-right: 15px;}
+	.btn-group{
+		margin-right: 15px;
+		
+		.dropdown-toggle .caret{
+			margin-top: 8px;
+		}
+	}
 
 	.lover-item{
 		margin-bottom: 10px;
@@ -450,6 +456,53 @@ body{
 				color: #666;
 				font-size: 12px;
 				line-height: 24px;
+			}
+		}
+	}
+
+	#modal-add-tags{
+		border: 8px solid rgba(0, 0, 0, 0.35);
+		box-shadow: none;
+
+		h4{font-size: 18px;}
+
+		#input-tags{
+			font-size: 12px;
+			margin-bottom: 15px;
+			width: 350px;
+		}
+
+		.tags-wap{
+			clear: both;
+			margin-bottom: 5px;
+
+			.tags-title{
+				float: left;
+			}
+
+			ul{
+				margin: 0 0 0 10px;
+				float: left;
+
+				li{
+					list-style: none;
+					display: inline-block;
+					font-size: 12px;
+					line-height: 12px;
+					padding: 5px 5px;
+					margin: 0 2px 0 2px;
+					cursor: pointer;
+					// color: #555;
+					// background-color: #EEE;
+					// box-shadow: 1px 1px 0px #aaa;
+					color: rgb(167, 35, 35);
+					background-color: rgb(247, 231, 231);
+					box-shadow: 1px 1px 0 rgb(192, 154, 154);
+					
+					&:hover{
+						background-color: rgb(240, 221, 221);
+					}
+				}			
 			}
 		}
 	}

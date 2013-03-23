@@ -17,12 +17,12 @@
 		
 		<div class="btn-group">
 			<a class="btn btn-small" href="{{ product.Url }}" target="_blank">
-				去逛逛 <span class="icon-shopping-cart"></span>
+				<span class="icon-shopping-cart"></span> 去逛逛
 			</a>
 
 			{% if session.user_id == 45197381 %}
 			<a class="btn btn-small" href="{{ url_for('edit_product', product_id=product.ProductID) }}">
-				编辑 <span class="icon-edit"></span>
+				<span class="icon-edit"></span> 编辑
 			</a>
 			{% endif %}
 		</div>
