@@ -62,9 +62,23 @@ def single_work(work_id):
 #--------------------------------------------------
 @app.route('/work/love/<int:work_id>', methods=['POST'])
 def love_work(work_id):
-	tags = request.form['tags']
-	# split, rm empty tag, rm repeat tag 
-	Love.add_love(session['user_id'], work_id)
+	tags = request.form['tags'].split(' ')
+
+	# remove the empty & repeat item
+	new_tags = []
+	for t in tags:
+		if t != '':
+			new_tags.append(t)
+	new_tags = list(set(new_tags))
+
+	# add love
+	Love.add_love(session['user_id'], work_id, ' '.join(new_tags))
+
+	# update user tags & work tags
+	for t in new_tags:
+		Tag.add_user_tag(session['user_id'], t)
+		Tag.add_work_tag(work_id, t)
+
 	return redirect(url_for('single_work', work_id=work_id))
 
 # proc - unlove work

@@ -42,8 +42,8 @@ class Love:
 	
 	# a user love a work
 	@staticmethod
-	def add_love(user_id, work_id):
-		query = "INSERT INTO love (UserID, WorkID) VALUES (%d, %d)" % (user_id, work_id)
+	def add_love(user_id, work_id, tags):
+		query = "INSERT INTO love (UserID, WorkID, Tags) VALUES (%d, %d, '%s')" % (user_id, work_id, tags)
 		cursor.execute(query)
 		return conn.commit()
 

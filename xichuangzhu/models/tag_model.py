@@ -17,3 +17,33 @@ class Tag:
 		query = "SELECT Tag FROM work_tag WHERE WorkID = %d ORDER BY Num DESC LIMIT %d" % (work_id, num)
 		cursor.execute(query)
 		return cursor.fetchall()
+
+# NEW
+	
+	# add tag in user tags
+	@staticmethod
+	def add_user_tag(user_id, tag):
+	 	cursor.execute("SELECT * FROM user_tag WHERE UserID=%d AND Tag = '%s'" % (user_id, tag))
+
+		if cursor.rowcount == 0:
+			query = "INSERT INTO user_tag (UserID, Tag) VALUES (%d, '%s')" % (user_id, tag)
+			cursor.execute(query)
+			conn.commit()
+		else:
+			query = "UPDATE user_tag SET Num = Num + 1 WHERE UserID = %d AND Tag = '%s'" % (user_id, tag)
+			cursor.execute(query)
+			conn.commit()
+	
+	# add tag in work tags
+	@staticmethod
+	def add_work_tag(work_id, tag):
+	 	cursor.execute("SELECT * FROM work_tag WHERE WorkID=%d AND Tag = '%s'" % (work_id, tag))
+
+		if cursor.rowcount == 0:
+			query = "INSERT INTO work_tag (WorkID, Tag) VALUES (%d, '%s')" % (work_id, tag)
+			cursor.execute(query)
+			conn.commit()
+		else:
+			query = "UPDATE work_tag SET Num = Num + 1 WHERE WorkID = %d AND Tag = '%s'" % (work_id, tag)
+			cursor.execute(query)
+			conn.commit()
