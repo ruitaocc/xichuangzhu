@@ -10,7 +10,7 @@
 		<h2>
 			<a href="{{ url_for('forum') }}" class="root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;{{ node.Name }}
 			{% if session.user_id %}
-			<a class="btn btn-small new-topic" href="">发起新话题</a>
+			<a class="btn btn-small new-topic" href="{{ url_for('add_topic') }}">发起新话题</a>
 			{% endif %}
 		</h2>
 

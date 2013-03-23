@@ -17,7 +17,7 @@ def forum():
 	hot_topics = Topic.get_hot_topics(10)
 	return render_template('topics.html', topics=topics, nodes=nodes, hot_topics=hot_topics)
 
-# page topic
+# page single topic
 #--------------------------------------------------
 
 @app.route('/topic/<int:topic_id>')
@@ -25,6 +25,15 @@ def single_topic(topic_id):
 	topic = Topic.get_topic(topic_id)
 	nodes = Node.get_nodes(20)
 	return render_template('single_topic.html', topic=topic, nodes=nodes)
+
+# page add topic
+#--------------------------------------------------
+@app.route('/topic/add', methods=['POST', 'GET'])
+def add_topic():
+	if request.method == 'GET':
+		return render_template('add_topic.html')
+	elif request.method == 'POST':
+		pass
 
 # page node
 #--------------------------------------------------
