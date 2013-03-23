@@ -38,13 +38,14 @@ def single_work(work_id):
 	# check is loved
 	if 'user_id' in session:
 		is_loved = Love_Work.check_love(session['user_id'], work_id)
+		tags = Love_Work.get_tags(session['user_id'], work_id) if is_loved else ""
+		my_tags = Tag.get_user_tags(session['user_id'], 20)
+		popular_tags = Tag.get_work_tags(work_id, 20)
 	else:
 		is_loved = False
-
-	# if is loved then get the tags
-	tags = Love_Work.get_tags(session['user_id'], work_id) if is_loved else ""
-	my_tags = Tag.get_user_tags(session['user_id'], 20)
-	popular_tags = Tag.get_work_tags(work_id, 20)
+		tags = ""
+		my_tags = []
+		popular_tags = []
 
 	reviews = Review.get_reviews_by_work(work_id)
 
