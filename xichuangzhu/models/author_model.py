@@ -28,8 +28,8 @@ class Author:
 	@staticmethod
 	def get_hot_authors(num):
 		query = '''SELECT author.Author, author.Abbr, author.Quote, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, count(*) AS LoveNum\n
-			FROM love, work, author, dynasty\n
-			WHERE love.WorkID = work.WorkID\n
+			FROM love_work, work, author, dynasty\n
+			WHERE love_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
 			AND author.DynastyID = dynasty.DynastyID\n
 			GROUP BY author.AuthorID\n
