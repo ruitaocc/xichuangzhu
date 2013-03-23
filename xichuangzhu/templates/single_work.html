@@ -10,7 +10,6 @@
 $(document).ready(function(){
 
 	// comments
-
 	$('.work-content sup').tooltip();
 
 	$('.work-content sup').each(function(index){
@@ -18,14 +17,13 @@ $(document).ready(function(){
 	});
 
 	// tag
-
-	$('#modal-add-tags').modal({
+	$('#modal-tags').modal({
 		backdrop: false,
 		show: false
 	});
 
-	$('#btn-add-tags').click(function(){
-		$('#form-add-tags').submit();
+	$('#btn-tags').click(function(){
+		$('#form-tags').submit();
 	});
 
 	$('.tags-wap li').click(function(){
@@ -37,15 +35,18 @@ $(document).ready(function(){
 
 </script>
 
-<div class="modal hide fade" id="modal-add-tags">
+{% if session.user_id %}
+<div class="modal hide fade" id="modal-tags">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
-		<h4>添加收藏《{{ work.Title }}》</h4>
+		<h4>{% if is_loved %}编辑收藏{% else %}添加收藏{% endif %}《{{ work.Title }}》</h4>
 	</div>
+
 	<div class="modal-body">
-		<form id="form-add-tags" method="post" action="{{ url_for('love_work', work_id=work.WorkID) }}">
+		<form id="form-tags" method="post" action="{{ url_for('love_work', work_id=work.WorkID) }}">
 			<p>标签（多个标签用空格分隔）:</p>
-			<input name="tags" id="input-tags" class="input-xlarge" type="text" />
+			<input name="tags" id="input-tags" class="input-xlarge" type="text" value="{{ tags }}" />
+
 			<div class="tags-wap clearfix">
 				<label class="tags-title">我的标签 :</label>
 				<ul>
@@ -66,9 +67,10 @@ $(document).ready(function(){
 		</form>
 	</div>
 	<div class="modal-footer">
-		<a id="btn-add-tags" class="btn btn-small">保存</a>
+		<a id="btn-tags" class="btn btn-small">保存</a>
 	</div>
 </div>
+{% endif %}
 
 <div class="row">
 	<div class="span8">
@@ -97,16 +99,16 @@ $(document).ready(function(){
 			<a class="btn btn-small" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
 
 			{% if is_loved %}
-			<a class="btn btn-small" title="取消收藏"  href="{{ url_for('unlove_work', work_id=work.WorkID) }}"><span class="icon-heart"></span> 已收藏</a>
+			<a class="btn btn-small" title="编辑收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
 
-			<!-- <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu">
-				<li><a href="#">取消收藏</a></li>
-			</ul> -->
+				<li><a href="{{ url_for('rm_love_work', work_id=work.WorkID) }}">取消收藏</a></li>
+			</ul>
 			{% else %}
-			<a class="btn btn-small" title="点击收藏" href="#modal-add-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
+			<a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
 			{% endif %}
 		</div>
 		{% endif %}

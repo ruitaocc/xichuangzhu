@@ -29,6 +29,13 @@ class Love_Work:
 		cursor.execute(query)
 		return cursor.fetchall()
 
+	# get tags
+	@staticmethod
+	def get_tags(user_id, work_id):
+		query = "SELECT Tags FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
+		cursor.execute(query)
+		return cursor.fetchone()['Tags']
+
 # CHECK 
 
 	# check if user loves work
@@ -44,6 +51,15 @@ class Love_Work:
 	@staticmethod
 	def add(user_id, work_id, tags):
 		query = "INSERT INTO love_work (UserID, WorkID, Tags) VALUES (%d, %d, '%s')" % (user_id, work_id, tags)
+		cursor.execute(query)
+		return conn.commit()
+
+# UPDATE
+	
+	# edit work tags
+	@staticmethod
+	def edit(user_id, work_id, tags):
+		query = "UPDATE love_work SET Tags = '%s' WHERE UserID = %d AND WorkID = %d" % (tags, user_id, work_id)
 		cursor.execute(query)
 		return conn.commit()
 

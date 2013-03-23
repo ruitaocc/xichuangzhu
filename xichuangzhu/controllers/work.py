@@ -29,23 +29,26 @@ import math
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
+
 	# 1 - add comment, 2 - split ci, 3 - gene paragraph
 	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])	
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 	work['Content'] = markdown2.markdown(work['Content'])
-
-	my_tags = Tag.get_user_tags(session['user_id'], 20)
-	popular_tags = Tag.get_work_tags(work_id, 20)
-
-	reviews = Review.get_reviews_by_work(work_id)
-
-	widgets = Widget.get_widgets('work', work_id)
 
 	# check is loved
 	if 'user_id' in session:
 		is_loved = Love_Work.check_love(session['user_id'], work_id)
 	else:
 		is_loved = False
+
+	# if is loved then get the tags
+	tags = Love_Work.get_tags(session['user_id'], work_id) if is_loved else ""
+	my_tags = Tag.get_user_tags(session['user_id'], 20)
+	popular_tags = Tag.get_work_tags(work_id, 20)
+
+	reviews = Review.get_reviews_by_work(work_id)
+
+	widgets = Widget.get_widgets('work', work_id)
 
 	product = Product.get_product_by_random()
 
@@ -56,9 +59,9 @@ def single_work(work_id):
 
 	lovers = Love_Work.get_users_love_work(work_id, 4)
 
-	return render_template('single_work.html', work=work, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
+	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
 
-# proc - love work
+# proc - add love work & edit tags
 #--------------------------------------------------
 @app.route('/work/love/<int:work_id>', methods=['POST'])
 def love_work(work_id):
@@ -72,7 +75,34 @@ def love_work(work_id):
 	new_tags = list(set(new_tags))
 
 	# add love work
-	Love_Work.add(session['user_id'], work_id, ' '.join(new_tags))
+	is_loved = Love_Work.check_love(session['user_id'], work_id)
+	if is_loved:
+		Love_Work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+	else:
+		Love_Work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+
+	# update user tags & work tags
+	for t in new_tags:
+		Tag.add_user_tag(session['user_id'], t)
+		Tag.add_work_tag(work_id, t)
+
+	return redirect(url_for('single_work', work_id=work_id))
+
+# proc - edit love work
+#--------------------------------------------------
+@app.route('/work/edit_love/<int:work_id>', methods=['POST'])
+def edit_love_work(work_id):
+	tags = request.form['tags'].split(' ')
+
+	# remove the empty & repeat item
+	new_tags = []
+	for t in tags:
+		if t != '':
+			new_tags.append(t)
+	new_tags = list(set(new_tags))
+
+	# add love work
+	Love_Work.edit(session['user_id'], work_id, ' '.join(new_tags))
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -83,8 +113,8 @@ def love_work(work_id):
 
 # proc - unlove work
 #--------------------------------------------------
-@app.route('/work/unlove/<int:work_id>')
-def unlove_work(work_id):
+@app.route('/work/rm_love/<int:work_id>')
+def rm_love_work(work_id):
 	Love_Work.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
