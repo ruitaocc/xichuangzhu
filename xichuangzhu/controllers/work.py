@@ -149,8 +149,39 @@ def works():
 		next_page = total_page
 
 	work_types = Work.get_types()
+
 	dynasties = Dynasty.get_dynasties()
-	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page,total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
+
+	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
+
+# page - works by tag
+#--------------------------------------------------
+
+# view
+@app.route('/tag/<tag>')
+def works_by_tag(tag):
+	num_per_page = 10
+
+	page = int(request.args['page'] if 'page' in request.args else 1)
+
+	works = Work.get_works_by_tag(tag, page, num_per_page)
+	for work in works:
+		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
+		work['Content'] = work['Content'].replace('%', '')
+
+	works_num  = Work.get_works_num_by_tag(tag)
+
+	# page paras
+	total_page = int(math.ceil(works_num / num_per_page))
+	pre_page   = (page - 1) if page > 1 else 1
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
+
+	return render_template('works_by_tag.html', works=works, tag=tag, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - add work
 #--------------------------------------------------

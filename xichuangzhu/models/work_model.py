@@ -74,6 +74,29 @@ class Work:
 		cursor.execute(query)
 		return cursor.fetchone()['WorksNum']
 
+	# get works by tag
+	@staticmethod
+	def get_works_by_tag(tag, page, num):
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.AuthorID, author.Author, author.Abbr AS AuthorAbbr\n
+			FROM work, author, work_tag\n
+			WHERE work.AuthorID = author.AuthorID\n
+			AND work_tag.Tag = '%s'\n
+			AND work_tag.WorkID = work.WorkID\n
+			LIMIT %d, %d''' % (tag, (page-1)*num, num)
+
+		cursor.execute(query)
+		return cursor.fetchall()
+
+	# get works num by tag
+	@staticmethod
+	def get_works_num_by_tag(tag):
+		query = '''SELECT COUNT(*) AS WorksNum\n
+			FROM work, work_tag\n
+			WHERE work_tag.Tag = '%s'\n
+			AND work_tag.WorkID = work.WorkID''' % tag
+		cursor.execute(query)
+		return cursor.fetchone()['WorksNum']
+
 	# get an author's all works
 	@staticmethod
 	def get_works_by_author(authorID):

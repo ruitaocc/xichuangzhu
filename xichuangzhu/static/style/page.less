@@ -249,7 +249,6 @@ body{
 		margin: 0;
 
 		li{
-
 			margin-bottom: 8px;
 			margin-right: 2px;
 			display: inline-block;
@@ -360,6 +359,14 @@ body{
 		}
 	}
 
+	.btn-group{
+		margin-right: 15px;
+		
+		.dropdown-toggle .caret{
+			margin-top: 8px;
+		}
+	}
+
 	.work-collection{
 		font-weight: bold;
 		font-size: 16px;
@@ -398,9 +405,37 @@ body{
 		}
 	}
 
-	.ad{
-		display: block;
-		margin-top: 20px;
+	.work-tags{
+		list-style: none;
+		margin: 0;
+
+		li{
+			list-style: none;
+			display: inline-block;
+
+			a{
+				text-decoration: none;
+				font-size: 12px;
+				line-height: 12px;
+				padding: 5px 5px;
+				margin: 0 2px 0 2px;
+				cursor: pointer;
+
+				color: #777;
+				background-color: #F2F2F2;
+				box-shadow: 1px 1px 0px #bbb;
+				&:hover{
+					background-color: #EbEbEb;
+				}
+
+				// color: rgb(167, 35, 35);
+				// background-color: rgb(247, 231, 231);
+				// box-shadow: 1px 1px 0 rgb(192, 154, 154);
+				// &:hover{
+				// 	background-color: rgb(240, 221, 221);
+				// }
+			}
+		}		
 	}
 
 	.other-work-item{
@@ -422,12 +457,9 @@ body{
 		}
 	}
 
-	.btn-group{
-		margin-right: 15px;
-		
-		.dropdown-toggle .caret{
-			margin-top: 8px;
-		}
+	.ad{
+		display: block;
+		margin-top: 20px;
 	}
 
 	.lover-item{

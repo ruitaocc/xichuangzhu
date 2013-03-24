@@ -34,15 +34,16 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-work .work-type-ge{padding-left:13em;}#page-single-work .work-type-ge p{margin-bottom:6px;line-height:24px;font-family:'arial','宋体';}
 #page-single-work .work-type-ge .bank{height:20px;}
 #page-single-work .work-type-wen{text-indent:2em;font-size:16px;line-height:30px;padding:0 0.5em;}#page-single-work .work-type-wen p{margin-bottom:18px;}
+#page-single-work .btn-group{margin-right:15px;}#page-single-work .btn-group .dropdown-toggle .caret{margin-top:8px;}
 #page-single-work .work-collection{font-weight:bold;font-size:16px;margin-bottom:5px;}
 #page-single-work .review-item{margin-bottom:15px;}#page-single-work .review-item .user-avatar{float:left;margin-top:5px;}
 #page-single-work .review-item .review-wap{margin-left:60px;}#page-single-work .review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 #page-single-work .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
 #page-single-work .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
-#page-single-work .ad{display:block;margin-top:20px;}
+#page-single-work .work-tags{list-style:none;margin:0;}#page-single-work .work-tags li{list-style:none;display:inline-block;}#page-single-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 2px 0 2px;cursor:pointer;color:#777;background-color:#F2F2F2;box-shadow:1px 1px 0px #bbb;}#page-single-work .work-tags li a:hover{background-color:#EbEbEb;}
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #DDD;padding-bottom:5px;}#page-single-work .other-work-item:last-child{border:0;}
 #page-single-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:gray;}
-#page-single-work .btn-group{margin-right:15px;}#page-single-work .btn-group .dropdown-toggle .caret{margin-top:8px;}
+#page-single-work .ad{display:block;margin-top:20px;}
 #page-single-work .lover-item{margin-bottom:10px;}#page-single-work .lover-item .lover-avatar{float:left;display:block;margin-top:6px;}
 #page-single-work .lover-item .lover-info{margin-left:60px;}#page-single-work .lover-item .lover-info .lover{font-size:13px;}
 #page-single-work .lover-item .lover-info .lover-signature{color:#666;font-size:12px;line-height:14px;}

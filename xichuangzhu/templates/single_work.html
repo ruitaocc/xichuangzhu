@@ -152,6 +152,13 @@ $(document).ready(function(){
 		
 		{% endfor %}
 
+		<h2>标签</h2>
+		<ul class="work-tags">
+			{% for t in popular_tags %}
+			<li><a href="{{ url_for('works_by_tag', tag=t.Tag) }}">{{ t.Tag }}</a></li>
+			{% endfor %}
+		</ul>
+
 		<h2>作者简介</h2>
 		<div>{{ work.AuthorIntroduction|truncate(55, True) }}</div>
 
