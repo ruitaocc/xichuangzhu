@@ -57,7 +57,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-authors .hot-author-item{margin-bottom:8px;}#page-authors .hot-author-item .hot-author{font-size:16px;line-height:24px;font-weight:bold;}#page-authors .hot-author-item .hot-author .hot-author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-authors .hot-author-item .hot-author .hot-author-dynasty a{color:#333;}
 #page-authors .hot-author-item .hot-author-quote{font-size:12px;}
 #page-single-author .author h1{display:inline-block;}
-#page-single-author .author .author-quote{font-size:12px;font-weight:normal;color:gray;margin-left:12px;}
+#page-single-author .author .author-quote{font-size:12px;font-weight:normal;color:gray;margin-left:12px;text-decoration:none;}
 #page-single-author .author-period{font-size:16px;margin-bottom:10px;}
 #page-single-author .works-num-wap{display:inline-block;margin-left:10px;}#page-single-author .works-num-wap span{font-size:12px;line-height:12px;cursor:pointer;margin-right:3px;padding:0px 7px 1px 8px;color:gray;letter-spacing:1px;}#page-single-author .works-num-wap span.active{background-color:#0088cc;color:white;}
 #page-single-author .collection-item{margin-bottom:10px;}#page-single-author .collection-item .collection{font-weight:bold;font-size:16px;}

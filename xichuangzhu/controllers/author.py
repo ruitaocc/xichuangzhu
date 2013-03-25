@@ -29,6 +29,10 @@ def authors():
 @app.route('/author/<author_abbr>')
 def single_author(author_abbr):
 	author = Author.get_author_by_abbr(author_abbr)
+	
+	quote = Quote.get_quote_by_random(author['AuthorID'])
+	quotes_num = Quote.get_quotes_num_by_author(author['AuthorID'])
+
 	collections = Collection.get_collections_by_author(author['AuthorID'])
 
 	works = Work.get_works_by_author(author['AuthorID'])
@@ -46,7 +50,7 @@ def single_author(author_abbr):
 		work_type = work['Type']  
 		works_num[work_type]['num'] += 1
 
-	return render_template('single_author.html', author=author, collections=collections, works=works, works_num=works_num)
+	return render_template('single_author.html', author=author, quote=quote, quotes_num=quotes_num, collections=collections, works=works, works_num=works_num)
 
 # page add author
 #--------------------------------------------------
@@ -117,4 +121,12 @@ def delete_quote(quote_id):
 #--------------------------------------------------
 @app.route('/quote/edit/<int:quote_id>', methods=['GET', 'POST'])
 def edit_quote(quote_id):
-	pass
+	if request.method == 'GET':
+		quote = Quote.get_quote_by_id(quote_id)
+		return render_template('edit_quote.html', quote=quote)
+	elif request.method == 'POST':
+		quote   = request.form['quote']
+		work_id = int(request.form['work-id'])
+		work    = Work.get_work(work_id)
+		Quote.edit(quote_id, work['AuthorID'], quote, work['WorkID'], work['Title'])
+		return redirect(url_for('admin_quotes', author_id=work['AuthorID']))
