@@ -8,6 +8,7 @@ from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
+from xichuangzhu.models.quote_model import Quote
 
 import re
 
@@ -85,3 +86,35 @@ def edit_author(authorID):
 		dynastyID    = int(request.form['dynastyID'])		
 		Author.edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
 		return redirect(url_for('single_author', author_abbr=abbr))
+
+# page admin quotes
+#--------------------------------------------------
+
+# view
+@app.route('/quote/admin/<int:author_id>')
+def admin_quotes(author_id):
+	author = Author.get_author_by_id(author_id)
+	quotes = Quote.get_quotes_by_author(author_id)
+	return render_template('admin_quotes.html', quotes=quotes, author=author)
+
+# proc - add quote
+@app.route('/quote/add/<int:author_id>', methods=['POST'])
+def add_quote(author_id):
+	quote      = request.form['quote']
+	work_id    = int(request.form['work-id'])
+	work_title = Work.get_work(work_id)['Title'] 
+	Quote.add(author_id, quote, work_id, work_title)
+	return redirect(url_for('admin_quotes', author_id=author_id))
+
+# proc - delete quote
+@app.route('/quote/delete/<int:quote_id>')
+def delete_quote(quote_id):
+	author_id = int(request.args['author_id'])
+	Quote.delete(quote_id)
+	return redirect(url_for('admin_quotes', author_id=author_id))
+
+# page edit quote
+#--------------------------------------------------
+@app.route('/quote/edit/<int:quote_id>', methods=['GET', 'POST'])
+def edit_quote(quote_id):
+	pass

@@ -39,7 +39,11 @@ $(document).ready(function(){
 		{% endif %}
 	
 		<div class="author">
-			<h1>{{ author.Author }}</h1><span class="author-quote">{{ author.Quote }}</span>
+			<h1>{{ author.Author }}</h1>
+			<span class="author-quote">{{ author.Quote }}</span>
+			{% if session.user_id == 45197381 %}
+			<a class="btn btn-mini" target="_blank" href="{{ url_for('admin_quotes', author_id=author.AuthorID) }}">Edit</a>
+			{% endif %}
 		</div>
 		
 		<div class='author-period'>
