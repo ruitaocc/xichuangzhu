@@ -91,7 +91,7 @@ class Author:
 	# add a new author and return its AuthorID
 	@staticmethod
 	def add_author(author, abbr, introduction, birthYear, deathYear, dynastyID):
-		query = '''INSERT INTO author (Author, Abbr, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)''' % (author, abbr, introduction, birthYear, deathYear, dynastyID)
+		query = '''INSERT INTO author (Author, Abbr, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', '%s', %d)''' % (author, abbr, introduction, birthYear, deathYear, dynastyID)
 		cursor.execute(query)
 		conn.commit()
 		return cursor.lastrowid
