@@ -39,7 +39,15 @@ $(document).ready(function(){
 		{% endif %}
 	
 		<div class="author">
-			<h1>{{ author.Author }}</h1><span class="author-quote">{{ author.Quote }}</span>
+			<h1>{{ author.Author }}</h1>
+			
+			{% if quotes_num != 0 %}
+			<a href="{{ url_for('single_work', work_id=quote.WorkID) }}" class="author-quote" title="出自《{{ quote.WorkTitle }}》">{{ quote.Quote }}</a>
+			{% endif %}
+
+			{% if session.user_id == 45197381 %}
+			<a class="btn btn-mini" target="_blank" href="{{ url_for('admin_quotes', author_id=author.AuthorID) }}">Edit / {{ quotes_num }}</a>
+			{% endif %}
 		</div>
 		
 		<div class='author-period'>

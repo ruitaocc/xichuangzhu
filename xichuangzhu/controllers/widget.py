@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, json, render_template_string
+from flask import render_template, request, redirect, url_for, json
 
 from xichuangzhu import app
 
@@ -8,7 +8,7 @@ from xichuangzhu.models.widget_model import Widget
 #--------------------------------------------------
 
 # view
-@app.route('/widget/admin/<target_type>/<int:target_id>', methods=['GET', 'POST'])
+@app.route('/widget/admin/<target_type>/<int:target_id>')
 def admin_widgets(target_type, target_id):
 	widgets = Widget.get_widgets(target_type, target_id)
 	return render_template('admin_widgets.html', target_type=target_type, target_id=target_id, widgets=widgets)
