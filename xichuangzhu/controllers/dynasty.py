@@ -4,6 +4,7 @@ from xichuangzhu import app
 
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
+from xichuangzhu.models.quote_model import Quote
 
 import markdown2
 
@@ -16,6 +17,10 @@ def single_dynasty(dynasty_abbr):
 	#dynasty['History'] = markdown2.markdown(dynasty['History'])
 
 	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'], 5)
+	for a in authors:
+		quote = Quote.get_quote_by_random(a['AuthorID'])
+		a['Quote'] = quote['Quote'] if quote else ""
+	
 	authors_num = Author.get_authors_num_by_dynasty(dynasty['DynastyID'])
 	
 	dynasties = Dynasty.get_dynasties()

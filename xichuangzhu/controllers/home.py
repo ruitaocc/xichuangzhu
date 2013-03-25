@@ -9,6 +9,7 @@ from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.topic_model import Topic
+from xichuangzhu.models.quote_model import Quote
 
 import re
 
@@ -22,9 +23,15 @@ def index():
 		work['Content'] = work['Content'].replace('%', '')
 
 	reviews = Review.get_reviews_by_random(4)
+	
 	authors = Author.get_authors_by_random(5)
+	for a in authors:
+		quote = Quote.get_quote_by_random(a['AuthorID'])
+		a['Quote'] = quote['Quote'] if quote else ""
+	
 	dynasties = Dynasty.get_dynasties()
 	topics = Topic.get_topics(8)
+	
 	return render_template('index.html', works=works, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
 
 # json - gene 4 works of different type

@@ -6,12 +6,12 @@ class Author:
 
 	# get authors by random
 	@staticmethod
-	def get_authors_by_random(authors_num):
-		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
+	def get_authors_by_random(num):
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			ORDER BY RAND()\n
-			LIMIT %d''' % authors_num
+			LIMIT %d''' % num
 		cursor.execute(query)
 		return cursor.fetchall()
 
@@ -27,7 +27,7 @@ class Author:
 	# get hot authors
 	@staticmethod
 	def get_hot_authors(num):
-		query = '''SELECT author.Author, author.Abbr, author.Quote, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, count(*) AS LoveNum\n
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, count(*) AS LoveNum\n
 			FROM love_work, work, author, dynasty\n
 			WHERE love_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
@@ -59,7 +59,7 @@ class Author:
 	# get a author by id
 	@staticmethod
 	def get_author_by_id(authorID):
-		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			AND author.AuthorID = %d''' % authorID
@@ -69,7 +69,7 @@ class Author:
 	# get a author by abbr
 	@staticmethod
 	def get_author_by_abbr(author_abbr):
-		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, author.Quote, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, author.Introduction, author.BirthYear, author.DeathYear, dynasty.DynastyID, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM author, dynasty\n
 			WHERE author.Abbr = '%s'\n
 			AND author.DynastyID = dynasty.DynastyID''' % author_abbr
@@ -90,8 +90,8 @@ class Author:
 
 	# add a new author and return its AuthorID
 	@staticmethod
-	def add_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID):
-		query = '''INSERT INTO author (Author, Abbr, Quote, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
+	def add_author(author, abbr, introduction, birthYear, deathYear, dynastyID):
+		query = '''INSERT INTO author (Author, Abbr, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d)''' % (author, abbr, introduction, birthYear, deathYear, dynastyID)
 		cursor.execute(query)
 		conn.commit()
 		return cursor.lastrowid
@@ -100,8 +100,8 @@ class Author:
 
 	# edit an author
 	@staticmethod
-	def edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID):
+	def edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID):
 		query = '''UPDATE author\n
-			SET Author='%s', Abbr='%s', Quote='%s', Introduction='%s', BirthYear='%s', DeathYear='%s', DynastyID=%d WHERE AuthorID = %d''' % (author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
+			SET Author='%s', Abbr='%s', Introduction='%s', BirthYear='%s', DeathYear='%s', DynastyID=%d WHERE AuthorID = %d''' % (author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
 		cursor.execute(query)
 		return conn.commit()

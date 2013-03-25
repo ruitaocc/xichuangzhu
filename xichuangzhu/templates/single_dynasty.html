@@ -71,7 +71,7 @@ $(document).ready(function(){
 						<a href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a>
 					</td>
 					<td>
-						<span class='author-introduction'>{{ author.Quote|truncate(30, True) }}</span>
+						<span class='author-introduction'>{{ author.Quote }}</span>
 					</td>
 				</tr>
 				{% endfor %}

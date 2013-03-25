@@ -20,7 +20,15 @@ def authors():
 	dynasties = Dynasty.get_dynasties()
 	for dyn in dynasties:
 		dyn['authors'] = Author.get_authors_by_dynasty(dyn['DynastyID'])
+		for a in dyn['authors']:
+			quote = Quote.get_quote_by_random(a['AuthorID'])
+			a['Quote'] = quote['Quote'] if quote else ""
+
 	hot_authors = Author.get_hot_authors(8)
+	for a in hot_authors:
+		quote = Quote.get_quote_by_random(a['AuthorID'])
+		a['Quote'] = quote['Quote'] if quote else ""
+
 	return render_template('authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
 # page single author
@@ -63,12 +71,11 @@ def add_author():
 	elif request.method == 'POST':
 		author       = request.form['author']
 		abbr         = request.form['abbr']
-		quote        = request.form['quote']
 		introduction = request.form['introduction']
 		birthYear    = request.form['birthYear']
 		deathYear    = request.form['deathYear']
 		dynastyID    = int(request.form['dynastyID'])
-		Author.add_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID)
+		Author.add_author(author, abbr, introduction, birthYear, deathYear, dynastyID)
 		return redirect(url_for('single_author', author_abbr=abbr))
 
 # page edit author
@@ -83,12 +90,11 @@ def edit_author(authorID):
 	elif request.method == 'POST':
 		author       = request.form['author']
 		abbr         = request.form['abbr']
-		quote        = request.form['quote']
 		introduction = request.form['introduction']
 		birthYear    = request.form['birthYear']
 		deathYear    = request.form['deathYear']
 		dynastyID    = int(request.form['dynastyID'])		
-		Author.edit_author(author, abbr, quote, introduction, birthYear, deathYear, dynastyID, authorID)
+		Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
 		return redirect(url_for('single_author', author_abbr=abbr))
 
 # page admin quotes
