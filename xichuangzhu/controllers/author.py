@@ -23,6 +23,7 @@ def authors():
 		for a in dyn['authors']:
 			quote = Quote.get_quote_by_random(a['AuthorID'])
 			a['Quote'] = quote['Quote'] if quote else ""
+			a['QuotesNum'] = Quote.get_quotes_num_by_author(a['AuthorID'])
 
 	hot_authors = Author.get_hot_authors(8)
 	for a in hot_authors:
