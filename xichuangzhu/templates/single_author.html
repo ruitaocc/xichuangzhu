@@ -46,7 +46,7 @@ $(document).ready(function(){
 			<h1>{{ author.Author }}</h1>
 			
 			{% if quotes_num != 0 %}
-			<a href="{{ url_for('single_work', work_id=quote.WorkID) }}" class="author-quote" title="出自《{{ quote.WorkTitle }}》">{{ quote.Quote }}</a>
+			<a href="{{ url_for('single_work', work_id=quote.WorkID) }}" class="author-quote" title="《{{ quote.WorkTitle }}》">{{ quote.Quote }}</a>
 			{% endif %}
 
 			{% if session.user_id == 45197381 %}
