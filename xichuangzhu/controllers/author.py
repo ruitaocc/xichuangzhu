@@ -47,6 +47,7 @@ def single_author(author_abbr):
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 
 	# count num of different type work
 	# return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}

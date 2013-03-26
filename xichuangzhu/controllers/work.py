@@ -31,7 +31,7 @@ def single_work(work_id):
 	work = Work.get_work(work_id)
 
 	# 1 - add comment, 2 - split ci, 3 - gene paragraph
-	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])	
+	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 	work['Content'] = markdown2.markdown(work['Content'])
 
@@ -57,6 +57,7 @@ def single_work(work_id):
 	for ow in other_works:
 		ow['Content'] = re.sub(r'<([^<]+)>', '', ow['Content'])
 		ow['Content'] = ow['Content'].replace('%', '')
+		ow['Content'] = ow['Content'].replace('（一）', "")
 
 	lovers = Love_Work.get_users_love_work(work_id, 4)
 
@@ -135,6 +136,7 @@ def works():
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 
 	works_num  = Work.get_works_num(work_type, dynasty_abbr)
 
@@ -168,6 +170,7 @@ def works_by_tag(tag):
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 
 	works_num  = Work.get_works_num_by_tag(tag)
 

@@ -21,6 +21,7 @@ def index():
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 
 	reviews = Review.get_reviews_by_random(4)
 	
@@ -41,6 +42,7 @@ def four_works():
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 	return render_template('four_works.widget', works=works)
 
 # page about

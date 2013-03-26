@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import render_template, request, redirect, url_for, json
 
 from xichuangzhu import app, conn, cursor
@@ -17,7 +19,8 @@ def single_collection(collectionID):
 	works      = Work.get_works_by_collection(collectionID)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 	return render_template('single_collection.html', collection=collection, works=works)
 
 # page - add collection

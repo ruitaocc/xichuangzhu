@@ -147,7 +147,8 @@ def people(user_abbr):
 	works = Love_Work.get_works_by_user_love(people['UserID'], 4)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '').replace('/', '')
+		work['Content'] = work['Content'].replace('%', '')
+		work['Content'] = work['Content'].replace('（一）', "")
 
 	reviews = Review.get_reviews_by_user(people['UserID'], 4)
 
