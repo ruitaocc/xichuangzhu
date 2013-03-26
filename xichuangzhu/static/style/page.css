@@ -31,8 +31,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-work .work-content{font-family:'宋体';font-size:17px;margin-bottom:30px;}#page-single-work .work-content sup{font-family:'黑体';font-size:12px;font-weight:normal;padding:5px 0px;cursor:pointer;color:#666;}
 #page-single-work .work-type-shi{text-align:center;}
 #page-single-work .work-type-ci{text-indent:2em;line-height:30px;padding:0 2em;}
-#page-single-work .work-type-ge{padding-left:13em;}#page-single-work .work-type-ge p{margin-bottom:6px;line-height:24px;font-family:'arial','宋体';}
-#page-single-work .work-type-ge .bank{height:20px;}
+#page-single-work .work-type-qu{text-indent:2em;line-height:30px;padding:0 2em;}
 #page-single-work .work-type-wen{text-indent:2em;font-size:16px;line-height:30px;padding:0 0.5em;}#page-single-work .work-type-wen p{margin-bottom:18px;}
 #page-single-work .btn-group{margin-right:15px;}#page-single-work .btn-group .dropdown-toggle .caret{margin-top:8px;}
 #page-single-work .work-collection{font-weight:bold;font-size:16px;margin-bottom:5px;}
@@ -53,7 +52,7 @@ body #main-wap .tooltip-inner{padding-top:5px;padding-bottom:5px;}
 #page-single-work #modal-tags .tags-wap{clear:both;margin-bottom:10px;}#page-single-work #modal-tags .tags-wap .tags-title{float:left;}
 #page-single-work #modal-tags .tags-wap ul{margin:0 0 0 10px;float:left;width:450px;}#page-single-work #modal-tags .tags-wap ul li{list-style:none;display:inline-block;font-size:12px;line-height:12px;padding:5px 5px;margin:0 5px 5px 0;cursor:pointer;color:#a72323;background-color:#f7e7e7;box-shadow:1px 1px 0 #c09a9a;}#page-single-work #modal-tags .tags-wap ul li:hover{background-color:#f0dddd;}
 #page-single-collection .collection-author{font-size:16px;}
-#page-authors .author-wap{border-top:1px dashed lightgray;padding-top:15px;}#page-authors .author-wap .author-dynasty{font-size:16px;line-height:16px;color:darkblue;font-family:'微软雅黑';width:100px;float:left;display:inline-block;}
+#page-authors .author-wap{border-top:1px dashed lightgray;padding-top:15px;}#page-authors .author-wap .author-dynasty{font-size:16px;line-height:16px;color:#1d56ac;font-family:'微软雅黑';width:100px;float:left;display:inline-block;}
 #page-authors .author-wap .author-group{list-style:none;margin:0 0 0 100px;}#page-authors .author-wap .author-group li{float:left;margin-bottom:15px;}#page-authors .author-wap .author-group li.author{font-size:16px;line-height:20px;width:100px;}
 #page-authors .hot-author-item{margin-bottom:8px;}#page-authors .hot-author-item .hot-author{font-size:16px;line-height:24px;font-weight:bold;}#page-authors .hot-author-item .hot-author .hot-author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-authors .hot-author-item .hot-author .hot-author-dynasty a{color:#333;}
 #page-authors .hot-author-item .hot-author-quote{font-size:12px;}
