@@ -88,7 +88,7 @@ $(document).ready(function(){
 		{% for work in works %}
 		<a href="{{url_for('single_work', work_id=work.WorkID)}}" data-work-type="{{ work.Type }}" class="work-item">
 			<div class='work-title'>{{ work.Title }}</div>
-			<div class='work-content'>{{ work.Content|truncate(24, True) }}</div>
+			<div class='work-content'>{{ work.Content|truncate(23, True) }}</div>
 		</a>
 		<!-- <div data-work-type="{{ work.Type }}" class="work-item">
 			<div class="work-header">

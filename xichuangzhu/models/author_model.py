@@ -27,13 +27,13 @@ class Author:
 	# get hot authors
 	@staticmethod
 	def get_hot_authors(num):
-		query = '''SELECT author.AuthorID, author.Author, author.Abbr, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, count(*) AS LoveNum\n
+		query = '''SELECT author.AuthorID, author.Author, author.Abbr, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
 			FROM love_work, work, author, dynasty\n
 			WHERE love_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
 			AND author.DynastyID = dynasty.DynastyID\n
 			GROUP BY author.AuthorID\n
-			ORDER BY LoveNum DESC\n
+			ORDER BY love_work.Time DESC\n
 			LIMIT %d''' % num
 		cursor.execute(query)
 		return cursor.fetchall()
