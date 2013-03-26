@@ -144,13 +144,13 @@ def logout():
 def people(user_abbr):
 	people = User.get_people_by_abbr(user_abbr)
 
-	works = Love_Work.get_works_by_user_love(people['UserID'], 4)
+	works = Love_Work.get_works_by_user_love(people['UserID'], 3)
 	for work in works:
 		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
 		work['Content'] = work['Content'].replace('%', '')
 		work['Content'] = work['Content'].replace('（一）', "")
 
-	reviews = Review.get_reviews_by_user(people['UserID'], 4)
+	reviews = Review.get_reviews_by_user(people['UserID'], 3)
 
 	if "user_id" in session and session['user_id'] == people['UserID']:
 		title_name = '我'
