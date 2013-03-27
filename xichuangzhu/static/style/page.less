@@ -8,29 +8,19 @@ body{
 
 		h1{
 			font-size: 25px;
-			line-height: 25px;
-			margin: 20px 0 12px 0;
+			line-height: 35px;
+			margin: 20px 0 10px 0;
 		}
 
 		h2{
 			font-size: 15px;
-			line-height: 16px;
+			line-height: 15px;
 			font-family: '微软雅黑';
 			font-weight: normal;
 			margin: 20px 0 15px 0;
 			color: rgb(173,22,22);
 			clear: both;
 
-			.link-more{
-				a{
-					margin-left: 5px;
-					font-size: 12px;
-					font-family: '微软雅黑';
-					font-weight: normal;
-					color: #37a;
-					cursor: pointer;
-				}
-			}
 		}
 
 		.tooltip{
@@ -45,6 +35,15 @@ body{
 			padding-top: 5px;
 			padding-bottom: 5px;
 		}
+	}
+
+	.link-more a{
+		margin-left: 5px;
+		font-size: 12px;
+		font-family: '微软雅黑';
+		font-weight: normal;
+		color: #37a;
+		cursor: pointer;
 	}
 }
 
@@ -487,6 +486,7 @@ body{
 	#modal-tags{
 		border: 8px solid rgba(0, 0, 0, 0.35);
 		box-shadow: none;
+		border-radius: 3px;
 
 		h4{font-size: 18px;}
 
@@ -561,7 +561,7 @@ body{
 
 		.author-dynasty{
 			font-size: 15px;
-			line-height: 15px;
+			line-height: 15FFpx;
 			color: rgb(29, 86, 172);
 			font-family: '微软雅黑';
 			width: 100px;
@@ -794,19 +794,28 @@ body{
 // page single review
 //-----------------------------------------------------
 #page-single-review{
-
-	.review-extra-info{
-		margin-bottom: 10px;
+	.user-avatar{
+		float: right;
 	}
 
-	.user-avatar{
-		float: left;
-		margin-top: 20px;
+	.review-title{
+		margin-bottom: 5px;
+	}
+
+	.review-extra-info{
+		margin-bottom: 15px;
+		border-bottom: 1px solid #EEE;
+		padding-bottom: 15px;
+		line-height: 14px;
+		color: #999;
+
+		.btn-edit-review{
+			margin-left: 10px;
+			vertical-align: text-bottom;
+		}
 	}
 
 	.review-wap{
-		margin-left: 65px;
-
 		.review-content{
 			margin-bottom: 20px;
 		}
@@ -833,6 +842,11 @@ body{
 				}
 			}
 		}
+	}
+
+	textarea{
+		display: block;
+		margin-top: 20px;
 	}
 }
 
@@ -1128,9 +1142,9 @@ body{
 
 	.topic-user-avatar{float: right;margin-right: 5px;}
 
-	.topic-title{font-size: 25px;line-height: 30px;font-weight: bold;margin-bottom: 10px;}
+	.topic-title{margin-top: 0px;}
 
-	.topic-extra-info{font-size: 13px;line-height: 12px;margin-bottom: 15px;border-bottom: 1px solid #eee;padding-bottom: 12px;color: #999;
+	.topic-extra-info{font-size: 14px;line-height: 14px;margin-bottom: 15px;border-bottom: 1px solid #eee;padding-bottom: 15px;color: #999;
 
 		.topic-node{font-size: 12px;background-color: #f5f5f5;display: inline-block;padding: 4px 5px;border-radius: 2px;text-decoration: none;color: #999;margin-right: 5px;
 

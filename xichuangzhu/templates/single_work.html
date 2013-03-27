@@ -160,7 +160,11 @@ $(document).ready(function(){
 		</ul>
 
 		<h2>作者简介</h2>
-		<div>{{ work.AuthorIntroduction|truncate(55, True) }}</div>
+		<div>{{ work.AuthorIntroduction|truncate(55, True) }}
+			<!-- <span class='link-more'>
+				<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">更多»</a>
+			</span> -->
+		</div>
 
 		<h2>其他作品</h2>
 

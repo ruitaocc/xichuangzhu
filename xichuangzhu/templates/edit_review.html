@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
-{% block page_title %}编辑评论：{{ review.Title }}{% endblock %}
+{% block page_title %}编辑点评：{{ review.Title }}{% endblock %}
 {% block page_id%}page-edit-review{% endblock %}
 
 {% block body %}
 
 <form id="form-edit-review" class="form-horizontal" method="post" action="{{ url_for('edit_review', review_id=review.ReviewID) }}">
 	<fieldset>
-		<legend>编辑评论：{{ review.Title }}</legend>
+		<legend>编辑点评：{{ review.Title }}</legend>
 
 		<div class="control-group">
 			<label class="control-label">标题</label>
