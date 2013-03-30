@@ -9,3 +9,4 @@ def page_404(error):
 @app.errorhandler(500)
 def page_500(error):
 	return render_template('500.html'), 500
+
