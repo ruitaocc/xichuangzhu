@@ -1,4 +1,4 @@
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Author:
 
@@ -12,8 +12,8 @@ class Author:
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			ORDER BY RAND()\n
 			LIMIT %d''' % num
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get all authors
 	@staticmethod
@@ -21,8 +21,8 @@ class Author:
 		query = '''SELECT *\n
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID'''
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get hot authors
 	@staticmethod
@@ -35,8 +35,8 @@ class Author:
 			GROUP BY author.AuthorID\n
 			ORDER BY love_work.Time DESC\n
 			LIMIT %d''' % num
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get certain dynasty's authors
 	@staticmethod
@@ -46,15 +46,15 @@ class Author:
 			WHERE DynastyID = %d
 			ORDER BY BirthYear ASC\n
 			LIMIT %d''' % (dynasty_id, num)
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get authors num of certain dynasty's
 	@staticmethod
 	def get_authors_num_by_dynasty(dynasty_id):
 		query = "SELECT COUNT(*) AS authors_num FROM author WHERE DynastyID = '%d'" % dynasty_id
-		cursor.execute(query)
-		return cursor.fetchone()['authors_num']
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['authors_num']
 
 	# get a author by id
 	@staticmethod
@@ -63,8 +63,8 @@ class Author:
 			FROM author, dynasty\n
 			WHERE author.DynastyID = dynasty.DynastyID\n
 			AND author.AuthorID = %d''' % authorID
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 	# get a author by abbr
 	@staticmethod
@@ -73,8 +73,8 @@ class Author:
 			FROM author, dynasty\n
 			WHERE author.Abbr = '%s'\n
 			AND author.DynastyID = dynasty.DynastyID''' % author_abbr
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 	# get authors by name
 	@staticmethod
@@ -83,8 +83,8 @@ class Author:
 			FROM author, dynasty\n
 			WHERE Author LIKE '%%%s%%'\n
 			AND author.DynastyID = dynasty.DynastyID''' % name
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 # NEW
 
@@ -92,9 +92,9 @@ class Author:
 	@staticmethod
 	def add_author(author, abbr, introduction, birthYear, deathYear, dynastyID):
 		query = '''INSERT INTO author (Author, Abbr, Introduction, BirthYear, DeathYear, DynastyID) VALUES ('%s', '%s', '%s', '%s', '%s', %d)''' % (author, abbr, introduction, birthYear, deathYear, dynastyID)
-		cursor.execute(query)
-		conn.commit()
-		return cursor.lastrowid
+		g.cursor.execute(query)
+		g.conn.commit()
+		return g.cursor.lastrowid
 
 # EDIT
 
@@ -103,5 +103,5 @@ class Author:
 	def edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID):
 		query = '''UPDATE author\n
 			SET Author='%s', Abbr='%s', Introduction='%s', BirthYear='%s', DeathYear='%s', DynastyID=%d WHERE AuthorID = %d''' % (author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()

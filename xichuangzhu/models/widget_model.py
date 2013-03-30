@@ -1,4 +1,4 @@
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Widget:
 
@@ -8,15 +8,15 @@ class Widget:
 	@staticmethod
 	def get_widgets(target_type, target_id):
 		query = "SELECT * FROM widget WHERE Type = '%s' AND TargetID = %d ORDER BY PositionIndex ASC" % (target_type, target_id)
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get a widget
 	@staticmethod
 	def get_widget(widget_id):
 		query = "SELECT * FROM widget WHERE WidgetID = %d" % widget_id
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 # NEW
 
@@ -25,9 +25,9 @@ class Widget:
 	def add_widget(target_type, target_id, title, content, position_index):
 		query = '''INSERT INTO widget (Type, TargetID, Title, Content, PositionIndex)\n
 			VALUES ('%s', %d, '%s', '%s', %d)''' % (target_type, target_id, title, content, position_index)
-		cursor.execute(query)
-		conn.commit()
-		return cursor.lastrowid
+		g.cursor.execute(query)
+		g.conn.commit()
+		return g.cursor.lastrowid
 
 # EDIT 
 
@@ -36,8 +36,8 @@ class Widget:
 	def edit_widget(widget_id, title, content, position_index):
 		query = '''UPDATE widget SET Title = '%s', Content = '%s', PositionIndex = %d\n
 			WHERE WidgetID = %d''' % (title, content, position_index, widget_id)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()
 
 # DELETE
 
@@ -45,5 +45,5 @@ class Widget:
 	@staticmethod
 	def delete_widget(widget_id):
 		query = "DELETE FROM widget WHERE WidgetID = %d" % widget_id
-		cursor.execute()
-		return conn.commit()
+		g.cursor.execute()
+		return g.conn.commit()

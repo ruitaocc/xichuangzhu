@@ -1,4 +1,4 @@
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Love_Work:
 
@@ -14,8 +14,8 @@ class Love_Work:
 			AND love_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
 			ORDER BY love_work.Time DESC LIMIT %d''' % (user_id, num)
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get all users who love a work
 	@staticmethod
@@ -26,15 +26,15 @@ class Love_Work:
 			AND love_work.UserID = user.UserID\n
 			GROUP BY user.UserID
 			LIMIT %d''' % (work_id, num)
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get tags
 	@staticmethod
 	def get_tags(user_id, work_id):
 		query = "SELECT Tags FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
-		cursor.execute(query)
-		return cursor.fetchone()['Tags']
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['Tags']
 
 # CHECK 
 
@@ -42,8 +42,8 @@ class Love_Work:
 	@staticmethod
 	def check_love(user_id, work_id):
 		query = "SELECT * FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
-		cursor.execute(query)
-		return cursor.rowcount > 0
+		g.cursor.execute(query)
+		return g.cursor.rowcount > 0
 
 # NEW
 	
@@ -51,8 +51,8 @@ class Love_Work:
 	@staticmethod
 	def add(user_id, work_id, tags):
 		query = "INSERT INTO love_work (UserID, WorkID, Tags) VALUES (%d, %d, '%s')" % (user_id, work_id, tags)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()
 
 # UPDATE
 	
@@ -60,8 +60,8 @@ class Love_Work:
 	@staticmethod
 	def edit(user_id, work_id, tags):
 		query = "UPDATE love_work SET Tags = '%s' WHERE UserID = %d AND WorkID = %d" % (tags, user_id, work_id)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()
 
 # DELETE
 
@@ -69,7 +69,7 @@ class Love_Work:
 	@staticmethod
 	def remove(user_id, work_id):
 		query = "DELETE FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()
 
 

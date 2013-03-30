@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Work:
 
@@ -15,8 +15,8 @@ class Work:
 			AND work.AuthorID = author.AuthorID\n
 			AND work.DynastyID = dynasty.DynastyID\n
 			AND work.collectionID = collection.CollectionID\n''' % workID
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 	# get works by random
 	@staticmethod
@@ -26,8 +26,8 @@ class Work:
 			WHERE work.AuthorID = author.AuthorID\n
 			ORDER BY RAND()\n
 			LIMIT %d''' % worksNum
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get works by random
 	@staticmethod
@@ -38,8 +38,8 @@ class Work:
 			AND work.Type = '%s'\n
 			ORDER BY RAND()\n
 			LIMIT 1''' % work_type
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 	# get works of certain type in certain dynasty
 	@staticmethod
@@ -56,8 +56,8 @@ class Work:
 
 		query += "LIMIT %d, %d" % ((page-1)*num, num)
 
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get works num of certain type in certain dynasty
 	@staticmethod
@@ -71,8 +71,8 @@ class Work:
 		if dynasty_abbr != 'all':
 			query += "AND dynasty.Abbr = '%s'\n" % dynasty_abbr
 
-		cursor.execute(query)
-		return cursor.fetchone()['WorksNum']
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['WorksNum']
 
 	# get works by tag
 	@staticmethod
@@ -84,8 +84,8 @@ class Work:
 			AND work_tag.WorkID = work.WorkID\n
 			LIMIT %d, %d''' % (tag, (page-1)*num, num)
 
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get works num by tag
 	@staticmethod
@@ -94,15 +94,15 @@ class Work:
 			FROM work, work_tag\n
 			WHERE work_tag.Tag = '%s'\n
 			AND work_tag.WorkID = work.WorkID''' % tag
-		cursor.execute(query)
-		return cursor.fetchone()['WorksNum']
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['WorksNum']
 
 	# get an author's all works
 	@staticmethod
 	def get_works_by_author(authorID):
 		query = "SELECT * FROM work WHERE AuthorID=%d" % authorID
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get an author's other works
 	@staticmethod
@@ -112,29 +112,29 @@ class Work:
 			AND WorkID != %d\n
 			ORDER BY RAND()\n
 			LIMIT %d''' % (author_id, work_id, num)
-		cursor.execute(query)
-		return cursor.fetchall()		
+		g.cursor.execute(query)
+		return g.cursor.fetchall()		
 
 	# get an collection's all works
 	@staticmethod
 	def get_works_by_collection(collectionID):
 		query = "SELECT * FROM work WHERE CollectionID = %d" % collectionID
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get all work types
 	@staticmethod
 	def get_types():
 		query = "SELECT * FROM work_type"
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get chinese name of a work type
 	@staticmethod
 	def get_type_name(work_type):
 		query = "SELECT TypeName From work_type WHERE WorkType = '%s'" % work_type
-		cursor.execute(query)
-		return cursor.fetchone()['TypeName']
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['TypeName']
 
 # NEW
 
@@ -143,9 +143,9 @@ class Work:
 	def add_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name):
 		query = '''INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, CollectionID, Type, TypeName)\n
 			VALUES ('%s', '%s', '%s','%s', %d, %d, %d, '%s', '%s')''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name)
-		cursor.execute(query)
-		conn.commit()
-		return cursor.lastrowid
+		g.cursor.execute(query)
+		g.conn.commit()
+		return g.cursor.lastrowid
 
 # EDIT
 
@@ -153,8 +153,8 @@ class Work:
 	@staticmethod
 	def edit_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name, work_id):
 		query = '''UPDATE work SET Title = '%s', Content = '%s', Foreword = '%s', Introduction = '%s', AuthorID = %d, DynastyID = %d, CollectionID = %d, Type = '%s', TypeName = '%s' WHERE WorkID=%d''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name, work_id)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()
 
 # DELETE
 
@@ -162,5 +162,5 @@ class Work:
 	@staticmethod
 	def delete_work(workID):
 		query = "DELETE FROM work WHERE WorkID = %d" % workID
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()

@@ -1,4 +1,4 @@
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Topic:
 
@@ -12,8 +12,8 @@ class Topic:
 			WHERE topic.UserID = user.UserID\n
 			AND topic.NodeID = node.NodeID\n
 			AND topic.TopicID = %d''' % topic_id
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 	# get topics
 	@staticmethod
@@ -23,8 +23,8 @@ class Topic:
 			WHERE topic.UserID = user.UserID\n
 			AND topic.NodeID = node.NodeID\n
 			ORDER BY Time DESC LIMIT %d''' % num
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get hot topics
 	@staticmethod
@@ -33,8 +33,8 @@ class Topic:
 			FROM topic, user\n
 			WHERE topic.UserID = user.UserID\n
 			ORDER BY topic.CommentNum DESC LIMIT %d''' % num
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get topics by node
 	@staticmethod
@@ -45,5 +45,5 @@ class Topic:
 			AND topic.NodeID = node.NodeID
 			AND node.Abbr = '%s'\n
 			ORDER BY Time DESC''' % node_abbr
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()

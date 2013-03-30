@@ -1,4 +1,4 @@
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Review_comment:
 
@@ -11,8 +11,8 @@ class Review_comment:
 			FROM review_comment AS comment, user\n
 			WHERE comment.ReplyerID = user.UserID
 			AND comment.ReviewID = %d''' % review_id
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 # NEW
 
@@ -21,5 +21,5 @@ class Review_comment:
 	def add_comment(review_id, replyer_id, replyee_id, comment):
 		query = '''INSERT INTO review_comment (ReviewID, ReplyerID, ReplyeeID, Comment)\n
 			VALUES (%d, %d, %d, '%s')''' % (review_id, replyer_id, replyee_id, comment)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()

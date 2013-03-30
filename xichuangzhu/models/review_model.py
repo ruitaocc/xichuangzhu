@@ -1,4 +1,4 @@
-from xichuangzhu import conn, cursor
+from flask import g
 
 class Review:
 
@@ -13,8 +13,8 @@ class Review:
 			AND review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID''' % review_id
-		cursor.execute(query)
-		return cursor.fetchone()
+		g.cursor.execute(query)
+		return g.cursor.fetchone()
 
 	# get reviews by random
 	@staticmethod
@@ -25,8 +25,8 @@ class Review:
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
 			LIMIT %d''' % reviews_num
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get hot reviews
 	@staticmethod
@@ -36,8 +36,8 @@ class Review:
 			WHERE review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n'''
-		cursor.execute(query)
-		return cursor.fetchall()	
+		g.cursor.execute(query)
+		return g.cursor.fetchall()	
 
 	# get reviews of a work
 	@staticmethod
@@ -48,8 +48,8 @@ class Review:
 			AND review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID''' % work_id
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get reviews from a user
 	@staticmethod
@@ -61,8 +61,8 @@ class Review:
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID
 			ORDER BY review.Time LIMIT %d''' % (user_id, num)
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 	# get hot reviewers
 	@staticmethod
@@ -73,8 +73,8 @@ class Review:
 			GROUP BY review.UserID\n
 			ORDER BY ReviewNum DESC\n
 			LIMIT %d''' % num
-		cursor.execute(query)
-		return cursor.fetchall()
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 # NEW
 
 	# add a review to a work
@@ -82,9 +82,9 @@ class Review:
 	def add_review(work_id, user_id, title, content):
 		query = '''INSERT INTO review (WorkID, UserID, Title, Content)\n
 			VALUES (%d, %d, '%s', '%s')''' % (work_id, user_id, title, content)
-		cursor.execute(query)
-		conn.commit()
-		return cursor.lastrowid
+		g.cursor.execute(query)
+		g.conn.commit()
+		return g.cursor.lastrowid
 
 # EDIT
 
@@ -92,5 +92,5 @@ class Review:
 	@staticmethod
 	def edit_review(review_id, title, content):
 		query = '''UPDATE review SET Title = '%s', Content = '%s' WHERE ReviewID = %d''' % (title, content, review_id)
-		cursor.execute(query)
-		return conn.commit()
+		g.cursor.execute(query)
+		return g.conn.commit()
