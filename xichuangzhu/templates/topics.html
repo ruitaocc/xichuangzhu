@@ -29,6 +29,20 @@
 			</div>
 		</div>
 		{% endfor %}
+
+		<h2>节点导航</h2>
+		{% for nt in node_types %}
+		{% if nt.nodes|length != 0 %}
+		<div class="type-item clearfix">
+			<div class="node-type">{{ nt.Type }}</div>
+			<ul class="node-list">
+				{% for n in nt.nodes %}
+				<li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+		{% endfor %}
 	</div>
 
 	<div class="span4">

@@ -24,3 +24,17 @@ class Node:
 		query = "SELECT * FROM node WHERE NodeID = %d" % node_id
 		g.cursor.execute(query)
 		return g.cursor.fetchone()
+
+	# get nodes by type
+	@staticmethod
+	def get_nodes_by_type(type_id):
+		query = "SELECT * FROM node WHERE TypeID = %d" % type_id
+		g.cursor.execute(query)
+		return g.cursor.fetchall() 
+
+	# get all node types
+	@staticmethod
+	def get_types():
+		query = "SELECT * FROM node_type ORDER BY TypeIndex ASC"
+		g.cursor.execute(query)
+		return g.cursor.fetchall()

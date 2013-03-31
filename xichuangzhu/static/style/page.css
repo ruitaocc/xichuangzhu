@@ -112,9 +112,11 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:12px;}
 .topic-item .topic-info .topic-extra-info .topic-time{color:#999;vertical-align:bottom;}
 .topic-item .topic-comment-num{position:absolute;top:15px;right:15px;font-size:12px;line-height:12px;font-weight:bold;color:gray;background-color:#e5e5e5;display:inline-block;padding:3px 12px;border-radius:12px;cursor:pointer;}
-.node-list{list-style:none;margin:0;}.node-list .node{font-size:12px;line-height:12px;display:inline-block;margin:0 5px 5px 0;background-color:#f3f3f3;border-radius:2px;border:1px solid #e5e5e5;}.node-list .node a{color:gray;text-decoration:none;padding:4px 10px;display:inline-block;}.node-list .node a:hover{color:#4d5256;}
+.node-list{list-style:none;margin:0;}.node-list .node{font-size:12px;line-height:12px;display:inline-block;margin:0 6px 6px 0;background-color:#f3f3f3;border-radius:2px;border:1px solid #e5e5e5;}.node-list .node a{color:gray;text-decoration:none;padding:4px 10px;display:inline-block;}.node-list .node a:hover{color:#4d5256;}
 #page-forum .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd;}#page-forum .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px;}
 #page-forum .ht-item .ht-title{margin-left:6px;font-size:14px;}
+#page-forum .type-item{clear:both;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #ddd;}#page-forum .type-item .node-type{float:left;font-size:12px;font-weight:bold;}
+#page-forum .type-item .node-list{float:left;margin:0 0 0 25px;}
 #page-single-topic .node-info{color:#aaa;}#page-single-topic .node-info a{color:#aaa;}#page-single-topic .node-info a:hover{color:darkred;}
 #page-single-topic .topic-user-avatar{float:right;margin-right:5px;}
 #page-single-topic .topic-title{margin-top:0px;}
@@ -122,3 +124,4 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999;}
 #page-single-topic .topic-extra-info .topic-time{color:#999;vertical-align:bottom;}
 #node-info{margin-bottom:20px;}
+#page-add-topic .node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}

@@ -13,9 +13,14 @@ from xichuangzhu.models.node_model import Node
 @app.route('/forum')
 def forum():
 	topics = Topic.get_topics(15)
-	nodes = Node.get_nodes(20)
+	nodes = Node.get_nodes(16)
 	hot_topics = Topic.get_hot_topics(10)
-	return render_template('topics.html', topics=topics, nodes=nodes, hot_topics=hot_topics)
+	
+	node_types = Node.get_types()
+	for nt in node_types:
+		nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
+
+	return render_template('topics.html', topics=topics, nodes=nodes, hot_topics=hot_topics, node_types=node_types)
 
 # page single topic
 #--------------------------------------------------
@@ -23,7 +28,7 @@ def forum():
 @app.route('/topic/<int:topic_id>')
 def single_topic(topic_id):
 	topic = Topic.get_topic(topic_id)
-	nodes = Node.get_nodes(20)
+	nodes = Node.get_nodes(16)
 	return render_template('single_topic.html', topic=topic, nodes=nodes)
 
 # page add topic
@@ -31,7 +36,9 @@ def single_topic(topic_id):
 @app.route('/topic/add', methods=['POST', 'GET'])
 def add_topic():
 	if request.method == 'GET':
-		return render_template('add_topic.html')
+		node_abbr = request.args['node'] if "node" in request.args else "shici"
+		node = Node.get_node_by_abbr(node_abbr)
+		return render_template('add_topic.html', node=node)
 	elif request.method == 'POST':
 		pass
 
