@@ -33,7 +33,7 @@
 					<script type="text/javascript">
 						$('.navbar-search').submit(function(){
 							var query = $('.search-query').val();
-							var url = "http://www.google.com.hk/search?q=site:xichuangzhu.com/ " + query;
+							var url = "http://www.google.com.hk/search?q=site:xichuangzhu.com/work " + query;
 							window.open(url, "_blank")
 							return false;
 						});
@@ -52,7 +52,7 @@
 						</li>
 					</ul>
 
-					{% if session.user_id == 45197381 %}
+					{% if session.user_id == admin_id %}
 					<ul class="nav pull-right">
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">

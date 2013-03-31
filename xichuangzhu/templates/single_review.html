@@ -8,9 +8,10 @@
 <div class="row">
 	<div class="span8">
 		<div class="review-wap">
-					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}" class="user-avatar">
-			<img src="{{ review.Avatar }}">
-		</a>
+			<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}" class="user-avatar">
+				<img src="{{ review.Avatar }}">
+			</a>
+			
 			<h1 class="review-title">{{ review.Title }}</h1>
 
 			<div class="review-extra-info">
@@ -53,11 +54,9 @@
 			</form>
 			{% endif %}
 		</div>
-		
 	</div>
 
-	<div class="span4">
-	</div>
+	<div class="span4"></div>
 </div>
 
 {% endblock %}

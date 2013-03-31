@@ -4,13 +4,12 @@ import config
 
 from flask import Flask, g
 app = Flask(__name__)
-#app.config.update(DEBUG=config.DEBUG, SECRET_KEY=config.SECRET_KEY)
 app.config.update(SECRET_KEY=config.SECRET_KEY)
 
 # inject douban_login_url into template context
 @app.context_processor
 def inject_user():
-	return dict(douban_login_url=config.DOUBAN_LOGIN_URL)
+	return dict(douban_login_url=config.DOUBAN_LOGIN_URL, admin_id = config.ADMIN_ID)
 
 # send log msg using smtp
 if not app.debug:
