@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block page_title %}发起新话题{% endblock %}
+{% block page_id%}page-add-topic{% endblock %}
+
+{% block body %}
+
+<form id="form-add-topic" class="form-horizontal" method="post" action="{{ url_for('add_topic') }}">
+	<fieldset>
+		<legend>发起新话题</legend>
+
+		<div class="control-group">
+			<label class="control-label">节点</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="node" />
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">话题</label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" name="title" />
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">内容</label>
+			<div class="controls">
+				<textarea class="input-xxlarge" id="author-introduction" rows="10" name="content"></textarea>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				<input type="submit" value="提交" class="btn btn-primary" />
+			</div>
+		</div>
+	</fieldset>
+</form>
+
+{% endblock %}
