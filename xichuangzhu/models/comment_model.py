@@ -37,7 +37,9 @@ class Comment:
 	# add comment to a topic
 	@staticmethod
 	def add_comment_to_topic(topic_id, replyer_id, replyee_id, comment):
-		query = '''INSERT INTO topic_comment (TopicID, ReplyerID, ReplyeeID, Comment)\n
-			VALUES (%d, %d, %d, '%s')''' % (topic_id, replyer_id, replyee_id, comment)
+		query = "INSERT INTO topic_comment (TopicID, ReplyerID, ReplyeeID, Comment) VALUES (%d, %d, %d, '%s')" % (topic_id, replyer_id, replyee_id, comment)
+		g.cursor.execute(query)
+		# comment num + 1
+		query = "UPDATE topic SET CommentNum = CommentNum + 1 WHERE TopicID = %d" % topic_id
 		g.cursor.execute(query)
 		return g.conn.commit()
