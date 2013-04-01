@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}首页{% endblock %}
+{% block page_title %}西窗烛{% endblock %}
 {% block page_id%}page-index{% endblock %}
 
 {% block body %}
@@ -83,6 +83,8 @@ $(document).ready(function(){
 			<div class='author'>
 				<a href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a><sup class='author-dynasty'>〔<a href="{{ url_for('single_dynasty', dynasty_abbr=author.DynastyAbbr) }}">{{ author.Dynasty }}</a>〕</sup>
 			</div>
+
+			<div class="author-quote">{{ author.Quote }}</div>
 		</div>
 		{% endfor %}
 
