@@ -6,6 +6,7 @@ from xichuangzhu import app
 
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.node_model import Node
+from xichuangzhu.models.comment_model import Comment
 
 import datetime, time
 
@@ -59,11 +60,21 @@ def forum():
 # page single topic
 #--------------------------------------------------
 
+# view
 @app.route('/topic/<int:topic_id>')
 def single_topic(topic_id):
 	topic = Topic.get_topic(topic_id)
+	comments = Comment.get_comments_by_topic(topic['TopicID'])
 	nodes = Node.get_nodes(16)
-	return render_template('single_topic.html', topic=topic, nodes=nodes)
+	return render_template('single_topic.html', topic=topic, comments=comments, nodes=nodes)
+
+# proc - add comment
+@app.route('/topic/<int:topic_id>', methods=['POST'])
+def add_comment_to_topic(topic_id):
+	comment    = request.form['comment']
+	replyer_id = session['user_id']
+	Comment.add_comment_to_topic(topic_id, replyer_id, 0, comment)
+	return redirect(url_for('single_topic', topic_id=topic_id))	
 
 # page add topic
 #--------------------------------------------------

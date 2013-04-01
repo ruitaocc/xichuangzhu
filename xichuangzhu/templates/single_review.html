@@ -7,53 +7,51 @@
 
 <div class="row">
 	<div class="span8">
-		<div class="review-wap">
-			<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}" class="user-avatar">
-				<img src="{{ review.Avatar }}">
-			</a>
+		<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}" class="user-avatar">
+			<img src="{{ review.Avatar }}">
+		</a>
+		
+		<h1 class="review-title">{{ review.Title }}</h1>
+
+		<div class="review-extra-info">
+			<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
+			评
+			<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
 			
-			<h1 class="review-title">{{ review.Title }}</h1>
+			<span class="review-time">{{ review.Time }}</span>
 
-			<div class="review-extra-info">
-				<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
-				评
-				<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
-				
-				<span class="review-time">{{ review.Time }}</span>
-
-				{% if session.user_id == review.UserID %}
-				<a class="btn btn-mini btn-edit-review" href="{{ url_for('edit_review', review_id=review.ReviewID) }}">编辑</a>
-				{% endif %}
-			</div>
-
-			<div class="review-content">{{ review.Content|safe }}</div>
-
-			<!-- <h2>回复</h2> -->
-
-			{% for comment in comments %}
-			<div class="comment-item clearfix">
-				<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">
-					<img src="{{ comment.Avatar }}">
-				</a>
-
-				<div class="comment-wap">
-					<div class="comment-extra-info">
-						<a href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">{{ comment.Name }}</a>
-						{{ comment.Time }}
-					</div>
-
-					<div class="comment-body">{{ comment.Comment }}</div>
-				</div>
-			</div>
-			{% endfor %}
-
-			{% if session.user_id %}
-			<form id="add-review-comment" method="post" action="{{ url_for('add_comment', review_id=review.ReviewID, replyer_id=session.user_id) }}">
-				<textarea name="comment" class="input-xxlarge" rows="4"></textarea>
-				<input type="submit" class="btn btn-small" value="提交" />
-			</form>
+			{% if session.user_id == review.UserID %}
+			<a class="btn btn-mini btn-edit-review" href="{{ url_for('edit_review', review_id=review.ReviewID) }}">编辑</a>
 			{% endif %}
 		</div>
+
+		<div class="review-content">{{ review.Content|safe }}</div>
+
+		<h2>回复</h2>
+
+		{% for comment in comments %}
+		<div class="comment-item clearfix">
+			<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">
+				<img src="{{ comment.Avatar }}">
+			</a>
+
+			<div class="comment-wap">
+				<div class="comment-extra-info">
+					<a href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">{{ comment.Name }}</a>
+					{{ comment.Time }}
+				</div>
+
+				<div class="comment-body">{{ comment.Comment }}</div>
+			</div>
+		</div>
+		{% endfor %}
+
+		{% if session.user_id %}
+		<form id="add-review-comment" method="post" action="{{ url_for('add_comment_to_review', review_id=review.ReviewID) }}">
+			<textarea name="comment" class="input-xxlarge" rows="4" placeholder="添加回复"></textarea>
+			<input type="submit" class="btn btn-small" value="回复" />
+		</form>
+		{% endif %}
 	</div>
 
 	<div class="span4"></div>
