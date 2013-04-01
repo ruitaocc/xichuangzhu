@@ -7,7 +7,7 @@ class Topic:
 	# get a topic
 	@staticmethod
 	def get_topic(topic_id):
-		query = '''SELECT topic.TopicID, topic.Title, topic.Content, topic.CommentNum, topic.Time, node.Name AS NodeName, node.Abbr AS NodeAbbr, user.Name AS UserName, user.Abbr AS UserAbbr, user.Avatar\n
+		query = '''SELECT topic.TopicID, topic.Title, topic.Content, topic.CommentNum, topic.Time, node.Name AS NodeName, node.Abbr AS NodeAbbr, node.NOdeID, user.Name AS UserName, user.Abbr AS UserAbbr, user.Avatar, user.UserID\n
 			FROM topic, user, node\n
 			WHERE topic.UserID = user.UserID\n
 			AND topic.NodeID = node.NodeID\n
@@ -47,3 +47,22 @@ class Topic:
 			ORDER BY Time DESC''' % node_abbr
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
+
+# NEW
+
+	# add topic
+	@staticmethod
+	def add(node_id, title, content, user_id):
+		query = "INSERT INTO topic (NodeID, Title, Content, UserID) VALUES (%d, '%s', '%s', %d)" % (node_id, title, content, user_id)
+		g.cursor.execute(query)
+		g.conn.commit()
+		return g.cursor.lastrowid
+
+# UPDATE
+
+	# edit topic
+	@staticmethod
+	def edit(topic_id, node_id, title, content):
+		query = "UPDATE topic SET NodeID = %d, Title = '%s', Content = '%s' WHERE TopicID = %d" % (node_id, title, content, topic_id)
+		g.cursor.execute(query)
+		return g.conn.commit()

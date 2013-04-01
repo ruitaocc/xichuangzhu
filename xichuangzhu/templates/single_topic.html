@@ -18,6 +18,9 @@
 				By
 				<a class="topic-launcher" href="{{ url_for('people', user_abbr=topic.UserAbbr) }}">{{ topic.UserName }}</a>
 				<span class="topic-time">{{ topic.Time }}</span>
+				{% if topic.UserID == session.user_id %}
+				<a class="btn btn-mini btn-edit-topic" href="{{ url_for('edit_topic', topic_id=topic.TopicID) }}">编辑</a>
+				{% endif %}
 			</div>
 			<div class="topic-content">{{ topic.Content }}</div>
 			<!-- <div class="topic-comment-num">{{ topic.CommentNum }}</div> -->

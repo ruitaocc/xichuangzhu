@@ -76,6 +76,14 @@ body{
 	display: block;
 }
 
+.modal{
+	border: 8px solid rgba(0, 0, 0, 0.35);
+	box-shadow: none;
+	border-radius: 3px;
+
+	h4{font-size: 18px;}
+}
+
 // component work item
 //-----------------------------------------------------
 
@@ -483,12 +491,6 @@ body{
 	}
 
 	#modal-tags{
-		border: 8px solid rgba(0, 0, 0, 0.35);
-		box-shadow: none;
-		border-radius: 3px;
-
-		h4{font-size: 18px;}
-
 		#input-tags{
 			font-size: 12px;
 			margin-bottom: 15px;
@@ -809,7 +811,6 @@ body{
 
 		.btn-edit-review{
 			margin-left: 10px;
-			vertical-align: text-bottom;
 		}
 
 		.review-time{
@@ -1104,9 +1105,29 @@ body{
 
 	.node{font-size:12px;line-height:12px;display: inline-block;margin:0 6px 6px 0;background-color: #f3f3f3;border-radius: 2px;border: 1px solid #e5e5e5;
 
-		a{color:gray;text-decoration: none;padding: 4px 10px;display: inline-block;
+		a{color:rgb(98, 104, 107);text-decoration: none;padding: 4px 10px;display: inline-block;cursor: pointer;
 			&:hover{color:#4d5256;}
 		}
+	}
+}
+
+// component nodes nav
+//----------------------------------------------------- 
+.type-item{
+	clear: both;
+	margin-bottom: 10px;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed #DDD;
+
+	.node-type{
+		float: left;
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	.node-list{
+		float: left;
+		margin: 0 0 0 25px;
 	}
 }
 
@@ -1128,31 +1149,6 @@ body{
 		.ht-title{
 			margin-left: 6px;
 			font-size: 14px;
-		}
-	}
-
-	.type-item{
-		clear: both;
-		margin-bottom: 10px;
-		padding-bottom: 10px;
-		border-bottom: 1px dashed #ddd;
-
-		.node-type{
-			float: left;
-			font-size: 12px;
-			font-weight: bold;
-		}
-
-		.node-list{
-			float: left;
-			margin: 0 0 0 25px;
-
-			.node{
-				// margin-right: 8px;
-				a{
-
-				}
-			}
 		}
 	}
 }
@@ -1180,7 +1176,11 @@ body{
 
 		.topic-launcher{margin-right: 5px;color: #999;}
 
-		.topic-time{color: #999;vertical-align: bottom;}
+		.topic-time{color: #999;}
+
+		.btn-edit-topic{
+			margin-left: 10px;
+		}
 	}
 }
 
@@ -1188,8 +1188,9 @@ body{
 
 // page add topic
 //-----------------------------------------------------
-#page-add-topic{
-	.node{
+#page-add-topic,
+#page-edit-topic{
+	#node{
 		font-size: 14px;
 		line-height: 14px;
 		margin-right: 10px;

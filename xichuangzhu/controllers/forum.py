@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 
-from flask import render_template, request, redirect, url_for, json
+from flask import render_template, request, redirect, url_for, json, session
 
 from xichuangzhu import app
 
@@ -38,9 +38,35 @@ def add_topic():
 	if request.method == 'GET':
 		node_abbr = request.args['node'] if "node" in request.args else "shici"
 		node = Node.get_node_by_abbr(node_abbr)
-		return render_template('add_topic.html', node=node)
+		
+		node_types = Node.get_types()
+		for nt in node_types:
+			nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
+		return render_template('add_topic.html', node=node, node_types=node_types)
 	elif request.method == 'POST':
-		pass
+		node_id = int(request.form['node-id'])
+		title   = request.form['title']
+		content = request.form['content']
+		user_id = session['user_id']
+		new_topic_id = Topic.add(node_id, title, content, user_id)
+		return redirect(url_for('single_topic', topic_id=new_topic_id))
+
+# page edit topic
+#--------------------------------------------------
+@app.route('/topic/edit/<int:topic_id>', methods=['POST', 'GET'])
+def edit_topic(topic_id):
+	if request.method == 'GET':
+		topic = Topic.get_topic(topic_id)
+		node_types = Node.get_types()
+		for nt in node_types:
+			nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
+		return render_template('edit_topic.html', topic=topic, node_types=node_types)
+	elif request.method == 'POST':
+		node_id = int(request.form['node-id'])
+		title   = request.form['title']
+		content = request.form['content']
+		new_topic_id = Topic.edit(topic_id, node_id, title, content)
+		return redirect(url_for('single_topic', topic_id=topic_id))
 
 # page node
 #--------------------------------------------------

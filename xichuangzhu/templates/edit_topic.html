@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
-{% block page_title %}发起新话题{% endblock %}
-{% block page_id%}page-add-topic{% endblock %}
+{% block page_title %}编辑话题{% endblock %}
+{% block page_id%}page-edit-topic{% endblock %}
 
 {% block body %}
 
@@ -26,30 +26,30 @@ $(document).ready(function(){
 
 </script>
 
-<form id="form-add-topic" class="form-horizontal" method="post" action="{{ url_for('add_topic') }}">
+<form id="form-edit-topic" class="form-horizontal" method="post" action="{{ url_for('edit_topic', topic_id=topic.TopicID) }}">
 	<fieldset>
 		<legend>发起新话题</legend>
 
 		<div class="control-group">
 			<label class="control-label">节点</label>
 			<div class="controls">
-				<span id="node">{{ node.Name }}</span>
+				<span id="node">{{ topic.NodeName }}</span>
 				<a type="button" class="btn btn-mini" href="#modal-nodes" data-toggle="modal">切换节点</a>
-				<input type="hidden" value="{{ node.NodeID }}" name="node-id" id="input-node-id" />
+				<input type="hidden" value="{{ topic.NodeID }}" name="node-id" id="input-node-id" />
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label">话题</label>
 			<div class="controls">
-				<input type="text" class="input-xlarge" name="title" />
+				<input type="text" class="input-xlarge" value="{{ topic.Title }}" name="title" />
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label">内容</label>
 			<div class="controls">
-				<textarea class="input-xxlarge" id="author-introduction" rows="15" name="content"></textarea>
+				<textarea class="input-xxlarge" id="author-introduction" rows="15" name="content">{{ topic.Content }}</textarea>
 			</div>
 		</div>
 
