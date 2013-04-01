@@ -17,7 +17,7 @@ from email.mime.text import MIMEText
 
 import hashlib
 
-import re
+from xichuangzhu.utils import content_clean
 
 # proc - login by douban's oauth2.0
 @app.route('/login/douban')
@@ -146,9 +146,7 @@ def people(user_abbr):
 
 	works = Love_Work.get_works_by_user_love(people['UserID'], 3)
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 
 	reviews = Review.get_reviews_by_user(people['UserID'], 3)
 

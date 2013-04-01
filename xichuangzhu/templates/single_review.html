@@ -38,7 +38,7 @@
 			<div class="comment-wap">
 				<div class="comment-extra-info">
 					<a href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">{{ comment.Name }}</a>
-					{{ comment.Time }}
+					<span class="comment-time">{{ comment.Time }}</span>
 				</div>
 
 				<div class="comment-body">{{ comment.Comment }}</div>

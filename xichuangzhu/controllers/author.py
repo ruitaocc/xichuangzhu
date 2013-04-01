@@ -12,6 +12,8 @@ from xichuangzhu.models.quote_model import Quote
 
 import re
 
+from xichuangzhu.utils import content_clean
+
 # page all authors
 #--------------------------------------------------
 
@@ -46,9 +48,7 @@ def single_author(author_abbr):
 
 	works = Work.get_works_by_author(author['AuthorID'])
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 
 	# count num of different type work
 	# return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}

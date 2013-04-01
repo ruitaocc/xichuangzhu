@@ -8,7 +8,7 @@ from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.author_model import Author
 
-import re
+from xichuangzhu.utils import content_clean
 
 # page - single collection
 #--------------------------------------------------
@@ -18,9 +18,7 @@ def single_collection(collectionID):
 	collection = Collection.get_collection(collectionID)
 	works      = Work.get_works_by_collection(collectionID)
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 	return render_template('single_collection.html', collection=collection, works=works)
 
 # page - add collection

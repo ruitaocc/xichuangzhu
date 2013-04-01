@@ -134,7 +134,7 @@ $(document).ready(function(){
 				<div class="review-extra-info">
 					By
 					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
-					{{ review.Time }}
+					<span class="review-time">{{ review.Time }}</span>
 				</div>
 			</div>
 		</div>

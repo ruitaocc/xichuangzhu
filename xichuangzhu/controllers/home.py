@@ -13,17 +13,19 @@ from xichuangzhu.models.quote_model import Quote
 
 import re
 
+from xichuangzhu.utils import time_diff, content_clean
+
 # page home
 #--------------------------------------------------
 @app.route('/')
 def index():
 	works = Work.get_works_by_random(4)
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 
 	reviews = Review.get_reviews_by_random(4)
+	for r in reviews:
+		r['Time'] = time_diff(r['Time'])
 	
 	authors = Author.get_authors_by_random(5)
 	for a in authors:
@@ -40,9 +42,7 @@ def index():
 def four_works():
 	works = Work.get_works_by_random(4)
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 	return render_template('four_works.widget', works=works)
 
 # page about

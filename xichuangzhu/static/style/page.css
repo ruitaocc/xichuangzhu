@@ -39,7 +39,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-work .work-collection{font-weight:bold;font-size:16px;margin-bottom:5px;}
 #page-single-work .review-item{margin-bottom:15px;}#page-single-work .review-item .user-avatar{float:left;margin-top:5px;}
 #page-single-work .review-item .review-wap{margin-left:60px;}#page-single-work .review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
-#page-single-work .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}
+#page-single-work .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}#page-single-work .review-item .review-wap .review-extra-info .review-time{color:#999;}
 #page-single-work .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 #page-single-work .work-tags{list-style:none;margin:0;}#page-single-work .work-tags li{list-style:none;display:inline-block;}#page-single-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 2px 0 2px;cursor:pointer;color:#666;background-color:#F2F2F2;box-shadow:1px 1px 0px #bbb;}#page-single-work .work-tags li a:hover{background-color:#EbEbEb;}
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #DDD;padding-bottom:5px;}#page-single-work .other-work-item:last-child{border:0;}
@@ -72,13 +72,13 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-dynasty .row #dynasty-wap .dynasty-extra p{margin-bottom:15px;}
 #page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
 #page-single-dynasty .row .author-item .author-quote{font-size:12px;}
-#page-single-review .user-avatar{float:right;}
+#page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
-#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;color:#999;}#page-single-review .review-extra-info .btn-edit-review{margin-left:10px;}
+#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;}#page-single-review .review-extra-info .btn-edit-review{margin-left:10px;}
 #page-single-review .review-extra-info .review-time{color:#999;}
 #page-single-review .review-content{margin-bottom:15px;}
 #page-single-review .comment-item{margin-bottom:15px;clear:both;}#page-single-review .comment-item .comment-user-avatar{float:left;margin-top:5px;}
-#page-single-review .comment-item .comment-wap{margin-left:60px;font-size:12px;}#page-single-review .comment-item .comment-wap .comment-extra-info{line-height:22px;}
+#page-single-review .comment-item .comment-wap{margin-left:60px;font-size:12px;}#page-single-review .comment-item .comment-wap .comment-extra-info{line-height:22px;}#page-single-review .comment-item .comment-wap .comment-extra-info .comment-time{color:#999;}
 #page-single-review textarea{display:block;margin-top:20px;}
 #page-reviews .review-item{margin-bottom:15px;}#page-reviews .review-item .user-avatar{float:left;margin-top:4px;}
 #page-reviews .review-item .review-wap{margin-left:60px;}#page-reviews .review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
@@ -125,7 +125,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-topic .topic-extra-info .topic-time{color:#999;}
 #page-single-topic .topic-extra-info .btn-edit-topic{margin-left:10px;}
 #page-single-topic .comment-item{margin-bottom:15px;clear:both;}#page-single-topic .comment-item .comment-user-avatar{float:left;margin-top:5px;}
-#page-single-topic .comment-item .comment-wap{margin-left:60px;font-size:12px;}#page-single-topic .comment-item .comment-wap .comment-extra-info{line-height:22px;}
+#page-single-topic .comment-item .comment-wap{margin-left:60px;font-size:12px;}#page-single-topic .comment-item .comment-wap .comment-extra-info{line-height:22px;}#page-single-topic .comment-item .comment-wap .comment-extra-info .comment-time{color:#999;}
 #page-single-topic textarea{display:block;margin-top:20px;}
 #node-info{margin-bottom:20px;}
 #page-add-topic #node,#page-edit-topic #node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}

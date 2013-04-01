@@ -11,6 +11,8 @@ from xichuangzhu.models.comment_model import Comment
 
 import markdown2
 
+from xichuangzhu.utils import time_diff
+
 # page single review
 #--------------------------------------------------
 
@@ -19,7 +21,10 @@ import markdown2
 def single_review(review_id):
 	review = Review.get_review(review_id)
 	review['Content'] = markdown2.markdown(review['Content'])
+	review['Time'] = time_diff(review['Time'])
 	comments = Comment.get_comments_by_review(review_id)
+	for c in comments:
+		c['Time'] = time_diff(c['Time'])
 	return render_template('single_review.html', review=review, comments=comments)
 
 # proc - add comment
@@ -37,6 +42,8 @@ def add_comment_to_review(review_id):
 @app.route('/reviews')
 def reviews():
 	reviews = Review.get_hot_reviews()
+	for r in reviews:
+		r['Time'] = time_diff(r['Time'])
 	reviewers = Review.get_hot_reviewers(8)
 	return render_template('reviews.html', reviews=reviews, reviewers=reviewers)
 

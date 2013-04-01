@@ -1,7 +1,5 @@
 #-*- coding: UTF-8 -*-
 
-from __future__ import division
-
 from flask import render_template, request, redirect, url_for, json, session
 
 from xichuangzhu import app
@@ -22,6 +20,8 @@ import re
 
 import math
 
+from xichuangzhu.utils import time_diff, content_clean
+
 # page - single work
 #--------------------------------------------------
 
@@ -30,7 +30,7 @@ import math
 def single_work(work_id):
 	work = Work.get_work(work_id)
 
-	# 1 - add comment, 2 - split ci, 3 - gene paragraph
+	# add comment, split ci, gene paragraph
 	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 	work['Content'] = markdown2.markdown(work['Content'])
@@ -48,6 +48,8 @@ def single_work(work_id):
 		popular_tags = []
 
 	reviews = Review.get_reviews_by_work(work_id)
+	for r in reviews:
+		r['Time'] = time_diff(r['Time'])
 
 	widgets = Widget.get_widgets('work', work_id)
 
@@ -55,9 +57,7 @@ def single_work(work_id):
 
 	other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
 	for ow in other_works:
-		ow['Content'] = re.sub(r'<([^<]+)>', '', ow['Content'])
-		ow['Content'] = ow['Content'].replace('%', '')
-		ow['Content'] = ow['Content'].replace('（一）', "")
+		ow['Content'] = content_clean(ow['Content'])
 
 	lovers = Love_Work.get_users_love_work(work_id, 4)
 
@@ -134,9 +134,7 @@ def works():
 
 	works = Work.get_works(work_type, dynasty_abbr, page, num_per_page)
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 
 	works_num  = Work.get_works_num(work_type, dynasty_abbr)
 
@@ -168,9 +166,7 @@ def works_by_tag(tag):
 
 	works = Work.get_works_by_tag(tag, page, num_per_page)
 	for work in works:
-		work['Content'] = re.sub(r'<([^<]+)>', '', work['Content'])
-		work['Content'] = work['Content'].replace('%', '')
-		work['Content'] = work['Content'].replace('（一）', "")
+		work['Content'] = content_clean(work['Content'])
 
 	works_num  = Work.get_works_num_by_tag(tag)
 
