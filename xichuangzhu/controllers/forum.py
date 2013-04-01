@@ -7,13 +7,47 @@ from xichuangzhu import app
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.node_model import Node
 
+import datetime, time
+
+# count the time diff, return a user-friendly format
+# dt must be format as 2013-4-1 14:25:10
+def time_diff(dt):
+	dt = datetime.datetime.strptime(str(dt), "%Y-%m-%d %H:%M:%S")
+	today = datetime.datetime.today()
+
+	if dt.year != today.year:
+		return str(today.year - dt.year) + "年前"
+	elif dt.month != today.month:
+		return str(today.month - dt.month) + "个月前"
+	elif dt.day != today.day:
+		return str(today.day - dt.day) + "天前"
+	elif dt.hour != today.hour:
+		return str(today.hour - dt.hour) + "小时前"
+	elif dt.minite != today.minite:
+		return str(today.minite - dt.minite) + "分钟前"
+	elif dt.minite == today.minite:
+		return "刚刚"
+
+	# or user timedelta
+	# s = (today - dt).total_seconds()
+	# if day_diff > 365, use year
+	# elif day_diff > 30, use month
+	# elif hour_diff > 24, use day
+	# elif minite_diff > 60, use hour
+	# elif second_diff > 60, use minite
+	# else use "just now"
+
 # page forum
 #--------------------------------------------------
 
 @app.route('/forum')
 def forum():
 	topics = Topic.get_topics(15)
+	for t in topics:
+		t['Time'] = time_diff(t['Time'])
+
 	nodes = Node.get_nodes(16)
+
 	hot_topics = Topic.get_hot_topics(10)
 	
 	node_types = Node.get_types()

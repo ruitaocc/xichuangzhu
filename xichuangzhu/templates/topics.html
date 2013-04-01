@@ -25,7 +25,9 @@
 					<a class="topic-launcher" href="{{ url_for('people', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
 					<span class="topic-time">{{ t.Time }}</span>
 				</div>
+				{% if t.CommentNum != 0 %}
 				<div class="topic-comment-num">{{ t.CommentNum }}</div>
+				{% endif %}
 			</div>
 		</div>
 		{% endfor %}
