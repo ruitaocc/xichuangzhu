@@ -42,6 +42,9 @@ def single_topic(topic_id):
 	for c in comments:
 		c['Time'] = time_diff(c['Time'])
 
+	# add click time
+	Topic.add_click_num(topic_id)
+
 	nodes = Node.get_nodes(16)
 	return render_template('single_topic.html', topic=topic, comments=comments, nodes=nodes)
 

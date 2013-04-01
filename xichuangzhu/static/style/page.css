@@ -74,7 +74,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-dynasty .row .author-item .author-quote{font-size:12px;}
 #page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
-#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;}#page-single-review .review-extra-info .btn-edit-review{margin-left:10px;}
+#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;color:#999;}#page-single-review .review-extra-info .btn-edit-review{margin-left:10px;}
 #page-single-review .review-extra-info .review-time{color:#999;}
 #page-single-review .review-content{margin-bottom:15px;}
 #page-single-review .comment-item{margin-bottom:15px;clear:both;}#page-single-review .comment-item .comment-user-avatar{float:left;margin-top:5px;}

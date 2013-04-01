@@ -19,6 +19,7 @@ from xichuangzhu.utils import time_diff
 # view
 @app.route('/review/<int:review_id>')
 def single_review(review_id):
+	Review.add_click_num(review_id)
 	review = Review.get_review(review_id)
 	review['Content'] = markdown2.markdown(review['Content'])
 	review['Time'] = time_diff(review['Time'])

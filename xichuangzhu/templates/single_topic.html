@@ -29,7 +29,9 @@
 			<!-- <div class="topic-comment-num">{{ topic.CommentNum }}</div> -->
 		</div>
 
+		{% if comments|length != 0 %}
 		<h2>回复</h2>
+		{% endif %}
 
 		{% for comment in comments %}
 		<div class="comment-item clearfix">

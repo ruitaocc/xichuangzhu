@@ -7,7 +7,7 @@ class Review:
 	# get a review
 	@staticmethod
 	def get_review(review_id):
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, review.ClickNum, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.ReviewID = %d\n
 			AND review.UserID = user.UserID\n
@@ -86,11 +86,18 @@ class Review:
 		g.conn.commit()
 		return g.cursor.lastrowid
 
-# EDIT
+# UPDATE
 
 	# edit a view
 	@staticmethod
 	def edit_review(review_id, title, content):
 		query = '''UPDATE review SET Title = '%s', Content = '%s' WHERE ReviewID = %d''' % (title, content, review_id)
+		g.cursor.execute(query)
+		return g.conn.commit()
+
+	# add click num
+	@staticmethod
+	def add_click_num(review_id):
+		query = '''UPDATE review SET ClickNum = ClickNum + 1 WHERE ReviewID = %d''' % review_id
 		g.cursor.execute(query)
 		return g.conn.commit()

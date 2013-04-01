@@ -66,3 +66,10 @@ class Topic:
 		query = "UPDATE topic SET NodeID = %d, Title = '%s', Content = '%s' WHERE TopicID = %d" % (node_id, title, content, topic_id)
 		g.cursor.execute(query)
 		return g.conn.commit()
+
+	# add click num
+	@staticmethod
+	def add_click_num(topic_id):
+		query = "UPDATE topic SET ClickNum = ClickNum + 1 WHERE TopicID = %d" % topic_id
+		g.cursor.execute(query)
+		return g.conn.commit()
