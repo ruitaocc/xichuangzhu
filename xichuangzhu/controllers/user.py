@@ -9,6 +9,7 @@ import config
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.love_work_model import Love_Work
 from xichuangzhu.models.review_model import Review
+from xichuangzhu.models.inform_model import Inform
 
 import urllib, urllib2
 
@@ -158,3 +159,11 @@ def people(user_abbr):
 	else:
 		title_name = people['Name']
 	return render_template('people.html', people=people, works=works, reviews=reviews, title_name=title_name)
+
+# page - informs
+@app.route('/informs')
+def informs():
+	informs = Inform.get_informs(session['user_id'])
+	for i in informs:
+		i['Time'] = time_diff(i['Time'])
+	return render_template('informs.html', informs=informs)

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block page_title %}提醒{% endblock %}
+{% block page_id%}page-informs{% endblock %}
+
+{% block body %}
+
+<h2>提醒</h2>
+
+<div class="row">
+	<div class="span8">
+		{% for i in informs %}
+		<div class="inform-item">
+			<a class="user-avatar" href="{{ url_for('people', user_abbr=i.Abbr) }}">
+				<img src="{{ i.Avatar }}">
+			</a>
+
+			<div class="inform-wap">
+				<div class="inform-title">
+					{{ i.Time }}&nbsp;&nbsp;{{ i.Title|safe }}
+				</div>
+				<div class="inform-content">{{ i.Content|safe }}</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="span4"></div>
+</div>
+
+{% endblock %}

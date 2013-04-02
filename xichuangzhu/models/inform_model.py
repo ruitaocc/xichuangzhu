@@ -6,8 +6,13 @@ class Inform:
 
 	# get all informs
 	@staticmethod
-	def get_informs(num):
-		pass
+	def get_informs(user_id):
+		query = '''SELECT inform.Title, inform.Content, inform.Time, user.Avatar, user.Abbr
+			FROM inform, user\n
+			WHERE inform.ReplyerID = user.UserID\n
+			AND inform.UserID = %d''' % user_id
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
 
 # NEW
 

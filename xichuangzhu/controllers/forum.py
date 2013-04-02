@@ -64,7 +64,7 @@ def add_comment_to_topic(topic_id):
 			replyee_name = header.lstrip('@')
 			replyee_abbr = User.get_abbr_by_name(replyee_name)
 			replyee_id = User.get_id_by_abbr(replyee_abbr)
-			comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + " " + comment.split(' ')[1]
+			comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + "&nbsp;&nbsp;" + comment.split(' ')[1]
 	Comment.add_comment_to_topic(topic_id, replyer_id, comment)
 
 	# plus comment num
@@ -73,7 +73,7 @@ def add_comment_to_topic(topic_id):
 	# inform
 	topic = Topic.get_topic(topic_id)
 	topic_user_id = topic['UserID']
-	inform_title = "<a href=" + url_for('people', user_abbr=replyer_abbr) + ">" + replyer_name + "</a> 在话题 " + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + " 中回复了你"
+	inform_title = "<a href=" + url_for('people', user_abbr=replyer_abbr) + ">" + replyer_name + "</a>&nbsp;&nbsp;在话题&nbsp;&nbsp;" + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
 	# if the topic not add by me
 	if topic_user_id != replyer_id:
 		Inform.add(replyer_id, topic_user_id, inform_title, comment)
