@@ -17,6 +17,13 @@ class User:
 		query = "SELECT * FROM user WHERE Abbr = '%s'" % user_abbr
 		g.cursor.execute(query)
 		return g.cursor.fetchone()
+
+	# get abbr by name
+	@staticmethod
+	def get_abbr_by_name(user_name):
+		query = "SELECT Abbr FROM user WHERE Name = '%s'" % user_name
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['Abbr']
 	
 	# get name by id
 	@staticmethod
@@ -60,17 +67,23 @@ class User:
 
 # CHECK
 	
-	# check user exist
+	# check user exist by id
 	@staticmethod
-	def check_user_exist(user_id):
+	def check_exist_by_id(user_id):
 		query = "SELECT * FROM user WHERE UserID = %d" % user_id
-		#return query
+		g.cursor.execute(query)
+		return g.cursor.rowcount > 0
+
+	# check user exist by name
+	@staticmethod
+	def check_exist_by_name(user_name):
+		query = "SELECT * FROM user WHERE Name = '%s'" % user_name
 		g.cursor.execute(query)
 		return g.cursor.rowcount > 0
 
 	# check user active
 	@staticmethod
-	def check_user_active(user_id):
+	def check_active(user_id):
 		query = "SELECT * FROM user WHERE UserID = %d AND IsActive = 1" % user_id
 		g.cursor.execute(query)
 		return g.cursor.rowcount > 0

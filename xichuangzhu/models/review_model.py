@@ -101,3 +101,10 @@ class Review:
 		query = '''UPDATE review SET ClickNum = ClickNum + 1 WHERE ReviewID = %d''' % review_id
 		g.cursor.execute(query)
 		return g.conn.commit()
+
+	# add comment num
+	@staticmethod
+	def add_comment_num(review_id):
+		query = "UPDATE review SET CommentNum = CommentNum + 1 WHERE ReviewID = %d" % review_id
+		g.cursor.execute(query)
+		return g.conn.commit()

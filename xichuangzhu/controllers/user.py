@@ -40,9 +40,9 @@ def auth():
 	user_id = int(info['douban_user_id'])
 
 	# if user exist
-	if User.check_user_exist(user_id):
+	if User.check_exist_by_id(user_id):
 		# if user unactive
-		if not User.check_user_active(user_id):
+		if not User.check_active(user_id):
 			return redirect(url_for('verify_email_callback', state='unactive', user_id=user_id))
 		else:
 			# set session
@@ -137,6 +137,7 @@ def verify_email_callback():
 def logout():
 	session.pop('user_id', None)
 	session.pop('user_name', None)
+	session.pop('user_abbr', None)
 	return redirect(url_for('index'))
 
 # page - personal page

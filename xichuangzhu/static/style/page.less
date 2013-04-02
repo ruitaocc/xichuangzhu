@@ -819,36 +819,6 @@ body{
 	.review-content{
 		margin-bottom: 15px;
 	}
-
-	.comment-item{
-		margin-bottom: 15px;
-		clear: both;
-
-		.comment-user-avatar{
-			float: left;
-			margin-top: 5px;
-		}
-
-		.comment-wap{
-			margin-left: 60px;
-			font-size: 12px;
-
-			.comment-extra-info{
-				line-height: 22px;
-
-				.comment-time{color:#999;}
-			}
-
-			.comment-body{
-
-			}
-		}
-	}
-
-	textarea{
-		display: block;
-		margin-top: 20px;
-	}
 }
 
 // page reviews
@@ -1129,6 +1099,56 @@ body{
 	}
 }
 
+
+// component comment
+//----------------------------------------------------- 
+.comment-item{
+	margin-bottom: 15px;
+	clear: both;
+	width: 530px;
+
+	.comment-user-avatar{
+		float: left;
+		margin-top: 5px;
+	}
+
+	.comment-wap{
+		margin-left: 60px;
+		font-size: 12px;
+
+		.comment-extra-info{
+			line-height: 22px;
+			margin-bottom: 2px;
+
+			.comment-time{
+				color: #999;
+				margin-left: 5px;
+			}
+
+			.btn-reply-somebody{
+				cursor: pointer;
+				display: none;
+				color: #999;
+				margin-left: 5px;
+			}
+		}
+
+		.comment-body{
+			line-height: 20px;
+
+			.replyee{
+				color: #333;
+				margin-right: 5px;
+			}
+		}
+	}
+}
+
+#textarea-comment{
+	display: block;
+	margin-top: 20px;
+}
+
 // page forum
 //-----------------------------------------------------
 #page-forum{
@@ -1181,31 +1201,7 @@ body{
 		}
 	}
 
-	.comment-item{
-		margin-bottom: 15px;
-		clear: both;
 
-		.comment-user-avatar{
-			float: left;
-			margin-top: 5px;
-		}
-
-		.comment-wap{
-			margin-left: 60px;
-			font-size: 12px;
-
-			.comment-extra-info{
-				line-height: 22px;
-
-				.comment-time{color: #999;}
-			}
-		}
-	}
-
-	textarea{
-		display: block;
-		margin-top: 20px;
-	}
 }
 
 #node-info{margin-bottom: 20px;}

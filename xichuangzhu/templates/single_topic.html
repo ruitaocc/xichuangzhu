@@ -5,6 +5,44 @@
 
 {% block body %}
 
+<script type="text/javascript">
+
+// move the blink to the end of the input/textarea
+function moveEnd(obj){
+	obj.focus();
+	var len = obj.value.length;
+
+	if (document.selection) {
+		var sel = obj.createTextRange();
+		sel.moveStart('character',len);
+		sel.collapse();
+		sel.select();
+	}
+	else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+		obj.selectionStart = obj.selectionEnd = len;
+	}
+}
+
+$(document).ready(function(){
+	$('.comment-item').hover(
+		function(){
+			$(this).find('.btn-reply-somebody').show();
+		},
+		function(){
+			$(this).find('.btn-reply-somebody').hide();
+		}
+	);
+
+	$('.btn-reply-somebody').click(function(){
+		var target_username = $(this).attr('data-username'),
+			comment = $("#textarea-comment").val();
+		$("#textarea-comment").val("@" + target_username + " " + comment);
+		moveEnd($("#textarea-comment")[0]);
+	});
+});
+
+</script>
+
 <div class="row">
 	<div class="span8">
 		<h2 class="node-info">
@@ -35,16 +73,23 @@
 
 		{% for comment in comments %}
 		<div class="comment-item clearfix">
-			<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">
-				<img src="{{ comment.Avatar }}">
+			<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.ReplyerAbbr) }}">
+				<img src="{{ comment.ReplyerAvatar }}">
 			</a>
 
 			<div class="comment-wap">
 				<div class="comment-extra-info">
-					<a href="{{ url_for('people', user_abbr=comment.UserAbbr) }}">{{ comment.Name }}</a>
+					<a href="{{ url_for('people', user_abbr=comment.ReplyerAbbr) }}">{{ comment.Replyer }}</a>
 					<span class="comment-time">{{ comment.Time }}</span>
+					<a class="btn-reply-somebody" data-username="{{ comment.Replyer }}">回应</a>
 				</div>
-				<div class="comment-body">{{ comment.Comment }}</div>
+				<div class="comment-body">
+					{% if comment.Replyee != '' %}
+					@<a class="replyee" href="{{ url_for('people', user_abbr=comment.ReplyeeAbbr) }}">{{ comment.Replyee }}</a>
+					{% endif %}
+					{{ comment.Comment }}
+				</div>
+
 			</div>
 		</div>
 		{% endfor %}
@@ -52,7 +97,7 @@
 		<!-- add comment -->
 		{% if session.user_id %}
 		<form id="add-topic-comment" method="post" action="{{ url_for('add_comment_to_topic', topic_id=topic.TopicID) }}">
-			<textarea name="comment" class="input-xxlarge" rows="4" placeholder="添加回复"></textarea>
+			<textarea name="comment" class="input-xxlarge" id="textarea-comment" rows="4" placeholder="添加回复"></textarea>
 			<input type="submit" class="btn btn-small" value="回复" />
 		</form>
 		{% endif %}
