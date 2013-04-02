@@ -17,7 +17,7 @@ from email.mime.text import MIMEText
 
 import hashlib
 
-from xichuangzhu.utils import content_clean
+from xichuangzhu.utils import content_clean, time_diff
 
 # proc - login by douban's oauth2.0
 @app.route('/login/douban')
@@ -149,6 +149,8 @@ def people(user_abbr):
 		work['Content'] = content_clean(work['Content'])
 
 	reviews = Review.get_reviews_by_user(people['UserID'], 3)
+	for r in reviews:
+		r['Time'] = time_diff(r['Time'])
 
 	if "user_id" in session and session['user_id'] == people['UserID']:
 		title_name = '我'

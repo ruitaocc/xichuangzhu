@@ -99,5 +99,7 @@ def edit_topic(topic_id):
 def node(node_abbr):
 	node = Node.get_node_by_abbr(node_abbr)
 	nodes = Node.get_nodes(20)
-	topcis = Topic.get_topics_by_node(node_abbr)
-	return render_template('node.html', node=node, nodes=nodes, topics=topcis)
+	topics = Topic.get_topics_by_node(node_abbr)
+	for t in topics:
+		t['Time'] = time_diff(t['Time'])
+	return render_template('node.html', node=node, nodes=nodes, topics=topics)
