@@ -9,6 +9,7 @@ from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
+from xichuangzhu.models.inform_model import Inform
 
 import markdown2
 
@@ -32,11 +33,7 @@ def single_review(review_id):
 # proc - add comment
 @app.route('/review/add_comment/<int:review_id>', methods=['POST'])
 def add_comment_to_review(review_id):
-	replyer = session['user_name']
-	replyer_abbr = session['user_abbr']
-	
-	replyee =  ""
-	replyee_abbr = ""
+	replyer_id = session['user_id']
 	comment = request.form['comment']
 
 	header = comment.split(' ')[0]
@@ -44,9 +41,9 @@ def add_comment_to_review(review_id):
 		if User.check_exist_by_name(header.lstrip('@')):
 			replyee = header.lstrip('@')
 			replyee_abbr = User.get_abbr_by_name(replyee)
-			comment = comment.split(' ')[1]
-	
-	Comment.add_comment_to_review(review_id, replyer, replyer_abbr, replyee, replyee_abbr, comment)
+			comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee + "</a>" + " " + comment.split(' ')[1]
+
+	Comment.add_comment_to_review(review_id, replyer_id, comment)
 	Review.add_comment_num(review_id)
 	return redirect(url_for('single_review', review_id=review_id))
 

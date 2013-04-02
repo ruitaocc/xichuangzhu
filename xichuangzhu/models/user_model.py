@@ -39,6 +39,13 @@ class User:
 		g.cursor.execute(query)
 		return g.cursor.fetchone()['Abbr']
 
+	# get id by abbr
+	@staticmethod
+	def get_id_by_abbr(user_abbr):
+		query = "SELECT UserID FROM user WHERE Abbr = '%s'" % user_abbr
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['UserID']
+
 # UPDATE
 
 	# active user

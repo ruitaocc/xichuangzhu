@@ -8,6 +8,7 @@ from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.node_model import Node
 from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
+from xichuangzhu.models.inform_model import Inform
 
 from xichuangzhu.utils import time_diff
 
@@ -48,22 +49,40 @@ def single_topic(topic_id):
 # proc - add comment
 @app.route('/topic/<int:topic_id>', methods=['POST'])
 def add_comment_to_topic(topic_id):
-	replyer = session['user_name']
-	replyer_abbr = session['user_abbr']
-	
-	replyee =  ""
-	replyee_abbr = ""
-	comment = request.form['comment']
 
+	replyer_id = session['user_id']
+	replyer_name = session['user_name']
+	replyer_abbr = session['user_abbr']
+
+	replyee_id = -1
+	
+	# check if @people exist
+	comment = request.form['comment']
 	header = comment.split(' ')[0]
 	if header.find('@') == 0:
 		if User.check_exist_by_name(header.lstrip('@')):
-			replyee = header.lstrip('@')
-			replyee_abbr = User.get_abbr_by_name(replyee)
-			comment = comment.split(' ')[1]
-	
-	Comment.add_comment_to_topic(topic_id, replyer, replyer_abbr, replyee, replyee_abbr, comment)
+			replyee_name = header.lstrip('@')
+			replyee_abbr = User.get_abbr_by_name(replyee_name)
+			replyee_id = User.get_id_by_abbr(replyee_abbr)
+			comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + " " + comment.split(' ')[1]
+	Comment.add_comment_to_topic(topic_id, replyer_id, comment)
+
+	# plus comment num
 	Topic.add_comment_num(topic_id)
+
+	# inform
+	topic = Topic.get_topic(topic_id)
+	topic_user_id = topic['UserID']
+	inform_title = "<a href=" + url_for('people', user_abbr=replyer_abbr) + ">" + replyer_name + "</a> 在话题 " + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + " 中回复了你"
+	# if the topic not add by me
+	if topic_user_id != replyer_id:
+		Inform.add(replyer_id, topic_user_id, inform_title, comment)
+	# if replyee exist
+	# and the topic not add by me,
+	# and not topic_user_id, because if so, the inform has already been sended above
+	if replyee_id != -1 and replyee_id != replyer_id and replyee_id != topic_user_id:
+		Inform.add(replyer_id, replyee_id, inform_title, comment)
+
 	return redirect(url_for('single_topic', topic_id=topic_id))	
 
 # page add topic
