@@ -42,12 +42,14 @@
 					</script>
 					
 					{% if session.user_id %}
-
+					
 					<ul class="nav pull-right">
 						<li>
 							<a href="{{ url_for('informs') }}">
 								提醒
-								<span class="label label-important">0</span>
+								{% if informs_num != 0 %}
+								<span class="label label-important">{{ informs_num }}</span>
+								{% endif %}
 							</a>
 						</li>
 

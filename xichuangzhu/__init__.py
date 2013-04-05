@@ -2,14 +2,19 @@ import sys
 sys.path.append('/var/www')
 import config
 
-from flask import Flask, g
+from flask import Flask, g, session
 app = Flask(__name__)
 app.config.update(SECRET_KEY=config.SECRET_KEY)
 
-# inject douban_login_url into template context
+from xichuangzhu.models.inform_model import Inform
+
+# inject vars into template context
 @app.context_processor
-def inject_user():
-	return dict(douban_login_url=config.DOUBAN_LOGIN_URL, admin_id = config.ADMIN_ID)
+def inject_vars():
+	return dict(
+		douban_login_url = config.DOUBAN_LOGIN_URL,	# douban oauth url
+		admin_id = config.ADMIN_ID,	# admin id
+		informs_num = Inform.get_informs_num(session['user_id']) if 'user_id' in session else 0)	# new informs num
 
 # send log msg using smtp
 if not app.debug:

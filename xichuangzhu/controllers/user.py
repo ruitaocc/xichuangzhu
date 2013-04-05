@@ -78,7 +78,7 @@ def auth():
 def send_verify_email():
 	if request.method == 'GET':
 		user_id = int(request.args['user_id'])
-		user_name = User.get_name(user_id)
+		user_name = User.get_name_by_id(user_id)
 		return render_template('send_verify_email.html', user_id=user_id, user_name=user_name)
 	elif request.method == 'POST':
 		# email
@@ -166,4 +166,6 @@ def informs():
 	informs = Inform.get_informs(session['user_id'])
 	for i in informs:
 		i['Time'] = time_diff(i['Time'])
-	return render_template('informs.html', informs=informs)
+	new_informs_num = Inform.get_informs_num(session['user_id'])
+	Inform.update_check_inform_time(session['user_id'])
+	return render_template('informs.html', informs=informs, new_informs_num=new_informs_num)

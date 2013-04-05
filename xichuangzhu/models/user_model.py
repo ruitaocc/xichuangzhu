@@ -67,8 +67,8 @@ class User:
 	# add a new user
 	@staticmethod
 	def add_user(userID, name, abbr, avatar, signature, desc, locationID, location):
-		query = '''INSERT INTO user (UserID, Name, Abbr, Avatar, Signature, Description, LocationID, Location)\n
-			VALUES (%d, '%s', '%s', '%s', '%s', '%s', %d, '%s')''' % (userID, name, abbr, avatar, signature, desc, locationID, location)
+		query = '''INSERT INTO user (UserID, Name, Abbr, Avatar, Signature, Description, LocationID, Location, CheckInformTime)\n
+			VALUES (%d, '%s', '%s', '%s', '%s', '%s', %d, '%s', NOW())''' % (userID, name, abbr, avatar, signature, desc, locationID, location)
 		g.cursor.execute(query)
 		return g.conn.commit()
 
