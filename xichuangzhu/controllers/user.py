@@ -48,8 +48,8 @@ def auth():
 		else:
 			# set session
 			session['user_id'] = user_id
-			session['user_name'] = User.get_name(user_id)
-			session['user_abbr'] = User.get_abbr(user_id)
+			session['user_name'] = User.get_name_by_id(user_id)
+			session['user_abbr'] = User.get_abbr_by_id(user_id)
 			return redirect(url_for('index'))
 	# if not exist
 	else:
@@ -62,7 +62,7 @@ def auth():
 		# add user
 		user_id     = int(user_info['id'])
 		user_name   = user_info['name']
-		abbr   = user_info['uid']
+		abbr        = user_info['uid']
 		avatar      = user_info['avatar']
 		signature   = user_info['signature']
 		desc        = user_info['desc']
@@ -86,7 +86,7 @@ def send_verify_email():
 
 		# user info
 		user_id = int(request.form['user_id'])
-		user_name = User.get_name(user_id)
+		user_name = User.get_name_by_id(user_id)
 
 		# add this email to user
 		User.add_email(user_id, t_addr)
@@ -115,8 +115,8 @@ def send_verify_email():
 # proc - verify the code and active user
 @app.route('/verify_email/douban/<int:user_id>/<verify_code>')
 def verify_email(user_id, verify_code):
-	user_name = User.get_name(user_id)
-	user_abbr = User.get_abbr(user_id)
+	user_name = User.get_name_by_id(user_id)
+	user_abbr = User.get_abbr_by_id(user_id)
 	if verify_code == hashlib.sha1(user_name).hexdigest():
 		User.active_user(user_id)
 		session['user_id'] = user_id
@@ -144,7 +144,7 @@ def logout():
 # page - personal page
 @app.route('/people/<user_abbr>')
 def people(user_abbr):
-	people = User.get_people_by_abbr(user_abbr)
+	people = User.get_user_by_abbr(user_abbr)
 
 	works = Love_Work.get_works_by_user_love(people['UserID'], 3)
 	for work in works:

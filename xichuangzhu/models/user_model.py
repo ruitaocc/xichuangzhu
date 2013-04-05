@@ -6,35 +6,35 @@ class User:
 
 	# get people by id
 	@staticmethod
-	def get_people_by_id(user_id):
+	def get_user_by_id(user_id):
 		query = "SELECT * FROM user WHERE UserID = %d" % user_id
 		g.cursor.execute(query)
 		return g.cursor.fetchone()
 
 	# get people by abbr
 	@staticmethod
-	def get_people_by_abbr(user_abbr):
+	def get_user_by_abbr(user_abbr):
 		query = "SELECT * FROM user WHERE Abbr = '%s'" % user_abbr
 		g.cursor.execute(query)
 		return g.cursor.fetchone()
 
-	# get abbr by name
+	# get id by name
 	@staticmethod
-	def get_abbr_by_name(user_name):
-		query = "SELECT Abbr FROM user WHERE Name = '%s'" % user_name
+	def get_id_by_name(user_name):
+		query = "SELECT UserID FROM user WHERE Name = '%s'" % user_name
 		g.cursor.execute(query)
-		return g.cursor.fetchone()['Abbr']
-	
+		return g.cursor.fetchone()['UserID']	
+
 	# get name by id
 	@staticmethod
-	def get_name(user_id):
+	def get_name_by_id(user_id):
 		query = "SELECT Name FROM user WHERE UserID = %d" % user_id
 		g.cursor.execute(query)
 		return g.cursor.fetchone()['Name']
 
 	# get abbr by id
 	@staticmethod
-	def get_abbr(user_id):
+	def get_abbr_by_id(user_id):
 		query = "SELECT Abbr FROM user WHERE UserID = %d" % user_id
 		g.cursor.execute(query)
 		return g.cursor.fetchone()['Abbr']

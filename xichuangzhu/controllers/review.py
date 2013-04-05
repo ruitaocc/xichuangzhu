@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import render_template, request, redirect, url_for, json, session
 
 from xichuangzhu import app
@@ -13,7 +15,7 @@ from xichuangzhu.models.inform_model import Inform
 
 import markdown2
 
-from xichuangzhu.utils import time_diff
+from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title
 
 # page single review
 #--------------------------------------------------
@@ -34,17 +36,29 @@ def single_review(review_id):
 @app.route('/review/add_comment/<int:review_id>', methods=['POST'])
 def add_comment_to_review(review_id):
 	replyer_id = session['user_id']
-	comment = request.form['comment']
 
-	header = comment.split(' ')[0]
-	if header.find('@') == 0:
-		if User.check_exist_by_name(header.lstrip('@')):
-			replyee = header.lstrip('@')
-			replyee_abbr = User.get_abbr_by_name(replyee)
-			comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee + "</a>" + " " + comment.split(' ')[1]
-
+	# add comment
+	comment = request.form['comment']	
+	replyee_id = get_comment_replyee_id(comment)	# check if @people exist
+	if replyee_id != -1:
+		comment = rebuild_comment(comment, replyee_id)
 	Comment.add_comment_to_review(review_id, replyer_id, comment)
+
+	# plus comment num
 	Review.add_comment_num(review_id)
+
+	# inform
+	review_user_id = Review.get_review(review_id)['UserID']
+	inform_title = build_review_inform_title(replyer_id, review_id)
+	# if the review not add by me
+	if  replyer_id != review_user_id:
+		Inform.add(replyer_id, review_user_id, inform_title, comment)
+	# if replyee exist,
+	# and the topic not add by me,
+	# and not review_user_id, because if so, the inform has already been sended above
+	if replyee_id != -1 and replyee_id != replyer_id and replyee_id != review_user_id:
+		Inform.add(replyer_id, replyee_id, inform_title, comment)	
+	
 	return redirect(url_for('single_review', review_id=review_id))
 
 # page all reviews

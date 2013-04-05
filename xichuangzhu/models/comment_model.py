@@ -11,7 +11,7 @@ class Comment:
 			FROM review_comment AS c, user\n
 			WHERE c.ReplyerID = user.UserID\n
 			AND c.ReviewID = %d\n
-			ORDER BY c.Time DESC''' % review_id
+			ORDER BY c.Time ASC''' % review_id
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 
@@ -22,7 +22,7 @@ class Comment:
 			FROM topic_comment AS c, user\n
 			WHERE c.ReplyerID = user.UserID\n
 			AND c.TopicID = %d\n
-			ORDER BY c.Time DESC''' % topic_id
+			ORDER BY c.Time ASC''' % topic_id
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 

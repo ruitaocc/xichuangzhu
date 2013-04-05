@@ -6,7 +6,7 @@ class Topic:
 
 	# get a topic
 	@staticmethod
-	def get_topic(topic_id):
+	def get_topic_by_id(topic_id):
 		query = '''SELECT topic.TopicID, topic.Title, topic.Content, topic.CommentNum, topic.Time, topic.ClickNum, node.Name AS NodeName, node.Abbr AS NodeAbbr, node.NodeID, user.Name AS UserName, user.Abbr AS UserAbbr, user.Avatar, user.UserID\n
 			FROM topic, user, node\n
 			WHERE topic.UserID = user.UserID\n

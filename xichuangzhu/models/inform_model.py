@@ -10,7 +10,8 @@ class Inform:
 		query = '''SELECT inform.Title, inform.Content, inform.Time, user.Avatar, user.Abbr
 			FROM inform, user\n
 			WHERE inform.ReplyerID = user.UserID\n
-			AND inform.UserID = %d''' % user_id
+			AND inform.UserID = %d\n
+			ORDER BY inform.Time DESC''' % user_id
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 
