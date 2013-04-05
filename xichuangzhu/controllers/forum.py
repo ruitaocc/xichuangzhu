@@ -68,7 +68,7 @@ def add_comment_to_topic(topic_id):
 	# if the topic not add by me
 	if replyer_id != topic_user_id:
 		Inform.add(replyer_id, topic_user_id, inform_title, comment)
-	# if replyee exist
+	# if replyee exist,
 	# and the topic not add by me,
 	# and not topic_user_id, because if so, the inform has already been sended above
 	if replyee_id != -1 and  replyee_id != replyer_id and replyee_id != topic_user_id:
