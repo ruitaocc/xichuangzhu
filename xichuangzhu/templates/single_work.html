@@ -98,6 +98,8 @@ $(document).ready(function(){
 
 			<a class="btn btn-small" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
 
+			<!-- <a class="btn btn-small" href="#"><span class="icon-eye-open"></span> 勘误</a> -->
+
 			{% if is_loved %}
 			<a class="btn btn-small" title="编辑收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
 			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
