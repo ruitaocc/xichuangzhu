@@ -1,25 +1,33 @@
 from flask import g
 
-class Love_Work:
+class Love_work:
 
 # GET
 
 	# get all works loved by user
 	@staticmethod
-	def get_works_by_user_love(user_id, num):
+	def get_works_by_user(user_id, page, num):
 		query = '''SELECT work.WorkID, work.Title, work.Content, author.Author, author.Abbr AS AuthorAbbr\n
 			FROM love_work, user, work, author\n
 			WHERE love_work.UserID = %d\n
 			AND love_work.UserID = user.UserID\n
 			AND love_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
-			ORDER BY love_work.Time DESC LIMIT %d''' % (user_id, num)
+			ORDER BY love_work.Time DESC\n
+			LIMIT %d, %d''' % (user_id, (page-1)*num, num)
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 
+	# get works num loved by user
+	@staticmethod
+	def get_works_num_by_user(user_id):
+		query = "SELECT COUNT(*) AS WorksNum FROM love_work WHERE UserID = %d" % user_id
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['WorksNum']
+
 	# get all users who love a work
 	@staticmethod
-	def get_users_love_work(work_id, num):
+	def get_users_by_work(work_id, num):
 		query = '''SELECT user.UserID, user.Name, user.Signature, user.Abbr, user.Avatar, COUNT(*) AS ReviewNum\n
 			FROM love_work, user, review\n
 			WHERE love_work.WorkID = %d\n

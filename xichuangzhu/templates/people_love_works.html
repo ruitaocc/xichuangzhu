@@ -11,6 +11,14 @@
 
 		{% from "works.widget" import show_works %}
 		{{ show_works(works)|safe }}
+
+		<div class="pagination">
+			<ul>
+				<li><a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}?page={{ pre_page }}"><<</a></li>
+				<li><a>{{ page }} / {{ total_page }}</a></li>
+				<li><a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}?page={{ next_page }}">>></a></li>
+			</ul>
+		</div>
 	</div>
 
 	<div class="span4"></div>

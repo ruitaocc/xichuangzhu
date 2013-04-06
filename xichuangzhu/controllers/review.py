@@ -1,4 +1,5 @@
 #-*- coding: UTF-8 -*-
+from __future__ import division
 
 from flask import render_template, request, redirect, url_for, json, session
 
@@ -14,6 +15,8 @@ from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 
 import markdown2
+
+import math
 
 import cgi
 
@@ -69,11 +72,27 @@ def add_comment_to_review(review_id):
 # view
 @app.route('/reviews')
 def reviews():
-	reviews = Review.get_hot_reviews()
+	# pagination
+	num_per_page = 10
+	page = int(request.args['page'] if 'page' in request.args else 1)
+
+	reviews = Review.get_reviews(page, num_per_page)
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
+
+	# page paras
+	reviews_num = Review.get_reviews_num()
+	total_page = int(math.ceil(reviews_num / num_per_page))
+	pre_page   = (page - 1) if page > 1 else 1
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
+
 	reviewers = Review.get_hot_reviewers(8)
-	return render_template('reviews.html', reviews=reviews, reviewers=reviewers)
+	return render_template('reviews.html', reviews=reviews, reviewers=reviewers, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page add review
 #--------------------------------------------------

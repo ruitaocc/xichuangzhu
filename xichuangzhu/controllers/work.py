@@ -1,4 +1,5 @@
 #-*- coding: UTF-8 -*-
+from __future__ import division
 
 from flask import render_template, request, redirect, url_for, json, session
 
@@ -9,7 +10,7 @@ from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.love_work_model import Love_Work
+from xichuangzhu.models.love_work_model import Love_work
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
@@ -19,6 +20,7 @@ import markdown2
 import re
 
 import math
+
 
 from xichuangzhu.utils import time_diff, content_clean
 
@@ -37,8 +39,8 @@ def single_work(work_id):
 
 	# check is loved
 	if 'user_id' in session:
-		is_loved = Love_Work.check_love(session['user_id'], work_id)
-		tags = Love_Work.get_tags(session['user_id'], work_id) if is_loved else ""
+		is_loved = Love_work.check_love(session['user_id'], work_id)
+		tags = Love_work.get_tags(session['user_id'], work_id) if is_loved else ""
 		my_tags = Tag.get_user_tags(session['user_id'], 20)
 		popular_tags = Tag.get_work_tags(work_id, 20)
 	else:
@@ -59,7 +61,7 @@ def single_work(work_id):
 	for ow in other_works:
 		ow['Content'] = content_clean(ow['Content'])
 
-	lovers = Love_Work.get_users_love_work(work_id, 4)
+	lovers = Love_work.get_users_by_work(work_id, 4)
 
 	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
 
@@ -77,11 +79,11 @@ def love_work(work_id):
 	new_tags = list(set(new_tags))
 
 	# add love work
-	is_loved = Love_Work.check_love(session['user_id'], work_id)
+	is_loved = Love_work.check_love(session['user_id'], work_id)
 	if is_loved:
-		Love_Work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+		Love_work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 	else:
-		Love_Work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+		Love_work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -104,7 +106,7 @@ def edit_love_work(work_id):
 	new_tags = list(set(new_tags))
 
 	# add love work
-	Love_Work.edit(session['user_id'], work_id, ' '.join(new_tags))
+	Love_work.edit(session['user_id'], work_id, ' '.join(new_tags))
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -117,7 +119,7 @@ def edit_love_work(work_id):
 #--------------------------------------------------
 @app.route('/work/rm_love/<int:work_id>')
 def rm_love_work(work_id):
-	Love_Work.remove(session['user_id'], work_id)
+	Love_work.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works
@@ -175,6 +177,7 @@ def works_by_tag(tag):
 	pre_page   = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
+		total_page = 1
 	elif page < total_page:
 		next_page = page + 1
 	else:

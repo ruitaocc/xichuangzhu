@@ -23,6 +23,14 @@
 			</div>
 		</div>
 		{% endfor %}
+
+		<div class="pagination">
+			<ul>
+				<li><a href="{{ url_for('informs') }}?page={{ pre_page }}"><<</a></li>
+				<li><a>{{ page }} / {{ total_page }}</a></li>
+				<li><a href="{{ url_for('informs') }}?page={{ next_page }}">>></a></li>
+			</ul>
+		</div>
 	</div>
 
 	<div class="span4"></div>

@@ -1,4 +1,5 @@
 #-*- coding: UTF-8 -*-
+from __future__ import division
 
 from flask import render_template, request, redirect, url_for, json, session
 
@@ -7,7 +8,7 @@ from xichuangzhu import app
 import config
 
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.love_work_model import Love_Work
+from xichuangzhu.models.love_work_model import Love_work
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
@@ -20,6 +21,8 @@ from email.mime.text import MIMEText
 import hashlib
 
 from xichuangzhu.utils import content_clean, time_diff
+
+import math
 
 # proc - login by douban's oauth2.0
 @app.route('/login/douban')
@@ -146,23 +149,19 @@ def logout():
 @app.route('/people/<user_abbr>')
 def people(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
+	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
 
-	works = Love_Work.get_works_by_user_love(people['UserID'], 3)
+	works = Love_work.get_works_by_user(people['UserID'], 1, 3)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	reviews = Review.get_reviews_by_user(people['UserID'], 3)
+	reviews = Review.get_reviews_by_user(people['UserID'], 1, 3)
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
 
-	topics = Topic.get_topics_by_user(people['UserID'], 3)
+	topics = Topic.get_topics_by_user(people['UserID'], 1, 3)
 	for t in topics:
 		t['Time'] = time_diff(t['Time'])
-
-	if "user_id" in session and session['user_id'] == people['UserID']:
-		user_name = '我'
-	else:
-		user_name = people['Name']
 
 	return render_template('people.html', people=people, works=works, reviews=reviews, topics=topics, user_name=user_name)
 
@@ -170,53 +169,111 @@ def people(user_abbr):
 @app.route('/people/<user_abbr>/love_works')
 def people_love_works(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
-	if "user_id" in session and session['user_id'] == people['UserID']:
-		user_name = '我'
-	else:
-		user_name = people['Name']
+	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
 
-	works = Love_Work.get_works_by_user_love(people['UserID'], 10)
+	# pagination
+	num_per_page = 10
+	page = int(request.args['page'] if 'page' in request.args else 1)
+
+	works = Love_work.get_works_by_user(people['UserID'], page, num_per_page)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	return render_template('people_love_works.html', people=people, works=works, user_name=user_name)
+	works_num = Love_work.get_works_num_by_user(people['UserID'])
+
+	# page paras
+	total_page = int(math.ceil(works_num / num_per_page))
+	pre_page   = (page - 1) if page > 1 else 1
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
+
+	return render_template('people_love_works.html', people=people, works=works, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people reviews
 @app.route('/people/<user_abbr>/reviews')
 def people_reviews(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
-	if "user_id" in session and session['user_id'] == people['UserID']:
-		user_name = '我'
-	else:
-		user_name = people['Name']
+	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
 
-	reviews = Review.get_reviews_by_user(people['UserID'], 10)
+	# pagination
+	num_per_page = 10
+	page = int(request.args['page'] if 'page' in request.args else 1)
+
+	reviews = Review.get_reviews_by_user(people['UserID'], page, num_per_page)
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
 
-	return render_template('people_reviews.html', people=people, reviews=reviews, user_name=user_name)
+	reviews_num = Review.get_reviews_num_by_user(people['UserID'])
+
+	# page paras
+	total_page = int(math.ceil(reviews_num / num_per_page))
+	pre_page   = (page - 1) if page > 1 else 1
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
+
+	return render_template('people_reviews.html', people=people, reviews=reviews, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people topics
 @app.route('/people/<user_abbr>/topics')
 def people_topics(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
-	if "user_id" in session and session['user_id'] == people['UserID']:
-		user_name = '我'
-	else:
-		user_name = people['Name']
+	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
 
-	topics = Topic.get_topics_by_user(people['UserID'], 10)
+	# pagination
+	num_per_page = 10
+	page = int(request.args['page'] if 'page' in request.args else 1)
+
+	topics = Topic.get_topics_by_user(people['UserID'], page, num_per_page)
 	for t in topics:
 		t['Time'] = time_diff(t['Time'])
 
-	return render_template('people_topics.html', people=people, topics=topics, user_name=user_name)
+	topics_num = Review.get_reviews_num()
+
+	# page paras
+	total_page = int(math.ceil(topics_num / num_per_page))
+	pre_page   = (page - 1) if page > 1 else 1
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
+
+	return render_template('people_topics.html', people=people, topics=topics, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - informs
 @app.route('/informs')
 def informs():
-	informs = Inform.get_informs(session['user_id'])
+	# pagination
+	num_per_page = 10
+	page = int(request.args['page'] if 'page' in request.args else 1)
+	
+	informs = Inform.get_informs(session['user_id'], page, num_per_page)
 	for i in informs:
 		i['Time'] = time_diff(i['Time'])
-	new_informs_num = Inform.get_informs_num(session['user_id'])
+
+	# page paras
+	informs_num = Inform.get_informs_num(session['user_id'])
+	#return str(informs_num)
+	total_page = int(math.ceil(informs_num / num_per_page))
+	pre_page   = (page - 1) if page > 1 else 1
+	if total_page == 0:
+		next_page = 1
+	elif page < total_page:
+		next_page = page + 1
+	else:
+		next_page = total_page
+
+	new_informs_num = Inform.get_new_informs_num(session['user_id'])
+
 	Inform.update_check_inform_time(session['user_id'])
-	return render_template('informs.html', informs=informs, new_informs_num=new_informs_num)
+
+	return render_template('informs.html', informs=informs, new_informs_num=new_informs_num, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)

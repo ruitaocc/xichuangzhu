@@ -6,18 +6,26 @@ class Inform:
 
 	# get all informs
 	@staticmethod
-	def get_informs(user_id):
+	def get_informs(user_id, page, num):
 		query = '''SELECT inform.Title, inform.Content, inform.Time, user.Avatar, user.Abbr
 			FROM inform, user\n
 			WHERE inform.ReplyerID = user.UserID\n
 			AND inform.UserID = %d\n
-			ORDER BY inform.Time DESC''' % user_id
+			ORDER BY inform.Time DESC\n
+			LIMIT %d, %d''' % (user_id, (page-1)*num, num)
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 
-	# get new informs num
+	# get informs num
 	@staticmethod
 	def get_informs_num(user_id):
+		query = '''SELECT COUNT(*) AS InformsNum FROM inform WHERE inform.UserID = %d''' % user_id
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['InformsNum']
+
+	# get new informs num
+	@staticmethod
+	def get_new_informs_num(user_id):
 		query = '''SELECT COUNT(*) AS InformsNum
 			FROM inform, user\n
 			WHERE inform.UserID = user.UserID\n

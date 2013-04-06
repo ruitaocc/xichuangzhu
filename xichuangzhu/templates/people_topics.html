@@ -11,6 +11,14 @@
 
 		{% from "topics.widget" import show_topics %}
 		{{ show_topics(topics)|safe }}
+
+		<div class="pagination">
+			<ul>
+				<li><a href="{{ url_for('people_topics', user_abbr=people.Abbr) }}?page={{ pre_page }}"><<</a></li>
+				<li><a>{{ page }} / {{ total_page }}</a></li>
+				<li><a href="{{ url_for('people_topics', user_abbr=people.Abbr) }}?page={{ next_page }}">>></a></li>
+			</ul>
+		</div>
 	</div>
 
 	<div class="span4"></div>

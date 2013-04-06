@@ -30,14 +30,22 @@ class Review:
 
 	# get hot reviews
 	@staticmethod
-	def get_hot_reviews():
+	def get_reviews(page, num):
 		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
-			AND work.AuthorID = author.AuthorID\n'''
+			AND work.AuthorID = author.AuthorID\n
+			LIMIT %d, %d''' % ((page-1)*num, num)
 		g.cursor.execute(query)
-		return g.cursor.fetchall()	
+		return g.cursor.fetchall()
+
+	# get hot reviews total num
+	@staticmethod
+	def get_reviews_num():
+		query = "SELECT COUNT(*) AS ReviewsNum FROM review"
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['ReviewsNum']
 
 	# get reviews of a work
 	@staticmethod
@@ -53,16 +61,23 @@ class Review:
 
 	# get reviews from a user
 	@staticmethod
-	def get_reviews_by_user(user_id, num):
+	def get_reviews_by_user(user_id, page, num):
 		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.UserID = %d\n
 			AND review.UserID = user.UserID\n
 			AND review.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID
-			ORDER BY review.Time LIMIT %d''' % (user_id, num)
+			ORDER BY review.Time LIMIT %d, %d''' % (user_id, (page-1)*num, num)
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
+
+	# get reviews num from a user
+	@staticmethod
+	def get_reviews_num_by_user(user_id):
+		query = "SELECT COUNT(*) AS ReviewsNum\n FROM review WHERE review.UserID = %d" % user_id
+		g.cursor.execute(query)
+		return g.cursor.fetchone()['ReviewsNum']
 
 	# get hot reviewers
 	@staticmethod
