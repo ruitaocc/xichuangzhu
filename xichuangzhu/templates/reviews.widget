@@ -1,0 +1,26 @@
+{% macro show_reviews(reviews) %}
+
+{% for r in reviews %}
+<div class="review-item">
+	<a class="user-avatar" href="{{ url_for('people', user_abbr=r.UserAbbr) }}" >
+		<img src="{{ r.Avatar }}" />
+	</a>
+
+	<div class="review-wap">
+		<div class="review-title">
+			<a href="{{ url_for('single_review', review_id = r.ReviewID) }}">{{ r.Title }}</a>
+		</div>
+
+		<div class="review-content">{{ r.Content|truncate(35, True)|safe }}</div>
+
+		<div class="review-extra-info">
+			<a href="{{ url_for('people', user_abbr=r.UserAbbr) }}">{{ r.Name }}</a>
+			评
+			<a href="{{ url_for('single_work', work_id=r.WorkID) }}">{{ r.WorkTitle }}〔{{ r.Author }}〕</a>
+			<span class="review-time">{{ r.Time }}</span>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+{% endmacro %}

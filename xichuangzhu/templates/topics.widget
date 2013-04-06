@@ -1,0 +1,21 @@
+{% macro show_topics(topics) %}
+
+{% for t in topics %}
+<div class="topic-item">
+	<a class="topic-user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+
+	<div class="topic-info">
+		<div class="topic-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>
+		<div class="topic-extra-info">
+			<a class="topic-node" href="{{ url_for('node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a>
+			<a class="topic-launcher" href="{{ url_for('people', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
+			<span class="topic-time">{{ t.Time }}</span>
+		</div>
+		{% if t.CommentNum != 0 %}
+		<div class="topic-comment-num">{{ t.CommentNum }}</div>
+		{% endif %}
+	</div>
+</div>
+{% endfor %}
+
+{% endmacro %}

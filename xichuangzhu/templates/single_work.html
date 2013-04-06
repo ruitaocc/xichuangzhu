@@ -122,23 +122,8 @@ $(document).ready(function(){
 		<div class="work-introduction">{{ work.WorkIntroduction }}</div>
 		
 		<h2>点评</h2>
-		{% for review in reviews %}
-		<div class="review-item">
-			<a class="user-avatar" href="{{ url_for('people', user_abbr=review.UserAbbr) }}">
-				<img src="{{ review.Avatar }}">
-			</a>
-			
-			<div class="review-wap">
-				<a class="review-title" href="{{ url_for('single_review', review_id=review.ReviewID) }}">{{ review.Title }}</a>
-				<div class="review-content">{{ review.Content|truncate(35, True)|safe }}</div>
-				<div class="review-extra-info">
-					By
-					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
-					<span class="review-time">{{ review.Time }}</span>
-				</div>
-			</div>
-		</div>
-		{% endfor %}
+		{% from "reviews.widget" import show_reviews %}
+		{{ show_reviews(reviews)|safe }}
 	</div>
 
 	<div class="span4">
