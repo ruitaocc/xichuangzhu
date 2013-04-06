@@ -19,7 +19,7 @@
 		<div class="control-group">
 			<label class="control-label">点评</label>
 			<div class="controls">
-				<textarea class="input-xxlarge" rows="15" name="content">{{ review.Content }}</textarea>
+				<textarea class="input-xxlarge" rows="15" name="content">{{ review.Content|safe }}</textarea>
 			</div>
 		</div>
 

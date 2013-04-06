@@ -12,6 +12,9 @@ from xichuangzhu.models.inform_model import Inform
 
 from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
 
+import cgi
+import markdown2
+
 # page forum
 #--------------------------------------------------
 
@@ -37,8 +40,9 @@ def forum():
 # view
 @app.route('/topic/<int:topic_id>')
 def single_topic(topic_id):
-	topic = Topic.get_topic_by_id(topic_id)
+	topic = Topic.get_topic(topic_id)
 	topic['Time'] = time_diff(topic['Time'])
+	topic['Content'] = markdown2.markdown(topic['Content'])
 	comments = Comment.get_comments_by_topic(topic['TopicID'])
 	for c in comments:
 		c['Time'] = time_diff(c['Time'])
@@ -53,7 +57,7 @@ def add_comment_to_topic(topic_id):
 	replyer_id = session['user_id']
 	
 	# add comment
-	comment = request.form['comment']
+	comment = cgi.escape(request.form['comment'])
 	replyee_id = get_comment_replyee_id(comment)	# check if @people exist
 	if replyee_id != -1:
 		comment = rebuild_comment(comment, replyee_id)
@@ -89,9 +93,9 @@ def add_topic():
 		return render_template('add_topic.html', node=node, node_types=node_types)
 	elif request.method == 'POST':
 		node_id = int(request.form['node-id'])
-		title   = request.form['title']
+		title   = cgi.escape(request.form['title'])
+		content = cgi.escape(request.form['content'])
 		user_id = session['user_id']
-		content = request.form['content']
 		new_topic_id = Topic.add(node_id, title, content, user_id)
 		return redirect(url_for('single_topic', topic_id=new_topic_id))
 
@@ -107,8 +111,8 @@ def edit_topic(topic_id):
 		return render_template('edit_topic.html', topic=topic, node_types=node_types)
 	elif request.method == 'POST':
 		node_id = int(request.form['node-id'])
-		title   = request.form['title']
-		content = request.form['content']
+		title   = cgi.escape(request.form['title'])
+		content = cgi.escape(request.form['content'])
 		new_topic_id = Topic.edit(topic_id, node_id, title, content)
 		return redirect(url_for('single_topic', topic_id=topic_id))
 

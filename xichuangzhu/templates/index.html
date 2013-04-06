@@ -54,7 +54,7 @@ $(document).ready(function(){
 					<a href="{{ url_for('single_review', review_id = review.ReviewID) }}">{{ review.Title }}</a>
 				</div>
 
-				<div class="review-content">{{ review.Content|truncate(35, True) }}</div>
+				<div class="review-content">{{ review.Content|truncate(35, True)|safe }}</div>
 
 				<div class="review-extra-info">
 					<a href="{{ url_for('people', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>

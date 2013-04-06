@@ -55,12 +55,12 @@ def get_comment_replyee_id(comment):
 def rebuild_comment(comment, replyee_id):
 	replyee_name = User.get_name_by_id(replyee_id)
 	replyee_abbr = User.get_abbr_by_id(replyee_id)
-	comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + "&nbsp;&nbsp;" + comment.split(' ')[1]
+	comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr + ">" + replyee_name + "</a>") + "&nbsp;&nbsp;" + comment.split(' ')[1]
 	return comment
 
 def build_topic_inform_title(replyer_id, topic_id):
 	replyer = User.get_user_by_id(replyer_id)
-	topic = Topic.get_topic_by_id(topic_id)
+	topic = Topic.get_topic(topic_id)
 	inform_title = "<a href=" + url_for('people', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在话题&nbsp;&nbsp;" + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
 	return inform_title
 

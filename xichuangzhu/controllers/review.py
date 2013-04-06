@@ -15,6 +15,8 @@ from xichuangzhu.models.inform_model import Inform
 
 import markdown2
 
+import cgi
+
 from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title
 
 # page single review
@@ -38,7 +40,7 @@ def add_comment_to_review(review_id):
 	replyer_id = session['user_id']
 
 	# add comment
-	comment = request.form['comment']	
+	comment = cgi.escape(request.form['comment'])
 	replyee_id = get_comment_replyee_id(comment)	# check if @people exist
 	if replyee_id != -1:
 		comment = rebuild_comment(comment, replyee_id)
@@ -83,8 +85,8 @@ def add_review(work_id):
 		return render_template('add_review.html', work=work)
 	elif request.method == 'POST':
 		user_id = int(request.form['user_id'])
-		title = request.form['title']
-		content = request.form['content']
+		title = cgi.escape(request.form['title'])
+		content = cgi.escape(request.form['content'])
 		new_review_id = Review.add_review(work_id, user_id, title, content)
 		return redirect(url_for('single_review', review_id=new_review_id))
 
@@ -96,7 +98,7 @@ def edit_review(review_id):
 		review = Review.get_review(review_id)
 		return render_template('edit_review.html', review=review)
 	elif request.method == 'POST':
-		title = request.form['title']
-		content = request.form['content']
+		title = cgi.escape(request.form['title'])
+		content = cgi.escape(request.form['content'])
 		Review.edit_review(review_id, title, content)
 		return redirect(url_for('single_review', review_id=review_id))
