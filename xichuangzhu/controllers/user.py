@@ -10,6 +10,7 @@ from xichuangzhu.models.user_model import User
 from xichuangzhu.models.love_work_model import Love_Work
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
+from xichuangzhu.models.topic_model import Topic
 
 import urllib, urllib2
 
@@ -154,11 +155,61 @@ def people(user_abbr):
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
 
+	topics = Topic.get_topics_by_user(people['UserID'], 3)
+	for t in topics:
+		t['Time'] = time_diff(t['Time'])
+
 	if "user_id" in session and session['user_id'] == people['UserID']:
-		title_name = '我'
+		user_name = '我'
 	else:
-		title_name = people['Name']
-	return render_template('people.html', people=people, works=works, reviews=reviews, title_name=title_name)
+		user_name = people['Name']
+
+	return render_template('people.html', people=people, works=works, reviews=reviews, topics=topics, user_name=user_name)
+
+# page - people love works page
+@app.route('/people/<user_abbr>/love_works')
+def people_love_works(user_abbr):
+	people = User.get_user_by_abbr(user_abbr)
+	if "user_id" in session and session['user_id'] == people['UserID']:
+		user_name = '我'
+	else:
+		user_name = people['Name']
+
+	works = Love_Work.get_works_by_user_love(people['UserID'], 10)
+	for work in works:
+		work['Content'] = content_clean(work['Content'])
+
+	return render_template('people_love_works.html', people=people, works=works, user_name=user_name)
+
+# page - people reviews
+@app.route('/people/<user_abbr>/reviews')
+def people_reviews(user_abbr):
+	people = User.get_user_by_abbr(user_abbr)
+	if "user_id" in session and session['user_id'] == people['UserID']:
+		user_name = '我'
+	else:
+		user_name = people['Name']
+
+	reviews = Review.get_reviews_by_user(people['UserID'], 10)
+	for r in reviews:
+		r['Time'] = time_diff(r['Time'])
+
+	return render_template('people_reviews.html', people=people, reviews=reviews, user_name=user_name)
+
+# page - people topics
+@app.route('/people/<user_abbr>/topics')
+def people_topics(user_abbr):
+	people = User.get_user_by_abbr(user_abbr)
+	if "user_id" in session and session['user_id'] == people['UserID']:
+		user_name = '我'
+	else:
+		user_name = people['Name']
+
+	topics = Topic.get_topics_by_user(people['UserID'], 10)
+	for t in topics:
+		t['Time'] = time_diff(t['Time'])
+
+	return render_template('people_topics.html', people=people, topics=topics, user_name=user_name)
 
 # page - informs
 @app.route('/informs')

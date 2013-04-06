@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block page_title %}{{ user_name }}的收藏{% endblock %}
+{% block page_id%}page-people-love-works{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="span8">
+		<h2>{{ user_name }}的收藏</h2>
+
+		{% for w in works %}
+		<div class="work-item">
+			<div class="work-header">
+				<a class="work-title" href="{{ url_for('single_work', work_id = w.WorkID) }}">{{ w.Title }}</a><sup class="work-author">〔<a href="{{ url_for('single_author', author_abbr=w.AuthorAbbr) }}">{{ w.Author }}</a>〕</sup>
+			</div>
+			<div class="work-content">{{ w.Content|truncate(35, True) }}</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="span4"></div>
+</div>
+
+{% endblock %}

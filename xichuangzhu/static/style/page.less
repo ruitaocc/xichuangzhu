@@ -84,7 +84,7 @@ body{
 	h4{font-size: 18px;}
 }
 
-// component work item
+// component - work item
 //-----------------------------------------------------
 
 .work-item{
@@ -122,11 +122,47 @@ body{
 	}
 }
 
+// component - review item
+//----------------------------------------------------- 
+.review-item{
+	margin-bottom: 8px;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed #DDD;
+
+	.user-avatar{
+		float: left;
+		margin-top: 4px;
+	}
+
+	.review-wap{
+		margin-left: 60px;
+
+		.review-title{
+			font-size: 16px;
+			font-weight: bold;
+			letter-spacing: 1px;	
+		}
+
+		.review-content{
+			font-size: 12px;
+			line-height: 22px;			
+		}
+
+		.review-extra-info{
+			font-size: 12px;
+			line-height: 22px;
+
+			.review-time{
+				color: gray;
+			}
+		}
+	}
+}
+
 
 // page index
 //-----------------------------------------------------
 #page-index{
-
 	.refresh-btn{
 		vertical-align: middle;
 		opacity: 0.6;
@@ -135,8 +171,6 @@ body{
 	}
 
 	.work-item{
-		margin-right: 50px;
-
 		.work-header{
 			font-size: 16px;
 			line-height: 32px;
@@ -824,39 +858,6 @@ body{
 // page reviews
 //-----------------------------------------------------
 #page-reviews{
-	.review-item{
-		margin-bottom: 15px;
-
-		.user-avatar{
-			float: left;
-			margin-top: 4px;
-		}
-
-		.review-wap{
-			margin-left: 60px;
-
-			.review-title{
-				font-size: 16px;
-				font-weight: bold;
-				letter-spacing: 1px;	
-			}
-
-			.review-content{
-				font-size: 12px;
-				line-height: 22px;			
-			}
-
-			.review-extra-info{
-				font-size: 12px;
-				line-height: 22px;
-
-				.review-time{
-					color: gray;
-				}
-			}
-		}
-	}
-
 	.reviewer-item{
 		margin-bottom: 10px;
 
@@ -919,7 +920,7 @@ body{
 // page people
 //-----------------------------------------------------
 #page-people{
-	.user-avatar{
+	#user-avatar{
 		float: left;
 		margin-top: 15px;
 	}
@@ -974,29 +975,6 @@ body{
 			line-height: 22px;
 		}
 	}
-
-	.review-item{
-		margin-bottom: 8px;
-		padding-bottom: 6px;
-		border-bottom: 1px dashed #DDD;
-		
-		.review-title{
-			font-size: 16px;
-			font-weight: bold;
-			letter-spacing: 1px;
-		}
-
-		.review-extra-info{
-			font-size: 12px;
-			line-height: 22px;
-
-			.review-time{
-				color: gray;
-			}
-		}
-
-		.review-content{font-size: 12px;line-height: 22px;}
-	}
 }
 
 // page shop
@@ -1033,7 +1011,7 @@ body{
 	}
 }
 
-// component topics
+// component - topics
 //----------------------------------------------------- 
 
 .root-node{color: #888;text-decoration: none;
@@ -1044,10 +1022,9 @@ body{
 	&:hover{color:#333;}
 }
 
-.topic-item{border-bottom: 1px dashed #DDD;margin-top: 10px;padding-bottom: 15px;position: relative;clear: both;
+.topic-item{border-bottom: 1px dashed #DDD;margin-top: 10px;padding-bottom: 20px;position: relative;clear: both;
 
-	.topic-user-avatar{float: left;margin-top: 0px;img{border-radius: 0px;}
-	}
+	.topic-user-avatar{float: left;margin-top: 4px;}
 
 	.topic-info{margin-left: 60px;
 

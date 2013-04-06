@@ -26,6 +26,18 @@ class Topic:
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 
+	# get topics by user
+	@staticmethod
+	def get_topics_by_user(user_id, num):
+		query = '''SELECT topic.TopicID, topic.Title, topic.CommentNum, topic.Time, node.NodeID, node.Name AS NodeName, node.Abbr AS NodeAbbr, user.Name AS UserName, user.Abbr AS UserAbbr, user.Avatar\n
+			FROM topic, user, node\n
+			WHERE topic.UserID = user.UserID\n
+			AND topic.NodeID = node.NodeID\n
+			AND topic.UserID = %d
+			ORDER BY Time DESC LIMIT %d''' % (user_id, num)
+		g.cursor.execute(query)
+		return g.cursor.fetchall()
+
 	# get hot topics
 	@staticmethod
 	def get_hot_topics(num):

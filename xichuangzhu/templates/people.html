@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ title_name }}的主页{% endblock %}
+{% block page_title %}{{ user_name }}的主页{% endblock %}
 {% block page_id%}page-people{% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
 	<div class="span8">
 
 		<div class="clearfix">
-			<a class="user-avatar" href="{{ url_for('people', user_abbr=people.Abbr) }}">
+			<a id="user-avatar" href="{{ url_for('people', user_abbr=people.Abbr) }}">
 				<img src="{{ people.Avatar }}" />
 			</a>
 			
@@ -19,38 +19,70 @@
 			</div>
 		</div>
 		
-		<h2>{{ title_name }}收藏的作品
+		<h2>{{ user_name }}的收藏
 			<span class='link-more'>
-				<a href="#">全部»</a>
+				<a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}">全部»</a>
 			</span>
 		</h2>
 
-		{% for work in works %}
+		{% for w in works %}
 		<div class="work-item">
 			<div class="work-header">
-				<a class="work-title" href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title }}</a><sup class="work-author">〔<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>〕</sup>
+				<a class="work-title" href="{{ url_for('single_work', work_id = w.WorkID) }}">{{ w.Title }}</a><sup class="work-author">〔<a href="{{ url_for('single_author', author_abbr=w.AuthorAbbr) }}">{{ w.Author }}</a>〕</sup>
 			</div>
-			
-			<div class="work-content">{{ work.Content|truncate(35, True) }}</div>
+			<div class="work-content">{{ w.Content|truncate(35, True) }}</div>
 		</div>
 		{% endfor %}
 
-		<h2>{{ title_name }}的点评
+		<h2>{{ user_name }}的点评
 			<span class='link-more'>
-				<a href="#">全部»</a>
+				<a href="{{ url_for('people_reviews', user_abbr=people.Abbr) }}">全部»</a>
 			</span>
 		</h2>
 
-		{% for review in reviews %}
+		{% for r in reviews %}
 		<div class="review-item">
-			<a class="review-title" href="{{ url_for('single_review', review_id=review.ReviewID) }}">{{ review.Title }}</a>
+			<a class="user-avatar" href="{{ url_for('people', user_abbr=r.UserAbbr) }}" >
+				<img src="{{ r.Avatar }}" />
+			</a>
 
-			<div class="review-content">{{ review.Content|truncate(35, True)|safe }}</div>
+			<div class="review-wap">
+				<div class="review-title">
+					<a href="{{ url_for('single_review', review_id = r.ReviewID) }}">{{ r.Title }}</a>
+				</div>
 
-			<div class="review-extra-info">
-				评
-				<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
-				<span class="review-time">{{ review.Time }}</span>
+				<div class="review-content">{{ r.Content|truncate(35, True)|safe }}</div>
+
+				<div class="review-extra-info">
+					<a href="{{ url_for('people', user_abbr=r.UserAbbr) }}">{{ r.Name }}</a>
+					评
+					<a href="{{ url_for('single_work', work_id=r.WorkID) }}">{{ r.WorkTitle }}〔{{ r.Author }}〕</a>
+					<span class="review-time">{{ r.Time }}</span>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+
+		<h2>{{ user_name }}的话题
+			<span class='link-more'>
+				<a href="{{ url_for('people_topics', user_abbr=people.Abbr) }}">全部»</a>
+			</span>
+		</h2>
+
+		{% for t in topics %}
+		<div class="topic-item">
+			<a class="topic-user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+
+			<div class="topic-info">
+				<div class="topic-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>
+				<div class="topic-extra-info">
+					<a class="topic-node" href="{{ url_for('node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a>
+					<a class="topic-launcher" href="{{ url_for('people', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
+					<span class="topic-time">{{ t.Time }}</span>
+				</div>
+				{% if t.CommentNum != 0 %}
+				<div class="topic-comment-num">{{ t.CommentNum }}</div>
+				{% endif %}
 			</div>
 		</div>
 		{% endfor %}
@@ -59,29 +91,28 @@
 			<span class='link-more'>
 				<a href="#">全部»</a>
 			</span>
-		</h2> -->
+		</h2>-->
 	</div>
 
 	<div class="span4">
-
-		<h2>{{ title_name }}发起的话题
+		<!-- <h2>{{ title_name }}发起的话题
 			<span class='link-more'>
 				<a href="#">全部»</a>
 			</span>
 		</h2>
 
-<!-- 		<h2>{{ title_name }}收藏的话题
+		<h2>{{ title_name }}收藏的话题
 			<span class='link-more'>
 				<a href="#">全部»</a>
 			</span>
-		</h2> -->
+		</h2>
 
 		<h2>
 			{{ title_name }}的回复
 			<span class='link-more'>
 				<a href="#">全部»</a>
 			</span>
-		</h2>
+		</h2> -->
 	</div>
 </div>
 
