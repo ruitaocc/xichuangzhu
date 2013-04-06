@@ -39,7 +39,8 @@ def time_diff(dt):
 def content_clean(content):
 	c = re.sub(r'<([^<]+)>', '', content)
 	c = c.replace('%', '')
-	c  = c.replace('（一）', "")
+	c = c.replace('（一）', "")
+	c = c.replace('(一)', "")
 	return c
 
 def get_comment_replyee_id(comment):

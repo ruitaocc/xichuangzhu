@@ -84,82 +84,6 @@ body{
 	h4{font-size: 18px;}
 }
 
-// component - work item
-//-----------------------------------------------------
-
-.work-item{
-	margin-bottom: 8px;
-	border-bottom: 1px dashed #DDD;
-	padding-bottom: 8px;
-
-	&:last-child{
-		border: none;
-		padding-bottom: 5px;
-	}
-
-	.work-header{
-		.work-title{
-			font-size: 16px;
-			line-height: 32px;
-			font-weight: bold;
-			letter-spacing: 1px;
-		}
-
-		.work-author{
-			font-size: 12px;
-			font-weight: normal;
-			margin-left: 3px;
-
-			a{
-				color: #333;
-			}
-		}
-	}
-
-	.work-content{
-		font-size: 14px;
-		line-height: 22px;
-	}
-}
-
-// component - review item
-//----------------------------------------------------- 
-.review-item{
-	margin-bottom: 8px;
-	padding-bottom: 8px;
-	border-bottom: 1px dashed #DDD;
-
-	.user-avatar{
-		float: left;
-		margin-top: 4px;
-	}
-
-	.review-wap{
-		margin-left: 60px;
-
-		.review-title{
-			font-size: 16px;
-			font-weight: bold;
-			letter-spacing: 1px;	
-		}
-
-		.review-content{
-			font-size: 12px;
-			line-height: 22px;			
-		}
-
-		.review-extra-info{
-			font-size: 12px;
-			line-height: 22px;
-
-			.review-time{
-				color: gray;
-			}
-		}
-	}
-}
-
-
 // page index
 //-----------------------------------------------------
 #page-index{
@@ -192,39 +116,6 @@ body{
 				&:hover{
 					background-color: white;
 					color: lighten(darkred, 5%);
-				}
-			}
-		}
-	}
-
-	.review-item{
-		margin-bottom: 15px;
-
-		.user-avatar{
-			float: left;
-			margin-top: 4px;
-		}
-
-		.review-wap{
-			margin-left: 60px;
-
-			.review-title{
-				font-size: 16px;
-				font-weight: bold;
-				letter-spacing: 1px;	
-			}
-
-			.review-content{
-				font-size: 12px;
-				line-height: 22px;			
-			}
-
-			.review-extra-info{
-				font-size: 12px;
-				line-height: 22px;
-
-				.review-time{
-					color: gray;
 				}
 			}
 		}
@@ -406,37 +297,6 @@ body{
 	}
 
 	.work-collection-introduction{
-	}
-
-	.review-item{
-		margin-bottom: 15px;
-		
-		.user-avatar{
-			float: left;
-			margin-top: 5px;
-		}
-
-		.review-wap{
-			margin-left: 60px;
-
-			.review-title{
-				font-size: 16px;
-				font-weight: bold;
-				letter-spacing: 1px;
-			}
-
-			.review-extra-info{
-				font-size: 12px;
-				line-height: 22px;
-
-				.review-time{color:#999;}
-			}
-
-			.review-content{
-				font-size: 12px;
-				line-height: 22px;
-			}		
-		}
 	}
 
 	.work-tags{
@@ -941,52 +801,16 @@ body{
 			color: #666;
 		}
 	}
-
-	.work-item{
-		margin-bottom: 8px;
-		padding-bottom: 8px;
-		border-bottom: 1px dashed #DDD;
-
-		&:last-child{
-			border-bottom: none;
-			padding-bottom: 5px;
-		}
-
-		.work-header{
-			.work-title{
-				font-size: 16px;
-				line-height: 30px;
-				font-weight: bold;
-				letter-spacing: 1px;
-			}
-
-			.work-author{
-				font-size: 12px;
-				font-weight: normal;
-				margin-left: 3px;
-
-				a{
-					color: #333;
-				}
-			}			
-		}
-
-		.work-content{
-			line-height: 22px;
-		}
-	}
 }
 
 // page shop
 //-----------------------------------------------------
 #page-shop{
-
 	.products-wap{margin-top: 15px;position: relative;
 		
 		.product-item{
 		
 			.product-image{ opacity: 0.9;
-
 				&:hover{
 					opacity: 1;
 				}
@@ -1009,121 +833,6 @@ body{
 	.product-introduction{
 		margin-bottom: 10px;
 	}
-}
-
-// component - topics
-//----------------------------------------------------- 
-
-.root-node{color: #888;text-decoration: none;
-	&:hover{color: darkred;}
-}
-
-.new-topic{float: right;margin: 0 10px 0 0;color: #888;
-	&:hover{color:#333;}
-}
-
-.topic-item{border-bottom: 1px dashed #DDD;margin-top: 10px;padding-bottom: 20px;position: relative;clear: both;
-
-	.topic-user-avatar{float: left;margin-top: 4px;}
-
-	.topic-info{margin-left: 60px;
-
-		.topic-title{font-size: 16px;margin-bottom: 6px;font-weight: bold;letter-spacing: 1px;}
-
-		.topic-extra-info{font-size: 12px;line-height: 12px;
-
-			.topic-node{font-size: 12px;display: inline-block;padding: 0px 0px;border-radius: 2px;color: #999;margin-right: 5px;
-			}
-
-			.topic-launcher{margin-right: 5px;color: gray;font-weight: bold;font-size: 12px;}
-
-			.topic-time{color: #999;}
-		}
-	}
-
-	.topic-comment-num{position: absolute;top: 15px;right: 15px;font-size: 12px;line-height: 12px;font-weight: bold;color: gray;background-color: #e5e5e5;display: inline-block;padding: 3px 12px;border-radius: 12px;cursor: pointer;}
-}
-
-// component node list
-//----------------------------------------------------- 
-.node-list{list-style: none;margin: 0;
-
-	.node{font-size:12px;line-height:12px;display: inline-block;margin:0 6px 6px 0;background-color: #f3f3f3;border-radius: 2px;border: 1px solid #e5e5e5;
-
-		a{color:rgb(98, 104, 107);text-decoration: none;padding: 4px 10px;display: inline-block;cursor: pointer;
-			&:hover{color:#4d5256;}
-		}
-	}
-}
-
-// component nodes nav
-//----------------------------------------------------- 
-.type-item{
-	clear: both;
-	margin-bottom: 10px;
-	padding-bottom: 8px;
-	border-bottom: 1px dashed #DDD;
-
-	.node-type{
-		float: left;
-		font-size: 12px;
-		font-weight: bold;
-	}
-
-	.node-list{
-		float: left;
-		margin: 0 0 0 25px;
-	}
-}
-
-
-// component comment
-//----------------------------------------------------- 
-.comment-item{
-	margin-bottom: 15px;
-	clear: both;
-	width: 530px;
-
-	.comment-user-avatar{
-		float: left;
-		margin-top: 5px;
-	}
-
-	.comment-wap{
-		margin-left: 60px;
-		font-size: 12px;
-
-		.comment-extra-info{
-			line-height: 22px;
-			margin-bottom: 2px;
-
-			.comment-time{
-				color: #999;
-				margin-left: 5px;
-			}
-
-			.btn-reply-somebody{
-				cursor: pointer;
-				display: none;
-				color: #999;
-				margin-left: 5px;
-			}
-		}
-
-		.comment-body{
-			line-height: 20px;
-
-			.replyee{
-				color: #333;
-				margin-right: 5px;
-			}
-		}
-	}
-}
-
-#textarea-comment{
-	display: block;
-	margin-top: 20px;
 }
 
 // page forum
