@@ -56,7 +56,7 @@ def get_comment_replyee_id(comment):
 def rebuild_comment(comment, replyee_id):
 	replyee_name = User.get_name_by_id(replyee_id)
 	replyee_abbr = User.get_abbr_by_id(replyee_id)
-	comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr + ">" + replyee_name + "</a>") + "&nbsp;&nbsp;" + comment.split(' ')[1]
+	comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + "&nbsp;&nbsp;" + comment.split(' ')[1]
 	return comment
 
 def build_topic_inform_title(replyer_id, topic_id):
