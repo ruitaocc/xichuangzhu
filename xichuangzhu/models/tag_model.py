@@ -26,7 +26,7 @@ class Tag:
 	 	g.cursor.execute("SELECT * FROM tag WHERE Tag = '%s'" % tag)
 
 		if g.cursor.rowcount == 0:
-			query = "INSERT INTO tag (Tag) VALUES '%s'" % tag
+			query = "INSERT INTO tag (Tag) VALUES ('%s')" % tag
 			g.cursor.execute(query)
 			g.conn.commit()
 		else:
