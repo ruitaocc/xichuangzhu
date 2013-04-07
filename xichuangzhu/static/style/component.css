@@ -1,13 +1,13 @@
 .work-item{margin-bottom:8px;border-bottom:1px dashed #DDD;padding-bottom:8px;}.work-item .work-header .work-title{font-size:16px;line-height:32px;font-weight:bold;letter-spacing:1px;}
 .work-item .work-header .work-author{font-size:12px;font-weight:normal;margin-left:3px;}.work-item .work-header .work-author a{color:#333;}
 .work-item .work-content{font-size:14px;line-height:22px;}
-.review-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #DDD;}.review-item .user-avatar{float:left;margin-top:4px;}
+.review-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #DDD;}.review-item .user-avatar{float:left;margin-top:3px;}
 .review-item .review-wap{margin-left:60px;}.review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}.review-item .review-wap .review-extra-info .review-time{color:gray;}
 .root-node{color:#888;text-decoration:none;}.root-node:hover{color:darkred;}
 .new-topic{float:right;margin:0 10px 0 0;color:#888;}.new-topic:hover{color:#333;}
-.topic-item{border-bottom:1px dashed #DDD;margin-top:10px;padding-bottom:20px;position:relative;clear:both;}.topic-item .topic-user-avatar{float:left;margin-top:4px;}
+.topic-item{border-bottom:1px dashed #DDD;margin-top:10px;padding-bottom:18px;position:relative;clear:both;}.topic-item .topic-user-avatar{float:left;margin-top:3px;}
 .topic-item .topic-info{margin-left:60px;}.topic-item .topic-info .topic-title{font-size:16px;margin-bottom:6px;font-weight:bold;letter-spacing:1px;}
 .topic-item .topic-info .topic-extra-info{font-size:12px;line-height:12px;}.topic-item .topic-info .topic-extra-info .topic-node{font-size:12px;display:inline-block;padding:0px 0px;border-radius:2px;color:#999;margin-right:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:12px;}
