@@ -40,8 +40,8 @@ class Topic:
 
 	# get topics num by user
 	@staticmethod
-	def get_topics_num_by_user(user_id, page, num):
-		query = "SELECT COUNT(*) AS TopicsNum FROM topic WHERE topic.UserID = user.UserID" % user_id
+	def get_topics_num_by_user(user_id):
+		query = "SELECT COUNT(*) AS TopicsNum FROM topic WHERE topic.UserID = %d" % user_id
 		g.cursor.execute(query)
 		return g.cursor.fetchone()['TopicsNum']
 

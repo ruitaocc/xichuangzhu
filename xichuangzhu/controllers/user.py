@@ -154,16 +154,19 @@ def people(user_abbr):
 	works = Love_work.get_works_by_user(people['UserID'], 1, 3)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
+	works_num = Love_work.get_works_num_by_user(people['UserID'])
 
 	reviews = Review.get_reviews_by_user(people['UserID'], 1, 3)
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
+	reviews_num = Review.get_reviews_num_by_user(people['UserID'])
 
 	topics = Topic.get_topics_by_user(people['UserID'], 1, 3)
 	for t in topics:
 		t['Time'] = time_diff(t['Time'])
+	topics_num = Topic.get_topics_num_by_user(people['UserID'])
 
-	return render_template('people.html', people=people, works=works, reviews=reviews, topics=topics, user_name=user_name)
+	return render_template('people.html', people=people, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, user_name=user_name)
 
 # page - people love works page
 @app.route('/people/<user_abbr>/love_works')
@@ -235,7 +238,7 @@ def people_topics(user_abbr):
 	for t in topics:
 		t['Time'] = time_diff(t['Time'])
 
-	topics_num = Review.get_reviews_num()
+	topics_num = Topic.get_topics_num_by_user(people['UserID'])
 
 	# page paras
 	total_page = int(math.ceil(topics_num / num_per_page))
