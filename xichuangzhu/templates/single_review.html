@@ -5,6 +5,7 @@
 
 {% block body %}
 
+{% if session.user_id %}
 <script type="text/javascript">
 
 // move the blink to the end of the input/textarea
@@ -42,6 +43,7 @@ $(document).ready(function(){
 });
 
 </script>
+{% endif %}
 
 <div class="row">
 	<div class="span8">
