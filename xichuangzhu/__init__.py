@@ -14,13 +14,13 @@ def inject_vars():
 	return dict(
 		douban_login_url = config.DOUBAN_LOGIN_URL,	# douban oauth url
 		admin_id = config.ADMIN_ID,	# admin id
-		informs_num = Inform.get_informs_num(session['user_id']) if 'user_id' in session else 0)	# new informs num
+		informs_num = Inform.get_new_informs_num(session['user_id']) if 'user_id' in session else 0)	# new informs num
 
 # send log msg using smtp
 if not app.debug:
 	import logging
 	from logging.handlers import SMTPHandler
-	credentials = (config.SMTP_USER, config.SMTP_PASSWORD)
+	credentials = 	dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)(config.SMTP_USER, config.SMTP_PASSWORD)
 	mail_handler = SMTPHandler((config.SMTP_SERVER, config.SMTP_PORT), config.SMTP_FROM, config.SMTP_ADMIN, 'xcz-log', credentials)
 	mail_handler.setLevel(logging.ERROR)
 	app.logger.addHandler(mail_handler)

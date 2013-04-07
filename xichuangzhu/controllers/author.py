@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 
-from flask import render_template, request, redirect, url_for, json
+from flask import render_template, request, redirect, url_for, json, abort
 
 from xichuangzhu import app
 
@@ -40,6 +40,9 @@ def authors():
 @app.route('/author/<author_abbr>')
 def single_author(author_abbr):
 	author = Author.get_author_by_abbr(author_abbr)
+
+	if not author:
+		abort(404)
 	
 	quote = Quote.get_quote_by_random(author['AuthorID'])
 	quotes_num = Quote.get_quotes_num_by_author(author['AuthorID'])

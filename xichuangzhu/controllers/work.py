@@ -1,7 +1,7 @@
 #-*- coding: UTF-8 -*-
 from __future__ import division
 
-from flask import render_template, request, redirect, url_for, json, session
+from flask import render_template, request, redirect, url_for, json, session, abort
 
 from xichuangzhu import app
 
@@ -21,7 +21,6 @@ import re
 
 import math
 
-
 from xichuangzhu.utils import time_diff, content_clean
 
 # page - single work
@@ -31,6 +30,9 @@ from xichuangzhu.utils import time_diff, content_clean
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
+
+	if not work:
+		abort(404)
 
 	# add comment, split ci, gene paragraph
 	work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])

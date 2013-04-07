@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, json, render_template_string
+from flask import render_template, request, redirect, url_for, json, abort
 
 from xichuangzhu import app
 
@@ -14,6 +14,10 @@ import markdown2
 @app.route('/dynasty/<dynasty_abbr>')
 def single_dynasty(dynasty_abbr):
 	dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)
+
+	if not dynasty:
+		abort(404)
+
 	#dynasty['History'] = markdown2.markdown(dynasty['History'])
 
 	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'], 5)
