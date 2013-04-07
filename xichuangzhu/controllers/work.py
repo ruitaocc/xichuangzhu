@@ -87,6 +87,7 @@ def love_work(work_id):
 
 	# update user tags & work tags
 	for t in new_tags:
+		Tag.add_tag(t)
 		Tag.add_user_tag(session['user_id'], t)
 		Tag.add_work_tag(work_id, t)
 

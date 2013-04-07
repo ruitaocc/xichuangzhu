@@ -19,8 +19,22 @@ class Tag:
 		return g.cursor.fetchall()
 
 # NEW
+
+	# add tag in table tag
+	@staticmethod
+	def add_tag(tag):
+	 	g.cursor.execute("SELECT * FROM tag WHERE Tag = '%s'" % tag)
+
+		if g.cursor.rowcount == 0:
+			query = "INSERT INTO tag (Tag) VALUES '%s'" % tag
+			g.cursor.execute(query)
+			g.conn.commit()
+		else:
+			query = "UPDATE tag SET Num = Num + 1 WHERE Tag = '%s'" % tag
+			g.cursor.execute(query)
+			g.conn.commit()
 	
-	# add tag in user tags
+	# add tag in table user_tag
 	@staticmethod
 	def add_user_tag(user_id, tag):
 	 	g.cursor.execute("SELECT * FROM user_tag WHERE UserID=%d AND Tag = '%s'" % (user_id, tag))
@@ -34,7 +48,7 @@ class Tag:
 			g.cursor.execute(query)
 			g.conn.commit()
 	
-	# add tag in work tags
+	# add tag in table work_tag
 	@staticmethod
 	def add_work_tag(work_id, tag):
 	 	g.cursor.execute("SELECT * FROM work_tag WHERE WorkID=%d AND Tag = '%s'" % (work_id, tag))

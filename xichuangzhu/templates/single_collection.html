@@ -28,10 +28,9 @@
 			<div class='work-header'>
 				<a class="work-title" href="{{url_for('single_work', work_id=work.WorkID)}}">{{ work.Title }}</a>
 			</div>
-			<div class='work-content'>{{ work.Content|truncate(20, True) }}</div>
+			<div class='work-content'>{{ work.Content|truncate(35, True) }}</div>
 		</div>
 		{% endfor %}
-
 	</div>
 
 	<div class="span4"></div>
