@@ -96,19 +96,30 @@
 
 					<script type="text/javascript">					
 					$(document).ready(function(){
-						var cookieName = "ft" + self.location.hostname.toString().replace(/\./g, "");
-						var bodyIsFt = getCookie(cookieName);
+						var bodyIsFt = getCookie("bodyIsFt");
+
+						if(bodyIsFt == "1"){
+							StranObj(document.body, 1);
+							$("#btn-tradition").addClass('active');
+							$("#btn-simple").removeClass('active');
+						}
+						else{
+							$("#btn-tradition").removeClass('active');
+							$("#btn-simple").addClass('active');
+						}
 
 						$('#btn-tradition').click(function(){
-							// if(bodyIsFt != "1"){
+							if(bodyIsFt != "1"){
 								StranObj(document.body, 1);
-							// }
+								setCookie("bodyIsFt", 1);
+							}
 						});
 
 						$('#btn-simple').click(function(){
-							// if(bodyIsFt == "1"){
+							if(bodyIsFt == "1"){
 								StranObj(document.body, 0);
-							// }
+								setCookie("bodyIsFt", 0);
+							}
 						});						
 					});
 					</script>
