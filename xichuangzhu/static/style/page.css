@@ -6,6 +6,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #douban-icon{float:right;margin-top:8px;cursor:pointer;}
 #st-selector{margin-top:7px;margin-right:15px;}
 #footer{text-align:center;font-size:12px;font-family:'微软雅黑';margin:60px 0 10px 0;}#footer a{color:#37a;}
+#footer img{margin-left:8px;}
 .navbar-search .search-query{line-height:1.2;font-size:12px;padding:2px 0px 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
 .modal{border:8px solid rgba(0, 0, 0, 0.35);box-shadow:none;border-radius:3px;}.modal h4{font-size:18px;}
