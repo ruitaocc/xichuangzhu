@@ -11,6 +11,7 @@
 		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.0.min.js')}}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/s2t.js') }}"></script>
 	</head>
 
 	<body id="{% block page_id %}{% endblock %}">
@@ -87,6 +88,30 @@
 					<a href="{{ douban_login_url }}"><img id="douban-icon" title="使用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/favicon_24x24.png" /></a>
 
 					{% endif %}
+
+					<div class="btn-group pull-right" id="st-selector" data-toggle="buttons-radio">
+						<button id="btn-simple" class="btn btn-small active">简</button>
+						<button id="btn-tradition" class="btn btn-small">繁</button>
+					</div>
+
+					<script type="text/javascript">					
+					$(document).ready(function(){
+						var cookieName = "ft" + self.location.hostname.toString().replace(/\./g, "");
+						var bodyIsFt = getCookie(cookieName);
+
+						$('#btn-tradition').click(function(){
+							// if(bodyIsFt != "1"){
+								StranObj(document.body, 1);
+							// }
+						});
+
+						$('#btn-simple').click(function(){
+							// if(bodyIsFt == "1"){
+								StranObj(document.body, 0);
+							// }
+						});						
+					});
+					</script>
 				</div>
 			</div>
 		</div>
