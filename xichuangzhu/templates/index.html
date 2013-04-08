@@ -14,6 +14,12 @@ $(document).ready(function(){
 			type: 'POST',
 			success: function(data){
 				$('#4works-wap').html(data);
+
+				// s2t
+				var bodyIsFt = getCookie("bodyIsFt");
+				if(bodyIsFt == "1"){
+					StranObj($('#4works-wap')[0], 1);
+				}
 			}
 		})
 	});

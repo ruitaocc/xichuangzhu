@@ -98,7 +98,10 @@ function setCookie(name, value)     //cookies设置
         var LargeExpDate = new Date ();
         LargeExpDate.setTime(LargeExpDate.getTime() + (expires*1000*3600*24));
     }
-    document.cookie = name + "=" + escape (value)+((expires == null) ? "" : ("; expires=" +LargeExpDate.toGMTString()));
+    document.cookie = 
+        name + "=" + escape (value) 
+        + ((expires == null) ? "" : ("; expires=" +LargeExpDate.toGMTString()))
+        + "path=/";
 }
 
 function getCookie(Name)            //cookies读取
