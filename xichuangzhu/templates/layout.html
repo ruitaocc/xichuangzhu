@@ -11,6 +11,7 @@
 		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
 		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.0.min.js')}}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='js/s2t.js') }}"></script>
 	</head>
 
@@ -96,7 +97,7 @@
 
 					<script type="text/javascript">					
 					$(document).ready(function(){
-						var bodyIsFt = getCookie("bodyIsFt");
+						var bodyIsFt = $.cookie("bodyIsFt");
 
 						if(bodyIsFt == "1"){
 							StranObj(document.body, 1);
@@ -113,14 +114,14 @@
 						$('#btn-tradition').click(function(){
 							if(bodyIsFt != "1"){
 								StranObj(document.body, 1);
-								setCookie("bodyIsFt", 1);
+								$.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
 							}
 						});
 
 						$('#btn-simple').click(function(){
 							if(bodyIsFt == "1"){
 								StranObj(document.body, 0);
-								setCookie("bodyIsFt", 0);
+								$.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
 							}
 						});						
 					});
