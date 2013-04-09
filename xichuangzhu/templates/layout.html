@@ -90,9 +90,8 @@
 
 					{% endif %}
 
-					<div class="btn-group pull-right" id="st-selector" data-toggle="buttons-radio">
-						<button id="btn-simple" class="btn btn-small active">简</button>
-						<button id="btn-tradition" class="btn btn-small">繁</button>
+					<div class="btn-group pull-right" id="st-selector">
+						<button id="btn-s2t" class="btn btn-small">简</button>
 					</div>
 
 					<script type="text/javascript">					
@@ -101,22 +100,26 @@
 
 						if(bodyIsFt == "1"){
 							StranObj(document.body, 1);
-							$("#btn-tradition").addClass('active');
-							$("#btn-simple").removeClass('active');
+							$('#btn-s2t').text('繁');
 						}
 						else{
-							$("#btn-tradition").removeClass('active');
-							$("#btn-simple").addClass('active');
+							$('#btn-s2t').text('简');
 						}
 
-						$('#btn-tradition').click(function(){
-							$.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
-							StranObj(document.body, 1);
-						});
-
-						$('#btn-simple').click(function(){
-							$.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
-							StranObj(document.body, 0);
+						$('#btn-s2t').click(function(){
+							// to simple
+							if(bodyIsFt == "1"){
+								$.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
+								bodyIsFt = "0";
+								$('#btn-s2t').text('简');
+								StranObj(document.body, 0);
+							}
+							else{	// to traditional
+								$.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
+								bodyIsFt = "1";
+								$('#btn-s2t').text('繁');
+								StranObj(document.body, 1);
+							}
 						});						
 					});
 					</script>
