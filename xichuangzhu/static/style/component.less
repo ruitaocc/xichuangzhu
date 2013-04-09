@@ -136,17 +136,28 @@
 	}
 }
 
-// component - topic item
+// component - node info
 //----------------------------------------------------- 
 
-.root-node{color: #888;text-decoration: none;
-	&:hover{color: darkred;}
+.node-info{
+	a{
+		color: #999;
+		text-decoration: none;
+	
+		&:hover{
+			color: darkred;
+		}
+	}
 }
 
+// component - add topic btn
+//----------------------------------------------------- 
 .new-topic{float: right;margin: 0 10px 0 0;color: #888;
 	&:hover{color:#333;}
 }
 
+// component - topic item
+//----------------------------------------------------- 
 .topic-item{border-bottom: 1px dashed #DDD;margin-top: 10px;padding-bottom: 18px;position: relative;clear: both;
 
 	.topic-user-avatar{float: left;margin-top: 3px;}
