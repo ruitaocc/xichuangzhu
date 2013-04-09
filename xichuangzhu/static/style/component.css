@@ -1,12 +1,12 @@
-.navbar #douban-icon{float:right;margin-top:8px;cursor:pointer;}
 .navbar #st-selector{margin-top:7px;margin-right:10px;}.navbar #st-selector button{background-image:none;}
+.navbar #douban-icon{float:right;margin-top:8px;margin-left:2px;cursor:pointer;}
 .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font-weight:normal;color:#37a;cursor:pointer;}
 .work-item{margin-bottom:8px;border-bottom:1px dashed #DDD;padding-bottom:8px;}.work-item .work-header .work-title{font-size:16px;line-height:32px;font-weight:bold;letter-spacing:1px;}
 .work-item .work-header .work-author{font-size:12px;font-weight:normal;margin-left:3px;}.work-item .work-header .work-author a{color:#333;}
 .work-item .work-content{font-size:14px;line-height:22px;}
 .author-item{margin-bottom:8px;}.author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}
 .author-item .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}.author-item .author-dynasty a{color:#333;}
-.author-item .author-quote{font-size:12px;}
+.author-item .author-quote{font-size:12px;line-height:22px;}
 .review-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #DDD;}.review-item .user-avatar{float:left;margin-top:3px;}
 .review-item .review-wap{margin-left:60px;}.review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
