@@ -1,7 +1,7 @@
 #-*- coding: UTF-8 -*-
 from __future__ import division
 
-from flask import render_template, request, redirect, url_for, json, session
+from flask import render_template, request, redirect, url_for, json, session, abort
 
 from xichuangzhu import app
 
@@ -28,10 +28,12 @@ from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment
 # view
 @app.route('/review/<int:review_id>')
 def single_review(review_id):
-	Review.add_click_num(review_id)
 	review = Review.get_review(review_id)
+	if not review:
+		abort(404)	
 	review['Content'] = markdown2.markdown(review['Content'])
 	review['Time'] = time_diff(review['Time'])
+	Review.add_click_num(review_id)
 	comments = Comment.get_comments_by_review(review_id)
 	for c in comments:
 		c['Time'] = time_diff(c['Time'])

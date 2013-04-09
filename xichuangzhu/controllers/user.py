@@ -70,7 +70,7 @@ def auth():
 		avatar      = user_info['avatar']
 		signature   = user_info['signature']
 		desc        = user_info['desc']
-		location_id = int(user_info['loc_id'])
+		location_id = int(user_info['loc_id']) if 'loc_id' in user_info else 0
 		location    = user_info['loc_name']
 		User.add_user(user_id, user_name, abbr, avatar, signature, desc, location_id, location)
 
