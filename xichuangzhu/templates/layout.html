@@ -86,7 +86,7 @@
 
 					{% else %}
 
-					<a href="{{ douban_login_url }}"><img id="douban-icon" title="使用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/favicon_24x24.png" /></a>
+					<a href="{{ douban_login_url }}"><img id="douban-icon" title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_24.png" /></a>
 
 					{% endif %}
 
@@ -110,17 +110,13 @@
 						}
 
 						$('#btn-tradition').click(function(){
-							if(bodyIsFt != "1"){
-								StranObj(document.body, 1);
-								$.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
-							}
+							$.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
+							StranObj(document.body, 1);
 						});
 
 						$('#btn-simple').click(function(){
-							if(bodyIsFt == "1"){
-								StranObj(document.body, 0);
-								$.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
-							}
+							$.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
+							StranObj(document.body, 0);
 						});						
 					});
 					</script>
