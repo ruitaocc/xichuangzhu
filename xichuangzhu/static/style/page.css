@@ -10,7 +10,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 .navbar-search .search-query{line-height:1.2;font-size:12px;padding:2px 0px 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
 .modal{border:8px solid rgba(0, 0, 0, 0.35);box-shadow:none;border-radius:3px;}.modal h4{font-size:18px;}
-#page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:text-top;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
+#page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:2px;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
 #page-works .work-item{margin-right:30px;}
