@@ -165,16 +165,8 @@ $(document).ready(function(){
 
 		<h2>谁收藏了它？</h2>
 
-		{% for lover in lovers %}
-		<div class="lover-item">
-			<a class="lover-avatar" href="{{ url_for('people', user_abbr=lover.Abbr) }}"><img src="{{ lover.Avatar }}" /></a>
-			<div class="lover-info">
-				<div class="lover"><a href="{{ url_for('people', user_abbr=lover.Abbr) }}">{{ lover.Name }}</a></div>
-				<div class="lover-signature">{{ lover.Signature }}</div>
-				<div class="lover-reviews-num">点评 {{ lover.ReviewNum }}</div>
-			</div>
-		</div>
-		{% endfor %}
+		{% from 'users.widget' import show_users %}
+		{{ show_users(lovers)|safe }}
 
 	</div>
 </div>

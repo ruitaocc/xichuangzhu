@@ -10,10 +10,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 .navbar-search .search-query{line-height:1.2;font-size:12px;padding:2px 0px 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
 .modal{border:8px solid rgba(0, 0, 0, 0.35);box-shadow:none;border-radius:3px;}.modal h4{font-size:18px;}
-#page-index .refresh-btn{vertical-align:middle;opacity:0.6;cursor:pointer;margin-left:3px;}
-#page-index .work-item .work-header{font-size:16px;line-height:32px;}#page-index .work-item .work-header .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:text-top;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-header .work-type:hover{background-color:white;color:#a40000;}
-#page-index .author-item{margin-bottom:8px;}#page-index .author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}#page-index .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-index .author-item .author .author-dynasty a{color:#333;}
-#page-index .author-item .author-quote{font-size:12px;}
+#page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:text-top;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
 #page-works .work-item{margin-right:30px;}
@@ -35,18 +32,13 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #DDD;padding-bottom:5px;}#page-single-work .other-work-item:last-child{border:0;}
 #page-single-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:gray;}
 #page-single-work .ad{display:block;margin-top:20px;}
-#page-single-work .lover-item{margin-bottom:10px;}#page-single-work .lover-item .lover-avatar{float:left;display:block;margin-top:6px;}
-#page-single-work .lover-item .lover-info{margin-left:60px;}#page-single-work .lover-item .lover-info .lover{font-size:13px;}
-#page-single-work .lover-item .lover-info .lover-signature{color:#666;font-size:12px;line-height:14px;}
-#page-single-work .lover-item .lover-info .lover-reviews-num{color:#666;font-size:12px;line-height:24px;}
 #page-single-work #modal-tags #input-tags{font-size:12px;margin-bottom:15px;width:350px;font-family:'宋体';}
 #page-single-work #modal-tags .tags-wap{clear:both;margin-bottom:10px;}#page-single-work #modal-tags .tags-wap .tags-title{float:left;}
 #page-single-work #modal-tags .tags-wap ul{margin:0 0 0 10px;float:left;width:450px;}#page-single-work #modal-tags .tags-wap ul li{list-style:none;display:inline-block;font-size:12px;line-height:12px;padding:5px 5px;margin:0 5px 5px 0;cursor:pointer;color:#a72323;background-color:#f7e7e7;box-shadow:1px 1px 0 #c09a9a;}#page-single-work #modal-tags .tags-wap ul li:hover{background-color:#f0dddd;}
 #page-single-collection .collection-author{font-size:16px;}
+#page-single-collection .work-item .work-author{display:none;}
 #page-authors .author-wap{border-top:1px dashed lightgray;padding-top:15px;}#page-authors .author-wap .author-dynasty{font-size:15px;line-height:15px;color:#1d56ac;font-family:'微软雅黑';width:100px;float:left;display:inline-block;}
 #page-authors .author-wap .author-group{list-style:none;margin:0 0 0 100px;}#page-authors .author-wap .author-group li{float:left;margin-bottom:15px;}#page-authors .author-wap .author-group li.author{font-size:16px;line-height:20px;width:100px;}
-#page-authors .hot-author-item{margin-bottom:8px;}#page-authors .hot-author-item .hot-author{font-size:16px;line-height:24px;font-weight:bold;}#page-authors .hot-author-item .hot-author .hot-author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-authors .hot-author-item .hot-author .hot-author-dynasty a{color:#333;}
-#page-authors .hot-author-item .hot-author-quote{font-size:12px;}
 #page-single-author .author h1{display:inline-block;}
 #page-single-author .author .author-quote{font-size:12px;font-weight:normal;color:gray;margin-left:12px;text-decoration:none;}
 #page-single-author .author-period{font-size:16px;margin-bottom:10px;}
@@ -60,8 +52,7 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-dynasty .row #dynasty-wap .dynasty-introduction{padding-right:1.5em;}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra h3{font-size:15px;font-family:'微软雅黑';}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra p{margin-bottom:15px;}
-#page-single-dynasty .row .author-item{margin-bottom:8px;}#page-single-dynasty .row .author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}#page-single-dynasty .row .author-item .author .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}#page-single-dynasty .row .author-item .author .author-dynasty a{color:#333;}
-#page-single-dynasty .row .author-item .author-quote{font-size:12px;}
+#page-single-dynasty .row .author-item .author-dynasty{display:none;}
 #page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
 #page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;color:#999;}#page-single-review .review-extra-info .btn-edit-review{margin-left:10px;}
@@ -71,9 +62,6 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-reviews .reviewer-item .reviewer-info{margin-left:60px;}#page-reviews .reviewer-item .reviewer-info .reviewer{font-size:13px;}
 #page-reviews .reviewer-item .reviewer-info .reviewer-signature{color:#666;font-size:12px;line-height:14px;}
 #page-reviews .reviewer-item .reviewer-info .reviews-num{color:#666;font-size:12px;line-height:24px;}
-#page-my-love .work-item{margin-bottom:15px;}#page-my-love .work-item .work-title{font-size:16px;line-height:30px;font-weight:bold;letter-spacing:1px;}
-#page-my-love .work-item .work-author{font-size:12px;font-weight:normal;}#page-my-love .work-item .work-author a{color:#333;}
-#page-my-love .work-item .work-content{line-height:22px;}
 #page-people #user-avatar{float:left;margin-top:15px;}
 #page-people .user-info{margin-left:60px;}#page-people .user-info .user-name{font-size:25px;line-height:30px;margin-top:15px;font-weight:bold;font-family:'微软雅黑';}
 #page-people .user-info .user-signature{font-size:12px;color:#666;}
@@ -89,7 +77,6 @@ body .link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font
 #page-single-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999;}
 #page-single-topic .topic-extra-info .topic-time{color:#999;}
 #page-single-topic .topic-extra-info .btn-edit-topic{margin-left:10px;}
-#node-info{margin-bottom:20px;}
 #page-add-topic #node,#page-edit-topic #node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}
 #page-informs .inform-item{clear:both;margin-bottom:10px;padding-bottom:15px;border-bottom:1px dashed #ddd;}#page-informs .inform-item .user-avatar{margin-top:5px;float:left;}
 #page-informs .inform-item .inform-wap{margin-left:60px;}#page-informs .inform-item .inform-wap .inform-title{font-size:12px;color:#999;}

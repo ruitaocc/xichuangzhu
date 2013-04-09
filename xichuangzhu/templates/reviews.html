@@ -24,16 +24,8 @@
 	<div class="span4">
 		<h2>点评人</h2>
 
-		{% for reviewer in reviewers %}
-		<div class="reviewer-item">
-			<a class="reviewer-avatar" href="{{ url_for('people', user_abbr=reviewer.Abbr) }}"><img src="{{ reviewer.Avatar }}" /></a>
-			<div class="reviewer-info">
-				<div class="reviewer"><a href="{{ url_for('people', user_abbr=reviewer.Abbr) }}">{{ reviewer.Name }}</a></div>
-				<div class="reviewer-signature">{{ reviewer.Signature }}</div>
-				<div class="reviews-num">点评 {{ reviewer.ReviewNum }}</div>
-			</div>
-		</div>
-		{% endfor %}
+		{% from 'users.widget' import show_users %}
+		{{ show_users(reviewers)|safe }}
 	</div>
 </div>
 

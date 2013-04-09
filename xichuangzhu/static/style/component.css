@@ -1,10 +1,17 @@
 .work-item{margin-bottom:8px;border-bottom:1px dashed #DDD;padding-bottom:8px;}.work-item .work-header .work-title{font-size:16px;line-height:32px;font-weight:bold;letter-spacing:1px;}
 .work-item .work-header .work-author{font-size:12px;font-weight:normal;margin-left:3px;}.work-item .work-header .work-author a{color:#333;}
 .work-item .work-content{font-size:14px;line-height:22px;}
+.author-item{margin-bottom:8px;}.author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px;}
+.author-item .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px;}.author-item .author-dynasty a{color:#333;}
+.author-item .author-quote{font-size:12px;}
 .review-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #DDD;}.review-item .user-avatar{float:left;margin-top:3px;}
 .review-item .review-wap{margin-left:60px;}.review-item .review-wap .review-title{font-size:16px;font-weight:bold;letter-spacing:1px;}
 .review-item .review-wap .review-content{font-size:12px;line-height:22px;}
 .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px;}.review-item .review-wap .review-extra-info .review-time{color:gray;}
+.user-item{margin-bottom:10px;}.user-item .user-avatar{float:left;display:block;margin-top:6px;}
+.user-item .user-info{margin-left:60px;}.user-item .user-info .user-name{font-size:13px;}
+.user-item .user-info .user-signature{color:#666;font-size:12px;line-height:14px;}
+.user-item .user-info .reviews-num{color:#666;font-size:12px;line-height:24px;}
 .root-node{color:#888;text-decoration:none;}.root-node:hover{color:darkred;}
 .new-topic{float:right;margin:0 10px 0 0;color:#888;}.new-topic:hover{color:#333;}
 .topic-item{border-bottom:1px dashed #DDD;margin-top:10px;padding-bottom:18px;position:relative;clear:both;}.topic-item .topic-user-avatar{float:left;margin-top:3px;}

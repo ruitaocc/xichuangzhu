@@ -23,14 +23,8 @@
 		<div class="collection-introduction">{{ collection.Introduction }}</div>
 
 		<h2>作品</h2>
-		{% for work in works %}
-		<div class="work-item">
-			<div class='work-header'>
-				<a class="work-title" href="{{url_for('single_work', work_id=work.WorkID)}}">{{ work.Title }}</a>
-			</div>
-			<div class='work-content'>{{ work.Content|truncate(35, True) }}</div>
-		</div>
-		{% endfor %}
+		{% from "works.widget" import show_works %}
+		{{ show_works(works)|safe }}
 	</div>
 
 	<div class="span4"></div>

@@ -1,0 +1,12 @@
+{% macro show_authors(authors) %}
+
+{% for author in authors %}
+<div class='author-item'>
+	<div>
+		<a class='author' href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a><sup class='author-dynasty'>〔<a href="{{ url_for('single_dynasty', dynasty_abbr=author.DynastyAbbr) }}">{{ author.Dynasty }}</a>〕</sup>
+	</div>
+	<div class='author-quote'>{{ author.Quote }}</div>
+</div>
+{% endfor %}
+
+{% endmacro %}

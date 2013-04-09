@@ -100,62 +100,25 @@ body{
 // page index
 //-----------------------------------------------------
 #page-index{
-	.refresh-btn{
-		vertical-align: middle;
-		opacity: 0.6;
-		cursor: pointer;
-		margin-left: 3px;
-	}
-
 	.work-item{
-		.work-header{
-			font-size: 16px;
-			line-height: 32px;
-
-			.work-type{
-				background-color: lighten(darkred, 5%);
-				padding: 2px 2px 3px 3px;
-				border: 1px solid lighten(darkred, 5%);
-				font-size: 12px;
-				line-height: 12px;
-				font-weight: normal;
-				border-radius: 2px;
-				margin-right: 5px;
-				display: inline-block;
-				vertical-align: text-top;
-				text-decoration: none;
-				color: #FBFBFB;
-
-				&:hover{
-					background-color: white;
-					color: lighten(darkred, 5%);
-				}
-			}
-		}
-	}
-
-	.author-item{
-		margin-bottom: 8px;
-
-		.author{
-			font-size: 16px;
-			line-height: 22px;
-			font-weight: bold;
-			letter-spacing: 1px;
-
-			.author-dynasty{
-				font-size: 12px;
-				font-weight: normal;
-				margin-left: 3px;
-
-				a{
-					color: #333;
-				}
-			}					
-		}
-
-		.author-quote{
+		.work-type{
+			background-color: lighten(darkred, 5%);
+			padding: 2px 2px 3px 3px;
+			border: 1px solid lighten(darkred, 5%);
 			font-size: 12px;
+			line-height: 12px;
+			font-weight: normal;
+			border-radius: 2px;
+			margin-right: 5px;
+			display: inline-block;
+			vertical-align: text-top;
+			text-decoration: none;
+			color: #FBFBFB;
+
+			&:hover{
+				background-color: white;
+				color: lighten(darkred, 5%);
+			}
 		}
 	}
 
@@ -369,36 +332,6 @@ body{
 		margin-top: 20px;
 	}
 
-	.lover-item{
-		margin-bottom: 10px;
-
-		.lover-avatar{
-			float: left;
-			display: block;
-			margin-top: 6px;
-		}
-
-		.lover-info{
-			margin-left: 60px;
-
-			.lover{
-				font-size: 13px;
-			}
-
-			.lover-signature{
-				color: #666;
-				font-size: 12px;
-				line-height: 14px;
-			}
-
-			.lover-reviews-num{
-				color: #666;
-				font-size: 12px;
-				line-height: 24px;
-			}
-		}
-	}
-
 	#modal-tags{
 		#input-tags{
 			font-size: 12px;
@@ -448,16 +381,15 @@ body{
 	}
 }
 
-// page add work
-//-----------------------------------------------------
-#page-add-work{
-}
-
 // page single collection
 //-----------------------------------------------------
 #page-single-collection{
 	.collection-author{
 		font-size: 16px;
+	}
+
+	.work-item .work-author{
+		display: none;
 	}
 }
 
@@ -493,30 +425,6 @@ body{
 					width: 100px;
 				}
 			}
-		}
-	}
-
-	.hot-author-item{
-		margin-bottom: 8px;
-
-		.hot-author{
-			font-size: 16px;
-			line-height: 24px;
-			font-weight: bold;
-
-			.hot-author-dynasty{
-				font-size: 12px;
-				font-weight: normal;
-				margin-left: 3px;
-
-				a{
-					color: #333;
-				}
-			}					
-		}
-
-		.hot-author-quote{
-			font-size: 12px;
 		}
 	}
 }
@@ -605,17 +513,9 @@ body{
 	}
 }
 
-// page add author & edit author
-//-----------------------------------------------------
-#page-add-author #form-add-author,
-#page-edit-author #form-edit-author{
-
-}
-
 // page single dynasty
 //-----------------------------------------------------
 #page-single-dynasty{
-
 	#dyn-selector{
 		margin: 0;
 		position: absolute;
@@ -646,7 +546,6 @@ body{
 		margin-top: 22px;
 
 		#dynasty-wap{
-			
 			.dynasty-period{
 				font-size: 16px;
 			}
@@ -668,29 +567,8 @@ body{
 			}
 		}
 
-		.author-item{
-			margin-bottom: 8px;
-
-			.author{
-				font-size: 16px;
-				line-height: 22px;
-				font-weight: bold;
-				letter-spacing: 1px;
-
-				.author-dynasty{
-					font-size: 12px;
-					font-weight: normal;
-					margin-left: 3px;
-
-					a{
-						color: #333;
-					}
-				}					
-			}
-
-			.author-quote{
-				font-size: 12px;
-			}
+		.author-item .author-dynasty{
+			display: none;
 		}
 	}
 }
@@ -762,34 +640,6 @@ body{
 	}
 }
 
-// page my love
-//-----------------------------------------------------
-#page-my-love{
-	.work-item{
-		margin-bottom: 15px;
-
-		.work-title{
-			font-size: 16px;
-			line-height: 30px;
-			font-weight: bold;
-			letter-spacing: 1px;
-		}
-
-		.work-author{
-			font-size: 12px;
-			font-weight: normal;
-
-			a{
-				color: #333;
-			}
-		}
-
-		.work-content{
-			line-height: 22px;
-		}
-	}
-}
-
 // page people
 //-----------------------------------------------------
 #page-people{
@@ -837,10 +687,6 @@ body{
 #page-single-product{
 	.product-image{
 		margin-top: 15px;
-	}
-
-	.product-name{
-
 	}
 
 	.product-introduction{
@@ -899,11 +745,7 @@ body{
 			margin-left: 10px;
 		}
 	}
-
-
 }
-
-#node-info{margin-bottom: 20px;}
 
 // page add topic
 //-----------------------------------------------------
@@ -934,9 +776,7 @@ body{
 		}
 
 		.inform-wap{
-			// float: left;
 			margin-left: 60px;
-
 
 			.inform-title{
 				font-size: 12px;

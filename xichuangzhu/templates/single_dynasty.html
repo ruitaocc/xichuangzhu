@@ -87,14 +87,8 @@ $(document).ready(function(){
 			</span>
 		</h2>
 
-		{% for author in authors %}
-		<div class='author-item'>
-			<div class='author'>
-				<a href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a>
-			</div>
-			<div class='author-quote'>{{ author.Quote }}</div>
-		</div>
-		{% endfor %}
+		{% from 'authors.widget' import show_authors %}
+		{{ show_authors(authors)|safe }}
 	</div>
 </div>
 
