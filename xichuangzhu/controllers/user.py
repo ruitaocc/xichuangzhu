@@ -51,6 +51,7 @@ def auth():
 			return redirect(url_for('verify_email_callback', state='unactive', user_id=user_id))
 		else:
 			# set session
+			session.permanent = True
 			session['user_id'] = user_id
 			session['user_name'] = User.get_name_by_id(user_id)
 			session['user_abbr'] = User.get_abbr_by_id(user_id)

@@ -4,7 +4,10 @@ import config
 
 from flask import Flask, g, session
 app = Flask(__name__)
-app.config.update(SECRET_KEY=config.SECRET_KEY)
+app.config.update(
+	SECRET_KEY = config.SECRET_KEY,
+	SESSION_COOKIE_NAME = config.SESSION_COOKIE_NAME,
+	PERMANENT_SESSION_LIFETIME = config.PERMANENT_SESSION_LIFETIME)
 
 from xichuangzhu.models.inform_model import Inform
 
