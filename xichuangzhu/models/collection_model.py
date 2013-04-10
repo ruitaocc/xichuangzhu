@@ -43,4 +43,3 @@ class Collection:
 			WHERE CollectionID = %d''' % (collection, authorID, introduction, collectionID)
 		g.cursor.execute(query)
 		return g.conn.commit()
-

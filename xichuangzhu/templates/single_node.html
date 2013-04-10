@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="span8">
 		<h2 class="node-info">
-			<a href="{{ url_for('forum') }}" class="node root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;{{ node.Name }}
+			<a href="{{ url_for('forum') }}" class="root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;{{ node.Name }}
 			{% if session.user_id %}
 			<a class="btn btn-small new-topic" href="{{ url_for('add_topic', node=node.Abbr) }}">发起新话题</a>
 			{% endif %}
@@ -26,7 +26,10 @@
 					<span class="topic-time">{{ t.Time }}</span>
 					
 				</div>
+
+				{% if t.CommentNum != 0 %}
 				<div class="topic-comment-num">{{ t.CommentNum }}</div>
+				{% endif %}
 			</div>
 		</div>
 		{% endfor %}
@@ -37,7 +40,7 @@
 
 		<ul class="node-list">
 		{% for n in nodes %}
-		<li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
+		<li class="node"><a href="{{ url_for('single_node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
 		{% endfor %}
 		</ul>
 	</div>

@@ -36,9 +36,9 @@ $(document).ready(function(){
 
 	$('.btn-reply-somebody').click(function(){
 		var target_username = $(this).attr('data-username'),
-			comment = $("#textarea-comment").val();
-		$("#textarea-comment").val("@" + target_username + " " + comment);
-		moveEnd($("#textarea-comment")[0]);
+			comment = $(".textarea-comment").val();
+		$(".textarea-comment").val("@" + target_username + " " + comment);
+		moveEnd($(".textarea-comment")[0]);
 	});
 });
 
@@ -48,7 +48,7 @@ $(document).ready(function(){
 <div class="row">
 	<div class="span8">
 		<h2 class="node-info">
-			<a href="{{ url_for('forum') }}" class="node root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;<a href="{{ url_for('node', node_abbr=topic.NodeAbbr)}}" class="node sub-node">{{ topic.NodeName }}</a>
+			<a href="{{ url_for('forum') }}" class="root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;<a href="{{ url_for('single_node', node_abbr=topic.NodeAbbr)}}" class="sub-node">{{ topic.NodeName }}</a>
 		</h2>
 
 		<div class="topic-wap">
@@ -70,43 +70,22 @@ $(document).ready(function(){
 
 		{% if comments|length != 0 %}
 		<h2>回复</h2>
+
+		{% from 'comments.widget' import show_comments %}
+		{{ show_comments(comments)|safe }}
+
 		{% endif %}
-
-		{% for comment in comments %}
-		<div class="comment-item clearfix">
-			<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.Abbr) }}">
-				<img src="{{ comment.Avatar }}">
-			</a>
-
-			<div class="comment-wap">
-				<div class="comment-extra-info">
-					<a href="{{ url_for('people', user_abbr=comment.Abbr) }}">{{ comment.Name }}</a>
-					<span class="comment-time">{{ comment.Time }}</span>
-					<a class="btn-reply-somebody" data-username="{{ comment.Name }}">回应</a>
-				</div>
-				<div class="comment-body">{{ comment.Comment|safe }}</div>
-			</div>
-		</div>
-		{% endfor %}
-
+		
 		<!-- add comment -->
 		{% if session.user_id %}
 		<form id="add-topic-comment" method="post" action="{{ url_for('add_comment_to_topic', topic_id=topic.TopicID) }}">
-			<textarea name="comment" class="input-xxlarge" id="textarea-comment" rows="4" placeholder="添加回复"></textarea>
+			<textarea name="comment" class="input-xxlarge textarea-comment" rows="4" placeholder="添加回复"></textarea>
 			<input type="submit" class="btn btn-small" value="回复" />
 		</form>
 		{% endif %}
 	</div>
 
-	<div class="span4">
-		<!-- <h2>最热节点</h2>
-
-		<ul class="node-list">
-		{% for n in nodes %}
-		<li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
-		{% endfor %}
-		</ul> -->
-	</div>
+	<div class="span4"></div>
 </div>
 
 {% endblock %}

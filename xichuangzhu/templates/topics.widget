@@ -7,7 +7,7 @@
 	<div class="topic-info">
 		<div class="topic-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>
 		<div class="topic-extra-info">
-			<a class="topic-node" href="{{ url_for('node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a>
+			<a class="topic-node" href="{{ url_for('single_node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a>
 			<a class="topic-launcher" href="{{ url_for('people', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
 			<span class="topic-time">{{ t.Time }}</span>
 		</div>

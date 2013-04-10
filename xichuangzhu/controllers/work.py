@@ -134,9 +134,9 @@ def rm_love_work(work_id):
 def works():
 	num_per_page = 10
 
-	work_type  = request.args['type'] if 'type' in request.args else 'all'
+	work_type = request.args['type'] if 'type' in request.args else 'all'
 	dynasty_abbr = request.args['dynasty'] if 'dynasty' in request.args else 'all'
-	page       = int(request.args['page'] if 'page' in request.args else 1)
+	page = int(request.args['page'] if 'page' in request.args else 1)
 
 	works = Work.get_works(work_type, dynasty_abbr, page, num_per_page)
 	for work in works:
@@ -174,11 +174,11 @@ def works_by_tag(tag):
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	works_num  = Work.get_works_num_by_tag(tag)
+	works_num = Work.get_works_num_by_tag(tag)
 
 	# page paras
 	total_page = int(math.ceil(works_num / num_per_page))
-	pre_page   = (page - 1) if page > 1 else 1
+	pre_page = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
 		total_page = 1
@@ -233,14 +233,6 @@ def edit_work(work_id):
 
 		Work.edit_work(title, content, foreword, intro ,authorID, dynastyID, collectionID, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
-
-# proc - delete work
-#--------------------------------------------------
-
-# @app.route('/work/delete/<int:workID>', methods=['GET'])
-# def delete_work(workID):
-# 	Work.delete_work(workID)
-# 	return redirect(url_for('index'))
 
 # helper - search authors and their collections in page add & edit work
 #--------------------------------------------------

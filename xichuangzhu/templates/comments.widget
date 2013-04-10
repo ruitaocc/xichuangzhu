@@ -1,0 +1,21 @@
+{% macro show_comments(comments) %}
+
+{% for comment in comments %}
+<div class="comment-item clearfix">
+	<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.Abbr) }}">
+		<img src="{{ comment.Avatar }}">
+	</a>
+
+	<div class="comment-wap">
+		<div class="comment-extra-info">
+			<a href="{{ url_for('people', user_abbr=comment.Abbr) }}">{{ comment.Name }}</a>
+			<span class="comment-time">{{ comment.Time }}</span>
+			<a class="btn-reply-somebody" data-username="{{ comment.Name }}">回应</a>
+		</div>
+
+		<div class="comment-body">{{ comment.Comment|safe }}</div>
+	</div>
+</div>
+{% endfor %}
+
+{% endmacro %}

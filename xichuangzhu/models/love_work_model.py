@@ -63,7 +63,7 @@ class Love_work:
 		return g.conn.commit()
 
 # UPDATE
-	
+
 	# edit work tags
 	@staticmethod
 	def edit(user_id, work_id, tags):
@@ -79,5 +79,3 @@ class Love_work:
 		query = "DELETE FROM love_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
 		g.cursor.execute(query)
 		return g.conn.commit()
-
-
