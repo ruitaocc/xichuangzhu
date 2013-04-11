@@ -13,6 +13,7 @@ from xichuangzhu.models.quote_model import Quote
 # page single dynasty
 #--------------------------------------------------
 
+# view (public)
 @app.route('/dynasty/<dynasty_abbr>')
 def single_dynasty(dynasty_abbr):
 	dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)
@@ -35,8 +36,12 @@ def single_dynasty(dynasty_abbr):
 
 # page add dynasty
 #--------------------------------------------------
+
+# view (admin)
 @app.route('/dynasty/add', methods=['GET', 'POST'])
 def add_dynasty():
+	check_admin()
+
 	if request.method == 'GET':
 		return render_template('add_dynasty.html')
 	elif request.method == 'POST':
@@ -50,8 +55,12 @@ def add_dynasty():
 
 # page edit dynasty
 #--------------------------------------------------
+
+# view (admin)
 @app.route('/dynasty/edit/<int:dynasty_id>', methods=['GET', 'POST'])
 def edit_dynasty(dynasty_id):
+	check_admin()
+
 	if request.method == 'GET':
 		dynasty = Dynasty.get_dynasty(dynasty_id)
 		return render_template('edit_dynasty.html', dynasty=dynasty)
@@ -65,10 +74,12 @@ def edit_dynasty(dynasty_id):
 		Dynasty.edit_dynasty(dynasty, abbr, introduction, history, startYear, endYear, dynasty_id)
 		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
 
-# json - get single dynasty info
+# json - get single dynasty info (admin)
 #--------------------------------------------------
 @app.route('/dynasty/json', methods=['POST'])
 def get_dynasty_by_json():
+	check_admin()
+
 	dynasty_id = int(request.form['dynasty_id'])
 	dynasty = Dynasty.get_dynasty(dynasty_id)
 	authors = Author.get_authors_by_dynasty(dynasty_id)

@@ -14,11 +14,12 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 
-from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
+from xichuangzhu.utils import time_diff, check_login, check_private, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
 
 # page forum
 #--------------------------------------------------
 
+# view (public)
 @app.route('/forum')
 def forum():
 	topics = Topic.get_topics(15)
@@ -38,7 +39,7 @@ def forum():
 # page single topic
 #--------------------------------------------------
 
-# view
+# view (public)
 @app.route('/topic/<int:topic_id>')
 def single_topic(topic_id):
 	topic = Topic.get_topic(topic_id)
@@ -49,11 +50,13 @@ def single_topic(topic_id):
 		c['Time'] = time_diff(c['Time'])
 	Topic.add_click_num(topic_id)
 	nodes = Node.get_nodes(16)
+	
 	return render_template('single_topic.html', topic=topic, comments=comments, nodes=nodes)
 
-# proc - add comment
+# proc - add comment (login)
 @app.route('/topic/<int:topic_id>', methods=['POST'])
 def add_comment_to_topic(topic_id):
+	check_login()
 
 	replyer_id = session['user_id']
 	
@@ -83,8 +86,12 @@ def add_comment_to_topic(topic_id):
 
 # page add topic
 #--------------------------------------------------
+
+# view (login)
 @app.route('/topic/add', methods=['POST', 'GET'])
 def add_topic():
+	check_login()
+	
 	if request.method == 'GET':
 		node_abbr = request.args['node'] if "node" in request.args else "shici"
 		node = Node.get_node_by_abbr(node_abbr)
@@ -102,10 +109,14 @@ def add_topic():
 
 # page edit topic
 #--------------------------------------------------
+
+# view (private)
 @app.route('/topic/edit/<int:topic_id>', methods=['POST', 'GET'])
 def edit_topic(topic_id):
+	topic = Topic.get_topic(topic_id)
+	check_private(topic['UserID'])
+
 	if request.method == 'GET':
-		topic = Topic.get_topic(topic_id)
 		node_types = Node.get_types()
 		for nt in node_types:
 			nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
@@ -117,8 +128,10 @@ def edit_topic(topic_id):
 		new_topic_id = Topic.edit(topic_id, node_id, title, content)
 		return redirect(url_for('single_topic', topic_id=topic_id))
 
-# page node
+# page single node
 #--------------------------------------------------
+
+# view (public)
 @app.route('/node/<node_abbr>')
 def single_node(node_abbr):
 	node = Node.get_node_by_abbr(node_abbr)

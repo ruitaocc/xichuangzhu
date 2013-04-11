@@ -2,9 +2,11 @@
 
 import re
 
-from flask import render_template, request, redirect, url_for, json, abort
+from flask import render_template, request, redirect, url_for, json, abort, session
 
 from xichuangzhu import app
+
+import config
 
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
@@ -12,11 +14,12 @@ from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.quote_model import Quote
 
-from xichuangzhu.utils import content_clean
+from xichuangzhu.utils import content_clean, check_admin
 
 # page all authors
 #--------------------------------------------------
 
+# view (public)
 @app.route('/author')
 def authors():
 	dynasties = Dynasty.get_dynasties()
@@ -37,6 +40,7 @@ def authors():
 # page single author
 #--------------------------------------------------
 
+# view (public)
 @app.route('/author/<author_abbr>')
 def single_author(author_abbr):
 	author = Author.get_author_by_abbr(author_abbr)
@@ -68,8 +72,11 @@ def single_author(author_abbr):
 # page add author
 #--------------------------------------------------
 
+# view (admin)
 @app.route('/author/add', methods=['GET', 'POST'])
 def add_author():
+	check_admin()
+
 	if request.method == 'GET':
 		dynasties = Dynasty.get_dynasties()
 		return render_template('add_author.html', dynasties=dynasties)
@@ -86,8 +93,11 @@ def add_author():
 # page edit author
 #--------------------------------------------------
 
+# view (admin)
 @app.route('/author/edit/<int:authorID>', methods=['GET', 'POST'])
 def edit_author(authorID):
+	check_admin()
+
 	if request.method == 'GET':
 		dynasties = Dynasty.get_dynasties()
 		author = Author.get_author_by_id(authorID)
@@ -102,36 +112,46 @@ def edit_author(authorID):
 		Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
 		return redirect(url_for('single_author', author_abbr=abbr))
 
-# page admin quotes
+# page - admin quotes
 #--------------------------------------------------
 
-# view
+# view (admin)
 @app.route('/quote/admin/<int:author_id>')
 def admin_quotes(author_id):
+	check_admin()
+
 	author = Author.get_author_by_id(author_id)
 	quotes = Quote.get_quotes_by_author(author_id)
 	return render_template('admin_quotes.html', quotes=quotes, author=author)
 
-# proc - add quote
+# proc - add quote (admin)
 @app.route('/quote/add/<int:author_id>', methods=['POST'])
 def add_quote(author_id):
+	check_admin()
+
 	quote = request.form['quote']
 	work_id = int(request.form['work-id'])
 	work_title = Work.get_work(work_id)['Title'] 
 	Quote.add(author_id, quote, work_id, work_title)
 	return redirect(url_for('admin_quotes', author_id=author_id))
 
-# proc - delete quote
+# proc - delete quote (admin)
 @app.route('/quote/delete/<int:quote_id>')
 def delete_quote(quote_id):
+	check_admin()
+
 	author_id = int(request.args['author_id'])
 	Quote.delete(quote_id)
 	return redirect(url_for('admin_quotes', author_id=author_id))
 
 # page edit quote
 #--------------------------------------------------
+
+# view (admin)
 @app.route('/quote/edit/<int:quote_id>', methods=['GET', 'POST'])
 def edit_quote(quote_id):
+	check_admin()
+	
 	if request.method == 'GET':
 		quote = Quote.get_quote_by_id(quote_id)
 		return render_template('edit_quote.html', quote=quote)

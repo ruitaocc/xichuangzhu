@@ -23,9 +23,11 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
 
-from xichuangzhu.utils import content_clean, time_diff
+from xichuangzhu.utils import content_clean, time_diff, check_login
 
-# proc - login by douban's oauth2.0
+# proc - login by douban's oauth2.0 (public)
+#--------------------------------------------------
+
 @app.route('/login/douban')
 def auth():
 	code = request.args['code']
@@ -80,8 +82,13 @@ def auth():
 		return redirect(url_for('send_verify_email', user_id=user_id))
 
 # page - send verify email
+#--------------------------------------------------
+
+# view (login)
 @app.route('/send_verify_email/douban', methods=['GET', 'POST'])
 def send_verify_email():
+	check_login()
+
 	if request.method == 'GET':
 		user_id = int(request.args['user_id'])
 		user_name = User.get_name_by_id(user_id)
@@ -118,7 +125,9 @@ def send_verify_email():
 
 		return redirect(url_for('verify_email_callback', state='send_succ'))
 
-# proc - verify the code and active user
+# proc - verify the code and active user (public)
+#--------------------------------------------------
+
 @app.route('/verify_email/douban/<int:user_id>/<verify_code>')
 def verify_email(user_id, verify_code):
 	user_name = User.get_name_by_id(user_id)
@@ -133,21 +142,30 @@ def verify_email(user_id, verify_code):
 		return redirect(url_for('verify_email_callback', state='active_failed'))
 
 # page - show the state of verify
+#--------------------------------------------------
+
+# view (public)
 @app.route('/verify_email_callback/douban/')
 def verify_email_callback():
 	state = request.args['state']
 	user_id = int(request.args['user_id']) if 'user_id' in request.args else 0
 	return render_template('verify_email_callback.html', state=state, user_id=user_id)
 
-# proc - logout
+# proc - logout (login)
+#--------------------------------------------------
 @app.route('/logout')
 def logout():
+	check_login()
+	
 	session.pop('user_id', None)
 	session.pop('user_name', None)
 	session.pop('user_abbr', None)
 	return redirect(url_for('index'))
 
 # page - personal page
+#--------------------------------------------------
+
+# view (public)
 @app.route('/people/<user_abbr>')
 def people(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
@@ -171,6 +189,9 @@ def people(user_abbr):
 	return render_template('people.html', people=people, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, user_name=user_name)
 
 # page - people love works page
+#--------------------------------------------------
+
+# view (public)
 @app.route('/people/<user_abbr>/love_works')
 def people_love_works(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
@@ -199,6 +220,9 @@ def people_love_works(user_abbr):
 	return render_template('people_love_works.html', people=people, works=works, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people reviews
+#--------------------------------------------------
+
+# view (public)
 @app.route('/people/<user_abbr>/reviews')
 def people_reviews(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
@@ -227,6 +251,9 @@ def people_reviews(user_abbr):
 	return render_template('people_reviews.html', people=people, reviews=reviews, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people topics
+#--------------------------------------------------
+
+# view (public)
 @app.route('/people/<user_abbr>/topics')
 def people_topics(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
@@ -255,8 +282,13 @@ def people_topics(user_abbr):
 	return render_template('people_topics.html', people=people, topics=topics, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - informs
+#--------------------------------------------------
+
+# view (login)
 @app.route('/informs')
 def informs():
+	check_login()
+	
 	# pagination
 	num_per_page = 10
 	page = int(request.args['page'] if 'page' in request.args else 1)

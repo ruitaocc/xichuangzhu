@@ -4,7 +4,9 @@ import datetime, time
 
 import re
 
-from flask import url_for
+from flask import url_for, session, abort
+
+import config
 
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.topic_model import Topic
@@ -64,9 +66,24 @@ def build_topic_inform_title(replyer_id, topic_id):
 	inform_title = "<a href=" + url_for('people', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在话题&nbsp;&nbsp;" + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
 	return inform_title
 
-# build HTML code for review inform's header 
+# Build HTML code for review inform's header 
 def build_review_inform_title(replyer_id, review_id):
 	replyer = User.get_user_by_id(replyer_id)
 	review = Review.get_review(review_id)
 	inform_title = "<a href=" + url_for('people', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在评论&nbsp;&nbsp;" + "<a href=" + url_for('single_review', review_id=review_id) + ">" + review['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
 	return inform_title
+
+# Check if is Administrator
+def check_admin():
+	if not ('user_id' in session and session['user_id'] == config.ADMIN_ID):
+		abort(404)
+
+# Check if login
+def check_login():
+	if 'user_id' not in session:
+		abort(404)
+
+# Check if login and owner
+def check_private(user_id):
+	if not ('user_id' in session and session['user_id'] == user_id):
+		abort(404)

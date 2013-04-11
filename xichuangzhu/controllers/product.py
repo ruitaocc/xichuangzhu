@@ -6,10 +6,12 @@ from xichuangzhu import app
 
 from xichuangzhu.models.product_model import Product
 
+from xichuangzhu.utils import check_admin
+
 # page - shop
 #--------------------------------------------------
 
-# view
+# view (public)
 @app.route('/things')
 def shop():
 	products = Product.get_products(12)
@@ -18,7 +20,7 @@ def shop():
 # page - single product
 #--------------------------------------------------
 
-# view
+# view (public)
 @app.route('/thing/<int:product_id>')
 def single_product(product_id):
 	product = Product.get_product(product_id)
@@ -27,9 +29,11 @@ def single_product(product_id):
 # page - add product
 #--------------------------------------------------
 
-# view
+# view (admin)
 @app.route('/thing/add', methods=['GET', 'POST'])
 def add_product():
+	check_admin()
+
 	if request.method == 'GET':
 		return render_template('add_product.html')
 	elif request.method == 'POST':
@@ -44,9 +48,11 @@ def add_product():
 # page - edit product
 #--------------------------------------------------
 
-# view
+# view (admin)
 @app.route('/thing/edit/<int:product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
+	check_admin()
+	
 	if request.method == 'GET':
 		product = Product.get_product(product_id)
 		return render_template('edit_product.html', product=product)

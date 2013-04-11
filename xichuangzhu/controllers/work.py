@@ -22,12 +22,12 @@ from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
 
-from xichuangzhu.utils import time_diff, content_clean
+from xichuangzhu.utils import time_diff, content_clean, check_admin, check_login
 
 # page - single work
 #--------------------------------------------------
 
-# view
+# view (public)
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
@@ -68,10 +68,11 @@ def single_work(work_id):
 
 	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
 
-# proc - add love work & edit tags
-#--------------------------------------------------
+# proc - add & edit love work (login)
 @app.route('/work/love/<int:work_id>', methods=['POST'])
 def love_work(work_id):
+	check_login()
+
 	tags = request.form['tags'].split(' ')
 
 	# remove the empty & repeat item
@@ -96,41 +97,18 @@ def love_work(work_id):
 
 	return redirect(url_for('single_work', work_id=work_id))
 
-# proc - edit love work
-#--------------------------------------------------
-@app.route('/work/edit_love/<int:work_id>', methods=['POST'])
-def edit_love_work(work_id):
-	tags = request.form['tags'].split(' ')
-
-	# remove the empty & repeat item
-	new_tags = []
-	for t in tags:
-		if t != '':
-			new_tags.append(t)
-	new_tags = list(set(new_tags))
-
-	# add love work
-	Love_work.edit(session['user_id'], work_id, ' '.join(new_tags))
-
-	# update user tags & work tags
-	for t in new_tags:
-		Tag.add_tag(t)
-		Tag.add_user_tag(session['user_id'], t)
-		Tag.add_work_tag(work_id, t)
-
-	return redirect(url_for('single_work', work_id=work_id))
-
-# proc - unlove work
-#--------------------------------------------------
+# proc - rm love work (login)
 @app.route('/work/rm_love/<int:work_id>')
 def rm_love_work(work_id):
+	check_login()
+
 	Love_work.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works
 #--------------------------------------------------
 
-# view
+# view (public)
 @app.route('/works')
 def works():
 	num_per_page = 10
@@ -164,7 +142,7 @@ def works():
 # page - works by tag
 #--------------------------------------------------
 
-# view
+# view (public)
 @app.route('/tag/<tag>')
 def works_by_tag(tag):
 	num_per_page = 10
@@ -193,8 +171,11 @@ def works_by_tag(tag):
 # page - add work
 #--------------------------------------------------
 
+# view (admin)
 @app.route('/work/add', methods=['GET', 'POST'])
 def add_work():
+	check_admin()
+
 	if request.method == 'GET':
 		work_types = Work.get_types()
 		return render_template('add_work.html', work_types=work_types)
@@ -215,8 +196,11 @@ def add_work():
 # page - edit work
 #--------------------------------------------------
 
+# view (admin)
 @app.route('/work/edit/<int:work_id>', methods=['GET', 'POST'])
 def edit_work(work_id):
+	check_admin()
+
 	if request.method == 'GET':
 		work = Work.get_work(work_id)
 		work_types = Work.get_types()
@@ -235,21 +219,25 @@ def edit_work(work_id):
 		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, collection_id, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
 
-# helper - search authors and their collections in page add & edit work
+# json - search authors and their collections in page add & edit work (admin)
 #--------------------------------------------------
 
 @app.route('/work/search_authors', methods=['POST'])
 def get_authors_by_name():
+	check_admin()
+
 	name = request.form['author']
 	authors = Author.get_authors_by_name(name)
 	for author in authors:
 		author['Collections'] = Collection.get_collections_by_author(author['AuthorID'])
 	return json.dumps(authors)
 
-# helper - search an author's collections in page edit work
+# json - search an author's collections in page edit work (admin)
 #--------------------------------------------------
 @app.route('/work/search_collections', methods=['POST'])
 def get_collections_by_author():
+	check_admin()
+	
 	authorID = int(request.form['authorID'])
 	collections = Collection.get_collections_by_author(authorID)
 	return json.dumps(collections)

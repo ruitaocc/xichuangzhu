@@ -13,6 +13,7 @@ from xichuangzhu.utils import content_clean
 # page - single collection
 #--------------------------------------------------
 
+# view (public)
 @app.route('/collection/<int:collectionID>')
 def single_collection(collectionID):
 	collection = Collection.get_collection(collectionID)
@@ -24,8 +25,11 @@ def single_collection(collectionID):
 # page - add collection
 #--------------------------------------------------
 
+# view (admin)
 @app.route('/collection/add', methods=['POST', 'GET'])
 def add_collection():
+	check_admin()
+
 	if request.method == 'GET':
 		return render_template('add_collection.html')
 	elif request.method == 'POST':
@@ -38,8 +42,11 @@ def add_collection():
 # page - edit collection
 #--------------------------------------------------
 
+# view (admin)
 @app.route('/collection/edit/<int:collectionID>', methods=['POST', 'GET'])
 def edit_collection(collectionID):
+	check_admin()
+
 	if request.method == 'GET':
 		collection = Collection.get_collection(collectionID)
 		return render_template('edit_collection.html', collection=collection)
@@ -50,11 +57,12 @@ def edit_collection(collectionID):
 		Collection.edit_collection(collection, authorID, introduction, collectionID)
 		return redirect(url_for('single_collection', collectionID=collectionID))
 
-# helper - search authors in page add & edit collection
+# json - search authors in page add & edit collection (admin)
 #--------------------------------------------------
-
 @app.route('/collection/search_author', methods=['POST'])
 def search_author_in_collection():
+	check_admin()
+	
 	name = request.form['author']
 	authors = Author.get_authors_by_name(name)
 	return json.dumps(authors)
