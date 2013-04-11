@@ -1,5 +1,12 @@
 #-*- coding: UTF-8 -*-
+
 from __future__ import division
+
+import re
+
+import math
+
+import markdown2
 
 from flask import render_template, request, redirect, url_for, json, session, abort
 
@@ -14,12 +21,6 @@ from xichuangzhu.models.love_work_model import Love_work
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
-
-import markdown2
-
-import re
-
-import math
 
 from xichuangzhu.utils import time_diff, content_clean
 
@@ -142,11 +143,11 @@ def works():
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	works_num  = Work.get_works_num(work_type, dynasty_abbr)
+	works_num = Work.get_works_num(work_type, dynasty_abbr)
 
 	# page paras
 	total_page = int(math.ceil(works_num / num_per_page))
-	pre_page   = (page - 1) if page > 1 else 1
+	pre_page = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
 	elif page < total_page:
@@ -198,15 +199,15 @@ def add_work():
 		work_types = Work.get_types()
 		return render_template('add_work.html', work_types=work_types)
 	elif request.method == 'POST':
-		title        = request.form['title']
-		content      = request.form['content']
-		foreword     = request.form['foreword']
-		intro        = request.form['introduction']
-		authorID     = int(request.form['authorID'])
-		dynastyID    = int(Dynasty.get_dynastyID_by_author(authorID))
+		title = request.form['title']
+		content = request.form['content']
+		foreword = request.form['foreword']
+		intro = request.form['introduction']
+		authorID = int(request.form['authorID'])
+		dynastyID = int(Dynasty.get_dynastyID_by_author(authorID))
 		collectionID = int(request.form['collectionID'])
-		work_type    = request.form['type']
-		type_name    = Work.get_type_name(work_type)
+		work_type = request.form['type']
+		type_name = Work.get_type_name(work_type)
 		
 		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, collectionID, work_type, type_name)
 		return redirect(url_for('single_work', work_id=new_work_id))
@@ -221,17 +222,17 @@ def edit_work(work_id):
 		work_types = Work.get_types()
 		return render_template('edit_work.html', work=work, work_types=work_types)
 	elif request.method == 'POST':
-		title        = request.form['title']
-		content      = request.form['content']
-		foreword     = request.form['foreword']
-		intro        = request.form['introduction']
-		authorID     = int(request.form['authorID'])
-		dynastyID    = int(Dynasty.get_dynastyID_by_author(authorID))
-		collectionID = int(request.form['collectionID'])
-		work_type    = request.form['type']
-		type_name    = Work.get_type_name(work_type)
+		title = request.form['title']
+		content = request.form['content']
+		foreword = request.form['foreword']
+		intro = request.form['introduction']
+		author_id = int(request.form['authorID'])
+		dynasty_id = int(Dynasty.get_dynastyID_by_author(authorID))
+		collection_id = int(request.form['collectionID'])
+		work_type = request.form['type']
+		type_name = Work.get_type_name(work_type)
 
-		Work.edit_work(title, content, foreword, intro ,authorID, dynastyID, collectionID, work_type, type_name, work_id)
+		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, collection_id, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
 
 # helper - search authors and their collections in page add & edit work

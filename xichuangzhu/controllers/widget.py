@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import render_template, request, redirect, url_for, json
 
 from xichuangzhu import app
@@ -17,10 +19,10 @@ def admin_widgets(target_type, target_id):
 @app.route('/widget/add', methods=['POST'])
 def add_widget():
 	target_type = request.form['target_type']
-	target_id   = int(request.form['target_id'])
-	title       = request.form['title']
-	content     = request.form['content']
-	index       = int(request.form['index'])
+	target_id = int(request.form['target_id'])
+	title = request.form['title']
+	content = request.form['content']
+	index = int(request.form['index'])
 
 	Widget.add_widget(target_type, target_id, title, content, index)
 	return redirect(url_for('admin_widgets', target_type=target_type, target_id=target_id))
@@ -35,10 +37,10 @@ def edit_widget(widget_id):
 		return render_template('edit_widget.html', widget=widget)
 	elif request.method == 'POST':
 		target_type = request.form['target_type']
-		target_id   = int(request.form['target_id'])		
-		title       = request.form['title']
-		content     = request.form['content']
-		index       = int(request.form['index'])
+		target_id = int(request.form['target_id'])		
+		title = request.form['title']
+		content = request.form['content']
+		index = int(request.form['index'])
 
 		Widget.edit_widget(widget_id, title, content, index)
 		return redirect(url_for('admin_widgets', target_type=target_type, target_id=target_id))

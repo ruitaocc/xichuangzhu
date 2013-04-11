@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import g
 
 class Collection:
@@ -32,7 +34,6 @@ class Collection:
 		g.cursor.execute(query)
 		g.conn.commit()
 		return g.cursor.lastrowid
-
 
 # EDIT
 

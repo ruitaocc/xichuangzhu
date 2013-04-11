@@ -33,9 +33,9 @@ def add_product():
 	if request.method == 'GET':
 		return render_template('add_product.html')
 	elif request.method == 'POST':
-		product      = request.form['product']
-		url          = request.form['url']
-		image_url    = request.form['image-url']
+		product = request.form['product']
+		url = request.form['url']
+		image_url = request.form['image-url']
 		introduction = request.form['introduction']
 		
 		new_product_id = Product.add_product(product, url, image_url, introduction)
@@ -51,9 +51,9 @@ def edit_product(product_id):
 		product = Product.get_product(product_id)
 		return render_template('edit_product.html', product=product)
 	elif request.method == 'POST':
-		product      = request.form['product']
-		url          = request.form['url']
-		image_url    = request.form['image-url']
+		product = request.form['product']
+		url = request.form['url']
+		image_url = request.form['image-url']
 		introduction = request.form['introduction']
 
 		Product.edit_product(product_id, product, url, image_url, introduction)

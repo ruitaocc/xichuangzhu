@@ -1,3 +1,5 @@
+#-*- coding: UTF-8 -*-
+
 from flask import g
 
 class Dynasty:

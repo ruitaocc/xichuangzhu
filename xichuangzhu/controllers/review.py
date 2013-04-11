@@ -1,5 +1,12 @@
 #-*- coding: UTF-8 -*-
+
 from __future__ import division
+
+import math
+
+import cgi
+
+import markdown2
 
 from flask import render_template, request, redirect, url_for, json, session, abort
 
@@ -13,12 +20,6 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
-
-import markdown2
-
-import math
-
-import cgi
 
 from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title
 
@@ -85,7 +86,7 @@ def reviews():
 	# page paras
 	reviews_num = Review.get_reviews_num()
 	total_page = int(math.ceil(reviews_num / num_per_page))
-	pre_page   = (page - 1) if page > 1 else 1
+	pre_page = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
 	elif page < total_page:

@@ -16,7 +16,7 @@ from xichuangzhu.utils import content_clean
 @app.route('/collection/<int:collectionID>')
 def single_collection(collectionID):
 	collection = Collection.get_collection(collectionID)
-	works      = Work.get_works_by_collection(collectionID)
+	works = Work.get_works_by_collection(collectionID)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 	return render_template('single_collection.html', collection=collection, works=works)
@@ -29,8 +29,8 @@ def add_collection():
 	if request.method == 'GET':
 		return render_template('add_collection.html')
 	elif request.method == 'POST':
-		collection   = request.form['collection']
-		authorID     = int(request.form['authorID'])
+		collection = request.form['collection']
+		authorID = int(request.form['authorID'])
 		introduction = request.form['introduction']
 		newCollectionID = Collection.add_collection(collection, authorID, introduction)
 		return redirect(url_for('single_collection', collectionID = newCollectionID))
@@ -44,8 +44,8 @@ def edit_collection(collectionID):
 		collection = Collection.get_collection(collectionID)
 		return render_template('edit_collection.html', collection=collection)
 	elif request.method == 'POST':
-		collection   = request.form['collection']
-		authorID     = int(request.form['authorID'])
+		collection = request.form['collection']
+		authorID = int(request.form['authorID'])
 		introduction = request.form['introduction']
 		Collection.edit_collection(collection, authorID, introduction, collectionID)
 		return redirect(url_for('single_collection', collectionID=collectionID))

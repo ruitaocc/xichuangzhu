@@ -1,6 +1,7 @@
 #-*- coding: UTF-8 -*-
 
 import datetime, time
+
 import re
 
 from flask import url_for
@@ -16,23 +17,18 @@ def time_diff(dt):
 	today = datetime.datetime.today()
 	s = int((today - dt).total_seconds())
 
-	# if day_diff > 365, use year
+	# day_diff > 365, use year
 	if s/3600/24 >= 365:
 		return str(s/3600/24/365) + " 年前"
-	# elif day_diff > 30, use month
-	elif s/3600/24 >= 30:
+	elif s/3600/24 >= 30:	# day_diff > 30, use month
 		return str(s/3600/24/30) + " 个月前"
-	# elif hour_diff > 24, use day
-	elif s/3600 >= 24:
+	elif s/3600 >= 24:	# hour_diff > 24, use day
 		return str(s/3600/24) + " 天前"
-	# elif minite_diff > 60, use hour
-	elif s/60 > 60:
+	elif s/60 > 60:	# minite_diff > 60, use hour
 		return str(s/3600) + " 小时前"
-	# elif second_diff > 60, use minite
-	elif s > 60:
+	elif s > 60:	# second_diff > 60, use minite
 		return str(s/60) + " 分钟前"
-	# else use "just now"
-	else:
+	else:	# use "just now"
 		return "刚刚"
 
 # clean work content for displayment
@@ -43,6 +39,8 @@ def content_clean(content):
 	c = c.replace('(一)', "")
 	return c
 
+# check if @replyee is in comment
+# if so, return user_id, otherwise -1 
 def get_comment_replyee_id(comment):
 	replyee_id = -1
 	header = comment.split(' ')[0]
@@ -59,12 +57,14 @@ def rebuild_comment(comment, replyee_id):
 	comment = "@" + "<a href=" + url_for('people', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + "&nbsp;&nbsp;" + comment.split(' ')[1]
 	return comment
 
+# build HTML code for topic inform's header 
 def build_topic_inform_title(replyer_id, topic_id):
 	replyer = User.get_user_by_id(replyer_id)
 	topic = Topic.get_topic(topic_id)
 	inform_title = "<a href=" + url_for('people', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在话题&nbsp;&nbsp;" + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
 	return inform_title
 
+# build HTML code for review inform's header 
 def build_review_inform_title(replyer_id, review_id):
 	replyer = User.get_user_by_id(replyer_id)
 	review = Review.get_review(review_id)

@@ -1,5 +1,7 @@
 #-*- coding: UTF-8 -*-
 
+import re
+
 from flask import render_template, request, redirect, url_for, json
 
 from xichuangzhu import app
@@ -10,8 +12,6 @@ from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.quote_model import Quote
-
-import re
 
 from xichuangzhu.utils import time_diff, content_clean
 
@@ -34,7 +34,6 @@ def index():
 	
 	dynasties = Dynasty.get_dynasties()
 	topics = Topic.get_topics(8)
-	
 	return render_template('index.html', works=works, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
 
 # json - gene 4 works of different type

@@ -1,3 +1,7 @@
+#-*- coding: UTF-8 -*-
+
+import markdown2
+
 from flask import render_template, request, redirect, url_for, json, abort
 
 from xichuangzhu import app
@@ -5,8 +9,6 @@ from xichuangzhu import app
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.quote_model import Quote
-
-import markdown2
 
 # page single dynasty
 #--------------------------------------------------
@@ -38,11 +40,11 @@ def add_dynasty():
 	if request.method == 'GET':
 		return render_template('add_dynasty.html')
 	elif request.method == 'POST':
-		dynasty      = request.form['dynasty']
-		abbr         = request.form['abbr']
+		dynasty = request.form['dynasty']
+		abbr = request.form['abbr']
 		introduction = request.form['introduction']
-		startYear    = int(request.form['startYear'])
-		endYear      = int(request.form['endYear'])
+		startYear = int(request.form['startYear'])
+		endYear = int(request.form['endYear'])
 		Dynasty.add_dynasty(dynasty, abbr, introduction, startYear, endYear)
 		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
 
@@ -54,12 +56,12 @@ def edit_dynasty(dynasty_id):
 		dynasty = Dynasty.get_dynasty(dynasty_id)
 		return render_template('edit_dynasty.html', dynasty=dynasty)
 	elif request.method == 'POST':
-		dynasty      = request.form['dynasty']
-		abbr         = request.form['abbr']
+		dynasty = request.form['dynasty']
+		abbr = request.form['abbr']
 		introduction = request.form['introduction']
-		history      = request.form['history']
-		startYear    = int(request.form['startYear'])
-		endYear      = int(request.form['endYear'])
+		history = request.form['history']
+		startYear = int(request.form['startYear'])
+		endYear = int(request.form['endYear'])
 		Dynasty.edit_dynasty(dynasty, abbr, introduction, history, startYear, endYear, dynasty_id)
 		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
 

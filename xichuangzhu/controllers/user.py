@@ -1,5 +1,15 @@
 #-*- coding: UTF-8 -*-
+
 from __future__ import division
+
+import urllib, urllib2
+
+import smtplib
+from email.mime.text import MIMEText
+
+import hashlib
+
+import math
 
 from flask import render_template, request, redirect, url_for, json, session
 
@@ -13,16 +23,7 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
 
-import urllib, urllib2
-
-import smtplib
-from email.mime.text import MIMEText
-
-import hashlib
-
 from xichuangzhu.utils import content_clean, time_diff
-
-import math
 
 # proc - login by douban's oauth2.0
 @app.route('/login/douban')

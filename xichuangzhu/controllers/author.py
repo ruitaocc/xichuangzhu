@@ -1,5 +1,7 @@
 #-*- coding: UTF-8 -*-
 
+import re
+
 from flask import render_template, request, redirect, url_for, json, abort
 
 from xichuangzhu import app
@@ -10,8 +12,6 @@ from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.quote_model import Quote
 
-import re
-
 from xichuangzhu.utils import content_clean
 
 # page all authors
@@ -20,9 +20,9 @@ from xichuangzhu.utils import content_clean
 @app.route('/author')
 def authors():
 	dynasties = Dynasty.get_dynasties()
-	for dyn in dynasties:
-		dyn['authors'] = Author.get_authors_by_dynasty(dyn['DynastyID'])
-		for a in dyn['authors']:
+	for d in dynasties:
+		d['authors'] = Author.get_authors_by_dynasty(d['DynastyID'])
+		for a in d['authors']:
 			quote = Quote.get_quote_by_random(a['AuthorID'])
 			a['Quote'] = quote['Quote'] if quote else ""
 			a['QuotesNum'] = Quote.get_quotes_num_by_author(a['AuthorID'])
@@ -53,8 +53,8 @@ def single_author(author_abbr):
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	# count num of different type work
-	# return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}
+	# count num of different type work.
+	# return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}.
 	work_types = Work.get_types()
 	works_num = {}
 	for wt in work_types:
@@ -74,12 +74,12 @@ def add_author():
 		dynasties = Dynasty.get_dynasties()
 		return render_template('add_author.html', dynasties=dynasties)
 	elif request.method == 'POST':
-		author       = request.form['author']
-		abbr         = request.form['abbr']
+		author = request.form['author']
+		abbr = request.form['abbr']
 		introduction = request.form['introduction']
-		birthYear    = request.form['birthYear']
-		deathYear    = request.form['deathYear']
-		dynastyID    = int(request.form['dynastyID'])
+		birthYear = request.form['birthYear']
+		deathYear = request.form['deathYear']
+		dynastyID = int(request.form['dynastyID'])
 		Author.add_author(author, abbr, introduction, birthYear, deathYear, dynastyID)
 		return redirect(url_for('single_author', author_abbr=abbr))
 
@@ -93,12 +93,12 @@ def edit_author(authorID):
 		author = Author.get_author_by_id(authorID)
 		return render_template('edit_author.html', dynasties=dynasties, author=author)
 	elif request.method == 'POST':
-		author       = request.form['author']
-		abbr         = request.form['abbr']
+		author = request.form['author']
+		abbr = request.form['abbr']
 		introduction = request.form['introduction']
-		birthYear    = request.form['birthYear']
-		deathYear    = request.form['deathYear']
-		dynastyID    = int(request.form['dynastyID'])		
+		birthYear = request.form['birthYear']
+		deathYear = request.form['deathYear']
+		dynastyID = int(request.form['dynastyID'])		
 		Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
 		return redirect(url_for('single_author', author_abbr=abbr))
 
@@ -115,8 +115,8 @@ def admin_quotes(author_id):
 # proc - add quote
 @app.route('/quote/add/<int:author_id>', methods=['POST'])
 def add_quote(author_id):
-	quote      = request.form['quote']
-	work_id    = int(request.form['work-id'])
+	quote = request.form['quote']
+	work_id = int(request.form['work-id'])
 	work_title = Work.get_work(work_id)['Title'] 
 	Quote.add(author_id, quote, work_id, work_title)
 	return redirect(url_for('admin_quotes', author_id=author_id))
@@ -136,8 +136,8 @@ def edit_quote(quote_id):
 		quote = Quote.get_quote_by_id(quote_id)
 		return render_template('edit_quote.html', quote=quote)
 	elif request.method == 'POST':
-		quote   = request.form['quote']
+		quote = request.form['quote']
 		work_id = int(request.form['work-id'])
-		work    = Work.get_work(work_id)
+		work = Work.get_work(work_id)
 		Quote.edit(quote_id, work['AuthorID'], quote, work['WorkID'], work['Title'])
 		return redirect(url_for('admin_quotes', author_id=work['AuthorID']))

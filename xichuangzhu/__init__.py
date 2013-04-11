@@ -1,7 +1,15 @@
+#-*- coding: UTF-8 -*-
+
+# convert python's encoding to utf8
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+# load config
 sys.path.append('/var/www')
 import config
 
+# app
 from flask import Flask, g, session
 app = Flask(__name__)
 app.config.update(
@@ -40,10 +48,5 @@ def before_request():
 @app.teardown_request
 def teardown_request(exception):
 	g.conn.close()
-
-# convert python's encoding to utf8
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 import controllers
