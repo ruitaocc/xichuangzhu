@@ -8,22 +8,25 @@
 <form id="form-add-review" class="form-horizontal" method="post" action="{{ url_for('add_review', work_id=work.WorkID) }}">
 	<fieldset>
 		<legend>点评：{{ work.Title }}</legend>
+		
+		{{ form.csrf_token }}
+
+		{% from "form.widget" import show_form_error %}
+		{{ show_form_error(form)|safe }}
 
 		<div class="control-group">
-			<label class="control-label">标题</label>
+			{{ form.title.label(class='control-label') }}
 			<div class="controls">
-				<input type="text" class="input-xlarge" name="title" />
+				{{ form.title(class='input-xlarge') }}
 			</div>
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">点评</label>
+			{{ form.content.label(class="control-label") }}
 			<div class="controls">
-				<textarea class="input-xxlarge" rows="15" name="content" placeholder="支持 markdown"></textarea>
+				{{ form.content(class="input-xxlarge", rows="15", placeholder="支持 markdown") }}
 			</div>
 		</div>
-
-		<input type="hidden" name="user_id" value="{{ session.user_id }}" />
 
 		<div class="control-group">
 			<div class="controls">

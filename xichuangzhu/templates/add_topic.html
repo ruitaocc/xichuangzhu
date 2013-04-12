@@ -20,7 +20,7 @@ $(document).ready(function(){
 		var node = $(this).text();
 		var node_id = $(this).attr('data-node-id');
 		$("#node").text(node);
-		$("#input-node-id").val(node_id);
+		$("#node_id").val(node_id);
 	});
 });
 
@@ -30,26 +30,31 @@ $(document).ready(function(){
 	<fieldset>
 		<legend>发起新话题</legend>
 
+		{{ form.csrf_token }}
+
+		{% from "form.widget" import show_form_error %}
+		{{ show_form_error(form)|safe }}
+
 		<div class="control-group">
-			<label class="control-label">节点</label>
+			{{ form.node_id.label(class="control-label") }}
 			<div class="controls">
 				<span id="node">{{ node.Name }}</span>
 				<a type="button" class="btn btn-mini" href="#modal-nodes" data-toggle="modal">切换节点</a>
-				<input type="hidden" value="{{ node.NodeID }}" name="node-id" id="input-node-id" />
+				{{ form.node_id(value=node.NodeID) }}
 			</div>
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">话题</label>
+			{{ form.title.label(class="control-label") }}
 			<div class="controls">
-				<input type="text" class="input-xlarge" name="title" />
+				{{ form.title(class="input-xlarge") }}
 			</div>
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">内容</label>
+			{{ form.content.label(class="control-label") }}
 			<div class="controls">
-				<textarea class="input-xxlarge" id="author-introduction" rows="15" name="content" placeholder="支持 markdown"></textarea>
+				{{ form.content(class="input-xxlarge", rows="15", placeholder="支持 markdown") }}
 			</div>
 		</div>
 

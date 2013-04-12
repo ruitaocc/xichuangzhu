@@ -35,11 +35,13 @@ class Comment:
 	def add_comment_to_review(review_id, replyer_id, comment):
 		query = "INSERT INTO review_comment (ReviewID, ReplyerID, Comment) VALUES (%d, '%s', '%s')" % (review_id, replyer_id, comment)
 		g.cursor.execute(query)
-		return g.conn.commit()
+		g.conn.commit()
+		return g.cursor.lastrowid
 
 	# add comment to a topic
 	@staticmethod
 	def add_comment_to_topic(topic_id, replyer_id, comment):
 		query = "INSERT INTO topic_comment (TopicID, ReplyerID, Comment) VALUES (%d, '%s', '%s')" % (topic_id, replyer_id, comment)
 		g.cursor.execute(query)
-		return g.conn.commit()
+		g.conn.commit()
+		return g.cursor.lastrowid

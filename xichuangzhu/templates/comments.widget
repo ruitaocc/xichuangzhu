@@ -2,6 +2,7 @@
 
 {% for comment in comments %}
 <div class="comment-item clearfix">
+	<a name="{{ comment.CommentID }}"></a>
 	<a class="comment-user-avatar" href="{{ url_for('people', user_abbr=comment.Abbr) }}">
 		<img src="{{ comment.Avatar }}">
 	</a>

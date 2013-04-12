@@ -68,14 +68,14 @@ def auth():
 		user_info = eval(response.read().replace('\\', ''))	# remove '\' and convert str to dict
 
 		# add user
-		user_id     = int(user_info['id'])
-		user_name   = user_info['name']
-		abbr        = user_info['uid']
-		avatar      = user_info['avatar']
-		signature   = user_info['signature']
-		desc        = user_info['desc']
+		user_id = int(user_info['id'])
+		user_name = user_info['name']
+		abbr = user_info['uid']
+		avatar = user_info['avatar']
+		signature = user_info['signature']
+		desc = user_info['desc']
 		location_id = int(user_info['loc_id']) if 'loc_id' in user_info else 0
-		location    = user_info['loc_name']
+		location = user_info['loc_name']
 		User.add_user(user_id, user_name, abbr, avatar, signature, desc, location_id, location)
 
 		# go to the verify email page
@@ -134,6 +134,7 @@ def verify_email(user_id, verify_code):
 	user_abbr = User.get_abbr_by_id(user_id)
 	if verify_code == hashlib.sha1(user_name).hexdigest():
 		User.active_user(user_id)
+		session.permanent = True
 		session['user_id'] = user_id
 		session['user_name'] = user_name
 		session['user_abbr'] = user_abbr
@@ -209,7 +210,7 @@ def people_love_works(user_abbr):
 
 	# page paras
 	total_page = int(math.ceil(works_num / num_per_page))
-	pre_page   = (page - 1) if page > 1 else 1
+	pre_page = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
 	elif page < total_page:
@@ -240,7 +241,7 @@ def people_reviews(user_abbr):
 
 	# page paras
 	total_page = int(math.ceil(reviews_num / num_per_page))
-	pre_page   = (page - 1) if page > 1 else 1
+	pre_page = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
 	elif page < total_page:
@@ -271,7 +272,7 @@ def people_topics(user_abbr):
 
 	# page paras
 	total_page = int(math.ceil(topics_num / num_per_page))
-	pre_page   = (page - 1) if page > 1 else 1
+	pre_page = (page - 1) if page > 1 else 1
 	if total_page == 0:
 		next_page = 1
 	elif page < total_page:

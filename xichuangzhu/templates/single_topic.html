@@ -79,7 +79,12 @@ $(document).ready(function(){
 		<!-- add comment -->
 		{% if session.user_id %}
 		<form id="add-topic-comment" method="post" action="{{ url_for('add_comment_to_topic', topic_id=topic.TopicID) }}">
-			<textarea name="comment" class="input-xxlarge textarea-comment" rows="4" placeholder="添加回复"></textarea>
+			{{ form.csrf_token }}
+
+			{% from "form.widget" import show_form_error %}
+			{{ show_form_error(form)|safe }}
+
+			{{ form.comment(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
 			<input type="submit" class="btn btn-small" value="回复" />
 		</form>
 		{% endif %}

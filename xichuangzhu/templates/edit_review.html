@@ -7,23 +7,26 @@
 
 <form id="form-edit-review" class="form-horizontal" method="post" action="{{ url_for('edit_review', review_id=review.ReviewID) }}">
 	<fieldset>
-		<legend>编辑点评：{{ review.Title }}</legend>
+		<legend>编辑点评</legend>
+
+		{{ form.csrf_token }}
+		
+		{% from "form.widget" import show_form_error %}
+		{{ show_form_error(form)|safe }}
 
 		<div class="control-group">
-			<label class="control-label">标题</label>
+			{{ form.title.label(class="control-label") }}
 			<div class="controls">
-				<input type="text" class="input-xlarge" name="title" value="{{ review.Title }}" />
-			</div>
+				{{ form.title(class="input-xlarge")|safe }}
+ 			</div>
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">点评</label>
+			{{ form.content.label(class="control-label") }}
 			<div class="controls">
-				<textarea class="input-xxlarge" rows="15" name="content">{{ review.Content|safe }}</textarea>
+				{{ form.content(class="input-xxlarge", rows="15")|safe }}
 			</div>
 		</div>
-
-		<input type="hidden" name="user_id" value="{{ review.UserID }}" />
 
 		<div class="control-group">
 			<div class="controls">

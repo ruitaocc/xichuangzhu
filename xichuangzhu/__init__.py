@@ -1,23 +1,27 @@
 #-*- coding: UTF-8 -*-
 
-# convert python's encoding to utf8
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 
-# load config
+from flask import Flask, g, session
+
+import MySQLdb
+import MySQLdb.cursors
+
 sys.path.append('/var/www')
 import config
 
+from xichuangzhu.models.inform_model import Inform
+
+# convert python's encoding to utf8
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 # app
-from flask import Flask, g, session
 app = Flask(__name__)
 app.config.update(
 	SECRET_KEY = config.SECRET_KEY,
 	SESSION_COOKIE_NAME = config.SESSION_COOKIE_NAME,
 	PERMANENT_SESSION_LIFETIME = config.PERMANENT_SESSION_LIFETIME)
-
-from xichuangzhu.models.inform_model import Inform
 
 # inject vars into template context
 @app.context_processor
@@ -37,9 +41,6 @@ if not app.debug:
 	app.logger.addHandler(mail_handler)
 
 # mysql
-import MySQLdb
-import MySQLdb.cursors
-
 @app.before_request
 def before_request():
 	g.conn = MySQLdb.connect(host=config.DB_HOST, user=config.DB_USER, passwd=config.DB_PASSWD, db=config.DB_NAME, use_unicode=True, charset='utf8', cursorclass=MySQLdb.cursors.DictCursor)
