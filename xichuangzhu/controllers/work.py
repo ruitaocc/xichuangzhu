@@ -211,7 +211,7 @@ def edit_work(work_id):
 		foreword = request.form['foreword']
 		intro = request.form['introduction']
 		author_id = int(request.form['authorID'])
-		dynasty_id = int(Dynasty.get_dynastyID_by_author(authorID))
+		dynasty_id = int(Dynasty.get_dynastyID_by_author(author_id))
 		collection_id = int(request.form['collectionID'])
 		work_type = request.form['type']
 		type_name = Work.get_type_name(work_type)

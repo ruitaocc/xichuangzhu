@@ -10,7 +10,7 @@ class ReviewForm(Form):
 		validators.Required(message="标题不能为空")])
 
 	content = TextAreaField('内容', [
-		validators.Length(min=50, message="内容最少50个字"),
+		validators.Length(min=30, message="内容最少30个字"),
 		validators.Required(message="内容不能为空")])
 
 # Topic form
