@@ -1,5 +1,7 @@
 #-*- coding: UTF-8 -*-
 
+import markdown2
+
 from flask import render_template, request, redirect, url_for, json, session
 
 from xichuangzhu import app
@@ -24,6 +26,7 @@ def shop():
 @app.route('/thing/<int:product_id>')
 def single_product(product_id):
 	product = Product.get_product(product_id)
+	product['Introduction'] = markdown2.markdown(product['Introduction'])
 	return render_template('single_product.html', product=product)
 
 # page - add product

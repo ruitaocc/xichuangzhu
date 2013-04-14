@@ -13,7 +13,7 @@
 	<div class="span6">
 		<h1 class="product-name">{{ product.Product }}</h1>
 
-		<div class="product-introduction">{{ product.Introduction }}</div>
+		<div class="product-introduction">{{ product.Introduction|safe }}</div>
 		
 		<div class="btn-group">
 			<a class="btn btn-small" href="{{ product.Url }}" target="_blank">
