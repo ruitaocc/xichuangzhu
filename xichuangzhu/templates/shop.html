@@ -16,7 +16,7 @@
 	{% endfor %}
 </div>
 
-
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -29,14 +29,15 @@ $(document).ready(function(){
 
 	$('.product-image').each(function(index){
 		$(this).css({
-			'width': '290px',
-			'position': 'absolute',
-			'left': lefts[index%3] + 'px',
-			'display': 'none'
-		})
+			'width': width + 'px',
+			'left': lefts[index%3] + 'px'
+		});
+	});
+
+	$('.product-image').each(function(index){
 
 		// only when a img loaded, it's height becomes known.
-		$(this).load(function(){
+		$(this).imagesLoaded(function(){
 
 			$(this).css({
 				'display': 'block',
