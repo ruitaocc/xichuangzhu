@@ -87,8 +87,6 @@ def auth():
 # view (login)
 @app.route('/send_verify_email/douban', methods=['GET', 'POST'])
 def send_verify_email():
-	check_login()
-
 	if request.method == 'GET':
 		user_id = int(request.args['user_id'])
 		user_name = User.get_name_by_id(user_id)

@@ -5,10 +5,24 @@
 
 {% block body %}
 
+
+<div class="products-wap clearfix">
+	{% for product in products %}
+	<div class="product-item">
+		<a href="{{ url_for('single_product', product_id=product.ProductID)}}">
+			<img class="product-image" title="{{ product.Product }}" src="{{ product.ImageUrl }}">
+		</a>
+	</div>
+	{% endfor %}
+</div>
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){
-	var width = 290, h_gap = 20, v_gap = 22;
+	var width = 290,
+		h_gap = 20,
+		v_gap = 22;
 
 	var lefts = [0, width+h_gap, 2*(width+h_gap)],
 		tops = [0, 0, 0];
@@ -45,15 +59,5 @@ $(document).ready(function(){
 });
 
 </script>
-
-<div class="products-wap clearfix">
-	{% for product in products %}
-	<div class="product-item">
-		<a href="{{ url_for('single_product', product_id=product.ProductID)}}">
-			<img class="product-image" title="{{ product.Product }}" src="{{ product.ImageUrl }}">
-		</a>
-	</div>
-	{% endfor %}
-</div>
 
 {% endblock %}
