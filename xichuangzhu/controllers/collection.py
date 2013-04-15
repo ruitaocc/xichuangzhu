@@ -8,7 +8,7 @@ from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.author_model import Author
 
-from xichuangzhu.utils import content_clean
+from xichuangzhu.utils import content_clean, check_admin
 
 # page - single collection
 #--------------------------------------------------

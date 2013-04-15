@@ -66,8 +66,9 @@ body #footer+div{display:none;}
 #page-people .user-info{margin-left:60px;}#page-people .user-info .user-name{font-size:25px;line-height:30px;margin-top:15px;font-weight:bold;font-family:'微软雅黑';}
 #page-people .user-info .user-signature{font-size:12px;color:#666;}
 #page-shop .products-wap{margin-top:15px;position:relative;}#page-shop .products-wap .product-item .product-image{opacity:0.9;}#page-shop .products-wap .product-item .product-image:hover{opacity:1;}
-#page-single-product .product-image{margin-top:15px;}
-#page-single-product .product-introduction{margin-bottom:10px;}
+#page-single-product .image-wap{text-align:center;}#page-single-product .image-wap .product-image{margin:15px auto 0 auto;}
+#page-single-product .product-name{border-bottom:2px solid darkred;padding-bottom:10px;margin-bottom:15px;}
+#page-single-product .product-introduction{margin-bottom:15px;}
 #page-forum .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd;}#page-forum .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px;}
 #page-forum .ht-item .ht-title{margin-left:6px;font-size:14px;}
 #page-add-topic .control-label,#page-edit-topic .control-label{width:50px;}

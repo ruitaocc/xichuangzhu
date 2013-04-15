@@ -33,7 +33,13 @@ $(document).ready(function(){
 			tops[index%3] += $(this).height() + v_gap;
 
 			// set mother wap's height
-			$('.products-wap').css('height', tops[index%3] + 'px');
+			var maxHeight = 0;
+			for(var i=0; i<tops.length; i++){
+				if(tops[i] > maxHeight){
+					maxHeight = tops[i];
+				}
+			}
+			$('.products-wap').css('height', maxHeight + 20 + 'px');
 		});
 	});
 });
