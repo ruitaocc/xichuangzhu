@@ -78,8 +78,8 @@ def add_comment_to_review(review_id):
 		if replyee_id != -1 and replyee_id != replyer_id and replyee_id != review_user_id:
 			Inform.add(replyer_id, replyee_id, inform_title, comment)
 		return redirect(url_for('single_review', review_id=review_id) + "#" + str(new_comment_id))
-
-	return redirect(url_for('single_review', review_id=review_id))
+	else:
+		return redirect(url_for('single_review', review_id=review_id))
 
 # page all reviews
 #--------------------------------------------------
@@ -116,15 +116,21 @@ def reviews():
 @app.route('/review/add/<int:work_id>', methods=['GET', 'POST'])
 def add_review(work_id):
 	check_login()
-	form = ReviewForm(request.form)
 	work = Work.get_work(work_id)
-	if request.method == 'POST' and form.validate():
-		user_id = session['user_id']
-		title = cgi.escape(form.title.data)
-		content = cgi.escape(form.content.data)
-		new_review_id = Review.add_review(work_id, user_id, title, content)
-		return redirect(url_for('single_review', review_id=new_review_id))
-	return render_template('add_review.html', work=work, form=form)
+	
+	if request.method == 'GET':
+		form = ReviewForm()
+		return render_template('add_review.html', work=work, form=form)
+	elif request.method == 'POST':
+		form = ReviewForm(request.form)
+		if form.validate():
+			user_id = session['user_id']
+			title = cgi.escape(form.title.data)
+			content = cgi.escape(form.content.data)
+			new_review_id = Review.add_review(work_id, user_id, title, content)
+			return redirect(url_for('single_review', review_id=new_review_id))
+		else:
+			return render_template('add_review.html', work=work, form=form)
 
 # page edit review
 #--------------------------------------------------
@@ -134,14 +140,16 @@ def add_review(work_id):
 def edit_review(review_id):
 	review = Review.get_review(review_id)
 	check_private(review['UserID'])
-	form = ReviewForm(title=review['Title'], content=review['Content'])
 
-	if request.method == 'POST':
+	if request.method == 'GET':
+		form = ReviewForm(title=review['Title'], content=review['Content'])
+		return render_template('edit_review.html', review=review, form=form)
+	elif request.method == 'POST':
 		form = ReviewForm(request.form)
 		if form.validate():
 			title = cgi.escape(form.title.data)
 			content = cgi.escape(form.content.data)
 			Review.edit_review(review_id, title, content)
 			return redirect(url_for('single_review', review_id=review_id))
-
-	return render_template('edit_review.html', review=review, form=form)
+		else:
+			return render_template('edit_review.html', review=review, form=form)

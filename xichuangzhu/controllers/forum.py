@@ -87,8 +87,8 @@ def add_comment_to_topic(topic_id):
 		if replyee_id != -1 and  replyee_id != replyer_id and replyee_id != topic_user_id:
 			Inform.add(replyer_id, replyee_id, inform_title, comment)
 		return redirect(url_for('single_topic', topic_id=topic_id) + "#" + str(new_comment_id))
-
-	return redirect(url_for('single_topic', topic_id=topic_id))
+	else:
+		return redirect(url_for('single_topic', topic_id=topic_id))
 
 # page add topic
 #--------------------------------------------------
@@ -97,24 +97,31 @@ def add_comment_to_topic(topic_id):
 @app.route('/topic/add', methods=['POST', 'GET'])
 def add_topic():
 	check_login()
-	form = TopicForm(request.form)
 
-	# receive post data
-	if request.method == 'POST' and form.validate():
-		node_id = int(form.node_id.data)
-		title = cgi.escape(form.title.data)
-		content = cgi.escape(form.content.data)
-		user_id = session['user_id']
-		new_topic_id = Topic.add(node_id, title, content, user_id)
-		return redirect(url_for('single_topic', topic_id=new_topic_id))
-
-	# choose a node to be default, here is node_id = 10001
-	node_id = int(request.args['node_id']) if "node_id" in request.args else 10001
-	node = Node.get_node_by_id(node_id)
 	node_types = Node.get_types()
 	for nt in node_types:
 		nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
-	return render_template('add_topic.html', node=node, node_types=node_types, form=form)
+
+	if request.method == 'GET':
+		# choose a node to be default, here is node_id = 10001
+		node_id = int(request.args['node_id']) if "node_id" in request.args else 10001
+		form = TopicForm(node_id=node_id)
+		node = Node.get_node_by_id(node_id)
+		return render_template('add_topic.html', node=node, node_types=node_types, form=form)
+	elif request.method == 'POST':
+		form = TopicForm(request.form)
+		if form.validate():
+			node_id = int(form.node_id.data)
+			title = cgi.escape(form.title.data)
+			content = cgi.escape(form.content.data)
+			user_id = session['user_id']
+			new_topic_id = Topic.add(node_id, title, content, user_id)
+			return redirect(url_for('single_topic', topic_id=new_topic_id))
+		else:
+			# choose a node to be default, here is node_id = 10001
+			node_id = int(form.node_id.data)
+			node = Node.get_node_by_id(node_id)
+			return render_template('add_topic.html', node=node, node_types=node_types, form=form)
 
 
 # page edit topic
@@ -123,11 +130,18 @@ def add_topic():
 # view (private)
 @app.route('/topic/edit/<int:topic_id>', methods=['POST', 'GET'])
 def edit_topic(topic_id):
+	# auth check
 	topic = Topic.get_topic(topic_id)
 	check_private(topic['UserID'])
-	form = TopicForm(node_id=topic['NodeID'], title=topic['Title'], content=topic['Content'])
 
-	if request.method == 'POST':
+	node_types = Node.get_types()
+	for nt in node_types:
+		nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
+
+	if request.method == 'GET':
+		form = TopicForm(node_id=topic['NodeID'], title=topic['Title'], content=topic['Content'])
+		return render_template('edit_topic.html', topic=topic, node_types=node_types, form=form)
+	elif request.method == 'POST':
 		form = TopicForm(request.form)
 		if form.validate():
 			node_id = int(form.node_id.data)
@@ -135,11 +149,8 @@ def edit_topic(topic_id):
 			content = cgi.escape(form.content.data)
 			new_topic_id = Topic.edit(topic_id, node_id, title, content)
 			return redirect(url_for('single_topic', topic_id=topic_id))
-
-	node_types = Node.get_types()
-	for nt in node_types:
-		nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
-	return render_template('edit_topic.html', topic=topic, node_types=node_types, form=form)
+		else:
+			return render_template('edit_topic.html', topic=topic, node_types=node_types, form=form)
 
 
 # page single node
