@@ -149,7 +149,7 @@ def edit_topic(topic_id):
 @app.route('/node/<node_abbr>')
 def single_node(node_abbr):
 	node = Node.get_node_by_abbr(node_abbr)
-	nodes = Node.get_nodes(20)
+	nodes = Node.get_nodes(16)
 	topics = Topic.get_topics_by_node(node_abbr)
 	for t in topics:
 		t['Time'] = time_diff(t['Time'])

@@ -25,6 +25,8 @@ from xichuangzhu.models.topic_model import Topic
 
 from xichuangzhu.utils import content_clean, time_diff, check_login
 
+from xichuangzhu.form import EmailForm
+
 # proc - login by douban's oauth2.0 (public)
 #--------------------------------------------------
 
@@ -89,39 +91,48 @@ def auth():
 def send_verify_email():
 	if request.method == 'GET':
 		user_id = int(request.args['user_id'])
+		form = EmailForm(user_id=user_id)
 		user_name = User.get_name_by_id(user_id)
-		return render_template('send_verify_email.html', user_id=user_id, user_name=user_name)
+		return render_template('send_verify_email.html', user_name=user_name, form=form)
 	elif request.method == 'POST':
-		# email
-		t_addr = request.form['email']
+		form = EmailForm(request.form)
 
-		# user info
-		user_id = int(request.form['user_id'])
-		user_name = User.get_name_by_id(user_id)
+		if form.validate():
 
-		# add this email to user
-		User.add_email(user_id, t_addr)
+			# email
+			t_addr = form.email.data
 
-		# gene verify url
-		verify_code = hashlib.sha1(user_name).hexdigest()
-		verify_url = config.SITE_DOMAIN + "verify_email/douban/" + str(user_id) + "/" + verify_code
+			# user info
+			user_id = int(form.user_id.data)
+			user_name = User.get_name_by_id(user_id)
 
-		# prepare email content
-		msgText = '''<html>
-			<h1>点击下面的链接，激活你在西窗烛的帐号：</h1>
-			<a href='%s'>%s</a>
-			</html>''' % (verify_url, verify_url)
-		msg = MIMEText(msgText, 'html', 'utf-8')
-		msg['From'] = "西窗烛 <" + config.SMTP_FROM + ">"
-		msg['To'] = user_name + "<" + t_addr + ">"
-		msg['Subject'] = "欢迎来到西窗烛！"
+			# add this email to user
+			User.add_email(user_id, t_addr)
 
-		# send email
-		s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
-		s.login(config.SMTP_USER, config.SMTP_PASSWORD)
-		s.sendmail(config.SMTP_FROM, t_addr, msg.as_string())
+			# gene verify url
+			verify_code = hashlib.sha1(user_name).hexdigest()
+			verify_url = config.SITE_DOMAIN + "verify_email/douban/" + str(user_id) + "/" + verify_code
 
-		return redirect(url_for('verify_email_callback', state='send_succ'))
+			# prepare email content
+			msgText = '''<html>
+				<h1>点击下面的链接，激活你在西窗烛的帐号：</h1>
+				<a href='%s'>%s</a>
+				</html>''' % (verify_url, verify_url)
+			msg = MIMEText(msgText, 'html', 'utf-8')
+			msg['From'] = "西窗烛 <" + config.SMTP_FROM + ">"
+			msg['To'] = user_name + "<" + t_addr + ">"
+			msg['Subject'] = "欢迎来到西窗烛！"
+
+			# send email
+			s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
+			s.login(config.SMTP_USER, config.SMTP_PASSWORD)
+			s.sendmail(config.SMTP_FROM, t_addr, msg.as_string())
+
+			return redirect(url_for('verify_email_callback', state='send_succ'))
+		else:
+			user_id = int(form.user_id.data)
+			user_name = User.get_name_by_id(user_id)
+			return render_template('send_verify_email.html', user_name=user_name, form=form)
 
 # proc - verify the code and active user (public)
 #--------------------------------------------------

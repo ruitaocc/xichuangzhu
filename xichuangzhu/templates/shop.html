@@ -5,7 +5,6 @@
 
 {% block body %}
 
-
 <div class="products-wap clearfix">
 	{% for product in products %}
 	<div class="product-item">
@@ -54,7 +53,7 @@ $(document).ready(function(){
 					maxHeight = tops[i];
 				}
 			}
-			$('.products-wap').css('height', maxHeight + 20 + 'px');
+			$('.products-wap').css('height', maxHeight + 'px');
 		});
 	});
 });

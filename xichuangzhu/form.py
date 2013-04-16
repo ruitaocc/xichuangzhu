@@ -29,3 +29,11 @@ class TopicForm(Form):
 class CommentForm(Form):
 	comment = TextAreaField('回复', [
 		validators.Required(message="回复不能为空")])
+
+# Email form
+class EmailForm(Form):
+	email = TextField('邮箱', [
+		validators.Email(message="无效的邮箱"),
+		validators.Required(message="邮箱不能为空")])
+	user_id = HiddenField('用户ID', [
+		validators.Required(message="用户ID不能为空")])
