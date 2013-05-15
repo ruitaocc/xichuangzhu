@@ -5,37 +5,6 @@
 
 {% block body %}
 
-<script type="text/javascript">
-
-$(document).ready(function(){
-
-	$('#dyn-selector a').each(function(){
-		// set random color
-		var color = 'rgb(' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*200+1) + ',' + Math.floor(Math.random()*200+1) + ')';
-
-		var bar_width = $(window).width() / 17;
-
-		$(this).css({
-			'height': '22px',
-			'width': bar_width + 'px',
-			'background-color': color
-		});
-	});
-
-	// when change window size
-	$(window).resize(function(){
-		var bar_width = $(window).width() / 17;
-
-		$('#dyn-selector a').each(function(){
-			$(this).css({
-				'width': bar_width + 'px'
-			});
-		});
-	});
-});
-
-</script>
-
 <ul id="dyn-selector" class="clearfix">
 	{% for dyn in dynasties %}
 	<li>
@@ -43,6 +12,32 @@ $(document).ready(function(){
 	</li>
 	{% endfor %}
 </ul>
+
+<script type="text/javascript">
+$('#dyn-selector a').each(function(){
+	// set random color
+	var color = 'rgb(' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*200+1) + ',' + Math.floor(Math.random()*200+1) + ')';
+
+	var bar_width = $(window).width() / 17;
+
+	$(this).css({
+		'height': '22px',
+		'width': bar_width + 'px',
+		'background-color': color
+	});
+});
+
+// when change window size
+$(window).resize(function(){
+	var bar_width = $(window).width() / 17;
+
+	$('#dyn-selector a').each(function(){
+		$(this).css({
+			'width': bar_width + 'px'
+		});
+	});
+});
+</script>
 
 <div class="row">
 	<div class="span8">
