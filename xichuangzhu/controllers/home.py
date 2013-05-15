@@ -53,3 +53,11 @@ def four_works():
 @app.route('/about')
 def about():
 	return render_template('about.html')
+
+# page ad
+#--------------------------------------------------
+
+# view (public)
+@app.route('/ad')
+def ad():
+	return render_template('ad.html')

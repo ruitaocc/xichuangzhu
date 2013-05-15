@@ -161,7 +161,11 @@ $(document).ready(function(){
 		</div>
 		{% endfor %}
 		
-		<a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}"><img src="{{ product.ImageUrl }}"></a>
+		<!-- ad -->
+		<a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}">
+			<!-- <div class="ad-tag">AD</div> -->
+			<img src="{{ product.ImageUrl }}">
+		</a>
 
 		<h2>谁收藏了它？</h2>
 
