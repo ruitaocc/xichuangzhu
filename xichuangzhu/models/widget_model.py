@@ -47,5 +47,5 @@ class Widget:
 	@staticmethod
 	def delete_widget(widget_id):
 		query = "DELETE FROM widget WHERE WidgetID = %d" % widget_id
-		g.cursor.execute()
+		g.cursor.execute(query)
 		return g.conn.commit()
