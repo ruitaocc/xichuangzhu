@@ -24,7 +24,6 @@ from xichuangzhu.utils import time_diff, content_clean, check_admin, check_login
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
-
 	if not work:
 		abort(404)
 

@@ -22,6 +22,8 @@ def shop():
 @app.route('/thing/<int:product_id>')
 def single_product(product_id):
 	product = Product.get_product(product_id)
+	if not product:
+		abort(404)
 	product['Introduction'] = markdown2.markdown(product['Introduction'])
 	return render_template('single_product.html', product=product)
 
