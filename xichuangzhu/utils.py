@@ -1,13 +1,9 @@
 #-*- coding: UTF-8 -*-
 
 import datetime, time
-
 import re
-
 from flask import url_for, session, abort
-
 import config
-
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.review_model import Review

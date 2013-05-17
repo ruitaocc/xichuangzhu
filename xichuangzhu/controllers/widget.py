@@ -1,11 +1,8 @@
 #-*- coding: UTF-8 -*-
 
 from flask import render_template, request, redirect, url_for, json
-
 from xichuangzhu import app
-
 from xichuangzhu.models.widget_model import Widget
-
 from xichuangzhu.utils import check_admin
 
 # page - admin widgets of a target

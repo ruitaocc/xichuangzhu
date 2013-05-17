@@ -1,30 +1,20 @@
 #-*- coding: UTF-8 -*-
 
 from __future__ import division
-
 import urllib, urllib2
-
 import smtplib
 from email.mime.text import MIMEText
-
 import hashlib
-
 import math
-
 from flask import render_template, request, redirect, url_for, json, session
-
 from xichuangzhu import app
-
 import config
-
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.love_work_model import Love_work
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
-
 from xichuangzhu.utils import content_clean, time_diff, check_login
-
 from xichuangzhu.form import EmailForm
 
 # proc - login by douban's oauth2.0 (public)

@@ -1,13 +1,10 @@
 #-*- coding: UTF-8 -*-
 
 from flask import render_template, request, redirect, url_for, json
-
 from xichuangzhu import app
-
 from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.author_model import Author
-
 from xichuangzhu.utils import content_clean, check_admin
 
 # page - single collection

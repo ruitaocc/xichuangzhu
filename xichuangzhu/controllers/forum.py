@@ -1,21 +1,15 @@
 #-*- coding: UTF-8 -*-
 
 import cgi
-
 import markdown2
-
 from flask import render_template, request, redirect, url_for, json, session
-
 from xichuangzhu import app
-
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.node_model import Node
 from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
-
 from xichuangzhu.form import TopicForm, CommentForm
-
 from xichuangzhu.utils import time_diff, check_login, check_private, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
 
 # page forum

@@ -2,6 +2,7 @@ body{font-family:'arial','宋体';}body #main-wap{font-size:14px;line-height:26p
 body #main-wap h2{font-size:15px;line-height:15px;font-family:'微软雅黑';font-weight:normal;margin:20px 0 15px 0;color:#ad1616;clear:both;}
 body #footer{text-align:center;font-size:12px;font-family:'微软雅黑';margin:60px 0 10px 0;}body #footer a{color:#37a;}
 body #footer img{display:none;}
+body #footer ul{margin:0;list-style-type:none;}body #footer ul li{display:inline-block;margin-right:3px;}
 body #footer+div{display:none;}
 .navbar-search .search-query{line-height:1.2;font-size:12px;padding:2px 0px 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}

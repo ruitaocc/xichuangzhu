@@ -1,19 +1,14 @@
 #-*- coding: UTF-8 -*-
 
 import re
-
 from flask import render_template, request, redirect, url_for, json, abort, session
-
 from xichuangzhu import app
-
 import config
-
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.quote_model import Quote
-
 from xichuangzhu.utils import content_clean, check_admin
 
 # page all authors

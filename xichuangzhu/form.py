@@ -8,7 +8,7 @@ class ReviewForm(Form):
 	title = TextField('标题', [
 		validators.Length(max=20, message="标题最多20个字"),
 		validators.Required(message="标题不能为空")])
-
+	
 	content = TextAreaField('内容', [
 		validators.Length(min=30, message="内容最少30个字"),
 		validators.Required(message="内容不能为空")])
@@ -35,5 +35,6 @@ class EmailForm(Form):
 	email = TextField('邮箱', [
 		validators.Email(message="无效的邮箱"),
 		validators.Required(message="邮箱不能为空")])
+
 	user_id = HiddenField('用户ID', [
 		validators.Required(message="用户ID不能为空")])

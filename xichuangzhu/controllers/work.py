@@ -1,17 +1,11 @@
 #-*- coding: UTF-8 -*-
 
 from __future__ import division
-
 import re
-
 import math
-
 import markdown2
-
 from flask import render_template, request, redirect, url_for, json, session, abort
-
 from xichuangzhu import app
-
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
@@ -21,7 +15,6 @@ from xichuangzhu.models.love_work_model import Love_work
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
-
 from xichuangzhu.utils import time_diff, content_clean, check_admin, check_login
 
 # page - single work

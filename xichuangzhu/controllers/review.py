@@ -1,17 +1,11 @@
 #-*- coding: UTF-8 -*-
 
 from __future__ import division
-
 import math
-
 import cgi
-
 import markdown2
-
 from flask import render_template, request, redirect, url_for, json, session, abort
-
 from xichuangzhu import app
-
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.collection_model import Collection
@@ -20,9 +14,7 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
-
 from xichuangzhu.form import ReviewForm, CommentForm
-
 from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, check_private, check_login
 
 # page single review

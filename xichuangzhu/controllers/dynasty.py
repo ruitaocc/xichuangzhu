@@ -1,15 +1,11 @@
 #-*- coding: UTF-8 -*-
 
 import markdown2
-
 from flask import render_template, request, redirect, url_for, json, abort
-
 from xichuangzhu import app
-
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.quote_model import Quote
-
 from xichuangzhu.utils import check_admin
 
 # page single dynasty
