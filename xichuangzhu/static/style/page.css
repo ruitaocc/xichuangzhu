@@ -47,7 +47,7 @@ body #footer+div{display:none;}
 #page-single-author .work-item .work-title{font-size:14px;padding-bottom:3px;font-family:'微软雅黑';color:#277ddd;line-height:24px;}
 #page-single-author .work-item .work-content{font-size:13px;line-height:22px;color:#666;}
 #page-single-dynasty #dyn-selector{margin:0;position:absolute;top:40px;left:0px;list-style:none;}#page-single-dynasty #dyn-selector li{float:left;}#page-single-dynasty #dyn-selector li a{display:block;text-align:center;color:white;font-size:12px;line-height:22px;opacity:1;text-decoration:none;cursor:pointer;}
-#page-single-dynasty .row{margin-top:22px;}#page-single-dynasty .row #dynasty-wap .dynasty-period{font-size:16px;}
+#page-single-dynasty .row{margin-top:20px;}#page-single-dynasty .row #dynasty-wap .dynasty-period{font-size:16px;}
 #page-single-dynasty .row #dynasty-wap .dynasty-introduction{padding-right:1.5em;}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra h3{font-size:15px;font-family:'微软雅黑';}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra p{margin-bottom:15px;}
