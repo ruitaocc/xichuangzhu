@@ -156,7 +156,6 @@ def verify_email_callback():
 @app.route('/logout')
 def logout():
 	check_login()
-	
 	session.pop('user_id', None)
 	session.pop('user_name', None)
 	session.pop('user_abbr', None)
@@ -217,7 +216,7 @@ def people_love_works(user_abbr):
 	else:
 		next_page = total_page
 
-	return render_template('people_love_works.html', people=people, works=works, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('people_love_works.html', people=people, works=works, works_num=works_num, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people reviews
 #--------------------------------------------------
@@ -248,7 +247,7 @@ def people_reviews(user_abbr):
 	else:
 		next_page = total_page
 
-	return render_template('people_reviews.html', people=people, reviews=reviews, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('people_reviews.html', people=people, reviews=reviews, reviews_num=reviews_num, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people topics
 #--------------------------------------------------
@@ -279,7 +278,7 @@ def people_topics(user_abbr):
 	else:
 		next_page = total_page
 
-	return render_template('people_topics.html', people=people, topics=topics, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('people_topics.html', people=people, topics=topics, topics_num=topics_num, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - informs
 #--------------------------------------------------
@@ -310,7 +309,5 @@ def informs():
 		next_page = total_page
 
 	new_informs_num = Inform.get_new_informs_num(session['user_id'])
-
 	Inform.update_check_inform_time(session['user_id'])
-
 	return render_template('informs.html', informs=informs, new_informs_num=new_informs_num, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)

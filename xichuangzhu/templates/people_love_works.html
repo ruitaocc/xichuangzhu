@@ -7,7 +7,7 @@
 
 <div class="row">
 	<div class="span8">
-		<h2>{{ user_name }}的收藏</h2>
+		<h2>{{ user_name }}的收藏 / {{ works_num }}</h2>
 
 		{% from "works.widget" import show_works %}
 		{{ show_works(works)|safe }}

@@ -19,47 +19,37 @@
 			</div>
 		</div>
 		
-		<h2>{{ user_name }}的收藏
+		<h2><!-- {{ user_name }}的 -->收藏
 			<span class='link-more'>
-				<a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}">全部»</a>
+				<a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}">全部 / {{ works_num }} »</a>
 			</span>
 		</h2>
 
 		{% from "works.widget" import show_works %}
 		{{ show_works(works)|safe }}
 
-		<h2>{{ user_name }}的点评
+		<h2>点评
 			<span class='link-more'>
-				<a href="{{ url_for('people_reviews', user_abbr=people.Abbr) }}">全部»</a>
+				<a href="{{ url_for('people_reviews', user_abbr=people.Abbr) }}">全部 / {{ reviews_num }} »</a>
 			</span>
 		</h2>
 
 		{% from "reviews.widget" import show_reviews %}
 		{{ show_reviews(reviews)|safe }}
 
-		<h2>{{ user_name }}的话题
+		<h2>话题
 			<span class='link-more'>
-				<a href="{{ url_for('people_topics', user_abbr=people.Abbr) }}">全部»</a>
+				<a href="{{ url_for('people_topics', user_abbr=people.Abbr) }}">全部 / {{ topics_num }} »</a>
 			</span>
 		</h2>
 
 		{% from "topics.widget" import show_topics %}
 		{{ show_topics(topics)|safe }}
 
-		<!-- <h2>{{ title_name }}喜欢的物品
-			<span class='link-more'>
-				<a href="#">全部»</a>
-			</span>
-		</h2>-->
 	</div>
 
 	<div class="span4">
-		<!-- <h2>{{ title_name }}发起的话题
-			<span class='link-more'>
-				<a href="#">全部»</a>
-			</span>
-		</h2>
-
+		<!--
 		<h2>{{ title_name }}收藏的话题
 			<span class='link-more'>
 				<a href="#">全部»</a>
