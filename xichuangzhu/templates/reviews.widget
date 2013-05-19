@@ -11,7 +11,7 @@
 			<a href="{{ url_for('single_review', review_id = r.ReviewID) }}">{{ r.Title }}</a>
 		</div>
 
-		<div class="review-content">{{ r.Content|truncate(35, True)|safe }}</div>
+		<div class="review-content">{{ r.Content|truncate(30, True)|safe }}</div>
 
 		<div class="review-extra-info">
 			<a href="{{ url_for('people', user_abbr=r.UserAbbr) }}">{{ r.Name }}</a>

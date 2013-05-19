@@ -1,7 +1,7 @@
 #-*- coding: UTF-8 -*-
 
 import markdown2
-from flask import render_template, request, redirect, url_for, json, session
+from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.utils import check_admin
