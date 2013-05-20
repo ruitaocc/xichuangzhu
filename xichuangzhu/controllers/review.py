@@ -30,6 +30,11 @@ def single_review(review_id):
 	if not review:
 		abort(404)
 
+	# the others cannot see draft 
+	is_me = True if "user_id" in session and session['user_id'] == review['UserID'] else False
+	if not is_me and review['IsPublish'] == 0: 
+		abort(404)
+
 	review['Content'] = markdown2.markdown(review['Content'])
 	review['Time'] = time_diff(review['Time'])
 	Review.add_click_num(review_id)

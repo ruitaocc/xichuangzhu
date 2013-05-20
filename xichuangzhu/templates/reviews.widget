@@ -9,6 +9,9 @@
 	<div class="review-wap">
 		<div class="review-title">
 			<a href="{{ url_for('single_review', review_id = r.ReviewID) }}">{{ r.Title }}</a>
+			{% if not r.IsPublish  %}
+			<span class="label label-inverse">草稿</span>
+			{% endif %}
 		</div>
 
 		<div class="review-content">{{ r.Content|truncate(30, True)|safe }}</div>

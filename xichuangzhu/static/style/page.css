@@ -57,8 +57,8 @@ body #footer+div{display:none;}
 #page-add-review input[name='draft'],#page-edit-review input[name='draft']{margin-right:10px;}
 #page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
-#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;color:#999;}#page-single-review .review-extra-info .btn-group{margin-left:10px;}
-#page-single-review .review-extra-info .review-time{color:#999;}
+#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;line-height:14px;color:#999;}#page-single-review .review-extra-info .review-time{color:#999;display:inline-block;padding-bottom:17px;}
+#page-single-review .review-extra-info .btn-group{margin-left:10px;}
 #page-single-review .review-content{margin-bottom:15px;}
 #page-reviews .reviewer-item{margin-bottom:10px;}#page-reviews .reviewer-item .reviewer-avatar{float:left;display:block;margin-top:6px;}
 #page-reviews .reviewer-item .reviewer-info{margin-left:60px;}#page-reviews .reviewer-item .reviewer-info .reviewer{font-size:13px;}
@@ -78,9 +78,9 @@ body #footer+div{display:none;}
 #page-single-topic .node-info{color:#999;}
 #page-single-topic .topic-user-avatar{float:right;margin-right:5px;}
 #page-single-topic .topic-title{margin-top:0px;}
-#page-single-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:15px;border-bottom:1px solid #eee;padding-bottom:15px;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
+#page-single-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:15px;border-bottom:1px solid #eee;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
 #page-single-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999;}
-#page-single-topic .topic-extra-info .topic-time{color:#999;}
+#page-single-topic .topic-extra-info .topic-time{color:#999;display:inline-block;padding-bottom:17px;}
 #page-single-topic .topic-extra-info .btn-edit-topic{margin-left:10px;}
 #page-add-topic #node,#page-edit-topic #node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}
 #page-informs .inform-item{clear:both;margin-bottom:10px;padding-bottom:15px;border-bottom:1px dashed #ddd;}#page-informs .inform-item .user-avatar{margin-top:5px;float:left;}
