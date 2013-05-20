@@ -113,13 +113,14 @@ def add_review(work_id):
 	if request.method == 'GET':
 		form = ReviewForm()
 		return render_template('add_review.html', work=work, form=form)
-	elif request.method == 'POST':
+	else:
 		form = ReviewForm(request.form)
 		if form.validate():
 			user_id = session['user_id']
 			title = cgi.escape(form.title.data)
 			content = cgi.escape(form.content.data)
-			new_review_id = Review.add_review(work_id, user_id, title, content)
+			is_publish = 1 if 'publish' in request.form else 0
+			new_review_id = Review.add_review(work_id, user_id, title, content, is_publish)
 			return redirect(url_for('single_review', review_id=new_review_id))
 		else:
 			return render_template('add_review.html', work=work, form=form)
@@ -141,7 +142,19 @@ def edit_review(review_id):
 		if form.validate():
 			title = cgi.escape(form.title.data)
 			content = cgi.escape(form.content.data)
-			Review.edit_review(review_id, title, content)
+			is_publish = 1 if 'publish' in request.form else 0
+			Review.edit_review(review_id, title, content, is_publish)
 			return redirect(url_for('single_review', review_id=review_id))
 		else:
 			return render_template('edit_review.html', review=review, form=form)
+
+# proc delete review
+#--------------------------------------------------
+
+# view (private)
+@app.route('/review/delete/<int:review_id>')
+def delete_review(review_id):
+	review = Review.get_review(review_id)
+	check_private(review['UserID'])
+	Review.delete(review_id)
+	return redirect(url_for('index'))

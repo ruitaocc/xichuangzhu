@@ -168,24 +168,27 @@ def logout():
 @app.route('/people/<user_abbr>')
 def people(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
-	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
+	is_me = True if "user_id" in session and session['user_id'] == people['UserID'] else False
 
+	# works
 	works = Love_work.get_works_by_user(people['UserID'], 1, 3)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 	works_num = Love_work.get_works_num_by_user(people['UserID'])
 
-	reviews = Review.get_reviews_by_user(people['UserID'], 1, 3)
+	# reivews
+	reviews = Review.get_reviews_by_user(people['UserID'], 1, 3, is_me)
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
-	reviews_num = Review.get_reviews_num_by_user(people['UserID'])
+	reviews_num = Review.get_reviews_num_by_user(people['UserID'], is_me)
 
+	# topics
 	topics = Topic.get_topics_by_user(people['UserID'], 1, 3)
 	for t in topics:
 		t['Time'] = time_diff(t['Time'])
 	topics_num = Topic.get_topics_num_by_user(people['UserID'])
 
-	return render_template('people.html', people=people, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, user_name=user_name)
+	return render_template('people.html', people=people, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num)
 
 # page - people love works page
 #--------------------------------------------------
@@ -225,17 +228,18 @@ def people_love_works(user_abbr):
 @app.route('/people/<user_abbr>/reviews')
 def people_reviews(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
-	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
+	is_me = True if "user_id" in session and session['user_id'] == people['UserID'] else False
+	user_name = '我' if is_me else people['Name']
 
 	# pagination
 	num_per_page = 10
 	page = int(request.args['page'] if 'page' in request.args else 1)
 
-	reviews = Review.get_reviews_by_user(people['UserID'], page, num_per_page)
+	reviews = Review.get_reviews_by_user(people['UserID'], page, num_per_page, is_me)
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
-
-	reviews_num = Review.get_reviews_num_by_user(people['UserID'])
+		
+	reviews_num = Review.get_reviews_num_by_user(people['UserID'], is_me)
 
 	# page paras
 	total_page = int(math.ceil(reviews_num / num_per_page))

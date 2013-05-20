@@ -54,9 +54,10 @@ body #footer+div{display:none;}
 #page-single-dynasty .row .author-item .author-dynasty{display:none;}
 #page-add-review .control-label,#page-edit-review .control-label{width:50px;}
 #page-add-review .controls,#page-edit-review .controls{margin-left:70px;}
+#page-add-review input[name='draft'],#page-edit-review input[name='draft']{margin-right:10px;}
 #page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
-#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;color:#999;}#page-single-review .review-extra-info .btn-edit-review{margin-left:10px;}
+#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;padding-bottom:15px;line-height:14px;color:#999;}#page-single-review .review-extra-info .btn-group{margin-left:10px;}
 #page-single-review .review-extra-info .review-time{color:#999;}
 #page-single-review .review-content{margin-bottom:15px;}
 #page-reviews .reviewer-item{margin-bottom:10px;}#page-reviews .reviewer-item .reviewer-avatar{float:left;display:block;margin-top:6px;}
