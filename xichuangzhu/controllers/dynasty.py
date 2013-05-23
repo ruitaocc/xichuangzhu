@@ -18,10 +18,11 @@ def single_dynasty(dynasty_abbr):
 	if not dynasty:
 		abort(404)
 
-	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'], 5)
+	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'], 5, True)
 	for a in authors:
 		quote = Quote.get_quote_by_random(a['AuthorID'])
 		a['Quote'] = quote['Quote'] if quote else ""
+		a['QuoteID'] = quote['QuoteID'] if quote else 0
 	
 	authors_num = Author.get_authors_num_by_dynasty(dynasty['DynastyID'])
 	
@@ -68,14 +69,3 @@ def edit_dynasty(dynasty_id):
 		endYear = int(request.form['endYear'])
 		Dynasty.edit_dynasty(dynasty, abbr, introduction, history, startYear, endYear, dynasty_id)
 		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
-
-# json - get single dynasty info (admin)
-#--------------------------------------------------
-@app.route('/dynasty/json', methods=['POST'])
-def get_dynasty_by_json():
-	check_admin()
-
-	dynasty_id = int(request.form['dynasty_id'])
-	dynasty = Dynasty.get_dynasty(dynasty_id)
-	authors = Author.get_authors_by_dynasty(dynasty_id)
-	return render_template('single_dynasty.widget', dynasty=dynasty, authors=authors)

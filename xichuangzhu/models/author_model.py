@@ -42,12 +42,16 @@ class Author:
 
 	# get certain dynasty's authors
 	@staticmethod
-	def get_authors_by_dynasty(dynasty_id, num = 10000):
-		query = '''SELECT *\n
-			FROM author\n
-			WHERE DynastyID = %d
-			ORDER BY BirthYear ASC\n
-			LIMIT %d''' % (dynasty_id, num)
+	def get_authors_by_dynasty(dynasty_id, num, random):
+		query = '''SELECT * FROM author WHERE DynastyID = %d\n''' % dynasty_id
+
+		if random:
+			query += "ORDER BY RAND()\n"
+		else:
+			query += "ORDER BY BirthYear ASC\n"
+
+		query += "LIMIT %d" % num
+
 		g.cursor.execute(query)
 		return g.cursor.fetchall()
 

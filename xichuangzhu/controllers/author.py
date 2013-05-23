@@ -19,16 +19,18 @@ from xichuangzhu.utils import content_clean, check_admin
 def authors():
 	dynasties = Dynasty.get_dynasties()
 	for d in dynasties:
-		d['authors'] = Author.get_authors_by_dynasty(d['DynastyID'])
+		d['authors'] = Author.get_authors_by_dynasty(d['DynastyID'], 30, False)
 		for a in d['authors']:
 			quote = Quote.get_quote_by_random(a['AuthorID'])
 			a['Quote'] = quote['Quote'] if quote else ""
+			a['QuoteID'] = quote['QuoteID'] if quote else 0
 			a['QuotesNum'] = Quote.get_quotes_num_by_author(a['AuthorID'])
 
 	hot_authors = Author.get_hot_authors(8)
 	for a in hot_authors:
 		quote = Quote.get_quote_by_random(a['AuthorID'])
 		a['Quote'] = quote['Quote'] if quote else ""
+		a['QuoteID'] = quote['QuoteID'] if quote else 0
 
 	return render_template('authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
@@ -43,7 +45,14 @@ def single_author(author_abbr):
 	if not author:
 		abort(404)
 	
-	quote = Quote.get_quote_by_random(author['AuthorID'])
+	# if 'q_id' in form.args, then display it,
+	# otherwise, display a random quote
+	if 'q_id' in request.args:
+		q_id = int(request.args['q_id'])
+		quote = Quote.get_quote_by_id(q_id)
+	else:
+		quote = Quote.get_quote_by_random(author['AuthorID'])
+	
 	quotes_num = Quote.get_quotes_num_by_author(author['AuthorID'])
 
 	collections = Collection.get_collections_by_author(author['AuthorID'])

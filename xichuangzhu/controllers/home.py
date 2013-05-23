@@ -29,6 +29,7 @@ def index():
 	for a in authors:
 		quote = Quote.get_quote_by_random(a['AuthorID'])
 		a['Quote'] = quote['Quote'] if quote else ""
+		a['QuoteID'] = quote['QuoteID'] if quote else 0
 	
 	dynasties = Dynasty.get_dynasties()
 	topics = Topic.get_topics(8)

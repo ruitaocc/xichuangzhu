@@ -14,27 +14,30 @@
 </ul>
 
 <script type="text/javascript">
+
+// get random rgb color in css style
+function random_color(){
+	var r, g, b;
+
+	r = Math.floor(Math.random()*255+1);
+	g = Math.floor(Math.random()*200+1);
+	b = Math.floor(Math.random()*255+1);
+	return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+
+// set random color
 $('#dyn-selector a').each(function(){
-	// set random color
-	var color = 'rgb(' + Math.floor(Math.random()*255+1) + ',' + Math.floor(Math.random()*200+1) + ',' + Math.floor(Math.random()*200+1) + ')';
-
-	var bar_width = $(window).width() / 17;
-
 	$(this).css({
 		'height': '22px',
-		'width': bar_width + 'px',
-		'background-color': color
+		'width': $(window).width() / 17 + 'px',
+		'background-color': random_color()
 	});
 });
 
 // when change window size
 $(window).resize(function(){
-	var bar_width = $(window).width() / 17;
-
-	$('#dyn-selector a').each(function(){
-		$(this).css({
-			'width': bar_width + 'px'
-		});
+	$('#dyn-selector a').css({
+		'width': $(window).width() / 17 + 'px'
 	});
 });
 </script>
@@ -56,21 +59,6 @@ $(window).resize(function(){
 
 			<h2>简介</h2>
 			<div class='dynasty-introduction'>{{ dynasty.Introduction }}</div>
-
-			<!-- <div class="dynasty-extra">{{ dynasty.History|safe }}</div> -->
-
-			<!-- <table class="table ">
-				{% for author in authors %}
-				<tr class="author-item">
-					<td class='author'>
-						<a href="{{ url_for('single_author', author_abbr=author.Abbr) }}">{{ author.Author }}</a>
-					</td>
-					<td>
-						<span class='author-introduction'>{{ author.Quote }}</span>
-					</td>
-				</tr>
-				{% endfor %}
-			</table> -->
 		</div>
 	</div>
 
