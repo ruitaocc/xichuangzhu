@@ -15,9 +15,10 @@ class ReviewForm(Form):
 
 # Topic form
 class TopicForm(Form):
-	node_id = HiddenField('节点', [
-		validators.Required(message="节点不能为空")])
-
+	# node_id = HiddenField('节点', [
+	# 	validators.Required(message="节点不能为空")])
+	node_id = HiddenField('节点', [])
+	
 	title = TextField('标题', [
 		validators.Length(max=20, message="标题最多20个字"),
 		validators.Required(message="标题不能为空")])

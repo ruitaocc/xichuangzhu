@@ -8,7 +8,8 @@
 <div class="row">
 	<div class="span8">
 		<h2 class="node-info">
-			<a href="{{ url_for('forum') }}" class="root-node">话题</a>
+			<!-- <a href="{{ url_for('forum') }}" class="root-node">话题</a> -->
+			<span>话题</span>
 			{% if session.user_id %}
 			<a class="btn btn-small new-topic" href="{{ url_for('add_topic') }}">发起新话题</a>
 			{% endif %}
@@ -17,7 +18,7 @@
 		{% from "topics.widget" import show_topics %}
 		{{ show_topics(topics)|safe }}
 
-		<h2>节点导航</h2>
+<!-- 		<h2>节点导航</h2>
 		{% for nt in node_types %}
 		{% if nt.nodes|length != 0 %}
 		<div class="type-item clearfix">
@@ -29,19 +30,19 @@
 			</ul>
 		</div>
 		{% endif %}
-		{% endfor %}
+		{% endfor %} -->
 	</div>
 
 	<div class="span4">
-		<h2>最热节点</h2>
+<!-- 		<h2>最热节点</h2>
 
 		<ul class="node-list">
 		{% for n in nodes %}
 		<li class="node"><a href="{{ url_for('single_node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
 		{% endfor %}
-		</ul>
+		</ul> -->
 
-		<h2>本日热议</h2>
+		<h2>近期热议</h2>
 
 		{% for t in hot_topics %}
 		<div class="ht-item">

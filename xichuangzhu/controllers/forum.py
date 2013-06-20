@@ -105,7 +105,8 @@ def add_topic():
 	elif request.method == 'POST':
 		form = TopicForm(request.form)
 		if form.validate():
-			node_id = int(form.node_id.data)
+			# node_id = int(form.node_id.data)
+			node_id = 10001
 			title = cgi.escape(form.title.data)
 			content = cgi.escape(form.content.data)
 			user_id = session['user_id']
@@ -113,7 +114,8 @@ def add_topic():
 			return redirect(url_for('single_topic', topic_id=new_topic_id))
 		else:
 			# choose a node to be default, here is node_id = 10001
-			node_id = int(form.node_id.data)
+			# node_id = int(form.node_id.data)
+			node_id = 10001
 			node = Node.get_node_by_id(node_id)
 			return render_template('add_topic.html', node=node, node_types=node_types, form=form)
 
@@ -138,7 +140,8 @@ def edit_topic(topic_id):
 	elif request.method == 'POST':
 		form = TopicForm(request.form)
 		if form.validate():
-			node_id = int(form.node_id.data)
+			# node_id = int(form.node_id.data)
+			node_id = 10001
 			title = cgi.escape(form.title.data)
 			content = cgi.escape(form.content.data)
 			new_topic_id = Topic.edit(topic_id, node_id, title, content)
