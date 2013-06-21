@@ -24,7 +24,7 @@
 
 					<ul class="nav">
 						<li><a href="{{ url_for('index') }}">首页</a></li>
-						<li><a href="{{ url_for('forum') }}">讨论</a></li>
+						<li><a href="{{ url_for('forum') }}">话题</a></li>
 						<!-- <li><a href="{{ url_for('shop') }}">物品</a></li> -->
 						{% if session.user_id %}
 						<li><a href="{{ url_for('people', user_abbr=session.user_abbr) }}">我</a></li>
