@@ -12,7 +12,6 @@ body #footer+div{display:none;}
 #page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:2px;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
-#page-works .work-item{margin-right:30px;}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block;}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}
 #page-works #type-selector li:hover,#page-works #dynasty-selector li:hover{background-color:#DDD;}#page-works #type-selector li:hover a,#page-works #dynasty-selector li:hover a{color:#333;}
 #page-works #type-selector li.active a,#page-works #dynasty-selector li.active a{background-color:#0088cc;color:white;}

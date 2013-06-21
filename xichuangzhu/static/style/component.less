@@ -209,36 +209,94 @@
 
 // component - topic item
 //----------------------------------------------------- 
-.topic-item{border-bottom: 1px dashed #DDD;margin-top: 10px;padding-bottom: 18px;position: relative;clear: both;
+.topic-item{
+	border-bottom: 1px dashed #DDD;
+	margin-top: 12px;
+	padding-bottom: 15px;
+	position: relative;
+	clear: both;
 
-	.topic-user-avatar{float: left;margin-top: 3px;}
+	.topic-user-avatar{
+		float: left;
+		margin-top: 3px;
+	}
 
-	.topic-info{margin-left: 60px;
+	.topic-info{
+		margin-left: 60px;
 
-		.topic-title{font-size: 16px;margin-bottom: 6px;font-weight: bold;letter-spacing: 1px;}
+		.topic-title{
+			font-size: 16px;
+			margin-bottom: 6px;
+			font-weight: bold;
+			letter-spacing: 1px;
+		}
 
-		.topic-extra-info{font-size: 12px;line-height: 12px;
+		.topic-extra-info{
+			font-size: 12px;
+			line-height: 12px;
 
-			.topic-node{font-size: 12px;display: inline-block;padding: 0px 0px;border-radius: 2px;color: #999;margin-right: 5px;
+			.topic-node{
+				font-size: 12px;
+				display: inline-block;
+				padding: 0px 0px;
+				border-radius: 2px;
+				color: #999;
+				margin-right: 5px;
 			}
 
-			.topic-launcher{margin-right: 5px;color: gray;font-weight: bold;font-size: 12px;}
+			.topic-launcher{
+				margin-right: 5px;
+				color: gray;
+				font-weight: bold;
+				font-size: 12px;
+			}
 
-			.topic-time{color: #999;}
+			.topic-time{
+				color: #999;
+			}
 		}
 	}
 
-	.topic-comment-num{position: absolute;top: 15px;right: 15px;font-size: 12px;line-height: 12px;color: #666;background-color: #e5e5e5;display: inline-block;padding: 3px 12px;border-radius: 12px;cursor: pointer;}
+	.topic-comment-num{
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		font-size: 12px;
+		line-height: 12px;
+		color: #666;
+		background-color: #e5e5e5;
+		display: inline-block;
+		padding: 3px 12px;
+		// border-radius: 12px;
+		cursor: pointer;
+	}
 }
 
 // component node list
 //----------------------------------------------------- 
-.node-list{list-style: none;margin: 0;
+.node-list{
+	list-style: none;
+	margin: 0;
 
-	.node{font-size:12px;line-height:12px;display: inline-block;margin:0 6px 6px 0;background-color: #f3f3f3;border-radius: 2px;border: 1px solid #e5e5e5;
+	.node{
+		font-size:12px;
+		line-height:12px;
+		display: inline-block;
+		margin:0 6px 6px 0;
+		background-color: #f3f3f3;
+		border-radius: 2px;
+		border: 1px solid #e5e5e5;
 
-		a{color:rgb(98, 104, 107);text-decoration: none;padding: 4px 10px;display: inline-block;cursor: pointer;
-			&:hover{color:#4d5256;}
+		a{
+			color:rgb(98, 104, 107);
+			text-decoration: none;
+			padding: 4px 10px;
+			display: inline-block;
+			cursor: pointer;
+			
+			&:hover{
+				color:#4d5256;
+			}
 		}
 	}
 }
