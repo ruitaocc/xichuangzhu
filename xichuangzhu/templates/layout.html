@@ -24,15 +24,15 @@
 
 					<ul class="nav">
 						<li><a href="{{ url_for('index') }}">首页</a></li>
-						<li><a href="{{ url_for('forum') }}">话题</a></li>
+						<li><a href="{{ url_for('forum') }}">建议</a></li>
 						<!-- <li><a href="{{ url_for('shop') }}">物品</a></li> -->
 						{% if session.user_id %}
-						<li><a href="{{ url_for('people', user_abbr=session.user_abbr) }}">我</a></li>
+						<li><a href="{{ url_for('people', user_abbr=session.user_abbr) }}">个人主页</a></li>
 						{% endif %}
 					</ul>
 
 					<form class="navbar-search">
-						<input type="text" class="search-query" title="按Enter键进行搜索" placeholder="按下 Enter 键开始搜索">
+						<input type="text" class="search-query" title="按下 Enter 键开始搜索" placeholder="按下 Enter 键开始搜索">
 					</form>
 
 					<script type="text/javascript">

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}话题{% endblock %}
+{% block page_title %}建议与反馈{% endblock %}
 {% block page_id%}page-forum{% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
 	<div class="span8">
 		<h2 class="node-info">
 			<!-- <a href="{{ url_for('forum') }}" class="root-node">话题</a> -->
-			<span>话题</span>
+			<span>建议与反馈</span>
 			{% if session.user_id %}
 			<a class="btn btn-small new-topic" href="{{ url_for('add_topic') }}">发起新话题</a>
 			{% endif %}
