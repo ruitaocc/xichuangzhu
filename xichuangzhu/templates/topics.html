@@ -18,7 +18,7 @@
 		{% from "topics.widget" import show_topics %}
 		{{ show_topics(topics)|safe }}
 
-<!-- 		<h2>节点导航</h2>
+		<!-- <h2>节点导航</h2>
 		{% for nt in node_types %}
 		{% if nt.nodes|length != 0 %}
 		<div class="type-item clearfix">
@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="span4">
-<!-- 		<h2>最热节点</h2>
+		<!-- <h2>最热节点</h2>
 
 		<ul class="node-list">
 		{% for n in nodes %}
@@ -42,14 +42,14 @@
 		{% endfor %}
 		</ul> -->
 
-		<h2>近期热议</h2>
+		<!-- <h2>近期热议</h2>
 
 		{% for t in hot_topics %}
 		<div class="ht-item">
 			<a class="ht-user-avatar" href="{{ url_for('people', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
 			<span class="ht-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></span>
 		</div>
-		{% endfor %}
+		{% endfor %} -->
 	</div>
 </div>
 
