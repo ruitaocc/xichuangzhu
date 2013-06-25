@@ -1,10 +1,15 @@
+html{
+	position: relative;
+    min-height: 100%;
+}
+
 body{
 	font-family: 'arial', '宋体';
+	margin: 0 0 6em 0;
 
 	#main-wap{
 		font-size: 14px;
 		line-height: 180%;
-		min-height: 700px;
 
 		h1{
 			font-size: 25px;
@@ -24,11 +29,19 @@ body{
 	}
 
 	#footer{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 2.2em;
+		z-index: 10;
 		text-align: center;
 		font-size: 12px;
 		font-family: '微软雅黑';
-		margin: 60px 0 10px 0;
-		
+		width: 100%;
+		color: #666;
+		padding-top: 5px;
+		border-top: 1px dashed #ddd;
+
 		a{
 			color: #37a;
 		}
@@ -37,13 +50,20 @@ body{
 			display: none;
 		}
 
-		ul{
-			margin: 0;
-			list-style-type: none;
+		.container{
+			#copyright{
+				float: left;
+			}
 
-			li{
-				display: inline-block;
-				margin-right: 3px;
+			#links{
+				float: right;
+				margin: 0;
+				list-style-type: none;
+
+				li{
+					display: inline-block;
+					margin-right: 10px;
+				}
 			}
 		}
 	}
@@ -74,7 +94,9 @@ body{
 	box-shadow: none;
 	border-radius: 3px;
 
-	h4{font-size: 18px;}
+	h4{
+		font-size: 18px;
+	}
 }
 
 // tooltip

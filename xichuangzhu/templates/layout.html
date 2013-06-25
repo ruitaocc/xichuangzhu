@@ -16,7 +16,6 @@
 	</head>
 
 	<body id="{% block page_id %}{% endblock %}">
-	
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
@@ -130,17 +129,17 @@
 		</div>
 
 		<div id="footer">
-			<div>©2013 西窗烛</div>
-			
-			<ul>
-				<li><a href="{{ url_for('about') }}">关于</a></li>
-				<li>·</li>
-				<li><a href="{{ url_for('ad') }}">广告</a></li>
-				<li>·</li>
-				<li><a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a></li>
-			</ul>
+			<div class='container'>
+				<div id='copyright'>西窗烛 ©2013 by <a href="http://hustlzp.com" target="_blank">hustlzp</a></div>
+				
+				<ul id='links'>
+					<li><a href="{{ url_for('about') }}">关于</a></li
+					><li><a href="{{ url_for('ad') }}">广告</a></li
+					><li><a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a></li>
+				</ul>
 
-			<script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script>
+				<script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script>
+			</div>
 		</div>
 	</body>
 </html>
