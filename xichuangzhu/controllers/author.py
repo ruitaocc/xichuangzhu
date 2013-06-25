@@ -45,10 +45,10 @@ def single_author(author_abbr):
 	if not author:
 		abort(404)
 	
-	# if 'q_id' in form.args, then display it,
+	# if 'q' in form.args, then display it,
 	# otherwise, display a random quote
-	if 'q_id' in request.args:
-		q_id = int(request.args['q_id'])
+	if 'q' in request.args:
+		q_id = int(request.args['q'])
 		quote = Quote.get_quote_by_id(q_id)
 	else:
 		quote = Quote.get_quote_by_random(author['AuthorID'])

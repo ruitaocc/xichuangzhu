@@ -29,7 +29,7 @@ $(document).ready(function(){
 			<ul class="author-group clearfix">
 				{% for author in dynasty.authors %}
 				<li class='author'>
-					<a title="{{ author.Quote }}{% if session.user_id == 45197381 %} / {{ author.QuotesNum }}{% endif %}" href="{{ url_for('single_author', author_abbr=author.Abbr, q_id=author.QuoteID) }}">{{ author.Author }}</a>
+					<a title="{{ author.Quote }}{% if session.user_id == 45197381 %} / {{ author.QuotesNum }}{% endif %}" href="{{ url_for('single_author', author_abbr=author.Abbr, q=author.QuoteID) }}">{{ author.Author }}</a>
 				</li>
 				{% endfor %}
 			</ul>
