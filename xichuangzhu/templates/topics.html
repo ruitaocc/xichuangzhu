@@ -9,7 +9,7 @@
 	<div class="span8">
 		<h2 class="node-info">
 			<!-- <a href="{{ url_for('forum') }}" class="root-node">话题</a> -->
-			<span>建议与反馈</span>
+			<span>讨论 / 建议 / 反馈</span>
 			{% if session.user_id %}
 			<a class="btn btn-small new-topic" href="{{ url_for('add_topic') }}">发起新话题</a>
 			{% endif %}

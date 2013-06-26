@@ -4,7 +4,7 @@ body #main-wap h2{font-size:15px;line-height:15px;font-family:'微软雅黑';fon
 body #footer{position:absolute;left:0;bottom:0;height:2.2em;z-index:10;text-align:center;font-size:12px;font-family:'微软雅黑';width:100%;color:#666;padding-top:5px;border-top:1px dashed #ddd;}body #footer a{color:#37a;}
 body #footer img{display:none;}
 body #footer .container #copyright{float:left;}
-body #footer .container #links{float:right;margin:0;list-style-type:none;}body #footer .container #links li{display:inline-block;margin-right:10px;}
+body #footer .container #links{float:right;margin:0;list-style-type:none;}body #footer .container #links li{display:inline-block;margin-right:12px;}
 body #footer+div{display:none;}
 .navbar-search .search-query{font-size:12px;padding:2px 0 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
@@ -19,7 +19,7 @@ body #footer+div{display:none;}
 #page-works #type-selector li.active a,#page-works #dynasty-selector li.active a{background-color:#0088cc;color:white;}
 #page-single-work .span8{width:600px;margin-right:20px;}
 #page-single-work .work-title{font-size:25px;line-height:35px;margin-top:30px;margin-bottom:12px;font-weight:bold;text-align:center;clear:both;}
-#page-single-work .work-author{text-align:center;margin-bottom:16px;padding-right:10px;font-size:16px;}
+#page-single-work .work-author{text-align:center;margin-bottom:15px;padding-right:10px;font-size:16px;}
 #page-single-work .work-foreword{font-size:17px;font-family:'kaiti';margin-bottom:10px;}
 #page-single-work .work-content{font-family:'宋体';font-size:17px;margin-bottom:30px;}#page-single-work .work-content sup{font-family:'黑体';font-size:12px;font-weight:normal;padding:5px 0px;cursor:pointer;color:#666;}
 #page-single-work .work-type-shi{text-align:center;}#page-single-work .work-type-shi p{margin-bottom:10px;}
@@ -58,8 +58,8 @@ body #footer+div{display:none;}
 #page-add-review input[name='draft'],#page-edit-review input[name='draft']{margin-right:10px;}
 #page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
-#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;line-height:14px;color:#999;}#page-single-review .review-extra-info .review-time{color:#999;display:inline-block;padding-bottom:17px;}
-#page-single-review .review-extra-info .btn-group{margin-left:10px;}
+#page-single-review .review-extra-info{margin-bottom:15px;border-bottom:1px solid #EEE;line-height:14px;color:#999;padding-bottom:15px;}#page-single-review .review-extra-info .review-time{color:#999;display:inline-block;}
+#page-single-review .review-extra-info #btn-edit-review{margin-left:10px;}
 #page-single-review .review-content{margin-bottom:15px;}
 #page-reviews .reviewer-item{margin-bottom:10px;}#page-reviews .reviewer-item .reviewer-avatar{float:left;display:block;margin-top:6px;}
 #page-reviews .reviewer-item .reviewer-info{margin-left:60px;}#page-reviews .reviewer-item .reviewer-info .reviewer{font-size:13px;}
@@ -78,9 +78,9 @@ body #footer+div{display:none;}
 #page-add-topic .controls,#page-edit-topic .controls{margin-left:70px;}
 #page-single-topic .node-info{color:#999;}
 #page-single-topic .topic-user-avatar{float:right;margin-right:5px;}
-#page-single-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:15px;border-bottom:1px solid #eee;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
+#page-single-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:15px;border-bottom:1px solid #eee;padding-bottom:15px;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
 #page-single-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999;}
-#page-single-topic .topic-extra-info .topic-time{color:#999;display:inline-block;padding-bottom:17px;}
+#page-single-topic .topic-extra-info .topic-time{color:#999;display:inline-block;}
 #page-single-topic .topic-extra-info .btn-edit-topic{margin-left:10px;}
 #page-add-topic #node,#page-edit-topic #node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}
 #page-informs .inform-item{clear:both;margin-bottom:10px;padding-bottom:15px;border-bottom:1px dashed #ddd;}#page-informs .inform-item .user-avatar{margin-top:5px;float:left;}
