@@ -4,7 +4,7 @@ body #main-wap h2{font-size:15px;line-height:15px;font-family:'微软雅黑';fon
 body #footer{position:absolute;left:0;bottom:0;height:2.2em;z-index:10;text-align:center;font-size:12px;font-family:'微软雅黑';width:100%;color:#666;padding-top:5px;border-top:1px dashed #ddd;}body #footer a{color:#37a;}
 body #footer img{display:none;}
 body #footer .container #copyright{float:left;}
-body #footer .container #links{float:right;margin:0;list-style-type:none;}body #footer .container #links li{display:inline-block;margin-right:12px;}
+body #footer .container #links{float:right;margin:0;list-style-type:none;}body #footer .container #links li{display:inline-block;margin-right:15px;}
 body #footer+div{display:none;}
 .navbar-search .search-query{font-size:12px;padding:2px 0 2px 16px;margin-top:2px;}
 .form-horizontal .input-append{display:block;}
