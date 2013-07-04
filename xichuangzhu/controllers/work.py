@@ -47,8 +47,6 @@ def single_work(work_id):
 	for r in reviews:
 		r['Time'] = time_diff(r['Time'])
 
-	widgets = Widget.get_widgets('work', work_id)
-
 	product = Product.get_product_by_random()
 
 	other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
