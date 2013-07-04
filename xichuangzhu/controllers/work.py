@@ -10,7 +10,7 @@ from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.collect_work_model import Collect_work
+from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
@@ -33,8 +33,8 @@ def single_work(work_id):
 
 	# check if is collected
 	if 'user_id' in session:
-		is_collected = Collect_work.check(session['user_id'], work_id)
-		tags = Collect_work.get_tags(session['user_id'], work_id) if is_collected else ""
+		is_collected = Collect.check(session['user_id'], work_id)
+		tags = Collect.get_tags(session['user_id'], work_id) if is_collected else ""
 		my_tags = Tag.get_user_tags(session['user_id'], 20)
 		popular_tags = Tag.get_work_tags(work_id, 20)
 	else:
@@ -55,7 +55,7 @@ def single_work(work_id):
 	for ow in other_works:
 		ow['Content'] = content_clean(ow['Content'])
 
-	collectors = Collect_work.get_users_by_work(work_id, 4)
+	collectors = Collect.get_users_by_work(work_id, 4)
 
 	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
@@ -74,11 +74,11 @@ def collect_work(work_id):
 	new_tags = list(set(new_tags))
 
 	# collect work
-	is_collected = Collect_work.check(session['user_id'], work_id)
+	is_collected = Collect.check(session['user_id'], work_id)
 	if is_collected:
-		Collect_work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+		Collect.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 	else:	# edit tags
-		Collect_work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+		Collect.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -93,7 +93,7 @@ def collect_work(work_id):
 def discollect_work(work_id):
 	check_login()
 
-	Collect_work.remove(session['user_id'], work_id)
+	Collect.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works

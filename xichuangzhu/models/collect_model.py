@@ -2,7 +2,7 @@
 
 from flask import g
 
-class Collect_work:
+class Collect:
 
 # GET
 
