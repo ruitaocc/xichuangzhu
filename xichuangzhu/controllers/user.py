@@ -10,7 +10,7 @@ from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app
 import config
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.collect_work_model import Collect_work
+from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
@@ -28,10 +28,10 @@ def user(user_abbr):
 	is_me = True if "user_id" in session and session['user_id'] == user['UserID'] else False
 
 	# works
-	works = Collect_work.get_works_by_user(user['UserID'], 1, 3)
+	works = Collect.get_works_by_user(user['UserID'], 1, 3)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
-	works_num = Collect_work.get_works_num_by_user(user['UserID'])
+	works_num = Collect.get_works_num_by_user(user['UserID'])
 
 	# reivews
 	reviews = Review.get_reviews_by_user(user['UserID'], 1, 3, is_me)
@@ -60,11 +60,11 @@ def user_collect_works(user_abbr):
 	num_per_page = 10
 	page = int(request.args['page'] if 'page' in request.args else 1)
 
-	works = Collect_work.get_works_by_user(user['UserID'], page, num_per_page)
+	works = Collect.get_works_by_user(user['UserID'], page, num_per_page)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	works_num = Collect_work.get_works_num_by_user(user['UserID'])
+	works_num = Collect.get_works_num_by_user(user['UserID'])
 
 	# page paras
 	total_page = int(math.ceil(works_num / num_per_page))

@@ -1,6 +1,5 @@
 import site
 import work
-import collection
 import author
 import dynasty
 import user
