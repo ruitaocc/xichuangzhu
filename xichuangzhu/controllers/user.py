@@ -10,7 +10,7 @@ from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app
 import config
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.love_work_model import Love_work
+from xichuangzhu.models.collect_work_model import Collect_work
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
@@ -171,10 +171,10 @@ def people(user_abbr):
 	is_me = True if "user_id" in session and session['user_id'] == people['UserID'] else False
 
 	# works
-	works = Love_work.get_works_by_user(people['UserID'], 1, 3)
+	works = Collect_work.get_works_by_user(people['UserID'], 1, 3)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
-	works_num = Love_work.get_works_num_by_user(people['UserID'])
+	works_num = Collect_work.get_works_num_by_user(people['UserID'])
 
 	# reivews
 	reviews = Review.get_reviews_by_user(people['UserID'], 1, 3, is_me)
@@ -190,12 +190,12 @@ def people(user_abbr):
 
 	return render_template('people.html', people=people, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num)
 
-# page - people love works page
+# page - people's collect works
 #--------------------------------------------------
 
 # view (public)
-@app.route('/people/<user_abbr>/love_works')
-def people_love_works(user_abbr):
+@app.route('/people/<user_abbr>/collect/works')
+def people_collect_works(user_abbr):
 	people = User.get_user_by_abbr(user_abbr)
 	user_name = '我' if "user_id" in session and session['user_id'] == people['UserID'] else people['Name']
 
@@ -203,11 +203,11 @@ def people_love_works(user_abbr):
 	num_per_page = 10
 	page = int(request.args['page'] if 'page' in request.args else 1)
 
-	works = Love_work.get_works_by_user(people['UserID'], page, num_per_page)
+	works = Collect_work.get_works_by_user(people['UserID'], page, num_per_page)
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
 
-	works_num = Love_work.get_works_num_by_user(people['UserID'])
+	works_num = Collect_work.get_works_num_by_user(people['UserID'])
 
 	# page paras
 	total_page = int(math.ceil(works_num / num_per_page))
@@ -219,7 +219,7 @@ def people_love_works(user_abbr):
 	else:
 		next_page = total_page
 
-	return render_template('people_love_works.html', people=people, works=works, works_num=works_num, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('people_collect_works.html', people=people, works=works, works_num=works_num, user_name=user_name, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - people reviews
 #--------------------------------------------------

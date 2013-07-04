@@ -39,11 +39,11 @@ $(document).ready(function(){
 <div class="modal hide fade" id="modal-tags">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
-		<h4>{% if is_loved %}编辑收藏{% else %}添加收藏{% endif %}《{{ work.Title }}》</h4>
+		<h4>{% if is_collected %}编辑收藏{% else %}添加收藏{% endif %}《{{ work.Title }}》</h4>
 	</div>
 
 	<div class="modal-body">
-		<form id="form-tags" method="post" action="{{ url_for('love_work', work_id=work.WorkID) }}">
+		<form id="form-tags" method="post" action="{{ url_for('collect_work', work_id=work.WorkID) }}">
 			<p>标签（多个标签用空格分隔）:</p>
 			<input name="tags" id="input-tags" class="input-xlarge" type="text" value="{{ tags }}" />
 
@@ -100,13 +100,13 @@ $(document).ready(function(){
 
 			<!-- <a class="btn btn-small" href="#"><span class="icon-eye-open"></span> 勘误</a> -->
 
-			{% if is_loved %}
+			{% if is_collected %}
 			<a class="btn btn-small" title="编辑收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
 			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu">
-				<li><a href="{{ url_for('rm_love_work', work_id=work.WorkID) }}">取消收藏</a></li>
+				<li><a href="{{ url_for('discollect_work', work_id=work.WorkID) }}">取消收藏</a></li>
 			</ul>
 			{% else %}
 			<a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
@@ -164,7 +164,7 @@ $(document).ready(function(){
 		<h2>谁收藏了它？</h2>
 
 		{% from 'users.widget' import show_users %}
-		{{ show_users(lovers)|safe }}
+		{{ show_users(collectors)|safe }}
 
 	</div>
 </div>

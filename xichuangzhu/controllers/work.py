@@ -10,7 +10,7 @@ from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.love_work_model import Love_work
+from xichuangzhu.models.collect_work_model import Collect_work
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
@@ -31,14 +31,14 @@ def single_work(work_id):
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 	work['Content'] = markdown2.markdown(work['Content'])
 
-	# check is loved
+	# check if is collected
 	if 'user_id' in session:
-		is_loved = Love_work.check_love(session['user_id'], work_id)
-		tags = Love_work.get_tags(session['user_id'], work_id) if is_loved else ""
+		is_collected = Collect_work.check(session['user_id'], work_id)
+		tags = Collect_work.get_tags(session['user_id'], work_id) if is_collected else ""
 		my_tags = Tag.get_user_tags(session['user_id'], 20)
 		popular_tags = Tag.get_work_tags(work_id, 20)
 	else:
-		is_loved = False
+		is_collected = False
 		tags = ""
 		my_tags = []
 		popular_tags = []
@@ -55,13 +55,13 @@ def single_work(work_id):
 	for ow in other_works:
 		ow['Content'] = content_clean(ow['Content'])
 
-	lovers = Love_work.get_users_by_work(work_id, 4)
+	collectors = Collect_work.get_users_by_work(work_id, 4)
 
-	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
+	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
-# proc - add & edit love work (login)
-@app.route('/work/love/<int:work_id>', methods=['POST'])
-def love_work(work_id):
+# proc - add & edit collected work (login)
+@app.route('/work/collect/<int:work_id>', methods=['POST'])
+def collect_work(work_id):
 	check_login()
 
 	tags = request.form['tags'].split(' ')
@@ -73,12 +73,12 @@ def love_work(work_id):
 			new_tags.append(t)
 	new_tags = list(set(new_tags))
 
-	# add love work
-	is_loved = Love_work.check_love(session['user_id'], work_id)
-	if is_loved:
-		Love_work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
-	else:
-		Love_work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+	# collect work
+	is_collected = Collect_work.check(session['user_id'], work_id)
+	if is_collected:
+		Collect_work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+	else:	# edit tags
+		Collect_work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -88,12 +88,12 @@ def love_work(work_id):
 
 	return redirect(url_for('single_work', work_id=work_id))
 
-# proc - rm love work (login)
-@app.route('/work/rm_love/<int:work_id>')
-def rm_love_work(work_id):
+# proc - discollect work (login)
+@app.route('/work/discollect/<int:work_id>')
+def discollect_work(work_id):
 	check_login()
 
-	Love_work.remove(session['user_id'], work_id)
+	Collect_work.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works

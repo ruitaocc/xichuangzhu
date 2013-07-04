@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block page_title %}{{ user_name }}的收藏{% endblock %}
-{% block page_id%}page-people-love-works{% endblock %}
+{% block page_id%}page-people-collect-works{% endblock %}
 
 {% block body %}
 
@@ -14,9 +14,9 @@
 
 		<div class="pagination">
 			<ul>
-				<li><a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}?page={{ pre_page }}"><<</a></li>
+				<li><a href="{{ url_for('people_collect_works', user_abbr=people.Abbr) }}?page={{ pre_page }}"><<</a></li>
 				<li><a>{{ page }} / {{ total_page }}</a></li>
-				<li><a href="{{ url_for('people_love_works', user_abbr=people.Abbr) }}?page={{ next_page }}">>></a></li>
+				<li><a href="{{ url_for('people_collect_works', user_abbr=people.Abbr) }}?page={{ next_page }}">>></a></li>
 			</ul>
 		</div>
 	</div>
