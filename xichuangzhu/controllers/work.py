@@ -9,7 +9,6 @@ from xichuangzhu import app
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.love_work_model import Love_work
 from xichuangzhu.models.widget_model import Widget
@@ -178,11 +177,10 @@ def add_work():
 		intro = request.form['introduction']
 		authorID = int(request.form['authorID'])
 		dynastyID = int(Dynasty.get_dynastyID_by_author(authorID))
-		collectionID = int(request.form['collectionID'])
 		work_type = request.form['type']
 		type_name = Work.get_type_name(work_type)
 		
-		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, collectionID, work_type, type_name)
+		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, work_type, type_name)
 		return redirect(url_for('single_work', work_id=new_work_id))
 
 # page - edit work
@@ -204,14 +202,13 @@ def edit_work(work_id):
 		intro = request.form['introduction']
 		author_id = int(request.form['authorID'])
 		dynasty_id = int(Dynasty.get_dynastyID_by_author(author_id))
-		collection_id = int(request.form['collectionID'])
 		work_type = request.form['type']
 		type_name = Work.get_type_name(work_type)
 
-		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, collection_id, work_type, type_name, work_id)
+		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
 
-# json - search authors and their collections in page add & edit work (admin)
+# json - search authors in page add & edit work (admin)
 #--------------------------------------------------
 
 @app.route('/work/search_authors', methods=['POST'])
@@ -220,16 +217,4 @@ def get_authors_by_name():
 
 	name = request.form['author']
 	authors = Author.get_authors_by_name(name)
-	for author in authors:
-		author['Collections'] = Collection.get_collections_by_author(author['AuthorID'])
 	return json.dumps(authors)
-
-# json - search an author's collections in page edit work (admin)
-#--------------------------------------------------
-@app.route('/work/search_collections', methods=['POST'])
-def get_collections_by_author():
-	check_admin()
-	
-	authorID = int(request.form['authorID'])
-	collections = Collection.get_collections_by_author(authorID)
-	return json.dumps(collections)

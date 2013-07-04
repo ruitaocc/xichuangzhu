@@ -114,12 +114,6 @@ $(document).ready(function(){
 		</div>
 		{% endif %}
 
-		{% if work.CollectionID != 0 %}
-		<h2>作品集</h2>
-		<div class="work-collection"><a href="{{ url_for('single_collection', collectionID=work.CollectionID) }}">{{ work.Collection }}</a></div>
-		<div class="work-collection-introduction">{{ work.Introduction|truncate(60, True) }}</div>
-		{% endif %}
-
 		<h2>题解</h2>
 		<div class="work-introduction">{{ work.WorkIntroduction }}</div>
 		

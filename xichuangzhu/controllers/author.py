@@ -6,7 +6,6 @@ from xichuangzhu import app
 import config
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
-from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.quote_model import Quote
 from xichuangzhu.utils import content_clean, check_admin
@@ -55,8 +54,6 @@ def single_author(author_abbr):
 	
 	quotes_num = Quote.get_quotes_num_by_author(author['AuthorID'])
 
-	collections = Collection.get_collections_by_author(author['AuthorID'])
-
 	works = Work.get_works_by_author(author['AuthorID'])
 	for work in works:
 		work['Content'] = content_clean(work['Content'])
@@ -71,7 +68,7 @@ def single_author(author_abbr):
 		work_type = work['Type']  
 		works_num[work_type]['num'] += 1
 
-	return render_template('single_author.html', author=author, quote=quote, quotes_num=quotes_num, collections=collections, works=works, works_num=works_num)
+	return render_template('single_author.html', author=author, quote=quote, quotes_num=quotes_num, works=works, works_num=works_num)
 
 # page add author
 #--------------------------------------------------

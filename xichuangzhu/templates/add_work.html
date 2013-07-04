@@ -28,34 +28,6 @@ $(document).ready(function(){
 					var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
 					$(option).appendTo('#select-author');
 				});
-
-				// triggle the change event to add collections
-				$('#select-author').change();
-			}
-		});
-	});
-
-	// select for collections
-	$("#select-author").change(function(){
-		var authorID = $(this)[0].options[$(this)[0].selectedIndex].value,
-			collections = [];
-
-		$('#select-collection').empty();
-
-		$.each(authors, function(index, author){
-			if(author['AuthorID'] == authorID){
-				// add the collections to collections <select>
-				// and also add 0 option to the end 
-				// because maybe some work don't belong to any collection!
-				collections = author['Collections'];
-				
-				$.each(collections, function(index, collection){
-					var option = "<option value=" + collection['CollectionID'] + ">" + collection['Collection'] + "</option>";
-					$(option).appendTo('#select-collection');
-				});
-
-				var option = "<option value=0>无</option>";
-				$(option).appendTo('#select-collection');
 			}
 		});
 	});
@@ -86,15 +58,12 @@ $(document).ready(function(){
 		</div>
 
 		<div class="control-group">
-			<label class="control-label">作者 & 作品集</label>
+			<label class="control-label">作者</label>
 			<div class="controls">
 				<input id="input-author" type="text" class="span2" />
 				<input id="btn-search-author" type="button" class="btn" value="搜索" />
 				<select id="select-author" name="authorID" class="span2">
 					<option>作者</option>
-				</select>
-				<select id="select-collection" name="collectionID" class="span2">
-					<option>作品集</option>
 				</select>
 			</div>
 		</div>

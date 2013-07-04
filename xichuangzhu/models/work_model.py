@@ -9,12 +9,11 @@ class Work:
 	# get a single work
 	@staticmethod
 	def get_work(workID):
-		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, work.CollectionID, author.AuthorID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr, collection.Collection, collection.Introduction\n
-			FROM work, author, dynasty, collection\n
+		query = '''SELECT work.WorkID, work.Title, work.Type, work.TypeName, work.Content, work.Foreword, work.Introduction AS WorkIntroduction, work.Type, author.AuthorID, author.Author, author.Abbr AS AuthorAbbr, author.Introduction AS AuthorIntroduction, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
+			FROM work, author, dynasty\n
 			WHERE work.workID = %d\n
 			AND work.AuthorID = author.AuthorID\n
-			AND work.DynastyID = dynasty.DynastyID\n
-			AND work.collectionID = collection.CollectionID\n''' % workID
+			AND work.DynastyID = dynasty.DynastyID\n''' % workID
 		g.cursor.execute(query)
 		return g.cursor.fetchone()
 
@@ -115,13 +114,6 @@ class Work:
 		g.cursor.execute(query)
 		return g.cursor.fetchall()		
 
-	# get an collection's all works
-	@staticmethod
-	def get_works_by_collection(collectionID):
-		query = "SELECT * FROM work WHERE CollectionID = %d" % collectionID
-		g.cursor.execute(query)
-		return g.cursor.fetchall()
-
 	# get all work types
 	@staticmethod
 	def get_types():
@@ -140,9 +132,9 @@ class Work:
 
 	# add a work
 	@staticmethod
-	def add_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name):
-		query = '''INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, CollectionID, Type, TypeName)\n
-			VALUES ('%s', '%s', '%s','%s', %d, %d, %d, '%s', '%s')''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name)
+	def add_work(title, content, foreword, introduction, authorID, dynastyID, work_type, type_name):
+		query = '''INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, Type, TypeName)\n
+			VALUES ('%s', '%s', '%s','%s', %d, %d, %d, '%s', '%s')''' % (title, content, foreword, introduction, authorID, dynastyID, work_type, type_name)
 		g.cursor.execute(query)
 		g.conn.commit()
 		return g.cursor.lastrowid
@@ -151,8 +143,8 @@ class Work:
 
 	# edit a Work
 	@staticmethod
-	def edit_work(title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name, work_id):
-		query = '''UPDATE work SET Title = '%s', Content = '%s', Foreword = '%s', Introduction = '%s', AuthorID = %d, DynastyID = %d, CollectionID = %d, Type = '%s', TypeName = '%s' WHERE WorkID=%d''' % (title, content, foreword, introduction, authorID, dynastyID, collectionID, work_type, type_name, work_id)
+	def edit_work(title, content, foreword, introduction, authorID, dynastyID, work_type, type_name, work_id):
+		query = '''UPDATE work SET Title = '%s', Content = '%s', Foreword = '%s', Introduction = '%s', AuthorID = %d, DynastyID = %d, Type = '%s', TypeName = '%s' WHERE WorkID=%d''' % (title, content, foreword, introduction, authorID, dynastyID, work_type, type_name, work_id)
 		g.cursor.execute(query)
 		return g.conn.commit()
 
