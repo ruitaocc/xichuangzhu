@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block page_title %}西窗烛 | 品味经典文学{% endblock %}
+{% block page_id%}page-index{% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#work-refresh').click(function(){
+		$.ajax({
+			url: "{{ url_for('four_works') }}",
+			type: 'POST',
+			success: function(data){
+				$('#4works-wap').html(data);
+
+				// s2t
+				var bodyIsFt = $.cookie("bodyIsFt");
+				if(bodyIsFt == "1"){
+					StranObj($('#4works-wap')[0], 1);
+				}
+			}
+		});
+	});
+});
+
+</script>
+
+<div class="row">
+	<div class="span8">
+		<h2>
+			作品
+			<span class='link-more'>
+				<a id="work-refresh">换换</a>
+				<a href="{{ url_for('works') }}">更多»</a>
+			</span>
+		</h2>
+
+		<div id="4works-wap">
+			{% include "macro/index_works.widget" %}
+		</div>
+
+		<h2>
+			点评
+			<span class='link-more'>
+				<a href="{{ url_for('reviews') }}">更多»</a>
+			</span>
+		</h2>
+
+		{% from "macro/reviews.widget" import show_reviews %}
+		{{ show_reviews(reviews)|safe }}
+
+	</div>
+
+	<div class="span4">
+
+		<h2>
+			文学家
+			<span class='link-more'>
+				<!-- <a id="author-refresh">换换</a> -->
+				<a href="{{ url_for('authors') }}">更多»</a>
+			</span>
+		</h2>
+
+		{% from 'macro/authors.widget' import show_authors %}
+		{{ show_authors(authors)|safe }}
+
+		<h2>五千年</h2>
+
+		<ul id="dynasties-wap">
+			{% for dynasty in dynasties %}
+			<li class='dynasty-item'>
+				<a href="{{ url_for('single_dynasty', dynasty_abbr=dynasty.Abbr) }}">{{ dynasty.Dynasty }}</a>
+				<span>/</span>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

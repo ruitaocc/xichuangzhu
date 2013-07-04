@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block page_title %}编辑点评：{{ review.Title }}{% endblock %}
+{% block page_id%}page-edit-review{% endblock %}
+
+{% block body %}
+
+<form id="form-edit-review" class="form-horizontal" method="post" action="{{ url_for('edit_review', review_id=review.ReviewID) }}">
+	<fieldset>
+		<legend>编辑点评</legend>
+
+		{{ form.csrf_token }}
+		
+		{% from "macro/form.widget" import show_form_error %}
+		{{ show_form_error(form)|safe }}
+
+		<div class="control-group">
+			{{ form.title.label(class="control-label") }}
+			<div class="controls">
+				{{ form.title(class="input-xlarge")|safe }}
+ 			</div>
+		</div>
+
+		<div class="control-group">
+			{{ form.content.label(class="control-label") }}
+			<div class="controls">
+				{{ form.content(class="input-xxlarge", rows="20")|safe }}
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				{% if review.IsPublish %}
+				<input type="submit" name="publish" value="更新" class="btn btn-small btn-primary" />
+				{% else %}
+				<input type="submit" name="draft" value="保存草稿" class="btn btn-small" />
+				<input type="submit" name="publish" value="发布" class="btn btn-small btn-primary" />
+				{% endif %}
+			</div>
+		</div>
+
+	</fieldset>
+</form>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block page_title %}{{ review.Title }} (评论：{{review.WorkTitle}}){% endblock %}
+{% block page_id%}page-single-review{% endblock %}
+
+{% block body %}
+
+{% if session.user_id %}
+<script type="text/javascript">
+
+// move the blink to the end of the input/textarea
+function moveEnd(obj){
+	obj.focus();
+	var len = obj.value.length;
+
+	if (document.selection) {
+		var sel = obj.createTextRange();
+		sel.moveStart('character',len);
+		sel.collapse();
+		sel.select();
+	}
+	else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+		obj.selectionStart = obj.selectionEnd = len;
+	}
+}
+
+$(document).ready(function(){
+	$('.comment-item').hover(
+		function(){
+			$(this).find('.btn-reply-somebody').show();
+		},
+		function(){
+			$(this).find('.btn-reply-somebody').hide();
+		}
+	);
+
+	$('.btn-reply-somebody').click(function(){
+		var target_username = $(this).attr('data-username'),
+			comment = $(".textarea-comment").val();
+		$(".textarea-comment").val("@" + target_username + " " + comment);
+		moveEnd($(".textarea-comment")[0]);
+	});
+
+	// confirm delete
+	$('#btn-delete-review').click(function(){
+		return confirm('确认删除？')? true: false;
+	});
+});
+
+</script>
+{% endif %}
+
+<div class="row">
+	<div class="span8">
+		<a href="{{ url_for('user', user_abbr=review.UserAbbr) }}" class="user-avatar">
+			<img src="{{ review.Avatar }}">
+		</a>
+		
+		<h1 class="review-title">{{ review.Title }}</h1>
+
+		<div class="review-extra-info">
+			<a href="{{ url_for('user', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
+			<span style="color:#333;">评</span>
+			<a href="{{ url_for('single_work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
+			·
+			<span class="review-time">{{ review.Time }}</span>
+			·
+			<span>{{ review.ClickNum }} 点击</span>
+
+			{% if session.user_id == review.UserID %}
+			<a id="btn-edit-review" href="{{ url_for('edit_review', review_id=review.ReviewID) }}">编辑</a>
+			/
+			<a id="btn-delete-review" href="{{ url_for('delete_review', review_id=review.ReviewID) }}">删除</a>
+			{% endif %}
+		</div>
+
+		<div class="review-content">{{ review.Content|safe }}</div>
+		
+		{% if comments|length != 0 %}
+		<h2>回复</h2>
+
+		{% from 'macro/comments.widget' import show_comments %}
+		{{ show_comments(comments)|safe }}
+
+		{% endif %}
+
+		{% if session.user_id %}
+		<form id="add-review-comment" method="post" action="{{ url_for('add_comment_to_review', review_id=review.ReviewID) }}">
+			{{ form.csrf_token }}
+
+			{% from "macro/form.widget" import show_form_error %}
+			{{ show_form_error(form)|safe }}
+
+			{{ form.comment(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
+			<input type="submit" class="btn btn-small" value="回复" />
+		</form>
+		{% endif %}
+	</div>
+
+	<div class="span4"></div>
+</div>
+
+{% endblock %}

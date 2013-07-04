@@ -57,7 +57,7 @@ def single_work(work_id):
 
 	collectors = Collect_work.get_users_by_work(work_id, 4)
 
-	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
+	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
 # proc - add & edit collected work (login)
 @app.route('/work/collect/<int:work_id>', methods=['POST'])
@@ -128,7 +128,7 @@ def works():
 
 	dynasties = Dynasty.get_dynasties()
 
-	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
+	return render_template('work/works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
 
 # page - works by tag
 #--------------------------------------------------
@@ -157,7 +157,7 @@ def works_by_tag(tag):
 	else:
 		next_page = total_page
 
-	return render_template('works_by_tag.html', works=works, tag=tag, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('work/works_by_tag.html', works=works, tag=tag, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - add work
 #--------------------------------------------------
@@ -169,7 +169,7 @@ def add_work():
 
 	if request.method == 'GET':
 		work_types = Work.get_types()
-		return render_template('add_work.html', work_types=work_types)
+		return render_template('work/add_work.html', work_types=work_types)
 	elif request.method == 'POST':
 		title = request.form['title']
 		content = request.form['content']
@@ -194,7 +194,7 @@ def edit_work(work_id):
 	if request.method == 'GET':
 		work = Work.get_work(work_id)
 		work_types = Work.get_types()
-		return render_template('edit_work.html', work=work, work_types=work_types)
+		return render_template('work/edit_work.html', work=work, work_types=work_types)
 	elif request.method == 'POST':
 		title = request.form['title']
 		content = request.form['content']
