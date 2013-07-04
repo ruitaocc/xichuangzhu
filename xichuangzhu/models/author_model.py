@@ -30,12 +30,12 @@ class Author:
 	@staticmethod
 	def get_hot_authors(num):
 		query = '''SELECT author.AuthorID, author.Author, author.Abbr, dynasty.Dynasty, dynasty.Abbr AS DynastyAbbr\n
-			FROM love_work, work, author, dynasty\n
-			WHERE love_work.WorkID = work.WorkID\n
+			FROM collect_work, work, author, dynasty\n
+			WHERE collect_work.WorkID = work.WorkID\n
 			AND work.AuthorID = author.AuthorID\n
 			AND author.DynastyID = dynasty.DynastyID\n
 			GROUP BY author.AuthorID\n
-			ORDER BY love_work.Time DESC\n
+			ORDER BY collect_work.Time DESC\n
 			LIMIT %d''' % num
 		g.cursor.execute(query)
 		return g.cursor.fetchall()

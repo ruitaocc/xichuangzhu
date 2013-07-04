@@ -41,7 +41,7 @@ $(document).ready(function(){
 
 	<div class="span4">
 		<h2>近期热门</h2>
-		{% from 'authors.widget' import show_authors %}
+		{% from 'macro/authors.widget' import show_authors %}
 		{{ show_authors(hot_authors)|safe }}
 	</div>
 </div>

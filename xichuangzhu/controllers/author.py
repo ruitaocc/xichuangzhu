@@ -14,7 +14,7 @@ from xichuangzhu.utils import content_clean, check_admin
 #--------------------------------------------------
 
 # view (public)
-@app.route('/author')
+@app.route('/authors')
 def authors():
 	dynasties = Dynasty.get_dynasties()
 	for d in dynasties:
