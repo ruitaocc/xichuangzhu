@@ -11,9 +11,9 @@ from xichuangzhu.utils import check_admin
 
 # view (public)
 @app.route('/things')
-def shop():
+def products():
 	products = Product.get_products(12)
-	return render_template('shop.html', products=products)
+	return render_template('product/products.html', products=products)
 
 # page - single product
 #--------------------------------------------------
@@ -25,7 +25,7 @@ def single_product(product_id):
 	if not product:
 		abort(404)
 	product['Introduction'] = markdown2.markdown(product['Introduction'])
-	return render_template('single_product.html', product=product)
+	return render_template('product/single_product.html', product=product)
 
 # page - add product
 #--------------------------------------------------
@@ -36,7 +36,7 @@ def add_product():
 	check_admin()
 
 	if request.method == 'GET':
-		return render_template('add_product.html')
+		return render_template('product/add_product.html')
 	elif request.method == 'POST':
 		product = request.form['product']
 		url = request.form['url']
@@ -56,7 +56,7 @@ def edit_product(product_id):
 	
 	if request.method == 'GET':
 		product = Product.get_product(product_id)
-		return render_template('edit_product.html', product=product)
+		return render_template('product/edit_product.html', product=product)
 	elif request.method == 'POST':
 		product = request.form['product']
 		url = request.form['url']

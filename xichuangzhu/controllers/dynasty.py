@@ -28,7 +28,7 @@ def single_dynasty(dynasty_abbr):
 	
 	dynasties = Dynasty.get_dynasties()
 	
-	return render_template('single_dynasty.html', dynasty=dynasty, authors=authors, authors_num=authors_num, dynasties=dynasties)
+	return render_template('dynasty/single_dynasty.html', dynasty=dynasty, authors=authors, authors_num=authors_num, dynasties=dynasties)
 
 # page add dynasty
 #--------------------------------------------------
@@ -39,7 +39,7 @@ def add_dynasty():
 	check_admin()
 
 	if request.method == 'GET':
-		return render_template('add_dynasty.html')
+		return render_template('dynasty/add_dynasty.html')
 	elif request.method == 'POST':
 		dynasty = request.form['dynasty']
 		abbr = request.form['abbr']
@@ -47,7 +47,7 @@ def add_dynasty():
 		startYear = int(request.form['startYear'])
 		endYear = int(request.form['endYear'])
 		Dynasty.add_dynasty(dynasty, abbr, introduction, startYear, endYear)
-		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
+		return redirect(url_for('dynasty/single_dynasty', dynasty_abbr=abbr))
 
 # page edit dynasty
 #--------------------------------------------------
@@ -59,7 +59,7 @@ def edit_dynasty(dynasty_id):
 
 	if request.method == 'GET':
 		dynasty = Dynasty.get_dynasty(dynasty_id)
-		return render_template('edit_dynasty.html', dynasty=dynasty)
+		return render_template('dynasty/edit_dynasty.html', dynasty=dynasty)
 	elif request.method == 'POST':
 		dynasty = request.form['dynasty']
 		abbr = request.form['abbr']
@@ -68,4 +68,4 @@ def edit_dynasty(dynasty_id):
 		startYear = int(request.form['startYear'])
 		endYear = int(request.form['endYear'])
 		Dynasty.edit_dynasty(dynasty, abbr, introduction, history, startYear, endYear, dynasty_id)
-		return redirect(url_for('single_dynasty', dynasty_abbr=abbr))
+		return redirect(url_for('dynasty/single_dynasty', dynasty_abbr=abbr))

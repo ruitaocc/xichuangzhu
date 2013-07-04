@@ -9,9 +9,8 @@ from xichuangzhu import app
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.love_work_model import Love_work
+from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
@@ -32,14 +31,14 @@ def single_work(work_id):
 	work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
 	work['Content'] = markdown2.markdown(work['Content'])
 
-	# check is loved
+	# check if is collected
 	if 'user_id' in session:
-		is_loved = Love_work.check_love(session['user_id'], work_id)
-		tags = Love_work.get_tags(session['user_id'], work_id) if is_loved else ""
+		is_collected = Collect.check(session['user_id'], work_id)
+		tags = Collect.get_tags(session['user_id'], work_id) if is_collected else ""
 		my_tags = Tag.get_user_tags(session['user_id'], 20)
 		popular_tags = Tag.get_work_tags(work_id, 20)
 	else:
-		is_loved = False
+		is_collected = False
 		tags = ""
 		my_tags = []
 		popular_tags = []
@@ -56,13 +55,13 @@ def single_work(work_id):
 	for ow in other_works:
 		ow['Content'] = content_clean(ow['Content'])
 
-	lovers = Love_work.get_users_by_work(work_id, 4)
+	collectors = Collect.get_users_by_work(work_id, 4)
 
-	return render_template('single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_loved=is_loved, product=product, other_works=other_works, lovers=lovers)
+	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
-# proc - add & edit love work (login)
-@app.route('/work/love/<int:work_id>', methods=['POST'])
-def love_work(work_id):
+# proc - add & edit collected work (login)
+@app.route('/work/collect/<int:work_id>', methods=['POST'])
+def collect_work(work_id):
 	check_login()
 
 	tags = request.form['tags'].split(' ')
@@ -74,12 +73,12 @@ def love_work(work_id):
 			new_tags.append(t)
 	new_tags = list(set(new_tags))
 
-	# add love work
-	is_loved = Love_work.check_love(session['user_id'], work_id)
-	if is_loved:
-		Love_work.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
-	else:
-		Love_work.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+	# collect work
+	is_collected = Collect.check(session['user_id'], work_id)
+	if is_collected:
+		Collect.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+	else:	# edit tags
+		Collect.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 
 	# update user tags & work tags
 	for t in new_tags:
@@ -89,12 +88,12 @@ def love_work(work_id):
 
 	return redirect(url_for('single_work', work_id=work_id))
 
-# proc - rm love work (login)
-@app.route('/work/rm_love/<int:work_id>')
-def rm_love_work(work_id):
+# proc - discollect work (login)
+@app.route('/work/discollect/<int:work_id>')
+def discollect_work(work_id):
 	check_login()
 
-	Love_work.remove(session['user_id'], work_id)
+	Collect.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works
@@ -129,7 +128,7 @@ def works():
 
 	dynasties = Dynasty.get_dynasties()
 
-	return render_template('works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
+	return render_template('work/works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
 
 # page - works by tag
 #--------------------------------------------------
@@ -158,7 +157,7 @@ def works_by_tag(tag):
 	else:
 		next_page = total_page
 
-	return render_template('works_by_tag.html', works=works, tag=tag, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('work/works_by_tag.html', works=works, tag=tag, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page - add work
 #--------------------------------------------------
@@ -170,7 +169,7 @@ def add_work():
 
 	if request.method == 'GET':
 		work_types = Work.get_types()
-		return render_template('add_work.html', work_types=work_types)
+		return render_template('work/add_work.html', work_types=work_types)
 	elif request.method == 'POST':
 		title = request.form['title']
 		content = request.form['content']
@@ -178,11 +177,10 @@ def add_work():
 		intro = request.form['introduction']
 		authorID = int(request.form['authorID'])
 		dynastyID = int(Dynasty.get_dynastyID_by_author(authorID))
-		collectionID = int(request.form['collectionID'])
 		work_type = request.form['type']
 		type_name = Work.get_type_name(work_type)
 		
-		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, collectionID, work_type, type_name)
+		new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, work_type, type_name)
 		return redirect(url_for('single_work', work_id=new_work_id))
 
 # page - edit work
@@ -196,7 +194,7 @@ def edit_work(work_id):
 	if request.method == 'GET':
 		work = Work.get_work(work_id)
 		work_types = Work.get_types()
-		return render_template('edit_work.html', work=work, work_types=work_types)
+		return render_template('work/edit_work.html', work=work, work_types=work_types)
 	elif request.method == 'POST':
 		title = request.form['title']
 		content = request.form['content']
@@ -204,14 +202,13 @@ def edit_work(work_id):
 		intro = request.form['introduction']
 		author_id = int(request.form['authorID'])
 		dynasty_id = int(Dynasty.get_dynastyID_by_author(author_id))
-		collection_id = int(request.form['collectionID'])
 		work_type = request.form['type']
 		type_name = Work.get_type_name(work_type)
 
-		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, collection_id, work_type, type_name, work_id)
+		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
 
-# json - search authors and their collections in page add & edit work (admin)
+# json - search authors in page add & edit work (admin)
 #--------------------------------------------------
 
 @app.route('/work/search_authors', methods=['POST'])
@@ -220,16 +217,4 @@ def get_authors_by_name():
 
 	name = request.form['author']
 	authors = Author.get_authors_by_name(name)
-	for author in authors:
-		author['Collections'] = Collection.get_collections_by_author(author['AuthorID'])
 	return json.dumps(authors)
-
-# json - search an author's collections in page edit work (admin)
-#--------------------------------------------------
-@app.route('/work/search_collections', methods=['POST'])
-def get_collections_by_author():
-	check_admin()
-	
-	authorID = int(request.form['authorID'])
-	collections = Collection.get_collections_by_author(authorID)
-	return json.dumps(collections)

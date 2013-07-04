@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block page_title %}发起新话题{% endblock %}
+{% block page_id%}page-add-topic{% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#modal-nodes').modal({
+		backdrop: false,
+		show: false
+	});
+
+	// select node
+	$(".node a").click(function(){
+		$("#modal-nodes").modal('hide');
+
+		var node = $(this).text();
+		var node_id = $(this).attr('data-node-id');
+		$("#node").text(node);
+		$("#node_id").val(node_id);
+	});
+});
+
+</script>
+
+<form id="form-add-topic" class="form-horizontal" method="post" action="{{ url_for('add_topic') }}">
+	<fieldset>
+		<legend>发起新话题</legend>
+
+		{{ form.csrf_token }}
+
+		{% from "macro/form.widget" import show_form_error %}
+		{{ show_form_error(form)|safe }}
+
+<!-- 		<div class="control-group">
+			{{ form.node_id.label(class="control-label") }}
+			<div class="controls">
+				<span id="node">{{ node.Name }}</span>
+				<a type="button" class="btn btn-mini" href="#modal-nodes" data-toggle="modal">切换节点</a>
+				{{ form.node_id() }}
+			</div>
+		</div>
+ -->
+		<div class="control-group">
+			{{ form.title.label(class="control-label") }}
+			<div class="controls">
+				{{ form.title(class="input-xlarge") }}
+			</div>
+		</div>
+
+		<div class="control-group">
+			{{ form.content.label(class="control-label") }}
+			<div class="controls">
+				{{ form.content(class="input-xxlarge", rows="15", placeholder="支持 markdown") }}
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				<input type="submit" value="提交" class="btn btn-primary btn-small" />
+			</div>
+		</div>
+	</fieldset>
+</form>
+
+{% if session.user_id %}
+<div class="modal hide fade" id="modal-nodes">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h4>全部节点</h4>
+	</div>
+
+	<div class="modal-body">
+		{% for nt in node_types %}
+		{% if nt.nodes|length != 0 %}
+		<div class="type-item clearfix">
+			<div class="node-type">{{ nt.Type }}</div>
+			<ul class="node-list">
+				{% for n in nt.nodes %}
+				<li class="node"><a data-node-id="{{ n.NodeID }}">{{ n.Name }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+</div>
+{% endif %}
+
+{% endblock %}

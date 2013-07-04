@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block page_title %}{{ topic.Title }}{% endblock %}
+{% block page_id%}page-single-topic{% endblock %}
+
+{% block body %}
+
+{% if session.user_id %}
+<script type="text/javascript">
+
+// move the blink to the end of the input/textarea
+function moveEnd(obj){
+	obj.focus();
+	var len = obj.value.length;
+
+	if (document.selection) {
+		var sel = obj.createTextRange();
+		sel.moveStart('character',len);
+		sel.collapse();
+		sel.select();
+	}
+	else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+		obj.selectionStart = obj.selectionEnd = len;
+	}
+}
+
+$(document).ready(function(){
+	$('.comment-item').hover(
+		function(){
+			$(this).find('.btn-reply-somebody').show();
+		},
+		function(){
+			$(this).find('.btn-reply-somebody').hide();
+		}
+	);
+
+	$('.btn-reply-somebody').click(function(){
+		var target_username = $(this).attr('data-username'),
+			comment = $(".textarea-comment").val();
+		$(".textarea-comment").val("@" + target_username + " " + comment);
+		moveEnd($(".textarea-comment")[0]);
+	});
+});
+
+</script>
+{% endif %}
+
+<div class="row">
+	<div class="span8">
+<!-- 		<h2 class="node-info">
+			<a href="{{ url_for('topics') }}" class="root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;<a href="{{ url_for('single_node', node_abbr=topic.NodeAbbr)}}" class="sub-node">{{ topic.NodeName }}</a>
+		</h2> -->
+
+		<div class="topic-wap">
+			<a class="topic-user-avatar" href="{{ url_for('user', user_abbr=topic.UserAbbr) }}"><img src="{{ topic.Avatar }}"></a>
+			<h1 class="topic-title">{{ topic.Title }}</h1>
+			<div class="topic-extra-info">
+				By
+				<a class="topic-launcher" href="{{ url_for('user', user_abbr=topic.UserAbbr) }}">{{ topic.UserName }}</a>
+				·
+				<span class="topic-time">{{ topic.Time }}</span>
+				·
+				<span>{{ topic.ClickNum }} 点击</span>
+				{% if topic.UserID == session.user_id %}
+				<a class="btn-edit-topic" href="{{ url_for('edit_topic', topic_id=topic.TopicID) }}">编辑</a>
+				{% endif %}
+			</div>
+			<div class="topic-content">{{ topic.Content|safe }}</div>
+		</div>
+
+		{% if comments|length != 0 %}
+		<h2>回复</h2>
+
+		{% from 'macro/comments.widget' import show_comments %}
+		{{ show_comments(comments)|safe }}
+
+		{% endif %}
+		
+		<!-- add comment -->
+		{% if session.user_id %}
+		<form id="add-topic-comment" method="post" action="{{ url_for('add_comment_to_topic', topic_id=topic.TopicID) }}">
+			{{ form.csrf_token }}
+
+			{% from "macro/form.widget" import show_form_error %}
+			{{ show_form_error(form)|safe }}
+
+			{{ form.comment(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
+			<input type="submit" class="btn btn-small" value="回复" />
+		</form>
+		{% endif %}
+	</div>
+
+	<div class="span4"></div>
+</div>
+
+{% endblock %}

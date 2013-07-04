@@ -1,0 +1,169 @@
+{% block page_title %}{{ work.Title }}{% endblock %}
+{% block page_id%}page-single-work{% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	// comments
+	$('.work-content sup').tooltip();
+
+	$('.work-content sup').each(function(index){
+		$(this).text('〔' + (index + 1) + '〕');
+	});
+
+	// tag
+	$('#modal-tags').modal({
+		backdrop: false,
+		show: false
+	});
+
+	$('#btn-tags').click(function(){
+		$('#form-tags').submit();
+	});
+
+	$('.tags-wap li').click(function(){
+		tags = $("#input-tags").val()
+		$("#input-tags").val(tags + $(this).text() + " ");
+		$("#input-tags").focus();
+	});
+});
+
+</script>
+
+{% if session.user_id %}
+<div class="modal hide fade" id="modal-tags">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h4>{% if is_collected %}编辑收藏{% else %}添加收藏{% endif %}《{{ work.Title }}》</h4>
+	</div>
+
+	<div class="modal-body">
+		<form id="form-tags" method="post" action="{{ url_for('collect_work', work_id=work.WorkID) }}">
+			<p>标签（多个标签用空格分隔）:</p>
+			<input name="tags" id="input-tags" class="input-xlarge" type="text" value="{{ tags }}" />
+
+			<div class="tags-wap clearfix">
+				<label class="tags-title">我的标签 :</label>
+				<ul>
+					{% for t in my_tags %}
+					<li>{{ t.Tag }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div class="tags-wap clearfix">
+				<label class="tags-title">常用标签 :</label>
+				<ul>
+					{% for t in popular_tags %}
+					<li>{{ t.Tag }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a id="btn-tags" class="btn btn-small">保存</a>
+	</div>
+</div>
+{% endif %}
+
+<div class="row">
+	<div class="span8">
+		<div class="work-title">{{ work.Title }}</div>
+
+		<div class="work-author">
+			〔<a href="{{ url_for('single_dynasty', dynasty_abbr = work.DynastyAbbr) }}">{{ work.Dynasty }}</a>〕<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>
+		</div>
+
+		<!-- 32 is a experienced value -->
+		{% if work.Foreword|length > 32 %}
+		<div class="work-foreword" style="text-indent:2em; padding:0 2em;">{{ work.Foreword }}</div>
+		{% else %}
+		<div class="work-foreword" style="text-align:center;">{{ work.Foreword }}</div>
+		{% endif %}
+
+		<div class="work-content work-type-{{ work.Type }}">{{ work.Content|safe }}</div>
+		
+		{% if session.user_id %}
+		<div class="btn-group pull-right" id="work-cmds">
+			{% if session.user_id == admin_id %}
+			<a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.WorkID) }}"><span class="icon-edit"></span> 编辑</a>
+			{% endif %}
+
+			<a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
+
+			<!-- <a class="btn btn-small" href="#"><span class="icon-eye-open"></span> 勘误</a> -->
+			<a class="btn btn-small" href="#"><span class="icon-upload"></span> 传图</a>
+
+			{% if is_collected %}
+			<a class="btn btn-small" title="编辑收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
+			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="{{ url_for('discollect_work', work_id=work.WorkID) }}">取消收藏</a></li>
+			</ul>
+			{% else %}
+			<a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
+			{% endif %}
+		</div>
+		{% endif %}
+
+		<h2>题解</h2>
+		<div class="work-introduction">{{ work.WorkIntroduction }}</div>
+		
+		<h2>点评</h2>
+		{% from "macro/reviews.widget" import show_reviews %}
+		{{ show_reviews(reviews)|safe }}
+	</div>
+
+	<div class="span4">
+		{% for w in widgets %}
+
+		{% if w.Title and w.Title != '' %}
+		<h2>{{ w.Title }}</h2>
+		{% endif %}
+		<div>{{ w.Content|safe }}</div>
+		
+		{% endfor %}
+
+		<h2>标签</h2>
+		<ul class="work-tags">
+			{% for t in popular_tags %}
+			<li><a href="{{ url_for('works_by_tag', tag=t.Tag) }}">{{ t.Tag }}</a></li>
+			{% endfor %}
+		</ul>
+
+		<h2>作者简介</h2>
+		<div>{{ work.AuthorIntroduction|truncate(55, True) }}
+			<!-- <span class='link-more'>
+				<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">更多»</a>
+			</span> -->
+		</div>
+
+		<h2>其他作品</h2>
+
+		{% for work in other_works %}
+		<div class="other-work-item">
+			<a class="other-work-title" href="{{ url_for('single_work', work_id = work.WorkID) }}">{{ work.Title|truncate(12, True, '') }}</a>
+			<span class="other-work-content">{{ work.Content|truncate(8, True) }}</span>
+		</div>
+		{% endfor %}
+		
+		<!-- ad -->
+		<a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}">
+			<img src="{{ product.ImageUrl }}">
+		</a>
+
+		<h2>谁收藏了它？</h2>
+
+		{% from 'macro/users.widget' import show_users %}
+		{{ show_users(collectors)|safe }}
+
+	</div>
+</div>
+
+{% endblock %}

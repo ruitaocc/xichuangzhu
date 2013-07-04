@@ -42,7 +42,7 @@ def single_review(review_id):
 	for c in comments:
 		c['Time'] = time_diff(c['Time'])
 
-	return render_template('single_review.html', review=review, comments=comments, form=form)
+	return render_template('review/single_review.html', review=review, comments=comments, form=form)
 
 # proc - add comment (login)
 @app.route('/review/add_comment/<int:review_id>', methods=['POST'])
@@ -104,7 +104,7 @@ def reviews():
 		next_page = total_page
 
 	reviewers = Review.get_hot_reviewers(8)
-	return render_template('reviews.html', reviews=reviews, reviewers=reviewers, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+	return render_template('review/reviews.html', reviews=reviews, reviewers=reviewers, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
 
 # page add review
 #--------------------------------------------------
@@ -117,7 +117,7 @@ def add_review(work_id):
 	
 	if request.method == 'GET':
 		form = ReviewForm()
-		return render_template('add_review.html', work=work, form=form)
+		return render_template('review/add_review.html', work=work, form=form)
 	else:
 		form = ReviewForm(request.form)
 		if form.validate():
@@ -128,7 +128,7 @@ def add_review(work_id):
 			new_review_id = Review.add_review(work_id, user_id, title, content, is_publish)
 			return redirect(url_for('single_review', review_id=new_review_id))
 		else:
-			return render_template('add_review.html', work=work, form=form)
+			return render_template('review/add_review.html', work=work, form=form)
 
 # page edit review
 #--------------------------------------------------
@@ -141,7 +141,7 @@ def edit_review(review_id):
 
 	if request.method == 'GET':
 		form = ReviewForm(title=review['Title'], content=review['Content'])
-		return render_template('edit_review.html', review=review, form=form)
+		return render_template('reviewedit_review.html', review=review, form=form)
 	elif request.method == 'POST':
 		form = ReviewForm(request.form)
 		if form.validate():
@@ -151,7 +151,7 @@ def edit_review(review_id):
 			Review.edit_review(review_id, title, content, is_publish)
 			return redirect(url_for('single_review', review_id=review_id))
 		else:
-			return render_template('edit_review.html', review=review, form=form)
+			return render_template('review/edit_review.html', review=review, form=form)
 
 # proc delete review
 #--------------------------------------------------
