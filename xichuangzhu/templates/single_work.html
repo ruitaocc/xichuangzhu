@@ -77,7 +77,7 @@ $(document).ready(function(){
 		<div class="work-title">{{ work.Title }}</div>
 
 		<div class="work-author">
-			〔<a href="{{ url_for('single_dynasty', dynasty_abbr = work.DynastyAbbr) }}">{{ work.Dynasty }}</a>〕<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>
+			〔<a href="{{ url_for('single_dynasty', dynasty_abbr=work.DynastyAbbr) }}">{{ work.Dynasty }}</a>〕<a href="{{ url_for('single_author', author_abbr=work.AuthorAbbr) }}">{{ work.Author }}</a>
 		</div>
 
 		<!-- 32 is a experienced value -->
@@ -99,6 +99,7 @@ $(document).ready(function(){
 			<a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
 
 			<!-- <a class="btn btn-small" href="#"><span class="icon-eye-open"></span> 勘误</a> -->
+			<a class="btn btn-small" href="#"><span class="icon-upload"></span> 传图</a>
 
 			{% if is_loved %}
 			<a class="btn btn-small" title="编辑收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
