@@ -55,7 +55,7 @@ def single_work(work_id):
 
 	collectors = Collect.get_users_by_work(work_id, 4)
 
-	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, widgets=widgets, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
+	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
 # proc - add & edit collected work (login)
 @app.route('/work/collect/<int:work_id>', methods=['POST'])

@@ -4,6 +4,7 @@ env.host_string = "root@173.208.227.86"
 
 def start():
 	with cd('/var/www/xichuangzhu'):
+		run('git pull')
 		run('gunicorn -c gunicorn.conf xichuangzhu:app -D')
 
 def restart():
