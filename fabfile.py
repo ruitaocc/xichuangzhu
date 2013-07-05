@@ -23,7 +23,3 @@ def ldeploy():
 # back up database files
 def backup():
 	pass
-
-# show apache error log
-def log():
-	pass
