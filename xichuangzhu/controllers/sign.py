@@ -9,12 +9,11 @@ from flask import render_template, request, redirect, url_for, json, session
 import config
 from xichuangzhu import app
 from xichuangzhu.models.user_model import User
-from xichuangzhu.utils import check_login
+from xichuangzhu.utils import require_login
 from xichuangzhu.form import EmailForm
 
 # proc - login by douban's oauth2.0 (public)
 #--------------------------------------------------
-
 @app.route('/login/douban')
 def auth():
     code = request.args['code']
@@ -70,8 +69,6 @@ def auth():
 
 # page - send verify email
 #--------------------------------------------------
-
-# view (login)
 @app.route('/send_verify_email/douban', methods=['GET', 'POST'])
 def send_verify_email():
     if request.method == 'GET':
@@ -79,7 +76,7 @@ def send_verify_email():
         form = EmailForm(user_id=user_id)
         user_name = User.get_name_by_id(user_id)
         return render_template('sign/send_verify_email.html', user_name=user_name, form=form)
-    elif request.method == 'POST':
+    else:
         form = EmailForm(request.form)
 
         if form.validate():
@@ -119,9 +116,8 @@ def send_verify_email():
             user_name = User.get_name_by_id(user_id)
             return render_template('sign/send_verify_email.html', user_name=user_name, form=form)
 
-# proc - verify the code and active user (public)
+# proc - verify the code and active user
 #--------------------------------------------------
-
 @app.route('/verify_email/douban/<int:user_id>/<verify_code>')
 def verify_email(user_id, verify_code):
     user_name = User.get_name_by_id(user_id)
@@ -138,15 +134,13 @@ def verify_email(user_id, verify_code):
 
 # page - show the state of verify
 #--------------------------------------------------
-
-# view (public)
 @app.route('/verify_email_callback/douban/')
 def verify_email_callback():
     state = request.args['state']
     user_id = int(request.args['user_id']) if 'user_id' in request.args else 0
     return render_template('sign/verify_email_callback.html', state=state, user_id=user_id)
 
-# proc - logout (login)
+# proc - logout
 #--------------------------------------------------
 @app.route('/logout')
 def logout():

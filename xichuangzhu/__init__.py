@@ -2,8 +2,10 @@
 
 import sys
 sys.path.append('/var/www')
+import MySQLdb
+import MySQLdb.cursors
 import config
-from flask import Flask, session
+from flask import Flask, session, g
 from xichuangzhu.models.inform_model import Inform
 
 # convert python's encoding to utf8
@@ -25,6 +27,18 @@ def inject_vars():
 		admin_id = config.ADMIN_ID,	# admin id
 		informs_num = Inform.get_new_informs_num(session['user_id']) if 'user_id' in session else 0)	# new informs num
 
-import db
+# bafore every request
+@app.before_request
+def before_request():
+    g.user_id =  session['user_id'] if 'user_id' in session else None
+    g.conn = MySQLdb.connect(host=config.DB_HOST, user=config.DB_USER, passwd=config.DB_PASSWD, db=config.DB_NAME, use_unicode=True, charset='utf8', cursorclass=MySQLdb.cursors.DictCursor)
+    g.cursor = g.conn.cursor()
+
+# after every request
+@app.teardown_request
+def teardown_request(exception):
+    # close connection
+    g.conn.close()
+
 import log
 import controllers

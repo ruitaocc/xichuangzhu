@@ -4,12 +4,10 @@ import markdown2
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu.models.product_model import Product
-from xichuangzhu.utils import check_admin
+from xichuangzhu.utils import require_admin
 
-# page - shop
+# page - products
 #--------------------------------------------------
-
-# view (public)
 @app.route('/things')
 def products():
 	products = Product.get_products(12)
@@ -17,8 +15,6 @@ def products():
 
 # page - single product
 #--------------------------------------------------
-
-# view (public)
 @app.route('/thing/<int:product_id>')
 def single_product(product_id):
 	product = Product.get_product(product_id)
@@ -29,15 +25,12 @@ def single_product(product_id):
 
 # page - add product
 #--------------------------------------------------
-
-# view (admin)
 @app.route('/thing/add', methods=['GET', 'POST'])
+@require_admin
 def add_product():
-	check_admin()
-
 	if request.method == 'GET':
 		return render_template('product/add_product.html')
-	elif request.method == 'POST':
+	else:
 		product = request.form['product']
 		url = request.form['url']
 		image_url = request.form['image-url']
@@ -48,16 +41,13 @@ def add_product():
 
 # page - edit product
 #--------------------------------------------------
-
-# view (admin)
 @app.route('/thing/edit/<int:product_id>', methods=['GET', 'POST'])
-def edit_product(product_id):
-	check_admin()
-	
+@require_admin
+def edit_product(product_id):	
 	if request.method == 'GET':
 		product = Product.get_product(product_id)
 		return render_template('product/edit_product.html', product=product)
-	elif request.method == 'POST':
+	else:
 		product = request.form['product']
 		url = request.form['url']
 		image_url = request.form['image-url']

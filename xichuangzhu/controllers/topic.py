@@ -10,12 +10,10 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import TopicForm, CommentForm
-from xichuangzhu.utils import time_diff, check_login, check_private, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
+from xichuangzhu.utils import time_diff, require_login, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
 
-# page forum
+# page topics
 #--------------------------------------------------
-
-# view (public)
 @app.route('/topics')
 def topics():
 	topics = Topic.get_topics(15)
@@ -34,8 +32,6 @@ def topics():
 
 # page single topic
 #--------------------------------------------------
-
-# view (public)
 @app.route('/topic/<int:topic_id>')
 def single_topic(topic_id):
 	form = CommentForm()
@@ -50,11 +46,10 @@ def single_topic(topic_id):
 	
 	return render_template('topic/single_topic.html', topic=topic, comments=comments, nodes=nodes, form=form)
 
-# proc - add comment (login)
+# proc - add comment
 @app.route('/topic/<int:topic_id>', methods=['POST'])
+@require_login
 def add_comment_to_topic(topic_id):
-	check_login()
-
 	form = CommentForm(request.form)	
 	if form.validate():
 		comment = cgi.escape(form.comment.data)
@@ -89,9 +84,8 @@ def add_comment_to_topic(topic_id):
 
 # view (login)
 @app.route('/topic/add', methods=['POST', 'GET'])
+@require_login
 def add_topic():
-	check_login()
-
 	node_types = Node.get_types()
 	for nt in node_types:
 		nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
@@ -102,7 +96,7 @@ def add_topic():
 		form = TopicForm(node_id=node_id)
 		node = Node.get_node_by_id(node_id)
 		return render_template('topic/add_topic.html', node=node, node_types=node_types, form=form)
-	elif request.method == 'POST':
+	else:
 		form = TopicForm(request.form)
 		if form.validate():
 			# node_id = int(form.node_id.data)
@@ -122,13 +116,13 @@ def add_topic():
 
 # page edit topic
 #--------------------------------------------------
-
-# view (private)
 @app.route('/topic/edit/<int:topic_id>', methods=['POST', 'GET'])
+@require_login
 def edit_topic(topic_id):
 	# auth check
 	topic = Topic.get_topic(topic_id)
-	check_private(topic['UserID'])
+	if topic['UserID'] != session['user_id']:
+		abort(404)
 
 	node_types = Node.get_types()
 	for nt in node_types:
@@ -137,7 +131,7 @@ def edit_topic(topic_id):
 	if request.method == 'GET':
 		form = TopicForm(node_id=topic['NodeID'], title=topic['Title'], content=topic['Content'])
 		return render_template('topic/edit_topic.html', topic=topic, node_types=node_types, form=form)
-	elif request.method == 'POST':
+	else:
 		form = TopicForm(request.form)
 		if form.validate():
 			# node_id = int(form.node_id.data)
@@ -152,8 +146,6 @@ def edit_topic(topic_id):
 
 # page single node
 #--------------------------------------------------
-
-# view (public)
 @app.route('/node/<node_abbr>')
 def single_node(node_abbr):
 	node = Node.get_node_by_abbr(node_abbr)

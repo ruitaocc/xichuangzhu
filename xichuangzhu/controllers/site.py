@@ -13,8 +13,6 @@ from xichuangzhu.utils import time_diff, content_clean
 
 # page home
 #--------------------------------------------------
-
-# view (public)
 @app.route('/')
 def index():
 	works = Work.get_works_by_random(4)
@@ -35,7 +33,7 @@ def index():
 	topics = Topic.get_topics(8)
 	return render_template('site/index.html', works=works, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
 
-# json - gene 4 works of different type (public)
+# json - gene works data for index page
 @app.route('/4works', methods=['POST'])
 def four_works():
 	works = Work.get_works_by_random(4)
@@ -45,16 +43,12 @@ def four_works():
 
 # page about
 #--------------------------------------------------
-
-# view (public)
 @app.route('/about')
 def about():
 	return render_template('site/about.html')
 
 # page ad
 #--------------------------------------------------
-
-# view (public)
 @app.route('/ad')
 def ad():
 	return render_template('site/ad.html')

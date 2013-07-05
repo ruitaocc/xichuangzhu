@@ -14,15 +14,13 @@ from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
-from xichuangzhu.utils import content_clean, time_diff, check_login
+from xichuangzhu.utils import content_clean, time_diff, require_login
 from xichuangzhu.form import EmailForm
 
 
-# page - personal page
+# page - user personal space
 #--------------------------------------------------
-
-# view (public)
-@app.route('/user/<user_abbr>')
+@app.route('/u/<user_abbr>')
 def user(user_abbr):
 	user = User.get_user_by_abbr(user_abbr)
 	is_me = True if "user_id" in session and session['user_id'] == user['UserID'] else False
@@ -49,9 +47,7 @@ def user(user_abbr):
 
 # page - user's collect works
 #--------------------------------------------------
-
-# view (public)
-@app.route('/user/<user_abbr>/collect/works')
+@app.route('/u/<user_abbr>/collect/works')
 def user_collect_works(user_abbr):
 	user = User.get_user_by_abbr(user_abbr)
 	user_name = '我' if "user_id" in session and session['user_id'] == user['UserID'] else user['Name']
@@ -80,9 +76,7 @@ def user_collect_works(user_abbr):
 
 # page - user reviews
 #--------------------------------------------------
-
-# view (public)
-@app.route('/user/<user_abbr>/reviews')
+@app.route('/u/<user_abbr>/reviews')
 def user_reviews(user_abbr):
 	user = User.get_user_by_abbr(user_abbr)
 	is_me = True if "user_id" in session and session['user_id'] == user['UserID'] else False
@@ -112,9 +106,7 @@ def user_reviews(user_abbr):
 
 # page - user topics
 #--------------------------------------------------
-
-# view (public)
-@app.route('/user/<user_abbr>/topics')
+@app.route('/u/<user_abbr>/topics')
 def user_topics(user_abbr):
 	user = User.get_user_by_abbr(user_abbr)
 	user_name = '我' if "user_id" in session and session['user_id'] == user['UserID'] else user['Name']
@@ -143,12 +135,9 @@ def user_topics(user_abbr):
 
 # page - informs
 #--------------------------------------------------
-
-# view (login)
 @app.route('/informs')
-def informs():
-	check_login()
-	
+@require_login
+def informs():	
 	# pagination
 	num_per_page = 10
 	page = int(request.args['page'] if 'page' in request.args else 1)

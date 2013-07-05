@@ -15,12 +15,10 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import ReviewForm, CommentForm
-from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, check_private, check_login
+from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login
 
 # page single review
 #--------------------------------------------------
-
-# view (public)
 @app.route('/review/<int:review_id>')
 def single_review(review_id):
 	form = CommentForm()
@@ -44,11 +42,10 @@ def single_review(review_id):
 
 	return render_template('review/single_review.html', review=review, comments=comments, form=form)
 
-# proc - add comment (login)
+# proc - add comment
 @app.route('/review/add_comment/<int:review_id>', methods=['POST'])
+@require_login
 def add_comment_to_review(review_id):
-	check_login()
-
 	form = CommentForm(request.form)
 	if form.validate():
 		comment = cgi.escape(form.comment.data)
@@ -60,7 +57,6 @@ def add_comment_to_review(review_id):
 			comment = rebuild_comment(comment, replyee_id)
 		new_comment_id = Comment.add_comment_to_review(review_id, replyer_id, comment)
 
-		# plus comment num by 1
 		Review.add_comment_num(review_id)
 
 		# add inform
@@ -80,8 +76,6 @@ def add_comment_to_review(review_id):
 
 # page all reviews
 #--------------------------------------------------
-
-# view (public)
 @app.route('/reviews')
 def reviews():
 	# pagination
@@ -108,13 +102,10 @@ def reviews():
 
 # page add review
 #--------------------------------------------------
-
-# view (login)
 @app.route('/review/add/<int:work_id>', methods=['GET', 'POST'])
+@require_login
 def add_review(work_id):
-	check_login()
 	work = Work.get_work(work_id)
-	
 	if request.method == 'GET':
 		form = ReviewForm()
 		return render_template('review/add_review.html', work=work, form=form)
@@ -132,17 +123,17 @@ def add_review(work_id):
 
 # page edit review
 #--------------------------------------------------
-
-# view (private)
 @app.route('/review/edit/<int:review_id>', methods=['GET', 'POST'])
+@require_login
 def edit_review(review_id):
 	review = Review.get_review(review_id)
-	check_private(review['UserID'])
+	if review['UserID'] != session['user_id']:
+		abort(404)
 
 	if request.method == 'GET':
 		form = ReviewForm(title=review['Title'], content=review['Content'])
 		return render_template('reviewedit_review.html', review=review, form=form)
-	elif request.method == 'POST':
+	else:
 		form = ReviewForm(request.form)
 		if form.validate():
 			title = cgi.escape(form.title.data)
@@ -155,11 +146,11 @@ def edit_review(review_id):
 
 # proc delete review
 #--------------------------------------------------
-
-# view (private)
 @app.route('/review/delete/<int:review_id>')
+@require_login
 def delete_review(review_id):
 	review = Review.get_review(review_id)
-	check_private(review['UserID'])
+	if review['UserID'] != session['user_id']:
+		abort(404)
 	Review.delete(review_id)
 	return redirect(url_for('index'))

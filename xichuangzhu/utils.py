@@ -2,7 +2,8 @@
 
 import datetime, time
 import re
-from flask import url_for, session, abort
+from functools import wraps
+from flask import url_for, session, abort, g
 import config
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.topic_model import Topic
@@ -74,10 +75,26 @@ def check_admin():
 	if not ('user_id' in session and session['user_id'] == config.ADMIN_ID):
 		abort(404)
 
+def require_admin(func):
+	@wraps(func)
+	def decorated_function(*args, **kwargs):
+		if not (g.user_id and g.user_id == config.ADMIN_ID):
+			return abort(404)
+		return func(*args, **kwargs)
+	return decorated_function
+
 # Check if login
 def check_login():
 	if 'user_id' not in session:
 		abort(404)
+
+def require_login(func):
+	@wraps(func)
+	def decorated_function(*args, **kwargs):
+		if not g.user_id:
+			return abort(404)
+		return func(*args, **kwargs)
+	return decorated_function
 
 # Check if login and owner
 def check_private(user_id):

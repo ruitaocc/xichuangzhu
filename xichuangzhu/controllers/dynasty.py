@@ -6,12 +6,10 @@ from xichuangzhu import app
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.quote_model import Quote
-from xichuangzhu.utils import check_admin
+from xichuangzhu.utils import require_admin
 
 # page single dynasty
 #--------------------------------------------------
-
-# view (public)
 @app.route('/dynasty/<dynasty_abbr>')
 def single_dynasty(dynasty_abbr):
 	dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)
@@ -32,15 +30,12 @@ def single_dynasty(dynasty_abbr):
 
 # page add dynasty
 #--------------------------------------------------
-
-# view (admin)
 @app.route('/dynasty/add', methods=['GET', 'POST'])
+@require_admin
 def add_dynasty():
-	check_admin()
-
 	if request.method == 'GET':
 		return render_template('dynasty/add_dynasty.html')
-	elif request.method == 'POST':
+	else:
 		dynasty = request.form['dynasty']
 		abbr = request.form['abbr']
 		introduction = request.form['introduction']
@@ -51,16 +46,13 @@ def add_dynasty():
 
 # page edit dynasty
 #--------------------------------------------------
-
-# view (admin)
 @app.route('/dynasty/edit/<int:dynasty_id>', methods=['GET', 'POST'])
+@require_admin
 def edit_dynasty(dynasty_id):
-	check_admin()
-
 	if request.method == 'GET':
 		dynasty = Dynasty.get_dynasty(dynasty_id)
 		return render_template('dynasty/edit_dynasty.html', dynasty=dynasty)
-	elif request.method == 'POST':
+	else:
 		dynasty = request.form['dynasty']
 		abbr = request.form['abbr']
 		introduction = request.form['introduction']

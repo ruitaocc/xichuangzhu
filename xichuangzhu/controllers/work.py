@@ -14,12 +14,10 @@ from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
-from xichuangzhu.utils import time_diff, content_clean, check_admin, check_login
+from xichuangzhu.utils import time_diff, content_clean, check_admin, check_login, require_login, require_admin
 
 # page - single work
 #--------------------------------------------------
-
-# view (public)
 @app.route('/work/<int:work_id>')
 def single_work(work_id):
 	work = Work.get_work(work_id)
@@ -57,11 +55,10 @@ def single_work(work_id):
 
 	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
-# proc - add & edit collected work (login)
+# proc - add & edit collected work
 @app.route('/work/collect/<int:work_id>', methods=['POST'])
+@require_login
 def collect_work(work_id):
-	check_login()
-
 	tags = request.form['tags'].split(' ')
 
 	# remove the empty & repeat item
@@ -86,18 +83,15 @@ def collect_work(work_id):
 
 	return redirect(url_for('single_work', work_id=work_id))
 
-# proc - discollect work (login)
+# proc - discollect work
 @app.route('/work/discollect/<int:work_id>')
+@require_login
 def discollect_work(work_id):
-	check_login()
-
 	Collect.remove(session['user_id'], work_id)
 	return redirect(url_for('single_work', work_id=work_id))
 
 # page - all works
 #--------------------------------------------------
-
-# view (public)
 @app.route('/works')
 def works():
 	num_per_page = 10
@@ -130,8 +124,6 @@ def works():
 
 # page - works by tag
 #--------------------------------------------------
-
-# view (public)
 @app.route('/tag/<tag>')
 def works_by_tag(tag):
 	num_per_page = 10
@@ -159,16 +151,13 @@ def works_by_tag(tag):
 
 # page - add work
 #--------------------------------------------------
-
-# view (admin)
 @app.route('/work/add', methods=['GET', 'POST'])
+@require_admin
 def add_work():
-	check_admin()
-
 	if request.method == 'GET':
 		work_types = Work.get_types()
 		return render_template('work/add_work.html', work_types=work_types)
-	elif request.method == 'POST':
+	else:
 		title = request.form['title']
 		content = request.form['content']
 		foreword = request.form['foreword']
@@ -183,17 +172,14 @@ def add_work():
 
 # page - edit work
 #--------------------------------------------------
-
-# view (admin)
 @app.route('/work/edit/<int:work_id>', methods=['GET', 'POST'])
+@require_admin
 def edit_work(work_id):
-	check_admin()
-
 	if request.method == 'GET':
 		work = Work.get_work(work_id)
 		work_types = Work.get_types()
 		return render_template('work/edit_work.html', work=work, work_types=work_types)
-	elif request.method == 'POST':
+	else:
 		title = request.form['title']
 		content = request.form['content']
 		foreword = request.form['foreword']
@@ -206,13 +192,11 @@ def edit_work(work_id):
 		Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
 		return redirect(url_for('single_work', work_id=work_id))
 
-# json - search authors in page add & edit work (admin)
+# json - search authors in page add & edit work
 #--------------------------------------------------
-
 @app.route('/work/search_authors', methods=['POST'])
+@require_admin
 def get_authors_by_name():
-	check_admin()
-
 	name = request.form['author']
 	authors = Author.get_authors_by_name(name)
 	return json.dumps(authors)

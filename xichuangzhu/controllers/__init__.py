@@ -1,10 +1,1 @@
-import site
-import work
-import author
-import dynasty
-import user
-import sign
-import review
-import product
-import widget
-import topic
+import site, work, author, dynasty, user, sign, review, product, widget, topic
