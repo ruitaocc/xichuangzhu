@@ -37,7 +37,6 @@ def before_request():
 # after every request
 @app.teardown_request
 def teardown_request(exception):
-    # close connection
     g.conn.close()
 
 import log

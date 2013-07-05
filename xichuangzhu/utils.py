@@ -71,10 +71,6 @@ def build_review_inform_title(replyer_id, review_id):
 	return inform_title
 
 # Check if is Administrator
-def check_admin():
-	if not ('user_id' in session and session['user_id'] == config.ADMIN_ID):
-		abort(404)
-
 def require_admin(func):
 	@wraps(func)
 	def decorated_function(*args, **kwargs):
@@ -84,10 +80,6 @@ def require_admin(func):
 	return decorated_function
 
 # Check if login
-def check_login():
-	if 'user_id' not in session:
-		abort(404)
-
 def require_login(func):
 	@wraps(func)
 	def decorated_function(*args, **kwargs):
@@ -95,8 +87,3 @@ def require_login(func):
 			return abort(404)
 		return func(*args, **kwargs)
 	return decorated_function
-
-# Check if login and owner
-def check_private(user_id):
-	if not ('user_id' in session and session['user_id'] == user_id):
-		abort(404)
