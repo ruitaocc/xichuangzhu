@@ -55,7 +55,7 @@ def single_work(work_id):
 
 	return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
 
-# proc - add & edit collected work
+# proc - collect work
 @app.route('/work/collect/<int:work_id>', methods=['POST'])
 @require_login
 def collect_work(work_id):
@@ -69,11 +69,7 @@ def collect_work(work_id):
 	new_tags = list(set(new_tags))
 
 	# collect work
-	is_collected = Collect.check(session['user_id'], work_id)
-	if is_collected:
-		Collect.edit(session['user_id'], work_id, ' '.join(new_tags) + ' ')
-	else:	# edit tags
-		Collect.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+	Collect.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 
 	# update user tags & work tags
 	for t in new_tags:

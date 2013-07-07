@@ -44,7 +44,7 @@ $(document).ready(function(){
 
 	<div class="modal-body">
 		<form id="form-tags" method="post" action="{{ url_for('collect_work', work_id=work.WorkID) }}">
-			<p>标签（多个标签用空格分隔）:</p>
+			<p style='margin-bottom: 10px;'>标签（多个标签用空格分隔）:</p>
 			<input name="tags" id="input-tags" class="input-xlarge" type="text" value="{{ tags }}" />
 
 			<div class="tags-wap clearfix">
@@ -100,13 +100,7 @@ $(document).ready(function(){
 			<a class="btn btn-small" href="#"><span class="icon-upload"></span> 传图</a>
 
 			{% if is_collected %}
-			<a class="btn btn-small" title="编辑收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
-			<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li><a href="{{ url_for('discollect_work', work_id=work.WorkID) }}">取消收藏</a></li>
-			</ul>
+			<a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.WorkID) }}" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
 			{% else %}
 			<a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
 			{% endif %}
