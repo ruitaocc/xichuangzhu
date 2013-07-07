@@ -67,7 +67,7 @@ class Review:
 	# get reviews from a user
 	@staticmethod
 	def get_reviews_by_user(user_id, page, num, is_me):
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, review.IsPublish, user.UserID, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, review.IsPublish, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.UserID = %d\n
 			AND review.UserID = user.UserID\n

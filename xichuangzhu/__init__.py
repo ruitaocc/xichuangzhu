@@ -1,7 +1,7 @@
 #-*- coding: UTF-8 -*-
 
 import sys
-sys.path.append('/var/www')
+sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import MySQLdb
 import MySQLdb.cursors
 import config

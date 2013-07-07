@@ -16,13 +16,12 @@ def single_dynasty(dynasty_abbr):
 	if not dynasty:
 		abort(404)
 
+	authors_num = Author.get_authors_num_by_dynasty(dynasty['DynastyID'])
 	authors = Author.get_authors_by_dynasty(dynasty['DynastyID'], 5, True)
 	for a in authors:
 		quote = Quote.get_quote_by_random(a['AuthorID'])
 		a['Quote'] = quote['Quote'] if quote else ""
 		a['QuoteID'] = quote['QuoteID'] if quote else 0
-	
-	authors_num = Author.get_authors_num_by_dynasty(dynasty['DynastyID'])
 	
 	dynasties = Dynasty.get_dynasties()
 	
