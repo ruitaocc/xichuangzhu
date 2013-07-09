@@ -148,7 +148,6 @@ $(document).ready(function(){
 		</div>
 		{% endfor %}
 		
-		<!-- ad -->
 		<a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}">
 			<img src="{{ product.ImageUrl }}">
 		</a>
@@ -157,7 +156,6 @@ $(document).ready(function(){
 
 		{% from 'macro/users.widget' import show_users %}
 		{{ show_users(collectors)|safe }}
-
 	</div>
 </div>
 

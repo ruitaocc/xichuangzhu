@@ -132,7 +132,7 @@ def edit_review(review_id):
 
 	if request.method == 'GET':
 		form = ReviewForm(title=review['Title'], content=review['Content'])
-		return render_template('reviewedit_review.html', review=review, form=form)
+		return render_template('review/edit_review.html', review=review, form=form)
 	else:
 		form = ReviewForm(request.form)
 		if form.validate():

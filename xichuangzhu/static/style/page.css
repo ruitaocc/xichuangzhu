@@ -32,7 +32,7 @@ body #footer+div{display:none;}
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #DDD;padding-bottom:5px;}#page-single-work .other-work-item:last-child{border:0;}
 #page-single-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:gray;}
 #page-single-work .ad{display:block;margin-top:20px;}
-#page-single-work #modal-tags #input-tags{font-size:12px;margin-bottom:15px;width:350px;font-family:'宋体';}
+#page-single-work #modal-tags #input-tags{font-size:12px;margin-bottom:15px;width:400px;font-family:'宋体';}
 #page-single-work #modal-tags .tags-wap{clear:both;margin-bottom:10px;}#page-single-work #modal-tags .tags-wap .tags-title{float:left;}
 #page-single-work #modal-tags .tags-wap ul{margin:0 0 0 10px;float:left;width:450px;}#page-single-work #modal-tags .tags-wap ul li{list-style:none;display:inline-block;font-size:12px;line-height:12px;padding:5px 5px;margin:0 5px 5px 0;cursor:pointer;color:#a72323;background-color:#f7e7e7;box-shadow:1px 1px 0 #c09a9a;}#page-single-work #modal-tags .tags-wap ul li:hover{background-color:#f0dddd;}
 #page-single-collection .collection-author{font-size:16px;}
