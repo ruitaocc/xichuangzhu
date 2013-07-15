@@ -25,7 +25,7 @@
 .topic-item .topic-info .topic-extra-info{font-size:12px;line-height:12px;}.topic-item .topic-info .topic-extra-info .topic-node{font-size:12px;display:inline-block;padding:0;border-radius:2px;color:#999;margin-right:5px;}
 .topic-item .topic-info .topic-extra-info .topic-launcher{margin-right:5px;color:gray;font-weight:bold;font-size:12px;}
 .topic-item .topic-info .topic-extra-info .topic-time{color:#999;}
-.topic-item .topic-comment-num{position:absolute;top:15px;right:10px;font-size:12px;line-height:12px;color:#666;background-color:#e5e5e5;display:inline-block;padding:3px 6px;cursor:pointer;}
+.topic-item .topic-comment-num{position:absolute;top:15px;right:10px;font-size:12px;line-height:12px;background-color:#BB1414;display:inline-block;padding:3px 6px;cursor:pointer;color:white;font-weight:bold;}
 .node-list{list-style:none;margin:0;}.node-list .node{font-size:12px;line-height:12px;display:inline-block;margin:0 6px 6px 0;background-color:#f3f3f3;border-radius:2px;border:1px solid #e5e5e5;}.node-list .node a{color:#62686b;text-decoration:none;padding:4px 10px;display:inline-block;cursor:pointer;}.node-list .node a:hover{color:#4d5256;}
 .type-item{clear:both;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #DDD;}.type-item .node-type{float:left;font-size:12px;font-weight:bold;}
 .type-item .node-list{float:left;margin:0 0 0 25px;}

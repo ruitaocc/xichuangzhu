@@ -6,11 +6,11 @@ from wtforms import TextField, TextAreaField, HiddenField, validators
 # Review form
 class ReviewForm(Form):
 	title = TextField('标题', [
-		validators.Length(max=20, message="标题最多20个字"),
+		validators.Length(max=20, message="标题最多20个字哦"),
 		validators.Required(message="标题不能为空")])
 	
 	content = TextAreaField('内容', [
-		validators.Length(min=30, message="内容最少30个字"),
+		validators.Length(min=30, message="内容最少30个字哦"),
 		validators.Required(message="内容不能为空")])
 
 # Topic form
@@ -20,7 +20,7 @@ class TopicForm(Form):
 	node_id = HiddenField('节点', [])
 	
 	title = TextField('标题', [
-		validators.Length(max=20, message="标题最多20个字"),
+		validators.Length(max=30, message="标题最多30个字哦"),
 		validators.Required(message="标题不能为空")])
 
 	content = TextAreaField('内容', [

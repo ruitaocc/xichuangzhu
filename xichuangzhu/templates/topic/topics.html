@@ -9,7 +9,7 @@
 	<div class="span8">
 		<h2 class="node-info">
 			<!-- <a href="{{ url_for('topics') }}" class="root-node">话题</a> -->
-			<span>讨论 / 建议</span>
+			<span>话题</span>
 			{% if session.user_id %}
 			<a class="btn btn-small new-topic" href="{{ url_for('add_topic') }}">发起新话题</a>
 			{% endif %}
@@ -50,6 +50,11 @@
 			<span class="ht-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></span>
 		</div>
 		{% endfor %} -->
+		<ul class='topic-tips'>
+			<li>建议与反馈</li>
+			<li>推荐文学家，推荐作品</li>
+			<li>其他</li>
+		</ul>
 	</div>
 </div>
 

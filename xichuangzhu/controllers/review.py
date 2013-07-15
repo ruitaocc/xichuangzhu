@@ -33,7 +33,8 @@ def single_review(review_id):
 	if not is_me and review['IsPublish'] == 0: 
 		abort(404)
 
-	review['Content'] = markdown2.markdown(review['Content'])
+	# review['Content'] = markdown2.markdown(review['Content'])
+	review['Content'] = review['Content'].replace('\n', "<div class='text-gap'></div>")
 	review['Time'] = time_diff(review['Time'])
 	Review.add_click_num(review_id)
 	comments = Comment.get_comments_by_review(review_id)

@@ -11,7 +11,7 @@
 	<div class="span8">
 		{% for i in informs %}
 		<div class="inform-item">
-			<a class="user-avatar" href="{{ url_for('people', user_abbr=i.Abbr) }}">
+			<a class="user-avatar" href="{{ url_for('user', user_abbr=i.Abbr) }}">
 				<img src="{{ i.Avatar }}">
 			</a>
 

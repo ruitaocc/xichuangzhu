@@ -37,7 +37,8 @@ def single_topic(topic_id):
 	form = CommentForm()
 	topic = Topic.get_topic(topic_id)
 	topic['Time'] = time_diff(topic['Time'])
-	topic['Content'] = markdown2.markdown(topic['Content'])
+	topic['Content'] = topic['Content'].replace('\n', "<div class='text-gap'></div>")
+	# topic['Content'] = markdown2.markdown(topic['Content'])
 	comments = Comment.get_comments_by_topic(topic['TopicID'])
 	for c in comments:
 		c['Time'] = time_diff(c['Time'])
@@ -112,7 +113,6 @@ def add_topic():
 			node_id = 10001
 			node = Node.get_node_by_id(node_id)
 			return render_template('topic/add_topic.html', node=node, node_types=node_types, form=form)
-
 
 # page edit topic
 #--------------------------------------------------

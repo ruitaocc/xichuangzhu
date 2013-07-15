@@ -53,7 +53,7 @@ $(document).ready(function(){
 
 		<div class="topic-wap">
 			<a class="topic-user-avatar" href="{{ url_for('user', user_abbr=topic.UserAbbr) }}"><img src="{{ topic.Avatar }}"></a>
-			<h1 class="topic-title">{{ topic.Title }}</h1>
+			<h1 class="topic-title">{{ topic.Title|safe }}</h1>
 			<div class="topic-extra-info">
 				By
 				<a class="topic-launcher" href="{{ url_for('user', user_abbr=topic.UserAbbr) }}">{{ topic.UserName }}</a>
