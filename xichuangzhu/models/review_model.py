@@ -9,7 +9,7 @@ class Review:
 	# get a review
 	@staticmethod
 	def get_review(review_id):
-		query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, review.ClickNum, review.IsPublish, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
+		query = '''SELECT review.ReviewID, review.Title, review.IsPublish, review.Content, review.Time, review.ClickNum, review.IsPublish, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
 			FROM review, user, work, author\n
 			WHERE review.ReviewID = %d\n
 			AND review.UserID = user.UserID\n

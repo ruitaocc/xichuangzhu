@@ -97,7 +97,7 @@ $(document).ready(function(){
 
 			<a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
 
-			<a class="btn btn-small" href="#"><span class="icon-upload"></span> 传图</a>
+			<!-- <a class="btn btn-small" href="#"><span class="icon-upload"></span> 传图</a> -->
 
 			{% if is_collected %}
 			<a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.WorkID) }}" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>

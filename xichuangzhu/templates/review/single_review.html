@@ -56,7 +56,12 @@ $(document).ready(function(){
 			<img src="{{ review.Avatar }}">
 		</a>
 		
-		<h1 class="review-title">{{ review.Title }}</h1>
+		<h1 class="review-title">
+			{{ review.Title }}
+			{% if not review.IsPublish %}
+			<sup><span class='label label-inverse'>草稿</span></sup>
+			{% endif %}
+		</h1>
 
 		<div class="review-extra-info">
 			<a href="{{ url_for('user', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
