@@ -1,12 +1,12 @@
 #-*- coding: UTF-8 -*-
 
-import urllib, urllib2
+import requests
 import smtplib
 from email.mime.text import MIMEText
 import hashlib
 import math
-from flask import render_template, request, redirect, url_for, json, session
 import config
+from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app
 from xichuangzhu.models.user_model import User
 from xichuangzhu.utils import require_login
@@ -16,9 +16,8 @@ from xichuangzhu.form import EmailForm
 #--------------------------------------------------
 @app.route('/login/douban')
 def auth():
+    # get current authed userID
     code = request.args['code']
-
-    # get access token and userID
     url = "https://www.douban.com/service/auth2/token"
     data = {
         'client_id': config.DOUBAN_CLIENT_ID,
@@ -27,11 +26,8 @@ def auth():
         'grant_type': 'authorization_code',
         'code': code
     }
-    data = urllib.urlencode(data)
-    req = urllib2.Request(url, data)
-    response = urllib2.urlopen(req)
-    info = eval(response.read())
-    user_id = int(info['douban_user_id'])
+    r = requests.post(url, data=data).json()
+    user_id = int(r['douban_user_id'])
 
     # if user exist
     if User.check_exist_by_id(user_id):
@@ -49,9 +45,7 @@ def auth():
     else:
         # get user info
         url = "https://api.douban.com/v2/user/" + str(user_id)
-        req = urllib2.Request(url)
-        response = urllib2.urlopen(req)
-        user_info = eval(response.read().replace('\\', '')) # remove '\' and convert str to dict
+        user_info = requests.get(url).json()
 
         # add user
         user_id = int(user_info['id'])
@@ -97,7 +91,7 @@ def send_verify_email():
 
             # prepare email content
             msgText = '''<html>
-                <h1>点击下面的链接，激活你在西窗烛的帐号：</h1>
+                <h3>点击下面的链接，激活你在西窗烛的帐号：</h3>
                 <a href='%s'>%s</a>
                 </html>''' % (verify_url, verify_url)
             msg = MIMEText(msgText, 'html', 'utf-8')
@@ -143,8 +137,8 @@ def verify_email_callback():
 # proc - logout
 #--------------------------------------------------
 @app.route('/logout')
+@require_login
 def logout():
-    check_login()
     session.pop('user_id', None)
     session.pop('user_name', None)
     session.pop('user_abbr', None)

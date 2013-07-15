@@ -2,9 +2,9 @@
 
 import sys
 sys.path.append('/var/www/flaskconfig/xichuangzhu')
+import config
 import MySQLdb
 import MySQLdb.cursors
-import config
 from flask import Flask, session, g
 from xichuangzhu.models.inform_model import Inform
 
