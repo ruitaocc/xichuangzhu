@@ -71,7 +71,7 @@ body #footer+div{display:none;}
 #page-products .products-wap{margin-top:15px;position:relative;}#page-products .products-wap .product-item .product-image{opacity:0.9;display:none;position:absolute;}#page-products .products-wap .product-item .product-image:hover{opacity:1;}
 #page-single-product .image-wap{text-align:center;}#page-single-product .image-wap .product-image{margin:15px auto 0 auto;}
 #page-single-product .product-name{border-bottom:2px solid darkred;padding-bottom:10px;margin-bottom:15px;}
-#page-single-product .product-introduction{margin-bottom:15px;}
+#page-single-product .product-introduction{margin-bottom:20px;}#page-single-product .product-introduction p{margin-bottom:10px;}
 #page-topics .topic-tips{margin-top:20px;list-style-type:square;}#page-topics .topic-tips li{margin-bottom:3px;}
 #page-topics .topic-item .topic-user-avatar{margin-top:0;}
 #page-topics .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd;}#page-topics .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px;}
