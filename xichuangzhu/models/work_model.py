@@ -132,8 +132,7 @@ class Work:
     # add a work
     @staticmethod
     def add_work(title, content, foreword, introduction, authorID, dynastyID, work_type, type_name):
-        query = '''INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, Type, TypeName)\n
-            VALUES ('%s', '%s', '%s','%s', %d, %d, %d, '%s', '%s')''' % (title, content, foreword, introduction, authorID, dynastyID, work_type, type_name)
+        query = "INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, Type, TypeName) VALUES ('%s', '%s', '%s','%s', %d, %d, '%s', '%s')" % (title, content, foreword, introduction, authorID, dynastyID, work_type, type_name)
         g.cursor.execute(query)
         g.conn.commit()
         return g.cursor.lastrowid
