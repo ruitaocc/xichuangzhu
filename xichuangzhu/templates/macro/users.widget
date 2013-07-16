@@ -2,12 +2,12 @@
 
 {% for u in users %}
 <div class="user-item">
-	<a class="user-avatar" href="{{ url_for('user', user_abbr=u.Abbr) }}"><img src="{{ u.Avatar }}" /></a>
-	<div class="user-info">
-		<div class="user-name"><a href="{{ url_for('user', user_abbr=u.Abbr) }}">{{ u.Name }}</a></div>
-		<div class="user-signature">{{ u.Signature }}</div>
-		<div class="reviews-num">点评 {{ u.ReviewNum }}</div>
-	</div>
+   <a class="user-avatar" href="{{ url_for('user', user_abbr=u.Abbr) }}"><img src="{{ u.Avatar }}" /></a>
+   <div class="user-info">
+      <div class="user-name"><a href="{{ url_for('user', user_abbr=u.Abbr) }}">{{ u.Name }}</a></div>
+      <div class="user-signature">{{ u.Signature }}</div>
+      <div class="reviews-num">点评 {{ u.ReviewNum }}</div>
+   </div>
 </div>
 {% endfor %}
 

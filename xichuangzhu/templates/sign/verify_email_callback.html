@@ -19,24 +19,24 @@
 {% elif state == 'active_succ' %}
 <p>邮箱绑定成功！<span id="second-count"></span>秒后进入首页。</p>
 <script type="text/javascript">
-	
-	// 倒计时
-	var count = 3;
+   
+   // 倒计时
+   var count = 3;
 
-	function countDown(){
-		if(count == 0){
-			clearTimeout(t);
-			window.location = "{{ url_for('index') }}";
-		}
-		else{
-			$('#second-count').text(count);
-			t = setTimeout("countDown()", 1000);			
-		}
-		count--;
-	}
+   function countDown(){
+      if(count == 0){
+         clearTimeout(t);
+         window.location = "{{ url_for('index') }}";
+      }
+      else{
+         $('#second-count').text(count);
+         t = setTimeout("countDown()", 1000);         
+      }
+      count--;
+   }
 
-	$('#second-count').text(count);
-	t = setTimeout("countDown()", 1000);
+   $('#second-count').text(count);
+   t = setTimeout("countDown()", 1000);
 </script>
 
 {% elif state == 'active_failed' %}

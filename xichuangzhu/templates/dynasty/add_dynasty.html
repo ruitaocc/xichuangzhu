@@ -1,59 +1,58 @@
 {% extends "layout.html" %}
 
 {% block page_title %}添加朝代{% endblock %}
-
 {% block page_id%}page-add-dynasty{% endblock %}
 
 {% block body %}
 
 <form id="form-add-dynasty" class="form-horizontal" method="post" action="{{ url_for('add_dynasty') }}">
-	<fieldset>
-		<legend>添加朝代</legend>
+   <fieldset>
+      <legend>添加朝代</legend>
 
-		<div class="control-group">
-			<label class="control-label">朝代</label>
-			<div class="controls">
-				<input type="text" name="dynasty" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">朝代</label>
+         <div class="controls">
+            <input type="text" name="dynasty" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">拼音缩写</label>
-			<div class="controls">
-				<input type="text" name="abbr" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">拼音缩写</label>
+         <div class="controls">
+            <input type="text" name="abbr" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">起始年</label>
-			<div class="controls input-append">
-				<input type="text" name="startYear" />
-				<span class="add-on">年</span>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">起始年</label>
+         <div class="controls input-append">
+            <input type="text" name="startYear" />
+            <span class="add-on">年</span>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">结束年</label>
-			<div class="controls input-append">
-				<input type="text" name="endYear" />
-				<span class="add-on">年</span>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">结束年</label>
+         <div class="controls input-append">
+            <input type="text" name="endYear" />
+            <span class="add-on">年</span>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">简介</label>
-			<div class="controls">
-				<textarea class="input-xxlarge" rows="10" name="introduction"></textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">简介</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" rows="10" name="introduction"></textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" value="提交" class="btn btn-primary" />
-			</div>
-		</div>
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-primary" />
+         </div>
+      </div>
 
-	</fieldset>
+   </fieldset>
 </form>
 
 {% endblock %}

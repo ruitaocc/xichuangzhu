@@ -6,29 +6,29 @@
 {% block body %}
 
 <form id="form-edit-quote" class="form-horizontal" method="post" action="{{ url_for('edit_quote', quote_id=quote.QuoteID) }}">
-	<fieldset>
-		<legend>编辑引语</legend>
+   <fieldset>
+      <legend>编辑引语</legend>
 
-		<div class="control-group">
-			<label class="control-label">引语</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" name="quote" value="{{ quote.Quote }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">引语</label>
+         <div class="controls">
+            <input type="text" class="input-xlarge" name="quote" value="{{ quote.Quote }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">出自</label>
-			<div class="controls">
-				<input type="text" class="input-xlarge" name="work-id" value="{{ quote.WorkID }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">出自</label>
+         <div class="controls">
+            <input type="text" class="input-xlarge" name="work-id" value="{{ quote.WorkID }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" value="提交" class="btn btn-small btn-primary" />
-			</div>
-		</div>
-	</fieldset>
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-small btn-primary" />
+         </div>
+      </div>
+   </fieldset>
 </form>
 
 {% endblock %}

@@ -6,22 +6,22 @@
 {% block body %}
 
 <div class="row">
-	<div class="span8">
-		<h2>{{ user_name }}的收藏 / {{ works_num }}</h2>
+   <div class="span8">
+      <h2>{{ user_name }}的收藏 / {{ works_num }}</h2>
 
-		{% from "macro/works.widget" import show_works %}
-		{{ show_works(works)|safe }}
+      {% from "macro/works.widget" import show_works %}
+      {{ show_works(works)|safe }}
 
-		<div class="pagination">
-			<ul>
-				<li><a href="{{ url_for('user_collect_works', user_abbr=user.Abbr) }}?page={{ pre_page }}"><<</a></li>
-				<li><a>{{ page }} / {{ total_page }}</a></li>
-				<li><a href="{{ url_for('user_collect_works', user_abbr=user.Abbr) }}?page={{ next_page }}">>></a></li>
-			</ul>
-		</div>
-	</div>
+      <div class="pagination">
+         <ul>
+            <li><a href="{{ url_for('user_collect_works', user_abbr=user.Abbr) }}?page={{ pre_page }}"><<</a></li>
+            <li><a>{{ page }} / {{ total_page }}</a></li>
+            <li><a href="{{ url_for('user_collect_works', user_abbr=user.Abbr) }}?page={{ next_page }}">>></a></li>
+         </ul>
+      </div>
+   </div>
 
-	<div class="span4"></div>
+   <div class="span4"></div>
 </div>
 
 {% endblock %}

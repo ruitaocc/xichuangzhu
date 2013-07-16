@@ -6,70 +6,70 @@
 {% block body %}
 
 <form id="form-edit-author" class="form-horizontal" method="post" action="{{ url_for('edit_author', authorID=author.AuthorID) }}">
-	<fieldset>
-		<legend>编辑文学家</legend>
+   <fieldset>
+      <legend>编辑文学家</legend>
 
-		<div class="control-group">
-			<label class="control-label">姓名</label>
-			<div class="controls">
-				<input type="text" name="author" value="{{ author.Author }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">姓名</label>
+         <div class="controls">
+            <input type="text" name="author" value="{{ author.Author }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">拼音缩写</label>
-			<div class="controls">
-				<input type="text" name="abbr" value="{{ author.Abbr }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">拼音缩写</label>
+         <div class="controls">
+            <input type="text" name="abbr" value="{{ author.Abbr }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">朝代</label>
-			<div class="controls">
-				<select name='dynastyID'>
-					{% for dynasty in dynasties %}
-					<option
-						value="{{ dynasty.DynastyID }}"
-						{% if dynasty.DynastyID == author.DynastyID %}
-						selected="selected"
-						{% endif %}
-						>
-						{{ dynasty.Dynasty }}
-					</option>
-					{% endfor %}
-				</select>
-			</div>
-		</div>
-		
-		<div class="control-group">
-			<label class="control-label">生年</label>
-			<div class="controls input-append">
-				<input type="text" name="birthYear" value="{{ author.BirthYear }}" />
-				<span class="add-on">年</span>
-			</div>
-		</div>
-		
-		<div class="control-group">
-			<label class="control-label">卒年</label>
-			<div class="controls input-append">
-				<input type="text" name="deathYear" value="{{ author.DeathYear }}" />
-				<span class="add-on">年</span>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">朝代</label>
+         <div class="controls">
+            <select name='dynastyID'>
+               {% for dynasty in dynasties %}
+               <option
+                  value="{{ dynasty.DynastyID }}"
+                  {% if dynasty.DynastyID == author.DynastyID %}
+                  selected="selected"
+                  {% endif %}
+                  >
+                  {{ dynasty.Dynasty }}
+               </option>
+               {% endfor %}
+            </select>
+         </div>
+      </div>
+      
+      <div class="control-group">
+         <label class="control-label">生年</label>
+         <div class="controls input-append">
+            <input type="text" name="birthYear" value="{{ author.BirthYear }}" />
+            <span class="add-on">年</span>
+         </div>
+      </div>
+      
+      <div class="control-group">
+         <label class="control-label">卒年</label>
+         <div class="controls input-append">
+            <input type="text" name="deathYear" value="{{ author.DeathYear }}" />
+            <span class="add-on">年</span>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">简介</label>
-			<div class="controls">
-				<textarea rows="10" class="input-xxlarge" name="introduction">{{ author.Introduction }}</textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">简介</label>
+         <div class="controls">
+            <textarea rows="10" class="input-xxlarge" name="introduction">{{ author.Introduction }}</textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" value="提交" class="btn btn-primary" />
-			</div>
-		</div>
-	</fieldset>
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-primary" />
+         </div>
+      </div>
+   </fieldset>
 </form>
 
 {% endblock %}

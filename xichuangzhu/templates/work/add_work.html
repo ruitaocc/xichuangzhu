@@ -8,93 +8,93 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	var authors;
+   var authors;
 
-	// search authors
-	$('#btn-search-author').click(function(){
-		var author = $('#input-author').val();
-		$.ajax({
-			'url': "{{ url_for('get_authors_by_name') }}",
-			'type': 'POST',
-			'dataType': 'json',
-			'data': {
-				'author': author
-			},
-			'success': function(data){
-				authors = data;
-				$('#select-author').empty();
+   // search authors
+   $('#btn-search-author').click(function(){
+      var author = $('#input-author').val();
+      $.ajax({
+         'url': "{{ url_for('get_authors_by_name') }}",
+         'type': 'POST',
+         'dataType': 'json',
+         'data': {
+            'author': author
+         },
+         'success': function(data){
+            authors = data;
+            $('#select-author').empty();
 
-				$.each(authors, function(index, author){
-					var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
-					$(option).appendTo('#select-author');
-				});
-			}
-		});
-	});
+            $.each(authors, function(index, author){
+               var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
+               $(option).appendTo('#select-author');
+            });
+         }
+      });
+   });
 
 });
 </script>
 
 <form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work') }}">
-	<fieldset>
-		<legend>添加作品</legend>
+   <fieldset>
+      <legend>添加作品</legend>
 
-		<div class="control-group">
-			<label class="control-label">类别</label>
-			<div class="controls">
-				<select name='type'>
-					{% for type in work_types %}
-					<option value='{{ type.WorkType }}'>{{ type.TypeName }}</option>
-					{% endfor %}
-				</select>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">类别</label>
+         <div class="controls">
+            <select name='type'>
+               {% for type in work_types %}
+               <option value='{{ type.WorkType }}'>{{ type.TypeName }}</option>
+               {% endfor %}
+            </select>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">标题</label>
-			<div class="controls">
-				<input type="text" name="title" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">标题</label>
+         <div class="controls">
+            <input type="text" name="title" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">作者</label>
-			<div class="controls">
-				<input id="input-author" type="text" class="span2" />
-				<input id="btn-search-author" type="button" class="btn" value="搜索" />
-				<select id="select-author" name="authorID" class="span2">
-					<option>作者</option>
-				</select>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">作者</label>
+         <div class="controls">
+            <input id="input-author" type="text" class="span2" />
+            <input id="btn-search-author" type="button" class="btn" value="搜索" />
+            <select id="select-author" name="authorID" class="span2">
+               <option>作者</option>
+            </select>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">小序</label>
-			<div class="controls">
-				<textarea class="input-xxlarge" name="foreword" rows='5'></textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">小序</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" name="foreword" rows='5'></textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">题解</label>
-			<div class="controls">
-				<textarea class="input-xxlarge" name="introduction" rows='5'></textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">题解</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" name="introduction" rows='5'></textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">内容</label>
-			<div class="controls">
-				<textarea class="input-xxlarge" name="content" rows='15'></textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">内容</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" name="content" rows='15'></textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" value="提交" class="btn btn-primary" />
-			</div>
-		</div>
-	</fieldset>
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-primary" />
+         </div>
+      </div>
+   </fieldset>
 </form>
 
 {% endblock %}

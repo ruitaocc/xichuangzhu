@@ -6,22 +6,22 @@
 {% block body %}
 
 <div class="row">
-	<div class="span8">
-		<h2>{{ user_name }}的话题 / {{ topics_num }}</h2>
+   <div class="span8">
+      <h2>{{ user_name }}的话题 / {{ topics_num }}</h2>
 
-		{% from "macro/topics.widget" import show_topics %}
-		{{ show_topics(topics)|safe }}
+      {% from "macro/topics.widget" import show_topics %}
+      {{ show_topics(topics)|safe }}
 
-		<div class="pagination">
-			<ul>
-				<li><a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}?page={{ pre_page }}"><<</a></li>
-				<li><a>{{ page }} / {{ total_page }}</a></li>
-				<li><a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}?page={{ next_page }}">>></a></li>
-			</ul>
-		</div>
-	</div>
+      <div class="pagination">
+         <ul>
+            <li><a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}?page={{ pre_page }}"><<</a></li>
+            <li><a>{{ page }} / {{ total_page }}</a></li>
+            <li><a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}?page={{ next_page }}">>></a></li>
+         </ul>
+      </div>
+   </div>
 
-	<div class="span4"></div>
+   <div class="span4"></div>
 </div>
 
 {% endblock %}

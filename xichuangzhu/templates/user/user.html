@@ -6,50 +6,50 @@
 {% block body %}
 
 <div class="row">
-	<div class="span8">
+   <div class="span8">
 
-		<div class="clearfix">
-			<a id="user-avatar" href="{{ url_for('user', user_abbr=user.Abbr) }}">
-				<img src="{{ user.Avatar }}" />
-			</a>
-			
-			<div class="user-info">
-				<div class="user-name">{{ user.Name }}</div>
-				<div class="user-signature">{{ user.Signature }}</div>
-			</div>
-		</div>
-		
-		<h2>收藏
-			<span class='link-more'>
-				<a href="{{ url_for('user_collect_works', user_abbr=user.Abbr) }}">全部 / {{ works_num }} »</a>
-			</span>
-		</h2>
+      <div class="clearfix">
+         <a id="user-avatar" href="{{ url_for('user', user_abbr=user.Abbr) }}">
+            <img src="{{ user.Avatar }}" />
+         </a>
+         
+         <div class="user-info">
+            <div class="user-name">{{ user.Name }}</div>
+            <div class="user-signature">{{ user.Signature }}</div>
+         </div>
+      </div>
+      
+      <h2>收藏
+         <span class='link-more'>
+            <a href="{{ url_for('user_collect_works', user_abbr=user.Abbr) }}">全部 / {{ works_num }} »</a>
+         </span>
+      </h2>
 
-		{% from "macro/works.widget" import show_works %}
-		{{ show_works(works)|safe }}
+      {% from "macro/works.widget" import show_works %}
+      {{ show_works(works)|safe }}
 
-		<h2>点评
-			<span class='link-more'>
-				<a href="{{ url_for('user_reviews', user_abbr=user.Abbr) }}">全部 / {{ reviews_num }} »</a>
-			</span>
-		</h2>
+      <h2>点评
+         <span class='link-more'>
+            <a href="{{ url_for('user_reviews', user_abbr=user.Abbr) }}">全部 / {{ reviews_num }} »</a>
+         </span>
+      </h2>
 
-		{% from "macro/reviews.widget" import show_reviews %}
-		{{ show_reviews(reviews)|safe }}
+      {% from "macro/reviews.widget" import show_reviews %}
+      {{ show_reviews(reviews)|safe }}
 
-		<h2>话题
-			<span class='link-more'>
-				<a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}">全部 / {{ topics_num }} »</a>
-			</span>
-		</h2>
+      <h2>话题
+         <span class='link-more'>
+            <a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}">全部 / {{ topics_num }} »</a>
+         </span>
+      </h2>
 
-		{% from "macro/topics.widget" import show_topics %}
-		{{ show_topics(topics)|safe }}
+      {% from "macro/topics.widget" import show_topics %}
+      {{ show_topics(topics)|safe }}
 
-	</div>
+   </div>
 
-	<div class="span4">
-	</div>
+   <div class="span4">
+   </div>
 </div>
 
 {% endblock %}

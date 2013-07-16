@@ -6,59 +6,59 @@
 {% block body %}
 
 <form id="form-edit-dynasty" class="form-horizontal" method="post" action="{{ url_for('edit_dynasty', dynasty_id=dynasty.DynastyID) }}">
-	<fieldset>
-		<legend>编辑朝代</legend>
+   <fieldset>
+      <legend>编辑朝代</legend>
 
-		<div class="control-group">
-			<label class="control-label" for="input-dynasty">朝代</label>
-			<div class="controls">
-				<input type="text" name="dynasty" id="input-dynasty" value="{{ dynasty.Dynasty }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label" for="input-dynasty">朝代</label>
+         <div class="controls">
+            <input type="text" name="dynasty" id="input-dynasty" value="{{ dynasty.Dynasty }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">拼音</label>
-			<div class="controls">
-				<input type="text" name="abbr" value="{{ dynasty.Abbr }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">拼音</label>
+         <div class="controls">
+            <input type="text" name="abbr" value="{{ dynasty.Abbr }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label" for="input-start">起始年</label>
-			<div class="controls input-append">
-				<input type="text" name="startYear" id="input-start" value="{{ dynasty.StartYear }}" />
-				<span class="add-on">年</span>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label" for="input-start">起始年</label>
+         <div class="controls input-append">
+            <input type="text" name="startYear" id="input-start" value="{{ dynasty.StartYear }}" />
+            <span class="add-on">年</span>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label" for="input-end">结束年</label>
-			<div class="controls input-append">
-				<input type="text" name="endYear" id="input-end" value="{{ dynasty.EndYear }}" />
-				<span class="add-on">年</span>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label" for="input-end">结束年</label>
+         <div class="controls input-append">
+            <input type="text" name="endYear" id="input-end" value="{{ dynasty.EndYear }}" />
+            <span class="add-on">年</span>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label" for="input-intro">简介</label>
-			<div class="controls">
-				<textarea rows="8" class="input-xxlarge" name="introduction" id="input-intro" >{{ dynasty.Introduction }}</textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label" for="input-intro">简介</label>
+         <div class="controls">
+            <textarea rows="8" class="input-xxlarge" name="introduction" id="input-intro" >{{ dynasty.Introduction }}</textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label" for="input-intro">历史</label>
-			<div class="controls">
-				<textarea rows="20" class="input-xxlarge" name="history" id="input-intro" >{{ dynasty.History }}</textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label" for="input-intro">历史</label>
+         <div class="controls">
+            <textarea rows="20" class="input-xxlarge" name="history" id="input-intro" >{{ dynasty.History }}</textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" value="提交" class="btn btn-primary" />
-			</div>
-		</div>
-	</fieldset>
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-primary" />
+         </div>
+      </div>
+   </fieldset>
 </form>
 
 {% endblock %}

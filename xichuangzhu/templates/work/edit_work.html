@@ -8,96 +8,96 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	var authors = [];
+   var authors = [];
 
-	// get the collections of this author
-	// then copy to the global var 'authors'
-	// then triggle the change event
-	// which will read the global var 'authors' to the select tag
-	$('#btn-search-author').click(function(){
-		var author = $('#input-author').val();
-		$.ajax({
-			'url': "{{ url_for('get_authors_by_name') }}",
-			'type': 'POST',
-			'dataType': 'json',
-			'data': {
-				'author': author
-			},
-			'success': function(data){
-				authors = data;
-				$('#select-author').empty();
+   // get the collections of this author
+   // then copy to the global var 'authors'
+   // then triggle the change event
+   // which will read the global var 'authors' to the select tag
+   $('#btn-search-author').click(function(){
+      var author = $('#input-author').val();
+      $.ajax({
+         'url': "{{ url_for('get_authors_by_name') }}",
+         'type': 'POST',
+         'dataType': 'json',
+         'data': {
+            'author': author
+         },
+         'success': function(data){
+            authors = data;
+            $('#select-author').empty();
 
-				$.each(authors, function(index, author){
-					var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
-					$(option).appendTo('#select-author');
-				});
-			}
-		});
-	});
+            $.each(authors, function(index, author){
+               var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
+               $(option).appendTo('#select-author');
+            });
+         }
+      });
+   });
 
 });
 </script>
 
 <form id="form-edit-work" class="form-horizontal" method="post" action="{{ url_for('edit_work', work_id=work.WorkID) }}">
-	<fieldset>
-		<legend>编辑作品</legend>
+   <fieldset>
+      <legend>编辑作品</legend>
 
-		<div class="control-group">
-			<label class="control-label">类别</label>
-			<div class="controls">
-				<select name='type'>
-					{% for type in work_types %}
-					<option value='{{ type.WorkType }}' {% if work.Type == type.WorkType %}selected="selected"{% endif %}>{{ type.TypeName }}</option>
-					{% endfor %}
-				</select>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">类别</label>
+         <div class="controls">
+            <select name='type'>
+               {% for type in work_types %}
+               <option value='{{ type.WorkType }}' {% if work.Type == type.WorkType %}selected="selected"{% endif %}>{{ type.TypeName }}</option>
+               {% endfor %}
+            </select>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">标题</label>
-			<div class="controls">
-				<input type="text" name="title" value="{{ work.Title }}" />
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">标题</label>
+         <div class="controls">
+            <input type="text" name="title" value="{{ work.Title }}" />
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">作者</label>
-			<div class="controls">
-				<input id="input-author" type="text" class="span2" value="{{ work.Author }}" />
-				<input id="btn-search-author" type="button" class="btn" value="搜索" />
-				<select id="select-author" name="authorID" class="span2">
-					<option value="{{ work.AuthorID }}">〔{{ work.Dynasty }}〕{{ work.Author }}</option>
-				</select>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">作者</label>
+         <div class="controls">
+            <input id="input-author" type="text" class="span2" value="{{ work.Author }}" />
+            <input id="btn-search-author" type="button" class="btn" value="搜索" />
+            <select id="select-author" name="authorID" class="span2">
+               <option value="{{ work.AuthorID }}">〔{{ work.Dynasty }}〕{{ work.Author }}</option>
+            </select>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">小序</label>
-			<div class="controls">
-				<textarea class="input-xxlarge" name="foreword" rows='5'>{{ work.Foreword }}</textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">小序</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" name="foreword" rows='5'>{{ work.Foreword }}</textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">题解</label>
-			<div class="controls">
-				<textarea class="input-xxlarge" name="introduction" rows='5'>{{ work.WorkIntroduction }}</textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">题解</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" name="introduction" rows='5'>{{ work.WorkIntroduction }}</textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<label class="control-label">内容</label>
-			<div class="controls">
-				<textarea name="content" class="input-xxlarge" id="work-content" rows='15'>{{ work.Content }}</textarea>
-			</div>
-		</div>
+      <div class="control-group">
+         <label class="control-label">内容</label>
+         <div class="controls">
+            <textarea name="content" class="input-xxlarge" id="work-content" rows='15'>{{ work.Content }}</textarea>
+         </div>
+      </div>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="submit" value="提交" class="btn btn-primary" />
-			</div>
-		</div>
-	</fieldset>
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-primary" />
+         </div>
+      </div>
+   </fieldset>
 </form>
 
 {% endblock %}

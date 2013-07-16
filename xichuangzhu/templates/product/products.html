@@ -6,56 +6,56 @@
 {% block body %}
 
 <div class="products-wap clearfix">
-	{% for product in products %}
-	<div class="product-item">
-		<a href="{{ url_for('single_product', product_id=product.ProductID)}}">
-			<img class="product-image" title="{{ product.Product }}" src="{{ product.ImageUrl }}">
-		</a>
-	</div>
-	{% endfor %}
+   {% for product in products %}
+   <div class="product-item">
+      <a href="{{ url_for('single_product', product_id=product.ProductID)}}">
+         <img class="product-image" title="{{ product.Product }}" src="{{ product.ImageUrl }}">
+      </a>
+   </div>
+   {% endfor %}
 </div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
-	var width = 290,
-		h_gap = 20,
-		v_gap = 22;
+   var width = 290,
+      h_gap = 20,
+      v_gap = 22;
 
-	var lefts = [0, width+h_gap, 2*(width+h_gap)],
-		tops = [0, 0, 0];
+   var lefts = [0, width+h_gap, 2*(width+h_gap)],
+      tops = [0, 0, 0];
 
-	$('.product-image').each(function(index){
-		$(this).css({
-			'width': width + 'px',
-			'left': lefts[index%3] + 'px'
-		});
-	});
+   $('.product-image').each(function(index){
+      $(this).css({
+         'width': width + 'px',
+         'left': lefts[index%3] + 'px'
+      });
+   });
 
-	$('.product-image').each(function(index){
+   $('.product-image').each(function(index){
 
-		// only when a img loaded, it's height becomes known.
-		$(this).imagesLoaded(function(){
+      // only when a img loaded, it's height becomes known.
+      $(this).imagesLoaded(function(){
 
-			$(this).css({
-				'display': 'block',
-				'top': tops[index%3] + 'px'
-			});
+         $(this).css({
+            'display': 'block',
+            'top': tops[index%3] + 'px'
+         });
 
-			// overadd height
-			tops[index%3] += $(this).height() + v_gap;
+         // overadd height
+         tops[index%3] += $(this).height() + v_gap;
 
-			// set mother wap's height
-			var maxHeight = 0;
-			for(var i=0; i<tops.length; i++){
-				if(tops[i] > maxHeight){
-					maxHeight = tops[i];
-				}
-			}
-			$('.products-wap').css('height', maxHeight + 'px');
-		});
-	});
+         // set mother wap's height
+         var maxHeight = 0;
+         for(var i=0; i<tops.length; i++){
+            if(tops[i] > maxHeight){
+               maxHeight = tops[i];
+            }
+         }
+         $('.products-wap').css('height', maxHeight + 'px');
+      });
+   });
 });
 
 </script>
