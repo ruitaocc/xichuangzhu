@@ -286,13 +286,17 @@ body{
         }
     }
 
-    .work-collection{
-        font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 5px;
-    }
+    .work-image-wap{
+        position: relative;
 
-    .work-collection-introduction{
+        .work-image{
+            display: none;
+            position: absolute;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+
+            &:hover{
+            }
+        }        
     }
 
     .work-tags{
@@ -869,6 +873,19 @@ body{
                 font-size: 12px;
                 color: #999;
             }
+        }
+    }
+}
+
+#page-work-image{
+    .image-info{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .image-wap{
+        img{
+            margin-bottom: 15px;
         }
     }
 }

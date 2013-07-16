@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block page_title %}添加作品图片{% endblock %}
+{% block page_id%}page-add-work-image{% endblock %}
+
+{% block body %}
+
+<form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work_image', work_id=work.WorkID) }}" enctype="multipart/form-data">
+   <fieldset>
+      <legend>为作品《{{ work.Title }}》添加图片</legend>
+
+      <div class="control-group">
+         <label class="control-label">图片</label>
+         <div class="controls">
+            <input type="file" name="image" />
+         </div>
+      </div>
+
+      <div class="control-group">
+         <label class="control-label">描述</label>
+         <div class="controls">
+            <textarea class="input-xxlarge" name="desc" rows='4'></textarea>
+         </div>
+      </div>
+
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-small btn-primary" />
+         </div>
+      </div>
+   </fieldset>
+</form>
+
+{% endblock %}

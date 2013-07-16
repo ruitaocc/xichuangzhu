@@ -95,14 +95,14 @@ $(document).ready(function(){
          <a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.WorkID) }}"><span class="icon-edit"></span> 编辑</a>
          {% endif %}
 
-         <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-file"></span> 点评</a>
+         <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-align-left"></span> 点评</a>
 
-         <!-- <a class="btn btn-small" href="#"><span class="icon-upload"></span> 传图</a> -->
+         <a class="btn btn-small" href="{{ url_for('add_work_image', work_id=work.WorkID) }}"><span class="icon-picture"></span> 图片</a>
 
          {% if is_collected %}
-         <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.WorkID) }}" data-toggle="modal"><span class="icon-heart"></span> 已收藏</a>
+         <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.WorkID) }}" data-toggle="modal"><span class="icon-bookmark"></span> 已收藏</a>
          {% else %}
-         <a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-heart"></span> 收藏</a>
+         <a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-bookmark"></span> 收藏</a>
          {% endif %}
       </div>
       {% endif %}
@@ -113,6 +113,59 @@ $(document).ready(function(){
       <h2>点评</h2>
       {% from "macro/reviews.widget" import show_reviews %}
       {{ show_reviews(reviews)|safe }}
+
+      {% if images|length != 0 %}
+      <h2>图片</h2>
+
+      <div class='work-image-wap'>
+         {% for i in images %}
+         <a href="{{ url_for('work_image', work_id=work.WorkID, image_id=i.id) }}"><img class='work-image' src="{{ i.url }}" /></a>
+         {% endfor %}
+      </div>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
+      <script type="text/javascript">
+      $(document).ready(function(){
+         var width = 200,
+            h_gap = 10,
+            v_gap = 10;
+
+         var lefts = [0, width+h_gap, 2*(width+h_gap)],
+            tops = [0, 0, 0];
+
+         $('.work-image').each(function(index){
+            $(this).css({
+               'width': width + 'px',
+               'left': lefts[index%3] + 'px'
+            });
+         });
+
+         $('.work-image').each(function(index){
+
+            // only when a img loaded, it's height becomes known.
+            $(this).imagesLoaded(function(){
+
+               $(this).css({
+                  'display': 'block',
+                  'top': tops[index%3] + 'px'
+               });
+
+               // overadd height
+               tops[index%3] += $(this).height() + v_gap;
+
+               // set mother wap's height
+               var maxHeight = 0;
+               for(var i=0; i<tops.length; i++){
+                  if(tops[i] > maxHeight){
+                     maxHeight = tops[i];
+                  }
+               }
+               $('.work-image-wap').css('height', maxHeight + 'px');
+            });
+         });
+      });
+
+      </script>
+      {% endif %}
    </div>
 
    <div class="span4">
@@ -148,9 +201,9 @@ $(document).ready(function(){
       </div>
       {% endfor %}
       
-      <a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}">
+      <!-- <a class="ad" title="{{ product.Product }}" href="{{ url_for('single_product', product_id=product.ProductID) }}">
          <img src="{{ product.ImageUrl }}">
-      </a>
+      </a> -->
 
       <h2>谁收藏了它？</h2>
 

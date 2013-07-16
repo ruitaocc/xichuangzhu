@@ -28,7 +28,7 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-single-work .work-type-qu{text-indent:2em;line-height:30px;padding:0 2em;}
 #page-single-work .work-type-wen{text-indent:2em;font-size:16px;line-height:30px;padding:0 0.5em;}#page-single-work .work-type-wen p{margin-bottom:18px;}
 #page-single-work #work-cmds{margin-right:15px;}#page-single-work #work-cmds .dropdown-toggle .caret{margin-top:8px;}
-#page-single-work .work-collection{font-weight:bold;font-size:16px;margin-bottom:5px;}
+#page-single-work .work-image-wap{position:relative;}#page-single-work .work-image-wap .work-image{display:none;position:absolute;box-shadow:0 0 1px rgba(0, 0, 0, 0.2);}
 #page-single-work .work-tags{list-style:none;margin:0;}#page-single-work .work-tags li{list-style:none;display:inline-block;}#page-single-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 2px 0 2px;cursor:pointer;color:#666;background-color:#F2F2F2;box-shadow:1px 1px 0px #bbb;}#page-single-work .work-tags li a:hover{background-color:#EbEbEb;}
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #DDD;padding-bottom:5px;}#page-single-work .other-work-item:last-child{border:0;}
 #page-single-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:gray;}
@@ -87,3 +87,5 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-add-topic #node,#page-edit-topic #node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}
 #page-informs .inform-item{clear:both;margin-bottom:10px;padding-bottom:15px;border-bottom:1px dashed #ddd;}#page-informs .inform-item .user-avatar{margin-top:5px;float:left;}
 #page-informs .inform-item .inform-wap{margin-left:60px;}#page-informs .inform-item .inform-wap .inform-title{font-size:12px;color:#999;}
+#page-work-image .image-info{margin-top:15px;margin-bottom:15px;}
+#page-work-image .image-wap img{margin-bottom:15px;}

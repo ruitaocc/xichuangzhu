@@ -127,12 +127,31 @@ class Work:
         g.cursor.execute(query)
         return g.cursor.fetchone()['TypeName']
 
+    # get a image
+    @staticmethod
+    def get_image(image_id):
+        g.cursor.execute('SELECT work_image.url, work_image.description, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
+        return g.cursor.fetchone()
+
+    # get images of a work
+    @staticmethod
+    def get_images_by_work(work_id):
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.description, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.work_id = %d AND user.UserID = work_image.user_id' % work_id)
+        return g.cursor.fetchall()
+
 # NEW
 
     # add a work
     @staticmethod
     def add_work(title, content, foreword, introduction, authorID, dynastyID, work_type, type_name):
         query = "INSERT INTO work (Title, Content, Foreword, Introduction, AuthorID, DynastyID, Type, TypeName) VALUES ('%s', '%s', '%s','%s', %d, %d, '%s', '%s')" % (title, content, foreword, introduction, authorID, dynastyID, work_type, type_name)
+        g.cursor.execute(query)
+        g.conn.commit()
+        return g.cursor.lastrowid
+
+    @staticmethod
+    def add_image(work_id, user_id, image_url, description):
+        query = "INSERT INTO work_image (work_id, user_id, url, description) VALUES (%d, %d, '%s', '%s')" % (work_id, user_id, image_url, description)
         g.cursor.execute(query)
         g.conn.commit()
         return g.cursor.lastrowid

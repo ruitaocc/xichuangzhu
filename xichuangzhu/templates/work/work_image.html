@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block page_title %}作品图片{% endblock %}
+{% block page_id%}page-work-image{% endblock %}
+
+{% block body %}
+
+<div class='row'>
+   <div class='span8'>
+      <div class='image-info'>
+         <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发布在 《<a href="{{ url_for('single_work', work_id=work.WorkID) }}">{{ work.Title }}</a>》
+      </div>
+      <div class='image-wap'>
+         <img src="{{ image.url }}" />
+         <div>{{ image.description }}</div>
+      </div>
+   </div>
+
+   <div class='span4'>
+      <h2>其他图片</h2>
+   </div>
+</div>
+
+{% endblock %}

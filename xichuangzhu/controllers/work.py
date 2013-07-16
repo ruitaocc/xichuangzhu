@@ -3,6 +3,8 @@ from __future__ import division
 import re
 import math
 import markdown2
+import uuid
+import config
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu.models.work_model import Work
@@ -46,16 +48,18 @@ def single_work(work_id):
 
     product = Product.get_product_by_random()
 
+    images = Work.get_images_by_work(work_id)
+
     other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
     for ow in other_works:
         ow['Content'] = content_clean(ow['Content'])
 
     collectors = Collect.get_users_by_work(work_id, 4)
 
-    return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors)
+    return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, images=images)
 
 # proc - collect work
-@app.route('/work/collect/<int:work_id>', methods=['POST'])
+@app.route('/work/<int:work_id>/collect', methods=['POST'])
 @require_login
 def collect_work(work_id):
     tags = request.form['tags'].split(' ')
@@ -79,7 +83,7 @@ def collect_work(work_id):
     return redirect(url_for('single_work', work_id=work_id))
 
 # proc - discollect work
-@app.route('/work/discollect/<int:work_id>')
+@app.route('/work/<int:work_id>/discollect')
 @require_login
 def discollect_work(work_id):
     Collect.remove(session['user_id'], work_id)
@@ -167,7 +171,7 @@ def add_work():
 
 # page - edit work
 #--------------------------------------------------
-@app.route('/work/edit/<int:work_id>', methods=['GET', 'POST'])
+@app.route('/work/<int:work_id>/edit', methods=['GET', 'POST'])
 @require_admin
 def edit_work(work_id):
     if request.method == 'GET':
@@ -186,6 +190,34 @@ def edit_work(work_id):
 
         Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
         return redirect(url_for('single_work', work_id=work_id))
+
+# page - add work image
+#--------------------------------------------------
+@app.route('/work/<int:work_id>/add_image', methods=['GET', 'POST'])
+@require_login
+def add_work_image(work_id):
+    if request.method == 'GET':
+        work = Work.get_work(work_id)
+        return render_template('work/add_work_image.html', work=work)
+    else:
+        # Add mtype
+        desc = request.form['desc']
+        image = request.files['image']
+
+        # Save image
+        image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
+        image.save(config.IMAGE_PATH + image_filename)
+
+        image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL + image_filename, desc)
+        return redirect(url_for('work_image', work_id=work_id, image_id=image_id))
+
+# page - add work image
+#--------------------------------------------------
+@app.route('/work/<int:work_id>/image/<int:image_id>', methods=['GET'])
+def work_image(work_id, image_id):
+    work = Work.get_work(work_id)
+    image = Work.get_image(image_id)
+    return render_template('work/work_image.html', work=work, image=image)
 
 # json - search authors in page add & edit work
 #--------------------------------------------------
