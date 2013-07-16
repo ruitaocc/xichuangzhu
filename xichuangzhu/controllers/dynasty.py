@@ -1,5 +1,4 @@
 #-*- coding: UTF-8 -*-
-
 import markdown2
 from flask import render_template, request, redirect, url_for, json, abort
 from xichuangzhu import app

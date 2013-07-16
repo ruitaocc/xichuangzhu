@@ -1,5 +1,4 @@
 #-*- coding: UTF-8 -*-
-
 import requests
 import smtplib
 from email.mime.text import MIMEText

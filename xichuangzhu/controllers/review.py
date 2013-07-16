@@ -1,5 +1,4 @@
 #-*- coding: UTF-8 -*-
-
 from __future__ import division
 import math
 import cgi

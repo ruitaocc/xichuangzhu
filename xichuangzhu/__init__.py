@@ -1,5 +1,4 @@
 #-*- coding: UTF-8 -*-
-
 import sys
 sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config

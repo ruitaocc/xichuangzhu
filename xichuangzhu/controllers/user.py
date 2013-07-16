@@ -1,5 +1,4 @@
 #-*- coding: UTF-8 -*-
-
 from __future__ import division
 import urllib, urllib2
 import smtplib
