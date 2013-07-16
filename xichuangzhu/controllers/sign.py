@@ -90,10 +90,7 @@ def send_verify_email():
             verify_url = config.SITE_DOMAIN + "verify_email/douban/" + str(user_id) + "/" + verify_code
 
             # prepare email content
-            msgText = '''<html>
-                <h3>点击下面的链接，激活你在西窗烛的帐号：</h3>
-                <a href='%s'>%s</a>
-                </html>''' % (verify_url, verify_url)
+            msgText = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % verify_url
             msg = MIMEText(msgText, 'html', 'utf-8')
             msg['From'] = "西窗烛 <" + config.SMTP_FROM + ">"
             msg['To'] = user_name + "<" + t_addr + ">"
