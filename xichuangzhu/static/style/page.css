@@ -3,7 +3,7 @@ body{font-family:'arial','宋体';margin:0 0 6em 0;}body #main-wap{font-size:14p
 body #main-wap h2{font-size:15px;line-height:15px;font-family:'微软雅黑';font-weight:normal;margin:20px 0 15px 0;color:#ad1616;clear:both;}
 body #main-wap .span4{width:290px;margin-left:30px;}
 body #main-wap .text-gap{height:7px;}
-body #footer{position:absolute;left:0;bottom:0;height:2.2em;z-index:10;text-align:center;font-size:12px;font-family:'微软雅黑';width:100%;color:#666;padding-top:5px;border-top:1px dashed #ddd;}body #footer a{color:#37a;}
+body #footer{position:absolute;left:0;bottom:0;height:2.2em;z-index:10;text-align:center;font-size:12px;font-family:'微软雅黑';width:100%;color:#666;padding-top:3px;}body #footer a{color:#37a;}
 body #footer img{display:none;}
 body #footer .container #copyright{float:left;}
 body #footer .container #links{float:right;margin:0;list-style-type:none;}body #footer .container #links li{display:inline-block;margin-right:15px;}
