@@ -97,12 +97,12 @@ $(document).ready(function(){
 
          <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-align-left"></span> 点评</a>
 
-         <a class="btn btn-small" href="{{ url_for('add_work_image', work_id=work.WorkID) }}"><span class="icon-picture"></span> 图片</a>
+         <a class="btn btn-small" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.WorkID) }}"><span class="icon-picture"></span> 书法</a>
 
          {% if is_collected %}
          <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.WorkID) }}" data-toggle="modal"><span class="icon-bookmark"></span> 已收藏</a>
          {% else %}
-         <a class="btn btn-small" title="添加收藏" href="#modal-tags" data-toggle="modal"><span class="icon-bookmark"></span> 收藏</a>
+         <a class="btn btn-small" title="收藏作品" href="#modal-tags" data-toggle="modal"><span class="icon-bookmark"></span> 收藏</a>
          {% endif %}
       </div>
       {% endif %}
@@ -115,7 +115,7 @@ $(document).ready(function(){
       {{ show_reviews(reviews)|safe }}
 
       {% if images|length != 0 %}
-      <h2>图片</h2>
+      <h2>书法作品</h2>
 
       <div class='work-image-wap'>
          {% for i in images %}
@@ -125,9 +125,9 @@ $(document).ready(function(){
       <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
       <script type="text/javascript">
       $(document).ready(function(){
-         var width = 200,
-            h_gap = 10,
-            v_gap = 10;
+         var width = 196,
+            h_gap = 15,
+            v_gap = 15;
 
          var lefts = [0, width+h_gap, 2*(width+h_gap)],
             tops = [0, 0, 0];

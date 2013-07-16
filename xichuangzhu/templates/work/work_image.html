@@ -8,7 +8,7 @@
 <div class='row'>
    <div class='span8'>
       <div class='image-info'>
-         <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发布在 《<a href="{{ url_for('single_work', work_id=work.WorkID) }}">{{ work.Title }}</a>》
+         <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发布于 《<a href="{{ url_for('single_work', work_id=work.WorkID) }}">{{ work.Title }}</a>》
       </div>
       <div class='image-wap'>
          <img src="{{ image.url }}" />
