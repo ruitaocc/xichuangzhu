@@ -18,6 +18,8 @@ def index():
     for work in works:
         work['Content'] = content_clean(work['Content'])
 
+    work_images = Work.get_images_by_random(9)
+
     reviews = Review.get_reviews_by_random(4)
     for r in reviews:
         r['Time'] = time_diff(r['Time'])
@@ -30,7 +32,7 @@ def index():
     
     dynasties = Dynasty.get_dynasties()
     topics = Topic.get_topics(8)
-    return render_template('site/index.html', works=works, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
+    return render_template('site/index.html', works=works, work_images=work_images, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
 
 # json - gene works data for index page
 @app.route('/4works', methods=['POST'])

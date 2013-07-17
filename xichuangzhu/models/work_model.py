@@ -133,6 +133,12 @@ class Work:
         g.cursor.execute('SELECT work_image.url, work_image.description, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
         return g.cursor.fetchone()
 
+    # get images by random
+    @staticmethod
+    def get_images_by_random(num):
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id, work_image.description, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE user.UserID = work_image.user_id ORDER BY RAND() LIMIT %d' % num) 
+        return g.cursor.fetchall()
+
     # get images of a work
     @staticmethod
     def get_images_by_work(work_id):
