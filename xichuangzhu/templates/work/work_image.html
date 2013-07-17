@@ -5,19 +5,25 @@
 
 {% block body %}
 
+<p class='image-info'>
+   <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发布于 《<a href="{{ url_for('single_work', work_id=work.WorkID) }}">{{ work.Title }}</a>》
+</p>
+
+<div class='image-wap'>
+   <img src="{{ image.url }}" />
+</div>
+
+
+
 <div class='row'>
    <div class='span8'>
-      <div class='image-info'>
-         <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发布于 《<a href="{{ url_for('single_work', work_id=work.WorkID) }}">{{ work.Title }}</a>》
-      </div>
-      <div class='image-wap'>
-         <img src="{{ image.url }}" />
-         <div>{{ image.description }}</div>
-      </div>
+      <p>{{ image.description }}</p>
+
+      <h2>评论</h2>
    </div>
 
    <div class='span4'>
-      <h2>其他图片</h2>
+      <!-- {{ image.description }} -->
    </div>
 </div>
 

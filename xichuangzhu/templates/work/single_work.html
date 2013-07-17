@@ -115,7 +115,7 @@ $(document).ready(function(){
       {{ show_reviews(reviews)|safe }}
 
       {% if images|length != 0 %}
-      <h2>书法作品</h2>
+      <h2>书法</h2>
 
       <div class='work-image-wap'>
          {% for i in images %}
@@ -125,7 +125,7 @@ $(document).ready(function(){
       <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
       <script type="text/javascript">
       $(document).ready(function(){
-         var width = 196,
+         var width = 190,
             h_gap = 15,
             v_gap = 15;
 
