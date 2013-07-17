@@ -71,23 +71,31 @@ $(document).ready(function(){
 
          $('.work-image').each(function(index){
             $(this).css({
-               'width': width + 'px',
-               'left': lefts[index%3] + 'px'
+               'width': width + 'px'
             });
          });
 
          $('.work-image').each(function(index){
-
             // only when a img loaded, it's height becomes known.
             $(this).imagesLoaded(function(){
+               // get the min height column
+               var minHeight = tops[0];
+               var minHeightColumn = 0;
+               for(var i=0; i<tops.length; i++){
+                  if(tops[i] < minHeight){
+                     minHeight = tops[i];
+                     minHeightColumn = i;
+                  }
+               }
 
                $(this).css({
                   'display': 'block',
-                  'top': tops[index%3] + 'px'
+                  'left': lefts[minHeightColumn] + 'px',
+                  'top': tops[minHeightColumn] + 'px'
                });
 
                // overadd height
-               tops[index%3] += $(this).height() + v_gap;
+               tops[minHeightColumn] += $(this).height() + v_gap;
 
                // set mother wap's height
                var maxHeight = 0;
