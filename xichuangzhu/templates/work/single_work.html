@@ -97,7 +97,7 @@ $(document).ready(function(){
 
          <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.WorkID) }}"><span class="icon-align-left"></span> 点评</a>
 
-         <a class="btn btn-small" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.WorkID) }}"><span class="icon-picture"></span> 书法</a>
+         <a class="btn btn-small" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.WorkID) }}"><span class="icon-picture"></span> 书画</a>
 
          {% if is_collected %}
          <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.WorkID) }}" data-toggle="modal"><span class="icon-bookmark"></span> 已收藏</a>

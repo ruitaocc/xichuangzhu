@@ -19,7 +19,7 @@
       <div class="review-extra-info">
          <a href="{{ url_for('user', user_abbr=r.UserAbbr) }}">{{ r.Name }}</a>
          评
-         <a href="{{ url_for('single_work', work_id=r.WorkID) }}">{{ r.WorkTitle }}〔{{ r.Author }}〕</a>
+         <a href="{{ url_for('single_work', work_id=r.WorkID) }}">{{ r.WorkTitle }}</a>〔{{ r.Author }}〕
          <span class="review-time">{{ r.Time }}</span>
       </div>
    </div>

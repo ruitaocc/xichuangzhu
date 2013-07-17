@@ -216,6 +216,7 @@ def add_work_image(work_id):
 @app.route('/work/<int:work_id>/image/<int:image_id>', methods=['GET'])
 def work_image(work_id, image_id):
     work = Work.get_work(work_id)
+    work['Content'] = content_clean(work['Content'])
     image = Work.get_image(image_id)
     return render_template('work/work_image.html', work=work, image=image)
 

@@ -16,7 +16,7 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:2px;text-decoration:none;color:#FBFBFB;}#page-index .work-item .work-type:hover{background-color:white;color:#a40000;}
 #page-index #dynasties-wap{margin:0;list-style:none;}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px;}#page-index #dynasties-wap .dynasty-item a{font-weight:bold;}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px;}
-#page-index .work-image-wap{position:relative;}#page-index .work-image-wap .work-image{display:none;position:absolute;box-shadow:0 0 1px rgba(0, 0, 0, 0.2);}
+#page-index .work-image-wap{position:relative;}#page-index .work-image-wap .work-image{display:none;position:absolute;}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block;}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#EEE;padding:4px 12px 5px 12px;text-decoration:none;color:#777;}
 #page-works #type-selector li:hover,#page-works #dynasty-selector li:hover{background-color:#DDD;}#page-works #type-selector li:hover a,#page-works #dynasty-selector li:hover a{color:#333;}
 #page-works #type-selector li.active a,#page-works #dynasty-selector li.active a{background-color:#0088cc;color:white;}
@@ -29,7 +29,7 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-single-work .work-type-qu{text-indent:2em;line-height:30px;padding:0 2em;}
 #page-single-work .work-type-wen{text-indent:2em;font-size:16px;line-height:30px;padding:0 0.5em;}#page-single-work .work-type-wen p{margin-bottom:18px;}
 #page-single-work #work-cmds{margin-right:15px;}#page-single-work #work-cmds .dropdown-toggle .caret{margin-top:8px;}
-#page-single-work .work-image-wap{position:relative;}#page-single-work .work-image-wap .work-image{display:none;position:absolute;box-shadow:0 0 1px rgba(0, 0, 0, 0.2);}
+#page-single-work .work-image-wap{position:relative;}#page-single-work .work-image-wap .work-image{display:none;position:absolute;}
 #page-single-work .work-tags{list-style:none;margin:0;}#page-single-work .work-tags li{list-style:none;display:inline-block;}#page-single-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 2px 0 2px;cursor:pointer;color:#666;background-color:#F2F2F2;box-shadow:1px 1px 0px #bbb;}#page-single-work .work-tags li a:hover{background-color:#EbEbEb;}
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #DDD;padding-bottom:5px;}#page-single-work .other-work-item:last-child{border:0;}
 #page-single-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:gray;}
@@ -54,9 +54,6 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-single-dynasty .row #dynasty-wap .dynasty-extra h3{font-size:15px;font-family:'微软雅黑';}
 #page-single-dynasty .row #dynasty-wap .dynasty-extra p{margin-bottom:15px;}
 #page-single-dynasty .row .author-item .author-dynasty{display:none;}
-#page-add-review .control-label,#page-edit-review .control-label{width:50px;}
-#page-add-review .controls,#page-edit-review .controls{margin-left:70px;}
-#page-add-review input[name='draft'],#page-edit-review input[name='draft']{margin-right:10px;}
 #page-single-review .user-avatar{float:right;margin-top:20px;}
 #page-single-review .review-title{margin-bottom:10px;}
 #page-single-review .review-extra-info{margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid #EEE;line-height:14px;color:#999;}#page-single-review .review-extra-info .review-time{color:#999;display:inline-block;}
@@ -77,8 +74,6 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-topics .topic-item .topic-user-avatar{margin-top:0;}
 #page-topics .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd;}#page-topics .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px;}
 #page-topics .ht-item .ht-title{margin-left:6px;font-size:14px;}
-#page-add-topic .control-label,#page-edit-topic .control-label{width:50px;}
-#page-add-topic .controls,#page-edit-topic .controls{margin-left:70px;}
 #page-single-topic .node-info{color:#999;}
 #page-single-topic .topic-user-avatar{float:right;margin-right:5px;}
 #page-single-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid #eee;color:#999;}#page-single-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px;}#page-single-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea;}
@@ -88,5 +83,5 @@ body #footer .container #extra-info{float:right;margin-right:20px;}body #footer 
 #page-add-topic #node,#page-edit-topic #node{font-size:14px;line-height:14px;margin-right:10px;font-family:'微软雅黑';vertical-align:middle;color:darkred;}
 #page-informs .inform-item{clear:both;margin-bottom:10px;padding-bottom:15px;border-bottom:1px dashed #ddd;}#page-informs .inform-item .user-avatar{margin-top:5px;float:left;}
 #page-informs .inform-item .inform-wap{margin-left:60px;}#page-informs .inform-item .inform-wap .inform-title{font-size:12px;color:#999;}
-#page-work-image .image-info{margin-top:15px;}
+#page-work-image .image-info{margin-top:15px;margin-bottom:10px;}
 #page-work-image .image-wap img{margin-bottom:15px;}
