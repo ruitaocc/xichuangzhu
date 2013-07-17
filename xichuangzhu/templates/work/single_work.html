@@ -110,12 +110,15 @@ $(document).ready(function(){
       <h2>题解</h2>
       <div class="work-introduction">{{ work.WorkIntroduction }}</div>
       
+      {% if reviews|length != 0 %}
       <h2>点评</h2>
+
       {% from "macro/reviews.widget" import show_reviews %}
       {{ show_reviews(reviews)|safe }}
+      {% endif %}
 
       {% if images|length != 0 %}
-      <h2>书法</h2>
+      <h2>书画</h2>
 
       <div class='work-image-wap'>
          {% for i in images %}
