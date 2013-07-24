@@ -4,9 +4,8 @@
 http://www.xichuangzhu.com
 
 何当共剪西窗烛，却话巴山夜雨时。
-<small>——李商隐《夜雨寄北》</small>
 
-部署方法：
+部署：
 
 （1）在MySQL数据库中新建数据库'xichuangzhu'，使用phpmyadmin导入xcz.sql
 （2）使用pip（全局）安装依赖包：requests, Flask-WTF, WTForms, MySQL-python, markdown2 
