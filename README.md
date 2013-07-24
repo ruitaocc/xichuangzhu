@@ -3,8 +3,12 @@
 
 http://www.xichuangzhu.com
 
-何当共剪西窗烛，却话巴山夜雨时。——李商隐 《夜雨寄北》
+何当共剪西窗烛，却话巴山夜雨时。
+<small>——李商隐《夜雨寄北》</small>
 
-不得不承认，中国传统文化的一部分，是对人性和自由的禁锢。五四运动所要摒弃的，是传统中的糟粕。但大江东去的豪放明快、低头弄青梅的婉媚曲折、西窗剪烛的情深意重，每次读到都会有所触动。文学之美，与时代无关。
+部署方法：
 
-“西窗烛”旨在为大家提供一个 <b>围绕传统文学作品的欣赏、点评、书画创作的网络空间</b>。对于小站的任何意见，欢迎在话题页面发表。
+（1）在MySQL数据库中新建数据库'xichuangzhu'，使用phpmyadmin导入xcz.sql
+（2）使用pip（全局）安装依赖包：requests, Flask-WTF, WTForms, MySQL-python, markdown2 
+（3）创建配置文件：将config.py复制到/var/www/flaskconfig/xichuangzhu.config.py，并修改其中的配置项
+（4）使用Gunicorn部署即可
