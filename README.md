@@ -11,4 +11,4 @@ http://www.xichuangzhu.com
 2. 使用pip（全局）安装依赖包：requests, Flask-WTF, WTForms, MySQL-python, markdown2 
 3. 创建配置文件：将config.py复制到/var/www/flaskconfig/xichuangzhu.config.py，并填充其中所有的缺失配置项
 4. 根据config.py中IMAGE_PATH建立同名同路径的文件夹
-5. 使用Gunicorn部署即可
+5. python run.py
