@@ -4,11 +4,11 @@
 SITE_DOMAIN = "http://localhost:5000"
 
 # admin id
-ADMIN_ID = 
+ADMIN_ID = 0000000
 
 # image upload path
-IMAGE_PATH = '/var/www/xcz_uploads/work_imgs/'
-IMAGE_URL = '/xcz_uploads/work_imgs/'
+#IMAGE_PATH = '/var/www/xcz_uploads/work_imgs/'
+#IMAGE_URL = '/xcz_uploads/work_imgs/'
 
 # app config
 SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT" # replace to your secret key

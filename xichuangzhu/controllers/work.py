@@ -12,7 +12,6 @@ from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.collect_model import Collect
-from xichuangzhu.models.widget_model import Widget
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
 from xichuangzhu.utils import time_diff, content_clean, require_login, require_admin

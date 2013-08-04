@@ -7,7 +7,6 @@ from flask import render_template, request, redirect, url_for, json, session, ab
 from xichuangzhu import app
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
-from xichuangzhu.models.collection_model import Collection
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.comment_model import Comment
