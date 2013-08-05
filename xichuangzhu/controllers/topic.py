@@ -1,6 +1,5 @@
 #-*- coding: UTF-8 -*-
 import cgi
-import markdown2
 from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app
 from xichuangzhu.models.topic_model import Topic
@@ -37,7 +36,6 @@ def single_topic(topic_id):
     topic = Topic.get_topic(topic_id)
     topic['Time'] = time_diff(topic['Time'])
     topic['Content'] = topic['Content'].replace('\n', "<div class='text-gap'></div>")
-    # topic['Content'] = markdown2.markdown(topic['Content'])
     comments = Comment.get_comments_by_topic(topic['TopicID'])
     for c in comments:
         c['Time'] = time_diff(c['Time'])
@@ -148,6 +146,9 @@ def edit_topic(topic_id):
 @app.route('/node/<node_abbr>')
 def single_node(node_abbr):
     node = Node.get_node_by_abbr(node_abbr)
+    if not node:
+        abort(404)
+
     nodes = Node.get_nodes(16)
     topics = Topic.get_topics_by_node(node_abbr)
     for t in topics:
