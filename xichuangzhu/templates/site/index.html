@@ -51,63 +51,63 @@ $(document).ready(function(){
       {% from "macro/reviews.widget" import show_reviews %}
       {{ show_reviews(reviews)|safe }}
 
-      <!-- <h2>书画</h2>
+      <h2>书法</h2>
 
       <div class='work-image-wap'>
          {% for i in work_images %}
          <a href="{{ url_for('work_image', work_id=i.work_id, image_id=i.id) }}"><img class='work-image' src="{{ i.url }}"></a>
          {% endfor %}
-      </div> -->
+      </div>
 
       <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
       <script type="text/javascript">
-      // $(document).ready(function(){
-      //    var width = 195,
-      //       h_gap = 15,
-      //       v_gap = 15;
+      $(document).ready(function(){
+         var width = 195,
+            h_gap = 15,
+            v_gap = 15;
 
-      //    var lefts = [0, width+h_gap, 2*(width+h_gap)],
-      //       tops = [0, 0, 0];
+         var lefts = [0, width+h_gap, 2*(width+h_gap)],
+            tops = [0, 0, 0];
 
-      //    $('.work-image').each(function(index){
-      //       $(this).css({
-      //          'width': width + 'px'
-      //       });
-      //    });
+         $('.work-image').each(function(index){
+            $(this).css({
+               'width': width + 'px'
+            });
+         });
 
-      //    $('.work-image').each(function(index){
-      //       // only when a img loaded, it's height becomes known.
-      //       $(this).imagesLoaded(function(){
-      //          // get the min height column
-      //          var minHeight = tops[0];
-      //          var minHeightColumn = 0;
-      //          for(var i=0; i<tops.length; i++){
-      //             if(tops[i] < minHeight){
-      //                minHeight = tops[i];
-      //                minHeightColumn = i;
-      //             }
-      //          }
+         $('.work-image').each(function(index){
+            // only when a img loaded, it's height becomes known.
+            $(this).imagesLoaded(function(){
+               // get the min height column
+               var minHeight = tops[0];
+               var minHeightColumn = 0;
+               for(var i=0; i<tops.length; i++){
+                  if(tops[i] < minHeight){
+                     minHeight = tops[i];
+                     minHeightColumn = i;
+                  }
+               }
 
-      //          $(this).css({
-      //             'display': 'block',
-      //             'left': lefts[minHeightColumn] + 'px',
-      //             'top': tops[minHeightColumn] + 'px'
-      //          });
+               $(this).css({
+                  'display': 'block',
+                  'left': lefts[minHeightColumn] + 'px',
+                  'top': tops[minHeightColumn] + 'px'
+               });
 
-      //          // overadd height
-      //          tops[minHeightColumn] += $(this).height() + v_gap;
+               // overadd height
+               tops[minHeightColumn] += $(this).height() + v_gap;
 
-      //          // set mother wap's height
-      //          var maxHeight = 0;
-      //          for(var i=0; i<tops.length; i++){
-      //             if(tops[i] > maxHeight){
-      //                maxHeight = tops[i];
-      //             }
-      //          }
-      //          $('.work-image-wap').css('height', maxHeight + 'px');
-      //       });
-      //    });
-      // });
+               // set mother wap's height
+               var maxHeight = 0;
+               for(var i=0; i<tops.length; i++){
+                  if(tops[i] > maxHeight){
+                     maxHeight = tops[i];
+                  }
+               }
+               $('.work-image-wap').css('height', maxHeight + 'px');
+            });
+         });
+      });
       </script>
    </div>
 
