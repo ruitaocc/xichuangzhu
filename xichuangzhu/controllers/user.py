@@ -13,6 +13,7 @@ from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.models.topic_model import Topic
+from xichuangzhu.models.work_model import Work
 from xichuangzhu.utils import content_clean, time_diff, require_login
 from xichuangzhu.form import EmailForm
 
@@ -42,7 +43,10 @@ def user(user_abbr):
         t['Time'] = time_diff(t['Time'])
     topics_num = Topic.get_topics_num_by_user(user['UserID'])
 
-    return render_template('user/user.html', user=user, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num)
+    # handwritings
+    work_images = Work.get_images_by_user(user['UserID'])
+
+    return render_template('user/user.html', user=user, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, work_images=work_images)
 
 # page - user's collect works
 #--------------------------------------------------

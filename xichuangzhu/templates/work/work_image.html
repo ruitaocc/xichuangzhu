@@ -11,20 +11,17 @@
          <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发表于 <a href="{{ url_for('single_work', work_id=work.WorkID) }}">{{ work.Title }}</a>：
       </p>
 
-      <blockquote>
-         <p>{{ work.Content|truncate(100, True) }}</p>
-         <small>〔{{ work.Dynasty }}〕{{ work.Author }}</small>
-      </blockquote>
-
       <div class='image-wap'>
          <img src="{{ image.url }}" />
       </div>
 
-      <p>{{ image.description }}</p>
+      <blockquote>
+         <p>{{ work.Content|truncate(100, True) }}</p>
+         <small>〔{{ work.Dynasty }}〕{{ work.Author }}</small>
+      </blockquote>
    </div>
 
-   <div class='span4'>
-   </div>
+   <div class='span4'></div>
 </div>
 
 {% endblock %}
