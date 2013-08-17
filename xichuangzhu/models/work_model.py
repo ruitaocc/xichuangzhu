@@ -149,7 +149,13 @@ class Work:
     @staticmethod
     def get_images_by_user(user_id):
         g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id FROM work_image WHERE work_image.user_id = %d' % user_id)
-        return g.cursor.fetchall()        
+        return g.cursor.fetchall()     
+
+    # get images num by user
+    @staticmethod
+    def get_images_num_by_user(user_id):
+        g.cursor.execute('SELECT COUNT(*) AS work_images_num FROM work_image WHERE work_image.user_id = %d' % user_id)
+        return g.cursor.fetchone()['work_images_num']
 
 # NEW
 

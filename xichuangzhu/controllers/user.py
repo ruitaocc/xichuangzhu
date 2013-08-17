@@ -45,8 +45,9 @@ def user(user_abbr):
 
     # handwritings
     work_images = Work.get_images_by_user(user['UserID'])
+    work_images_num = Work.get_images_num_by_user(user['UserID'])
 
-    return render_template('user/user.html', user=user, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, work_images=work_images)
+    return render_template('user/user.html', user=user, works=works, works_num=works_num, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, work_images=work_images, work_images_num=work_images_num)
 
 # page - user's collect works
 #--------------------------------------------------
