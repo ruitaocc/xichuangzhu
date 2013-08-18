@@ -34,13 +34,8 @@ $(document).ready(function(){
       {% from "macro/works.widget" import show_works %}
       {{ show_works(works)|safe }}
 
-      <div class="pagination">
-         <ul>
-            <li><a href="{{ url_for('works') }}?page={{ pre_page }}&type={{ work_type }}&dynasty={{ dynasty_abbr }}"><<</a></li>
-            <li><a>{{ page }} / {{ total_page }}</a></li>
-            <li><a href="{{ url_for('works') }}?page={{ next_page }}&type={{ work_type }}&dynasty={{ dynasty_abbr }}">>></a></li>
-         </ul>
-      </div>
+      {% from "macro/pagination.widget" import render_pagination %}
+      {{ render_pagination(pagination)|safe }}
    </div>
 
    <div class="span4">

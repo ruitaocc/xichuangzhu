@@ -117,56 +117,12 @@ $(document).ready(function(){
       {{ show_reviews(reviews)|safe }}
       {% endif %}
 
-      {% if images|length != 0 %}
+      {% if work_images|length != 0 %}
       <h2>书法</h2>
 
-      <div class='work-image-wap'>
-         {% for i in images %}
-         <a href="{{ url_for('work_image', work_id=work.WorkID, image_id=i.id) }}"><img class='work-image' src="{{ i.url }}" /></a>
-         {% endfor %}
-      </div>
-      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
-      <script type="text/javascript">
-      $(document).ready(function(){
-         var width = 190,
-            h_gap = 15,
-            v_gap = 15;
+      {% from "macro/work_images.widget" import show_work_images %}
+      {{ show_work_images(work_images)|safe }}
 
-         var lefts = [0, width+h_gap, 2*(width+h_gap)],
-            tops = [0, 0, 0];
-
-         $('.work-image').each(function(index){
-            $(this).css({
-               'width': width + 'px',
-               'left': lefts[index%3] + 'px'
-            });
-         });
-
-         $('.work-image').each(function(index){
-
-            // only when a img loaded, it's height becomes known.
-            $(this).imagesLoaded(function(){
-
-               $(this).css({
-                  'display': 'block',
-                  'top': tops[index%3] + 'px'
-               });
-
-               // overadd height
-               tops[index%3] += $(this).height() + v_gap;
-
-               // set mother wap's height
-               var maxHeight = 0;
-               for(var i=0; i<tops.length; i++){
-                  if(tops[i] > maxHeight){
-                     maxHeight = tops[i];
-                  }
-               }
-               $('.work-image-wap').css('height', maxHeight + 'px');
-            });
-         });
-      });
-      </script>
       {% endif %}
    </div>
 

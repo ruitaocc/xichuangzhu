@@ -12,13 +12,8 @@
       {% from "macro/works.widget" import show_works %}
       {{ show_works(works)|safe }}
 
-      <div class="pagination">
-         <ul>
-            <li><a href="{{ url_for('works_by_tag', tag=tag) }}?page={{ pre_page }}"><<</a></li>
-            <li><a>{{ page }} / {{ total_page }}</a></li>
-            <li><a href="{{ url_for('works_by_tag', tag=tag) }}?page={{ next_page }}">>></a></li>
-         </ul>
-      </div>
+      {% from "macro/pagination.widget" import render_pagination %}
+      {{ render_pagination(pagination)|safe }}
    </div>
 
    <div class="span4"></div>

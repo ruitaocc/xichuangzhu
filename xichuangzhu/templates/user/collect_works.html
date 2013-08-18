@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block page_title %}作品收藏{% endblock %}
+{% block page_id%}page-user-collect-works{% endblock %}
+
+{% block body %}
+
+<div class="row">
+   <div class="span8">
+      <h2>作品收藏 / {{ collect_works_num }}</h2>
+
+      {% from "macro/works.widget" import show_works %}
+      {{ show_works(collect_works)|safe }}
+
+      {% from "macro/pagination.widget" import render_pagination %}
+      {{ render_pagination(pagination)|safe }}
+   </div>
+
+   <div class="span4"></div>
+</div>
+
+{% endblock %}

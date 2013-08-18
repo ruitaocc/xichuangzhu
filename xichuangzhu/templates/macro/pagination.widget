@@ -1,0 +1,17 @@
+{% macro render_pagination(pagination) %}
+
+<div class="pagination">
+   <ul>
+      {% if pagination.has_prev %}
+      <li><a href="{{ url_for_other_page(pagination.prev_page) }}"><<</a></li>
+      {% endif %}
+
+      <li><a>{{ pagination.page }} / {{ pagination.pages }}</a></li>
+
+      {% if pagination.has_next %}
+      <li><a href="{{ url_for_other_page(pagination.next_page) }}">>></a></li>
+      {% endif %}
+   </ul>
+</div>
+
+{% endmacro %}

@@ -14,7 +14,7 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
-from xichuangzhu.utils import time_diff, content_clean, require_login, require_admin
+from xichuangzhu.utils import time_diff, content_clean, require_login, require_admin, Pagination
 
 # page - single work
 #--------------------------------------------------
@@ -47,7 +47,7 @@ def single_work(work_id):
 
     product = Product.get_product_by_random()
 
-    images = Work.get_images_by_work(work_id)
+    work_images = Work.get_images_by_work(work_id, 9)
 
     other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
     for ow in other_works:
@@ -55,7 +55,7 @@ def single_work(work_id):
 
     collectors = Collect.get_users_by_work(work_id, 4)
 
-    return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, images=images)
+    return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, work_images=work_images)
 
 # proc - collect work
 @app.route('/work/<int:work_id>/collect', methods=['POST'])
@@ -92,60 +92,41 @@ def discollect_work(work_id):
 #--------------------------------------------------
 @app.route('/works')
 def works():
-    num_per_page = 10
-
+    per_page = 10
     work_type = request.args['type'] if 'type' in request.args else 'all'
     dynasty_abbr = request.args['dynasty'] if 'dynasty' in request.args else 'all'
     page = int(request.args['page'] if 'page' in request.args else 1)
 
-    works = Work.get_works(work_type, dynasty_abbr, page, num_per_page)
+    works = Work.get_works(work_type, dynasty_abbr, page, per_page)
     for work in works:
         work['Content'] = content_clean(work['Content'])
 
     works_num = Work.get_works_num(work_type, dynasty_abbr)
 
-    # page paras
-    total_page = int(math.ceil(works_num / num_per_page))
-    pre_page = (page - 1) if page > 1 else 1
-    if total_page == 0:
-        next_page = 1
-    elif page < total_page:
-        next_page = page + 1
-    else:
-        next_page = total_page
+    pagination = Pagination(page, per_page, works_num)
 
     work_types = Work.get_types()
 
     dynasties = Dynasty.get_dynasties()
 
-    return render_template('work/works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page, work_type=work_type, dynasty_abbr=dynasty_abbr)
+    return render_template('work/works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, pagination=pagination, work_type=work_type, dynasty_abbr=dynasty_abbr)
 
 # page - works by tag
 #--------------------------------------------------
 @app.route('/tag/<tag>')
 def works_by_tag(tag):
-    num_per_page = 10
-
+    per_page = 10
     page = int(request.args['page'] if 'page' in request.args else 1)
 
-    works = Work.get_works_by_tag(tag, page, num_per_page)
+    works = Work.get_works_by_tag(tag, page, per_page)
     for work in works:
         work['Content'] = content_clean(work['Content'])
 
     works_num = Work.get_works_num_by_tag(tag)
 
-    # page paras
-    total_page = int(math.ceil(works_num / num_per_page))
-    pre_page = (page - 1) if page > 1 else 1
-    if total_page == 0:
-        next_page = 1
-        total_page = 1
-    elif page < total_page:
-        next_page = page + 1
-    else:
-        next_page = total_page
+    pagination = Pagination(page, per_page, works_num)
 
-    return render_template('work/works_by_tag.html', works=works, tag=tag, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+    return render_template('work/works_by_tag.html', works=works, tag=tag, pagination=pagination)
 
 # page - add work
 #--------------------------------------------------

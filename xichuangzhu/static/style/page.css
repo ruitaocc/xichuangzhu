@@ -16,7 +16,6 @@ body #footer .container #extra-info{float:right;margin-right:20px}body #footer .
 #page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 3px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:2px;text-decoration:none;color:#fbfbfb}#page-index .work-item .work-type:hover{background-color:#fff;color:#a40000}
 #page-index #dynasties-wap{margin:0;list-style:none}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px}#page-index #dynasties-wap .dynasty-item a{font-weight:bold}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px}
-#page-index .work-image-wap{position:relative}#page-index .work-image-wap .work-image{display:none;position:absolute}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#eee;padding:4px 12px 5px 12px;text-decoration:none;color:#777}
 #page-works #type-selector li:hover,#page-works #dynasty-selector li:hover{background-color:#ddd}#page-works #type-selector li:hover a,#page-works #dynasty-selector li:hover a{color:#333}
 #page-works #type-selector li.active a,#page-works #dynasty-selector li.active a{background-color:#08c;color:#fff}
@@ -29,7 +28,6 @@ body #footer .container #extra-info{float:right;margin-right:20px}body #footer .
 #page-single-work .work-type-qu{text-indent:2em;line-height:30px;padding:0 2em}
 #page-single-work .work-type-wen,#page-single-work .work-type-fu{text-indent:2em;font-size:16px;line-height:30px;padding:0 .5em}#page-single-work .work-type-wen p,#page-single-work .work-type-fu p{margin-bottom:18px}
 #page-single-work #work-cmds{margin-right:15px}#page-single-work #work-cmds .dropdown-toggle .caret{margin-top:8px}
-#page-single-work .work-image-wap{position:relative}#page-single-work .work-image-wap .work-image{display:none;position:absolute}
 #page-single-work .work-tags{list-style:none;margin:0}#page-single-work .work-tags li{list-style:none;display:inline-block}#page-single-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 2px 0 2px;cursor:pointer;color:#666;background-color:#f2f2f2;box-shadow:1px 1px 0 #bbb}#page-single-work .work-tags li a:hover{background-color:#ebebeb}
 #page-single-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #ddd;padding-bottom:5px}#page-single-work .other-work-item:last-child{border:0}
 #page-single-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:#808080}
@@ -66,7 +64,6 @@ body #footer .container #extra-info{float:right;margin-right:20px}body #footer .
 #page-user #user-avatar{float:left;margin-top:15px}
 #page-user .user-info{margin-left:60px}#page-user .user-info .user-name{font-size:25px;line-height:30px;margin-top:15px;font-weight:bold;font-family:'微软雅黑'}
 #page-user .user-info .user-signature{font-size:12px;color:#666}
-#page-user .work-image-wap{position:relative}#page-user .work-image-wap .work-image{display:none;position:absolute}
 #page-products .products-wap{margin-top:15px;position:relative}#page-products .products-wap .product-item .product-image{opacity:.9;display:none;position:absolute}#page-products .products-wap .product-item .product-image:hover{opacity:1}
 #page-single-product .image-wap{text-align:center}#page-single-product .image-wap .product-image{margin:15px auto 0 auto}
 #page-single-product .product-name{border-bottom:2px solid #8b0000;padding-bottom:10px;margin-bottom:18px}

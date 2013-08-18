@@ -4,7 +4,7 @@ sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config
 import MySQLdb
 import MySQLdb.cursors
-from flask import Flask, session, g
+from flask import Flask, session, g, request, url_for
 from xichuangzhu.models.inform_model import Inform
 
 # convert python's encoding to utf8
@@ -26,7 +26,16 @@ def inject_vars():
         admin_id = config.ADMIN_ID, # admin id
         informs_num = Inform.get_new_informs_num(session['user_id']) if 'user_id' in session else 0)    # new informs num
 
-# bafore every request
+# url generator for pagination
+def url_for_other_page(page):
+    view_args = request.view_args.copy()
+    args = request.args.copy()
+    args['page'] = page
+    view_args.update(args)
+    return url_for(request.endpoint, **view_args)
+app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+
+# before every request
 @app.before_request
 def before_request():
     g.user_id =  session['user_id'] if 'user_id' in session else None

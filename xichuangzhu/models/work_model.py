@@ -141,14 +141,14 @@ class Work:
 
     # get images of a work
     @staticmethod
-    def get_images_by_work(work_id):
-        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id  FROM user, work_image WHERE work_image.work_id = %d AND user.UserID = work_image.user_id' % work_id)
+    def get_images_by_work(work_id, num):
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id  FROM user, work_image WHERE work_image.work_id = %d AND user.UserID = work_image.user_id LIMIT %d' % (work_id, num))
         return g.cursor.fetchall()
 
     # get images by user
     @staticmethod
-    def get_images_by_user(user_id):
-        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id FROM work_image WHERE work_image.user_id = %d' % user_id)
+    def get_images_by_user(user_id, num):
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id FROM work_image WHERE work_image.user_id = %d LIMIT %d' % (user_id, num))
         return g.cursor.fetchall()     
 
     # get images num by user

@@ -13,7 +13,7 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import ReviewForm, CommentForm
-from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login
+from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login, Pagination
 
 # page single review
 #--------------------------------------------------
@@ -78,26 +78,20 @@ def add_comment_to_review(review_id):
 @app.route('/reviews')
 def reviews():
     # pagination
-    num_per_page = 10
+    per_page = 10
     page = int(request.args['page'] if 'page' in request.args else 1)
 
-    reviews = Review.get_reviews(page, num_per_page)
+    reviews = Review.get_reviews(page, per_page)
     for r in reviews:
         r['Time'] = time_diff(r['Time'])
 
-    # page paras
     reviews_num = Review.get_reviews_num()
-    total_page = int(math.ceil(reviews_num / num_per_page))
-    pre_page = (page - 1) if page > 1 else 1
-    if total_page == 0:
-        next_page = 1
-    elif page < total_page:
-        next_page = page + 1
-    else:
-        next_page = total_page
+
+    pagination = Pagination(page, per_page, reviews_num)
 
     reviewers = Review.get_hot_reviewers(8)
-    return render_template('review/reviews.html', reviews=reviews, reviewers=reviewers, page=page, total_page=total_page, pre_page=pre_page, next_page=next_page)
+
+    return render_template('review/reviews.html', reviews=reviews, reviewers=reviewers, pagination=pagination)
 
 # page add review
 #--------------------------------------------------

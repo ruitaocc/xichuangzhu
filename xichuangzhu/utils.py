@@ -2,6 +2,7 @@
 import datetime, time
 import re
 from functools import wraps
+from math import ceil
 from flask import url_for, session, abort, g
 import config
 from xichuangzhu.models.user_model import User
@@ -86,3 +87,36 @@ def require_login(func):
             return abort(404)
         return func(*args, **kwargs)
     return decorated_function
+
+# Pagination class
+class Pagination(object):
+
+    def __init__(self, page, per_page, total_count):
+        self.page = page
+        self.per_page = per_page
+        self.total_count = total_count
+
+    @property
+    def pages(self):
+        return int(ceil(self.total_count / float(self.per_page)))
+
+    @property
+    def has_prev(self):
+        return self.page > 1
+
+    @property
+    def has_next(self):
+        return self.page < self.pages
+
+    @property
+    def prev_page(self):
+        return (self.page - 1) if self.page > 1 else 1
+
+    @property
+    def next_page(self):
+        if self.pages == 0:
+            return 1
+        elif self.page < self.pages:
+            return self.page + 1
+        else:
+            return self.pages

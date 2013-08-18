@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block page_title %}收藏{% endblock %}
+{% block page_id%}page-user-collects{% endblock %}
+
+{% block body %}
+
+<div class="row">
+   <div class="span8">
+      <h2>
+         作品收藏
+         <span class='link-more'>
+            <a href="{{ url_for('collect_works') }}">全部 / {{ collect_works_num }} »</a>
+         </span>
+      </h2>
+
+      {% from "macro/works.widget" import show_works %}
+      {{ show_works(collect_works)|safe }}
+
+      <h2>
+         书法收藏
+         <span class='link-more'>
+            <a href="#">全部 / {{ work_images_num }} »</a>
+         </span>
+      </h2>
+
+      {% from "macro/work_images.widget" import show_work_images %}
+      {{ show_work_images(work_images)|safe }}
+      
+   </div>
+
+   <div class="span4">
+   </div>
+</div>
+
+{% endblock %}
