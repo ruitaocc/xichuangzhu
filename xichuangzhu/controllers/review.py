@@ -15,10 +15,10 @@ from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import ReviewForm, CommentForm
 from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login, Pagination
 
-# page single review
+# page review
 #--------------------------------------------------
 @app.route('/review/<int:review_id>')
-def single_review(review_id):
+def review(review_id):
     form = CommentForm()
 
     # check exist
@@ -39,7 +39,7 @@ def single_review(review_id):
     for c in comments:
         c['Time'] = time_diff(c['Time'])
 
-    return render_template('review/single_review.html', review=review, comments=comments, form=form)
+    return render_template('review/review.html', review=review, comments=comments, form=form)
 
 # proc - add comment
 @app.route('/review/add_comment/<int:review_id>', methods=['POST'])
@@ -69,9 +69,9 @@ def add_comment_to_review(review_id):
         # and not review_user_id, because if so, the inform has already been sended above
         if replyee_id != -1 and replyee_id != replyer_id and replyee_id != review_user_id:
             Inform.add(replyer_id, replyee_id, inform_title, comment)
-        return redirect(url_for('single_review', review_id=review_id) + "#" + str(new_comment_id))
+        return redirect(url_for('review', review_id=review_id) + "#" + str(new_comment_id))
     else:
-        return redirect(url_for('single_review', review_id=review_id))
+        return redirect(url_for('review', review_id=review_id))
 
 # page all reviews
 #--------------------------------------------------
@@ -110,7 +110,7 @@ def add_review(work_id):
             content = cgi.escape(form.content.data)
             is_publish = 1 if 'publish' in request.form else 0
             new_review_id = Review.add_review(work_id, user_id, title, content, is_publish)
-            return redirect(url_for('single_review', review_id=new_review_id))
+            return redirect(url_for('review', review_id=new_review_id))
         else:
             return render_template('review/add_review.html', work=work, form=form)
 
@@ -133,7 +133,7 @@ def edit_review(review_id):
             content = cgi.escape(form.content.data)
             is_publish = 1 if 'publish' in request.form else 0
             Review.edit_review(review_id, title, content, is_publish)
-            return redirect(url_for('single_review', review_id=review_id))
+            return redirect(url_for('review', review_id=review_id))
         else:
             return render_template('review/edit_review.html', review=review, form=form)
 

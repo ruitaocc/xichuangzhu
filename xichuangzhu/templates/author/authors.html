@@ -24,12 +24,12 @@ $(document).ready(function(){
       <a name="{{ dynasty.Abbr }}"></a>
 
       <div class="author-wap">
-         <a class='author-dynasty' href="{{ url_for('single_dynasty', dynasty_abbr=dynasty.Abbr) }}">{{ dynasty.Dynasty }}</a>
+         <a class='author-dynasty' href="{{ url_for('dynasty', dynasty_abbr=dynasty.Abbr) }}">{{ dynasty.Dynasty }}</a>
 
          <ul class="author-group clearfix">
             {% for author in dynasty.authors %}
             <li class='author'>
-               <a title="{{ author.Quote }}{% if session.user_id == 45197381 %} / {{ author.QuotesNum }}{% endif %}" href="{{ url_for('single_author', author_abbr=author.Abbr, q=author.QuoteID) }}">{{ author.Author }}</a>
+               <a title="{{ author.Quote }}{% if session.user_id == 45197381 %} / {{ author.QuotesNum }}{% endif %}" href="{{ url_for('author', author_abbr=author.Abbr, q=author.QuoteID) }}">{{ author.Author }}</a>
             </li>
             {% endfor %}
          </ul>

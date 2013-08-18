@@ -30,10 +30,10 @@ def authors():
 
     return render_template('author/authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
-# page single author
+# page author
 #--------------------------------------------------
 @app.route('/author/<author_abbr>')
-def single_author(author_abbr):
+def author(author_abbr):
     author = Author.get_author_by_abbr(author_abbr)
     if not author:
         abort(404)
@@ -62,7 +62,7 @@ def single_author(author_abbr):
         work_type = work['Type']  
         works_num[work_type]['num'] += 1
 
-    return render_template('author/single_author.html', author=author, quote=quote, quotes_num=quotes_num, works=works, works_num=works_num)
+    return render_template('author/author.html', author=author, quote=quote, quotes_num=quotes_num, works=works, works_num=works_num)
 
 # page add author
 #--------------------------------------------------
@@ -80,7 +80,7 @@ def add_author():
         deathYear = request.form['deathYear']
         dynastyID = int(request.form['dynastyID'])
         Author.add_author(author, abbr, introduction, birthYear, deathYear, dynastyID)
-        return redirect(url_for('author/single_author', author_abbr=abbr))
+        return redirect(url_for('author/author', author_abbr=abbr))
 
 # page edit author
 #--------------------------------------------------
@@ -99,7 +99,7 @@ def edit_author(authorID):
         deathYear = request.form['deathYear']
         dynastyID = int(request.form['dynastyID'])      
         Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
-        return redirect(url_for('author/single_author', author_abbr=abbr))
+        return redirect(url_for('author/author', author_abbr=abbr))
 
 # page - admin quotes
 #--------------------------------------------------

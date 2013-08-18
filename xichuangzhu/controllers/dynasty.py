@@ -7,10 +7,10 @@ from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.quote_model import Quote
 from xichuangzhu.utils import require_admin
 
-# page single dynasty
+# page dynasty
 #--------------------------------------------------
 @app.route('/dynasty/<dynasty_abbr>')
-def single_dynasty(dynasty_abbr):
+def dynasty(dynasty_abbr):
     dynasty = Dynasty.get_dynasty_by_abbr(dynasty_abbr)
     if not dynasty:
         abort(404)
@@ -24,7 +24,7 @@ def single_dynasty(dynasty_abbr):
     
     dynasties = Dynasty.get_dynasties()
     
-    return render_template('dynasty/single_dynasty.html', dynasty=dynasty, authors=authors, authors_num=authors_num, dynasties=dynasties)
+    return render_template('dynasty/dynasty.html', dynasty=dynasty, authors=authors, authors_num=authors_num, dynasties=dynasties)
 
 # page add dynasty
 #--------------------------------------------------
@@ -40,7 +40,7 @@ def add_dynasty():
         startYear = int(request.form['startYear'])
         endYear = int(request.form['endYear'])
         Dynasty.add_dynasty(dynasty, abbr, introduction, startYear, endYear)
-        return redirect(url_for('dynasty/single_dynasty', dynasty_abbr=abbr))
+        return redirect(url_for('dynasty/dynasty', dynasty_abbr=abbr))
 
 # page edit dynasty
 #--------------------------------------------------
@@ -58,4 +58,4 @@ def edit_dynasty(dynasty_id):
         startYear = int(request.form['startYear'])
         endYear = int(request.form['endYear'])
         Dynasty.edit_dynasty(dynasty, abbr, introduction, history, startYear, endYear, dynasty_id)
-        return redirect(url_for('dynasty/single_dynasty', dynasty_abbr=abbr))
+        return redirect(url_for('dynasty/dynasty', dynasty_abbr=abbr))

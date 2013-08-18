@@ -81,7 +81,7 @@ $(document).ready(function(){
       <ul id="dynasties-wap">
          {% for dynasty in dynasties %}
          <li class='dynasty-item'>
-            <a href="{{ url_for('single_dynasty', dynasty_abbr=dynasty.Abbr) }}">{{ dynasty.Dynasty }}</a>
+            <a href="{{ url_for('dynasty', dynasty_abbr=dynasty.Abbr) }}">{{ dynasty.Dynasty }}</a>
             <span>/</span>
          </li>
          {% endfor %}

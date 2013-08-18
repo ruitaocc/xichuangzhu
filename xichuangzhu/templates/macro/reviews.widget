@@ -8,7 +8,7 @@
 
    <div class="review-wap">
       <div class="review-title">
-         <a href="{{ url_for('single_review', review_id = r.ReviewID) }}">{{ r.Title }}</a>
+         <a href="{{ url_for('review', review_id = r.ReviewID) }}">{{ r.Title }}</a>
          {% if "IsPublish" in r and not r.IsPublish %}
          <sup><span class="label label-inverse">草稿</span></sup>
          {% endif %}
@@ -19,7 +19,7 @@
       <div class="review-extra-info">
          <a href="{{ url_for('user', user_abbr=r.UserAbbr) }}">{{ r.Name }}</a>
          评
-         <a href="{{ url_for('single_work', work_id=r.WorkID) }}">{{ r.WorkTitle }}</a>〔{{ r.Author }}〕
+         <a href="{{ url_for('work', work_id=r.WorkID) }}">{{ r.WorkTitle }}</a>〔{{ r.Author }}〕
          <span class="review-time">{{ r.Time }}</span>
       </div>
    </div>

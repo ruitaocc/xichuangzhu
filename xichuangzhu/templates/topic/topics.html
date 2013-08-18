@@ -27,7 +27,7 @@
          <div class="node-type">{{ nt.Type }}</div>
          <ul class="node-list">
             {% for n in nt.nodes %}
-            <li class="node"><a href="{{ url_for('single_node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
+            <li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
             {% endfor %}
          </ul>
       </div>
@@ -40,7 +40,7 @@
 
       <ul class="node-list">
       {% for n in nodes %}
-      <li class="node"><a href="{{ url_for('single_node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
+      <li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
       {% endfor %}
       </ul> -->
 
@@ -49,7 +49,7 @@
       {% for t in hot_topics %}
       <div class="ht-item">
          <a class="ht-user-avatar" href="{{ url_for('user', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
-         <span class="ht-title"><a href="{{ url_for('single_topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></span>
+         <span class="ht-title"><a href="{{ url_for('topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></span>
       </div>
       {% endfor %} -->
       <ul class='topic-tips'>

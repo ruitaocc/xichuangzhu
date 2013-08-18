@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block page_title %}{{ dynasty.Dynasty }}{% endblock %}
-{% block page_id%}page-single-dynasty{% endblock %}
+{% block page_id%}page-dynasty{% endblock %}
 
 {% block body %}
 
 <ul id="dyn-selector" class="clearfix">
    {% for dyn in dynasties %}
    <li>
-      <a href="{{ url_for('single_dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 10px{% endif %}">{{ dyn.Dynasty }}</a>
+      <a href="{{ url_for('dynasty', dynasty_abbr=dyn.Abbr) }}" id="dyn-{{ dyn.DynastyID }}" data-dynasty-id="{{ dyn.DynastyID }}" style="{% if dyn.DynastyID == dynasty.DynastyID %}margin-top: 10px{% endif %}">{{ dyn.Dynasty }}</a>
    </li>
    {% endfor %}
 </ul>

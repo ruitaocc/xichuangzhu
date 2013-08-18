@@ -16,10 +16,10 @@ from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
 from xichuangzhu.utils import time_diff, content_clean, require_login, require_admin, Pagination
 
-# page - single work
+# page - work
 #--------------------------------------------------
 @app.route('/work/<int:work_id>')
-def single_work(work_id):
+def work(work_id):
     work = Work.get_work(work_id)
     if not work:
         abort(404)
@@ -55,7 +55,7 @@ def single_work(work_id):
 
     collectors = Collect.get_users_by_work(work_id, 4)
 
-    return render_template('work/single_work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, work_images=work_images)
+    return render_template('work/work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, work_images=work_images)
 
 # proc - collect work
 @app.route('/work/<int:work_id>/collect', methods=['POST'])
@@ -79,14 +79,14 @@ def collect_work(work_id):
         Tag.add_user_tag(session['user_id'], t)
         Tag.add_work_tag(work_id, t)
 
-    return redirect(url_for('single_work', work_id=work_id))
+    return redirect(url_for('work', work_id=work_id))
 
 # proc - discollect work
 @app.route('/work/<int:work_id>/discollect')
 @require_login
 def discollect_work(work_id):
     Collect.remove(session['user_id'], work_id)
-    return redirect(url_for('single_work', work_id=work_id))
+    return redirect(url_for('work', work_id=work_id))
 
 # page - all works
 #--------------------------------------------------
@@ -147,7 +147,7 @@ def add_work():
         type_name = Work.get_type_name(work_type)
         
         new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, work_type, type_name)
-        return redirect(url_for('single_work', work_id=new_work_id))
+        return redirect(url_for('work', work_id=new_work_id))
 
 # page - edit work
 #--------------------------------------------------
@@ -169,7 +169,7 @@ def edit_work(work_id):
         type_name = Work.get_type_name(work_type)
 
         Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
-        return redirect(url_for('single_work', work_id=work_id))
+        return redirect(url_for('work', work_id=work_id))
 
 # page - add work image
 #--------------------------------------------------

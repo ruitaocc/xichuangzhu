@@ -28,10 +28,10 @@ def topics():
 
     return render_template('topic/topics.html', topics=topics, nodes=nodes, hot_topics=hot_topics, node_types=node_types)
 
-# page single topic
+# page topic
 #--------------------------------------------------
 @app.route('/topic/<int:topic_id>')
-def single_topic(topic_id):
+def topic(topic_id):
     form = CommentForm()
     topic = Topic.get_topic(topic_id)
     topic['Time'] = time_diff(topic['Time'])
@@ -42,7 +42,7 @@ def single_topic(topic_id):
     Topic.add_click_num(topic_id)
     nodes = Node.get_nodes(16)
     
-    return render_template('topic/single_topic.html', topic=topic, comments=comments, nodes=nodes, form=form)
+    return render_template('topic/topic.html', topic=topic, comments=comments, nodes=nodes, form=form)
 
 # proc - add comment
 @app.route('/topic/<int:topic_id>', methods=['POST'])
@@ -73,9 +73,9 @@ def add_comment_to_topic(topic_id):
         # and not topic_user_id, because if so, the inform has already been sended above
         if replyee_id != -1 and  replyee_id != replyer_id and replyee_id != topic_user_id:
             Inform.add(replyer_id, replyee_id, inform_title, comment)
-        return redirect(url_for('single_topic', topic_id=topic_id) + "#" + str(new_comment_id))
+        return redirect(url_for('topic', topic_id=topic_id) + "#" + str(new_comment_id))
     else:
-        return redirect(url_for('single_topic', topic_id=topic_id))
+        return redirect(url_for('topic', topic_id=topic_id))
 
 # page add topic
 #--------------------------------------------------
@@ -103,7 +103,7 @@ def add_topic():
             content = cgi.escape(form.content.data)
             user_id = session['user_id']
             new_topic_id = Topic.add(node_id, title, content, user_id)
-            return redirect(url_for('single_topic', topic_id=new_topic_id))
+            return redirect(url_for('topic', topic_id=new_topic_id))
         else:
             # choose a node to be default, here is node_id = 10001
             # node_id = int(form.node_id.data)
@@ -136,15 +136,15 @@ def edit_topic(topic_id):
             title = cgi.escape(form.title.data)
             content = cgi.escape(form.content.data)
             new_topic_id = Topic.edit(topic_id, node_id, title, content)
-            return redirect(url_for('single_topic', topic_id=topic_id))
+            return redirect(url_for('topic', topic_id=topic_id))
         else:
             return render_template('topic/edit_topic.html', topic=topic, node_types=node_types, form=form)
 
 
-# page single node
+# page node
 #--------------------------------------------------
 @app.route('/node/<node_abbr>')
-def single_node(node_abbr):
+def node(node_abbr):
     node = Node.get_node_by_abbr(node_abbr)
     if not node:
         abort(404)
@@ -153,4 +153,4 @@ def single_node(node_abbr):
     topics = Topic.get_topics_by_node(node_abbr)
     for t in topics:
         t['Time'] = time_diff(t['Time'])
-    return render_template('topic/single_node.html', node=node, nodes=nodes, topics=topics)
+    return render_template('topic/node.html', node=node, nodes=nodes, topics=topics)
