@@ -8,7 +8,7 @@
 <div class='row'>
    <div class='span8'>
       <p class='image-info'>
-         <a href="{{ url_for('user', user_abbr=image.user_abbr) }}">{{ image.user_name }}</a> 发表于 <a href="{{ url_for('work', work_id=work.WorkID) }}">{{ work.Title }}</a>：
+         <a href="{{ url_for('user', user_abbr=work_image.user_abbr) }}">{{ work_image.user_name }}</a> 发表于 <a href="{{ url_for('work', work_id=work.WorkID) }}">{{ work.Title }}</a>：
       </p>
 
       <blockquote>
@@ -17,11 +17,26 @@
       </blockquote>
 
       <div class='image-wap'>
-         <img src="{{ image.url }}" />
+         <img src="{{ work_image.url }}" />
       </div>
    </div>
 
-   <div class='span4'></div>
+   <div class='span4'>
+      <div class='btn-group'>
+         {% if session.user_id %}
+            {% if work_image.user_id == session.user_id %}
+            <a class='btn btn-small' href="{{ url_for('edit_work_image', work_image_id=work_image.id) }}"><i class='icon-edit'></i> 编辑</a>
+            <a class='btn btn-small' href="{{ url_for('delete_work_image', work_image_id=work_image.id) }}"><i class='icon-trash'></i> 删除</a>
+            {% else %}
+               {% if is_collected %}
+               <a href="#"><i class='icon-heart'></i> 已收藏</a>
+               {% else %}
+               <a href="#"><i class='icon-heart'></i> 收藏</a>
+               {% endif %}
+            {% endif %}
+         {% endif %}
+      </div>
+   </div>
 </div>
 
 {% endblock %}

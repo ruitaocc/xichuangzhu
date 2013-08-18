@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}添加作品图片{% endblock %}
+{% block page_title %}添加书法作品{% endblock %}
 {% block page_id%}page-add-work-image{% endblock %}
 
 {% block body %}
@@ -9,19 +9,17 @@
    <fieldset>
       <legend>为《{{ work.Title }}》添加书法作品</legend>
 
+      {{ form.csrf_token }}
+
+      {% from "widget/form.widget" import render_form_error %}
+      {{ render_form_error(form)|safe }}
+
       <div class="control-group">
-         <label class="control-label">图片</label>
+         <label class="control-label">作品</label>
          <div class="controls">
-            <input type="file" name="image" />
+            {{ form.image }}
          </div>
       </div>
-      
-      <!-- <div class="control-group">
-         <label class="control-label">描述</label>
-         <div class="controls">
-            <textarea class="input-xxlarge" name="desc" rows='4' placeholder='选填'></textarea>
-         </div>
-      </div> -->
 
       <div class="control-group">
          <div class="controls">

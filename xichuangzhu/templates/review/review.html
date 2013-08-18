@@ -66,7 +66,7 @@ $(document).ready(function(){
       <div class="review-extra-info">
          <a href="{{ url_for('user', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
          <span style="color:#333;">评</span>
-         <a href="{{ url_for('work', work_id=review.WorkID) }}">{{ review.WorkTitle }}〔{{ review.Author }}〕</a>
+         <a href="{{ url_for('work', work_id=review.WorkID) }}">{{ review.WorkTitle }}</a><span style="color:#333;">〔{{ review.Author }}〕</span>
          ·
          <span class="review-time">{{ review.Time }}</span>
          ·

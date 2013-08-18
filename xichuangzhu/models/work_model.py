@@ -130,7 +130,7 @@ class Work:
     # get a image
     @staticmethod
     def get_image(image_id):
-        g.cursor.execute('SELECT work_image.url, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
+        g.cursor.execute('SELECT work_image.id, work_image.url, work_image.filename, work_image.work_id, work_image.user_id, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
         return g.cursor.fetchone()
 
     # get images by random
@@ -168,8 +168,8 @@ class Work:
         return g.cursor.lastrowid
 
     @staticmethod
-    def add_image(work_id, user_id, image_url):
-        query = "INSERT INTO work_image (work_id, user_id, url) VALUES (%d, %d, '%s')" % (work_id, user_id, image_url)
+    def add_image(work_id, user_id, image_url, filename):
+        query = "INSERT INTO work_image (work_id, user_id, url, filename) VALUES (%d, %d, '%s', '%s')" % (work_id, user_id, image_url, filename)
         g.cursor.execute(query)
         g.conn.commit()
         return g.cursor.lastrowid
@@ -189,5 +189,12 @@ class Work:
     @staticmethod
     def delete_work(workID):
         query = "DELETE FROM work WHERE WorkID = %d" % workID
+        g.cursor.execute(query)
+        return g.conn.commit()
+
+    # delete work image
+    @staticmethod
+    def delete_image(image_id):
+        query = "DELETE FROM work_image WHERE id = %d" % image_id
         g.cursor.execute(query)
         return g.conn.commit()

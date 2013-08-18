@@ -1,8 +1,8 @@
 {% macro render_work_images(work_images) %}
 
 <div class='work-image-wap'>
-    {% for i in work_images %}
-    <a href="{{ url_for('work_image', work_id=i.work_id, image_id=i.id) }}"><img class='work-image' src="{{ i.url }}"></a>
+    {% for w in work_images %}
+    <a href="{{ url_for('work_image', work_image_id=w.id) }}"><img class='work-image' src="{{ w.url }}"></a>
     {% endfor %}
 </div>
 

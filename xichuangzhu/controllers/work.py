@@ -1,5 +1,6 @@
 #-*- coding: UTF-8 -*-
 from __future__ import division
+import os
 import re
 import math
 import markdown2
@@ -14,6 +15,7 @@ from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.product_model import Product
 from xichuangzhu.models.tag_model import Tag
+from xichuangzhu.form import WorkImageForm
 from xichuangzhu.utils import time_diff, content_clean, require_login, require_admin, Pagination
 
 # page - work
@@ -171,32 +173,76 @@ def edit_work(work_id):
         Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
         return redirect(url_for('work', work_id=work_id))
 
+
+
+# page - work image
+#--------------------------------------------------
+@app.route('/work_image/<int:work_image_id>', methods=['GET'])
+def work_image(work_image_id):
+    work_image = Work.get_image(work_image_id)
+    work = Work.get_work(work_image['work_id'])
+    work['Content'] = content_clean(work['Content'])
+    return render_template('work/work_image.html', work=work, work_image=work_image)
+
 # page - add work image
 #--------------------------------------------------
 @app.route('/work/<int:work_id>/add_image', methods=['GET', 'POST'])
 @require_login
 def add_work_image(work_id):
-    if request.method == 'GET':
-        work = Work.get_work(work_id)
-        return render_template('work/add_work_image.html', work=work)
-    else:
-        image = request.files['image']
-
-        # Save image
-        image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
-        image.save(config.IMAGE_PATH + image_filename)
-
-        image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL + image_filename)
-        return redirect(url_for('work_image', work_id=work_id, image_id=image_id))
-
-# page - work image
-#--------------------------------------------------
-@app.route('/work/<int:work_id>/image/<int:image_id>', methods=['GET'])
-def work_image(work_id, image_id):
     work = Work.get_work(work_id)
-    work['Content'] = content_clean(work['Content'])
-    image = Work.get_image(image_id)
-    return render_template('work/work_image.html', work=work, image=image)
+    form = WorkImageForm()
+    if request.method == 'GET':        
+        return render_template('work/add_work_image.html', work=work, form=form)
+    else:
+        if form.validate():
+            # Save image
+            image = request.files['image']
+            image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
+            image.save(config.IMAGE_PATH + image_filename)
+
+            image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL + image_filename, image_filename)
+            return redirect(url_for('work_image', work_image_id=image_id))
+        else:
+            return render_template('work/add_work_image.html', work=work, form=form)
+
+
+# page - edit work image
+#--------------------------------------------------
+@app.route('/work_image/<int:work_image_id>/edit', methods=['GET', 'POST'])
+@require_login
+def edit_work_image(work_image_id):
+    work_image = Work.get_image(work_image_id)
+    form = WorkImageForm()
+    if request.method == 'GET':
+        return render_template('work/edit_work_image.html', work_image=work_image, form=form)
+    else:
+        if form.validate():
+            # Delete old image
+            if os.path.isfile(config.IMAGE_PATH + work_image['filename']):
+                os.remove(config.IMAGE_PATH + work_image['filename'])
+
+            # Save new image
+            image = request.files['image']
+            image_filename = work_image['filename'].split('.')[0] + '.' + image.filename.split('.')[-1]
+            image.save(config.IMAGE_PATH + image_filename)
+            return redirect(url_for('work_image', work_image_id=work_image['id']))
+        else:
+            return render_template('work/edit_work_image.html', work_image=work_image, form=form)
+
+# proc - delete work image
+@app.route('/work_image/<int:work_image_id>/delete', methods=['GET'])
+@require_login
+def delete_work_image(work_image_id):
+    work_image = Work.get_image(work_image_id)
+    if not work_image or work_image['user_id'] != session['user_id']:
+        abort(404)
+
+    # delete image file
+    if os.path.isfile(config.IMAGE_PATH + work_image['filename']):
+        os.remove(config.IMAGE_PATH + work_image['filename'])
+
+    Work.delete_image(work_image_id)
+    return redirect(url_for('work', work_id=work_image['work_id']))
 
 # json - search authors in page add & edit work
 #--------------------------------------------------
