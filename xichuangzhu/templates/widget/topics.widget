@@ -1,4 +1,4 @@
-{% macro show_topics(topics) %}
+{% macro render_topics(topics) %}
 
 {% for t in topics %}
 <div class="topic-item">

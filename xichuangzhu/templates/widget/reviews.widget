@@ -1,4 +1,4 @@
-{% macro show_reviews(reviews) %}
+{% macro render_reviews(reviews) %}
 
 {% for r in reviews %}
 <div class="review-item">

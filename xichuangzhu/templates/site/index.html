@@ -38,7 +38,7 @@ $(document).ready(function(){
       </h2>
 
       <div id="4works-wap">
-         {% include "macro/index_works.widget" %}
+         {% include "widget/index_works.widget" %}
       </div>
 
       <h2>
@@ -48,8 +48,8 @@ $(document).ready(function(){
          </span>
       </h2>
 
-      {% from "macro/reviews.widget" import show_reviews %}
-      {{ show_reviews(reviews)|safe }}
+      {% from "widget/reviews.widget" import render_reviews %}
+      {{ render_reviews(reviews)|safe }}
 
       <h2>
          书法
@@ -58,8 +58,8 @@ $(document).ready(function(){
          </span>
       </h2>
 
-      {% from "macro/work_images.widget" import show_work_images %}
-      {{ show_work_images(work_images)|safe }}
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(work_images)|safe }}
       
    </div>
 
@@ -68,13 +68,12 @@ $(document).ready(function(){
       <h2>
          文学家
          <span class='link-more'>
-            <!-- <a id="author-refresh">换换</a> -->
             <a href="{{ url_for('authors') }}">更多»</a>
          </span>
       </h2>
 
-      {% from 'macro/authors.widget' import show_authors %}
-      {{ show_authors(authors)|safe }}
+      {% from 'widget/authors.widget' import render_authors %}
+      {{ render_authors(authors)|safe }}
 
       <h2>五千年</h2>
 

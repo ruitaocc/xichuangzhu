@@ -14,8 +14,8 @@
          </span>
       </h2>
 
-      {% from "macro/works.widget" import show_works %}
-      {{ show_works(collect_works)|safe }}
+      {% from "widget/works.widget" import render_works %}
+      {{ render_works(collect_works)|safe }}
 
       <h2>
          书法收藏
@@ -24,8 +24,8 @@
          </span>
       </h2>
 
-      {% from "macro/work_images.widget" import show_work_images %}
-      {{ show_work_images(work_images)|safe }}
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(work_images)|safe }}
       
    </div>
 

@@ -1,4 +1,4 @@
-{% macro show_users(users) %}
+{% macro render_users(users) %}
 
 {% for u in users %}
 <div class="user-item">

@@ -9,10 +9,10 @@
    <div class="span8">
       <h2>作品收藏 / {{ collect_works_num }}</h2>
 
-      {% from "macro/works.widget" import show_works %}
-      {{ show_works(collect_works)|safe }}
+      {% from "widget/works.widget" import render_works %}
+      {{ render_works(collect_works)|safe }}
 
-      {% from "macro/pagination.widget" import render_pagination %}
+      {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
    </div>
 

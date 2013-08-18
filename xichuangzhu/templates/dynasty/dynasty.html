@@ -70,8 +70,8 @@ $(window).resize(function(){
          </span>
       </h2>
 
-      {% from 'macro/authors.widget' import show_authors %}
-      {{ show_authors(authors)|safe }}
+      {% from 'widget/authors.widget' import render_authors %}
+      {{ render_authors(authors)|safe }}
    </div>
 </div>
 

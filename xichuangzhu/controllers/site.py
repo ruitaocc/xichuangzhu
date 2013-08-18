@@ -40,7 +40,7 @@ def four_works():
     works = Work.get_works_by_random(4)
     for work in works:
         work['Content'] = content_clean(work['Content'])
-    return render_template('macro/index_works.widget', works=works)
+    return render_template('widget/index_works.widget', works=works)
 
 # page about
 #--------------------------------------------------

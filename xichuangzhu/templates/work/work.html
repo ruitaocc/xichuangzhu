@@ -113,15 +113,15 @@ $(document).ready(function(){
       {% if reviews|length != 0 %}
       <h2>点评</h2>
 
-      {% from "macro/reviews.widget" import show_reviews %}
-      {{ show_reviews(reviews)|safe }}
+      {% from "widget/reviews.widget" import render_reviews %}
+      {{ render_reviews(reviews)|safe }}
       {% endif %}
 
       {% if work_images|length != 0 %}
       <h2>书法</h2>
 
-      {% from "macro/work_images.widget" import show_work_images %}
-      {{ show_work_images(work_images)|safe }}
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(work_images)|safe }}
 
       {% endif %}
    </div>
@@ -165,8 +165,8 @@ $(document).ready(function(){
 
       <h2>谁收藏了它？</h2>
 
-      {% from 'macro/users.widget' import show_users %}
-      {{ show_users(collectors)|safe }}
+      {% from 'widget/users.widget' import render_users %}
+      {{ render_users(collectors)|safe }}
    </div>
 </div>
 

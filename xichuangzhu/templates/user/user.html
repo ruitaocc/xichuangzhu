@@ -26,8 +26,8 @@
          </span>
       </h2>
 
-      {% from "macro/reviews.widget" import show_reviews %}
-      {{ show_reviews(reviews)|safe }}
+      {% from "widget/reviews.widget" import render_reviews %}
+      {{ render_reviews(reviews)|safe }}
 
       <h2>
          话题
@@ -36,8 +36,8 @@
          </span>
       </h2>
 
-      {% from "macro/topics.widget" import show_topics %}
-      {{ show_topics(topics)|safe }}
+      {% from "widget/topics.widget" import render_topics %}
+      {{ render_topics(topics)|safe }}
 
       <h2>
          书法
@@ -46,8 +46,8 @@
          </span>
       </h2>
 
-      {% from "macro/work_images.widget" import show_work_images %}
-      {{ show_work_images(work_images)|safe }}
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(work_images)|safe }}
 
    </div>
 

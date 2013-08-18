@@ -9,18 +9,18 @@
    <div class="span8">
       <h2>最新点评</h2>
 
-      {% from "macro/reviews.widget" import show_reviews %}
-      {{ show_reviews(reviews)|safe }}
+      {% from "widget/reviews.widget" import render_reviews %}
+      {{ render_reviews(reviews)|safe }}
 
-      {% from "macro/pagination.widget" import render_pagination %}
+      {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
    </div>
 
    <div class="span4">
       <h2>点评人</h2>
 
-      {% from 'macro/users.widget' import show_users %}
-      {{ show_users(reviewers)|safe }}
+      {% from 'widget/users.widget' import render_users %}
+      {{ render_users(reviewers)|safe }}
    </div>
 </div>
 

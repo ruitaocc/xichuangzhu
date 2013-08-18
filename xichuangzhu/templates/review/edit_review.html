@@ -11,8 +11,8 @@
 
       {{ form.csrf_token }}
       
-      {% from "macro/form.widget" import show_form_error %}
-      {{ show_form_error(form)|safe }}
+      {% from "widget/form.widget" import render_form_error %}
+      {{ render_form_error(form)|safe }}
 
       <div class="control-group">
          {{ form.title.label(class="control-label") }}

@@ -9,10 +9,10 @@
    <div class="span8">
       <h2>标签 - {{ tag }}</h2>
 
-      {% from "macro/works.widget" import show_works %}
-      {{ show_works(works)|safe }}
+      {% from "widget/works.widget" import render_works %}
+      {{ render_works(works)|safe }}
 
-      {% from "macro/pagination.widget" import render_pagination %}
+      {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
    </div>
 

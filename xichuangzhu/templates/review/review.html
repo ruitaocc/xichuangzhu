@@ -84,8 +84,8 @@ $(document).ready(function(){
       {% if comments|length != 0 %}
       <h2>回复</h2>
 
-      {% from 'macro/comments.widget' import show_comments %}
-      {{ show_comments(comments)|safe }}
+      {% from 'widget/comments.widget' import render_comments %}
+      {{ render_comments(comments)|safe }}
 
       {% endif %}
 
@@ -93,8 +93,8 @@ $(document).ready(function(){
       <form id="add-review-comment" method="post" action="{{ url_for('add_comment_to_review', review_id=review.ReviewID) }}">
          {{ form.csrf_token }}
 
-         {% from "macro/form.widget" import show_form_error %}
-         {{ show_form_error(form)|safe }}
+         {% from "widget/form.widget" import render_form_error %}
+         {{ render_form_error(form)|safe }}
 
          {{ form.comment(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
          <input type="submit" class="btn btn-small" value="回复" />

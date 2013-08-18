@@ -1,4 +1,4 @@
-{% macro show_authors(authors) %}
+{% macro render_authors(authors) %}
 
 {% for author in authors %}
 <div class='author-item'>

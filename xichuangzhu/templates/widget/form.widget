@@ -1,4 +1,4 @@
-{% macro show_form_error(form) %}
+{% macro render_form_error(form) %}
 
 {% if form.errors %}
 <div class="alert alert-error">

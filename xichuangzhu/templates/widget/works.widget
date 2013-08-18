@@ -1,4 +1,4 @@
-{% macro show_works(works) %}
+{% macro render_works(works) %}
 
 {% for work in works %}
 <div class="work-item">

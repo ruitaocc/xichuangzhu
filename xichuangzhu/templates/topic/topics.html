@@ -17,8 +17,8 @@
          {% endif %}
       </h2>
 
-      {% from "macro/topics.widget" import show_topics %}
-      {{ show_topics(topics)|safe }}
+      {% from "widget/topics.widget" import render_topics %}
+      {{ render_topics(topics)|safe }}
 
       <!-- <h2>节点导航</h2>
       {% for nt in node_types %}
