@@ -180,18 +180,16 @@ def add_work_image(work_id):
         work = Work.get_work(work_id)
         return render_template('work/add_work_image.html', work=work)
     else:
-        # Add mtype
-        desc = request.form['desc']
         image = request.files['image']
 
         # Save image
         image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
         image.save(config.IMAGE_PATH + image_filename)
 
-        image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL + image_filename, desc)
+        image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL + image_filename)
         return redirect(url_for('work_image', work_id=work_id, image_id=image_id))
 
-# page - add work image
+# page - work image
 #--------------------------------------------------
 @app.route('/work/<int:work_id>/image/<int:image_id>', methods=['GET'])
 def work_image(work_id, image_id):

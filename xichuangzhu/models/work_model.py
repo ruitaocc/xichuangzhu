@@ -130,13 +130,13 @@ class Work:
     # get a image
     @staticmethod
     def get_image(image_id):
-        g.cursor.execute('SELECT work_image.url, work_image.description, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
+        g.cursor.execute('SELECT work_image.url, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
         return g.cursor.fetchone()
 
     # get images by random
     @staticmethod
     def get_images_by_random(num):
-        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id, work_image.description, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE user.UserID = work_image.user_id ORDER BY RAND() LIMIT %d' % num) 
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE user.UserID = work_image.user_id ORDER BY RAND() LIMIT %d' % num) 
         return g.cursor.fetchall()
 
     # get images of a work
@@ -168,8 +168,8 @@ class Work:
         return g.cursor.lastrowid
 
     @staticmethod
-    def add_image(work_id, user_id, image_url, description):
-        query = "INSERT INTO work_image (work_id, user_id, url, description) VALUES (%d, %d, '%s', '%s')" % (work_id, user_id, image_url, description)
+    def add_image(work_id, user_id, image_url):
+        query = "INSERT INTO work_image (work_id, user_id, url) VALUES (%d, %d, '%s')" % (work_id, user_id, image_url)
         g.cursor.execute(query)
         g.conn.commit()
         return g.cursor.lastrowid
