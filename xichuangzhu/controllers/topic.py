@@ -8,15 +8,21 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import TopicForm, CommentForm
-from xichuangzhu.utils import time_diff, require_login, get_comment_replyee_id, rebuild_comment, build_topic_inform_title
+from xichuangzhu.utils import time_diff, require_login, get_comment_replyee_id, rebuild_comment, build_topic_inform_title, Pagination
 
 # page topics
 #--------------------------------------------------
 @app.route('/topics')
 def topics():
-    topics = Topic.get_topics(15)
+    per_page = 10
+    page = int(request.args['page'] if 'page' in request.args else 1)
+    
+    topics = Topic.get_topics(page, per_page)
     for t in topics:
         t['Time'] = time_diff(t['Time'])
+    topics_num = Topic.get_topics_num()
+
+    pagination = Pagination(page, per_page, topics_num)
 
     nodes = Node.get_nodes(16)
 
@@ -26,7 +32,7 @@ def topics():
     for nt in node_types:
         nt['nodes'] = Node.get_nodes_by_type(nt['TypeID'])
 
-    return render_template('topic/topics.html', topics=topics, nodes=nodes, hot_topics=hot_topics, node_types=node_types)
+    return render_template('topic/topics.html', topics=topics, topics_num=topics_num, pagination=pagination, nodes=nodes, hot_topics=hot_topics, node_types=node_types)
 
 # page topic
 #--------------------------------------------------

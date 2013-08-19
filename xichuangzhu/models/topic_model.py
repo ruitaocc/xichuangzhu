@@ -18,14 +18,21 @@ class Topic:
 
     # get topics
     @staticmethod
-    def get_topics(num):
+    def get_topics(page, per_page):
         query = '''SELECT topic.TopicID, topic.Title, topic.CommentNum, topic.Time, node.NodeID, node.Name AS NodeName, node.Abbr AS NodeAbbr, user.Name AS UserName, user.Abbr AS UserAbbr, user.Avatar\n
             FROM topic, user, node\n
             WHERE topic.UserID = user.UserID\n
             AND topic.NodeID = node.NodeID\n
-            ORDER BY Time DESC LIMIT %d''' % num
+            ORDER BY Time DESC LIMIT %d, %d''' % ((page-1)*per_page, per_page)
         g.cursor.execute(query)
         return g.cursor.fetchall()
+
+    # get topics num
+    @staticmethod
+    def get_topics_num():
+        query = "SELECT COUNT(*) AS topics_num FROM topic"
+        g.cursor.execute(query)
+        return g.cursor.fetchone()['topics_num']
 
     # get topics by user
     @staticmethod

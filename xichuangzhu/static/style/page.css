@@ -44,7 +44,7 @@ body #footer .container #extra-info{float:right;margin-right:20px}body #footer .
 #page-author .author-period{font-size:16px;margin-bottom:10px}
 #page-author .works-num-wap{display:inline-block;margin-left:10px}#page-author .works-num-wap span{font-size:12px;line-height:12px;cursor:pointer;margin-right:3px;padding:0 7px 1px 8px;color:#808080;letter-spacing:1px}#page-author .works-num-wap span.active{background-color:#08c;color:#fff}
 #page-author .collection-item{margin-bottom:10px}#page-author .collection-item .collection{font-weight:bold;font-size:16px}
-#page-author .work-item{float:left;display:block;width:120px;height:120px;border:1px solid #e8e8e8;margin:5px 15px 10px 0;padding:5px 5px 5px 10px;overflow:hidden;text-decoration:none}#page-author .work-item:hover{border-color:#d16e6e}
+#page-author .work-item{float:left;display:block;width:120px;height:120px;border:1px solid #e8e8e8;margin:5px 15px 10px 0;padding:5px 5px 5px 10px;overflow:hidden;text-decoration:none}#page-author .work-item:hover{background-color:#fbfbfb}#page-author .work-item:hover .work-content{color:#333}
 #page-author .work-item .work-title{font-size:14px;padding-bottom:3px;font-family:'微软雅黑';color:#277ddd;line-height:24px}
 #page-author .work-item .work-content{font-size:13px;line-height:22px;color:#666}
 #page-dynasty #dyn-selector{margin:0;position:absolute;top:40px;left:0;list-style:none}#page-dynasty #dyn-selector li{float:left}#page-dynasty #dyn-selector li a{display:block;text-align:center;color:#fff;font-size:12px;line-height:22px;opacity:1;text-decoration:none;cursor:pointer}
