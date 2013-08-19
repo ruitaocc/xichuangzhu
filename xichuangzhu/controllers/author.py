@@ -141,4 +141,4 @@ def edit_quote(quote_id):
         work_id = int(request.form['work-id'])
         work = Work.get_work(work_id)
         Quote.edit(quote_id, work['AuthorID'], quote, work['WorkID'], work['Title'])
-        return redirect(url_for('author/admin_quotes', author_id=work['AuthorID']))
+        return redirect(url_for('admin_quotes', author_id=work['AuthorID']))

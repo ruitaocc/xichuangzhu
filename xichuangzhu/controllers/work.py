@@ -200,7 +200,7 @@ def add_work_image(work_id):
             image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
             image.save(config.IMAGE_PATH + image_filename)
 
-            image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL + image_filename, image_filename)
+            image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL+image_filename, image_filename)
             return redirect(url_for('work_image', work_image_id=image_id))
         else:
             return render_template('work/add_work_image.html', work=work, form=form)
@@ -223,8 +223,11 @@ def edit_work_image(work_image_id):
 
             # Save new image
             image = request.files['image']
-            image_filename = work_image['filename'].split('.')[0] + '.' + image.filename.split('.')[-1]
+            image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
             image.save(config.IMAGE_PATH + image_filename)
+
+            # update image info
+            Work.update_image(work_image_id, config.IMAGE_URL+image_filename, image_filename)
             return redirect(url_for('work_image', work_image_id=work_image['id']))
         else:
             return render_template('work/edit_work_image.html', work_image=work_image, form=form)

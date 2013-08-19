@@ -174,12 +174,19 @@ class Work:
         g.conn.commit()
         return g.cursor.lastrowid
 
-# EDIT
+# UPDATE
 
-    # edit a Work
+    # Update a work
     @staticmethod
     def edit_work(title, content, foreword, introduction, authorID, dynastyID, work_type, type_name, work_id):
         query = '''UPDATE work SET Title = '%s', Content = '%s', Foreword = '%s', Introduction = '%s', AuthorID = %d, DynastyID = %d, Type = '%s', TypeName = '%s' WHERE WorkID=%d''' % (title, content, foreword, introduction, authorID, dynastyID, work_type, type_name, work_id)
+        g.cursor.execute(query)
+        return g.conn.commit()
+
+    # Update work image info
+    @staticmethod
+    def update_image(image_id, url, filename):
+        query = "UPDATE work_image SET url = '%s', filename = '%s' WHERE id = %d" % (url, filename, image_id)
         g.cursor.execute(query)
         return g.conn.commit()
 

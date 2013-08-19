@@ -57,7 +57,7 @@ def auth():
         location = user_info['loc_name']
         User.add_user(user_id, user_name, abbr, avatar, signature, desc, location_id, location)
 
-        # go to the verify email page
+        # redirect to the verify email page
         return redirect(url_for('send_verify_email', user_id=user_id))
 
 # page - send verify email

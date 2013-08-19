@@ -30,16 +30,6 @@
       {{ render_reviews(reviews)|safe }}
 
       <h2>
-         书法
-         <span class='link-more'>
-            <a href="#">全部 / {{ work_images_num }} »</a>
-         </span>
-      </h2>
-
-      {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(work_images)|safe }}
-
-      <h2>
          话题
          <span class='link-more'>
             <a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}">全部 / {{ topics_num }} »</a>
@@ -48,6 +38,16 @@
 
       {% from "widget/topics.widget" import render_topics %}
       {{ render_topics(topics)|safe }}
+
+      <h2>
+         书法
+         <span class='link-more'>
+            <a href="#">全部 / {{ work_images_num }} »</a>
+         </span>
+      </h2>
+
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(work_images)|safe }}
 
    </div>
 
