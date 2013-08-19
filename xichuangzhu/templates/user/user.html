@@ -42,7 +42,7 @@
       <h2>
          书法
          <span class='link-more'>
-            <a href="#">全部 / {{ work_images_num }} »</a>
+            <a href="{{ url_for('user_work_images', user_abbr=user.Abbr) }}">全部 / {{ work_images_num }} »</a>
          </span>
       </h2>
 

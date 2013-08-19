@@ -26,6 +26,25 @@ class Collect:
         g.cursor.execute(query)
         return g.cursor.fetchone()['WorksNum']
 
+    # get work images collected by user
+    @staticmethod
+    def get_work_images_by_user(user_id, page, num):
+        query = '''SELECT work_image.id, work_image.url\n
+            FROM collect_work_image, work_image\n
+            WHERE collect_work_image.user_id = %d\n
+            AND collect_work_image.work_image_id = work_image.id\n
+            ORDER BY collect_work_image.create_time DESC\n
+            LIMIT %d, %d''' % (user_id, (page-1)*num, num)
+        g.cursor.execute(query)
+        return g.cursor.fetchall()
+
+    # get work images collected by user
+    @staticmethod
+    def get_work_images_num_by_user(user_id):
+        query = "SELECT COUNT(*) AS work_images_num FROM collect_work_image WHERE user_id = %d" % user_id
+        g.cursor.execute(query)
+        return g.cursor.fetchone()['work_images_num']
+
     # get all users who collect this work
     @staticmethod
     def get_users_by_work(work_id, num):

@@ -20,12 +20,12 @@
       <h2>
          书法收藏
          <span class='link-more'>
-            <a href="#">全部 / {{ work_images_num }} »</a>
+            <a href="{{ url_for('collect_work_images') }}">全部 / {{ collect_work_images_num }} »</a>
          </span>
       </h2>
 
       {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(work_images)|safe }}
+      {{ render_work_images(collect_work_images)|safe }}
       
    </div>
 

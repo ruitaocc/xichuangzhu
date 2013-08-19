@@ -43,13 +43,15 @@ def work(work_id):
         my_tags = []
         popular_tags = []
 
-    reviews = Review.get_reviews_by_work(work_id)
+    reviews = Review.get_reviews_by_work(work_id, 1, 4)
     for r in reviews:
         r['Time'] = time_diff(r['Time'])
+    reviews_num = Review.get_reviews_num_by_work(work_id)
 
     product = Product.get_product_by_random()
 
-    work_images = Work.get_images_by_work(work_id, 9)
+    work_images = Work.get_images_by_work(work_id, 1, 9)
+    work_images_num = Work.get_images_num_by_work(work_id)
 
     other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
     for ow in other_works:
@@ -57,7 +59,7 @@ def work(work_id):
 
     collectors = Collect.get_users_by_work(work_id, 4)
 
-    return render_template('work/work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, work_images=work_images)
+    return render_template('work/work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, reviews_num=reviews_num, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, work_images=work_images, work_images_num=work_images_num)
 
 # proc - collect work
 @app.route('/work/<int:work_id>/collect', methods=['POST'])
@@ -173,6 +175,26 @@ def edit_work(work_id):
         Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
         return redirect(url_for('work', work_id=work_id))
 
+# page - reviews of this work
+#--------------------------------------------------
+@app.route('/work/<int:work_id>/reviews')
+def work_reviews(work_id):
+    work = Work.get_work(work_id)
+
+    # pagination
+    per_page = 10
+    page = int(request.args['page'] if 'page' in request.args else 1)
+
+    reviews = Review.get_reviews_by_work(work_id, page, per_page)
+    for r in reviews:
+        r['Time'] = time_diff(r['Time'])
+
+    reviews_num = Review.get_reviews_num_by_work(work_id)
+
+    pagination = Pagination(page, per_page, reviews_num)
+
+    return render_template('work/work_reviews.html', work=work, reviews=reviews, reviews_num=reviews_num, pagination=pagination)
+
 # page - work image
 #--------------------------------------------------
 @app.route('/work_image/<int:work_image_id>', methods=['GET'])
@@ -187,6 +209,38 @@ def work_image(work_image_id):
         is_collected = False
 
     return render_template('work/work_image.html', work=work, work_image=work_image, is_collected=is_collected)
+
+# page - images of this work
+#--------------------------------------------------
+@app.route('/work/<int:work_id>/images', methods=['GET'])
+def work_images(work_id):
+    # pagination
+    per_page = 9
+    page = int(request.args['page'] if 'page' in request.args else 1)
+
+    work = Work.get_work(work_id)
+
+    work_images = Work.get_images_by_work(work_id, page, per_page)
+    work_images_num = Work.get_images_num_by_work(work_id)
+
+    pagination = Pagination(page, per_page, work_images_num)
+
+    return render_template('work/work_images.html', work=work, work_images=work_images, work_images_num=work_images_num, pagination=pagination)
+
+# page - all work images
+#--------------------------------------------------
+@app.route('/all_work_images', methods=['GET'])
+def all_work_images():
+    # pagination
+    per_page = 9
+    page = int(request.args['page'] if 'page' in request.args else 1)
+
+    work_images = Work.get_images(page, per_page)
+    work_images_num = Work.get_images_num()
+
+    pagination = Pagination(page, per_page, work_images_num)
+
+    return render_template('work/all_work_images.html', work_images=work_images, work_images_num=work_images_num, pagination=pagination)
 
 # proc - delete work image
 @app.route('/work_image/<int:work_image_id>/delete', methods=['GET'])

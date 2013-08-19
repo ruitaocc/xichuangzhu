@@ -52,16 +52,24 @@ class Review:
 
     # get reviews of a work
     @staticmethod
-    def get_reviews_by_work(work_id):
+    def get_reviews_by_work(work_id, page, per_page):
         query = '''SELECT review.ReviewID, review.Title, review.Content, review.Time, user.UserID, user.Abbr AS UserAbbr, user.Name, user.Avatar, work.WorkID, work.Title AS WorkTitle, work.Content AS WorkContent, author.Author\n
             FROM review, user, work, author\n
             WHERE review.WorkID = %d\n
             AND review.UserID = user.UserID\n
             AND review.WorkID = work.WorkID\n
             AND work.AuthorID = author.AuthorID\n
-            AND review.IsPublish = 1''' % work_id
+            AND review.IsPublish = 1\n
+            LIMIT %d, %d''' % (work_id, (page-1)*per_page, per_page)
         g.cursor.execute(query)
         return g.cursor.fetchall()
+
+    # get reviews num of a work
+    @staticmethod
+    def get_reviews_num_by_work(work_id):
+        query = "SELECT COUNT(*) AS reviews_num FROM review WHERE review.WorkID = %d" % work_id
+        g.cursor.execute(query)
+        return g.cursor.fetchone()['reviews_num']
 
     # get reviews from a user
     @staticmethod

@@ -111,14 +111,24 @@ $(document).ready(function(){
       <div class="work-introduction">{{ work.WorkIntroduction }}</div>
       
       {% if reviews|length != 0 %}
-      <h2>点评</h2>
+      <h2>
+         点评
+         <span class='link-more'>
+            <a href="{{ url_for('work_reviews', work_id=work.WorkID) }}">更多 / {{ reviews_num }} »</a>
+         </span>
+      </h2>
 
       {% from "widget/reviews.widget" import render_reviews %}
       {{ render_reviews(reviews)|safe }}
       {% endif %}
 
       {% if work_images|length != 0 %}
-      <h2>书法</h2>
+      <h2>
+         书法
+         <span class='link-more'>
+            <a href="{{ url_for('work_images', work_id=work.WorkID) }}">更多 / {{ work_images_num }} »</a>
+         </span>
+      </h2>
 
       {% from "widget/work_images.widget" import render_work_images %}
       {{ render_work_images(work_images)|safe }}

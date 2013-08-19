@@ -37,7 +37,7 @@ def user(user_abbr):
     topics_num = Topic.get_topics_num_by_user(user['UserID'])
 
     # handwritings
-    work_images = Work.get_images_by_user(user['UserID'], 9)
+    work_images = Work.get_images_by_user(user['UserID'], 1, 9)
     work_images_num = Work.get_images_num_by_user(user['UserID'])
 
     return render_template('user/user.html', user=user, reviews=reviews, reviews_num=reviews_num, topics=topics, topics_num=topics_num, work_images=work_images, work_images_num=work_images_num)
@@ -61,7 +61,7 @@ def user_reviews(user_abbr):
 
     pagination = Pagination(page, per_page, reviews_num)
 
-    return render_template('user/user_reviews.html', user=user, reviews=reviews, reviews_num=reviews_num, user_name=user_name, pagination=pagination)
+    return render_template('user/reviews.html', user=user, reviews=reviews, reviews_num=reviews_num, user_name=user_name, pagination=pagination)
 
 # page - user topics
 #--------------------------------------------------
@@ -81,7 +81,25 @@ def user_topics(user_abbr):
 
     pagination = Pagination(page, per_page, topics_num)
 
-    return render_template('user/user_topics.html', user=user, topics=topics, topics_num=topics_num, user_name=user_name, pagination=pagination)
+    return render_template('user/topics.html', user=user, topics=topics, topics_num=topics_num, user_name=user_name, pagination=pagination)
+
+# page - user work images
+#--------------------------------------------------
+@app.route('/u/<user_abbr>/work_images')
+def user_work_images(user_abbr):
+    user = User.get_user_by_abbr(user_abbr)
+    user_name = '我' if "user_id" in session and session['user_id'] == user['UserID'] else user['Name']
+
+    page = int(request.args['page'] if 'page' in request.args else 1)
+    per_page = 10
+
+    work_images = Work.get_images_by_user(user['UserID'], page, per_page)
+    work_images_num = Work.get_images_num_by_user(user['UserID'])
+
+    pagination = Pagination(page, per_page, work_images_num)
+    
+    return render_template('user/work_images.html', user=user, user_name=user_name, work_images=work_images, work_images_num=work_images_num, pagination=pagination)
+
 
 # page - informs
 #--------------------------------------------------
@@ -113,7 +131,11 @@ def collects():
     for w in collect_works:
         w['Content'] = content_clean(w['Content'])
     collect_works_num = Collect.get_works_num_by_user(session['user_id'])
-    return render_template('/user/collects.html', collect_works=collect_works, collect_works_num=collect_works_num)
+
+    collect_work_images = Collect.get_work_images_by_user(session['user_id'], 1, 9)
+    collect_work_images_num = Collect.get_work_images_num_by_user(session['user_id'])
+
+    return render_template('/user/collects.html', collect_works=collect_works, collect_works_num=collect_works_num, collect_work_images=collect_work_images, collect_work_images_num=collect_work_images_num)
 
 # page - user's collect works
 #--------------------------------------------------
@@ -127,9 +149,24 @@ def collect_works():
     collect_works = Collect.get_works_by_user(session['user_id'], page, per_page)
     for w in collect_works:
         w['Content'] = content_clean(w['Content'])
-
     collect_works_num = Collect.get_works_num_by_user(session['user_id'])
 
     pagination = Pagination(page, per_page, collect_works_num)
 
     return render_template('user/collect_works.html', collect_works=collect_works, collect_works_num=collect_works_num, pagination=pagination)
+
+# page - user's collect work images
+#--------------------------------------------------
+@app.route('/collect_work_images')
+@require_login
+def collect_work_images():
+    # pagination
+    per_page = 18
+    page = int(request.args['page'] if 'page' in request.args else 1)
+
+    collect_work_images = Collect.get_work_images_by_user(session['user_id'], page, per_page)
+    collect_work_images_num = Collect.get_work_images_num_by_user(session['user_id'])
+
+    pagination = Pagination(page, per_page, collect_work_images_num)
+
+    return render_template('user/collect_work_images.html', collect_work_images=collect_work_images, collect_work_images_num=collect_work_images_num, pagination=pagination)

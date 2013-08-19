@@ -133,22 +133,42 @@ class Work:
         g.cursor.execute('SELECT work_image.id, work_image.url, work_image.filename, work_image.work_id, work_image.user_id, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE work_image.id = %d AND user.UserID = work_image.user_id' % image_id)
         return g.cursor.fetchone()
 
+    # get all images
+    @staticmethod
+    def get_images(page, per_page):
+        query = "SELECT id, url FROM work_image ORDER BY create_time DESC LIMIT %d, %d" % ((page-1)*per_page, per_page)
+        g.cursor.execute(query)
+        return g.cursor.fetchall()
+
+    # get num of all images
+    @staticmethod
+    def get_images_num():
+        query = "SELECT COUNT(*) AS images_num FROM work_image"
+        g.cursor.execute(query)
+        return g.cursor.fetchone()['images_num']
+
     # get images by random
     @staticmethod
     def get_images_by_random(num):
-        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id, user.Name as user_name, user.Abbr as user_abbr FROM user, work_image WHERE user.UserID = work_image.user_id ORDER BY RAND() LIMIT %d' % num) 
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id FROM user, work_image WHERE user.UserID = work_image.user_id ORDER BY RAND() LIMIT %d' % num) 
         return g.cursor.fetchall()
 
     # get images of a work
     @staticmethod
-    def get_images_by_work(work_id, num):
-        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id  FROM user, work_image WHERE work_image.work_id = %d AND user.UserID = work_image.user_id LIMIT %d' % (work_id, num))
+    def get_images_by_work(work_id, page, per_page):
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id  FROM user, work_image WHERE work_image.work_id = %d AND user.UserID = work_image.user_id ORDER BY work_image.create_time DESC LIMIT %d, %d' % (work_id, (page-1)*per_page, per_page))
         return g.cursor.fetchall()
+
+    # get images num of a work
+    @staticmethod
+    def get_images_num_by_work(work_id):
+        g.cursor.execute('SELECT COUNT(*) AS images_num FROM work_image WHERE work_image.work_id = %d' % work_id)
+        return g.cursor.fetchone()['images_num']
 
     # get images by user
     @staticmethod
-    def get_images_by_user(user_id, num):
-        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id FROM work_image WHERE work_image.user_id = %d LIMIT %d' % (user_id, num))
+    def get_images_by_user(user_id, page, per_page):
+        g.cursor.execute('SELECT work_image.url, work_image.id, work_image.work_id FROM work_image WHERE work_image.user_id = %d ORDER BY work_image.create_time DESC LIMIT %d, %d' % (user_id, (page-1)*per_page, per_page))
         return g.cursor.fetchall()     
 
     # get images num by user

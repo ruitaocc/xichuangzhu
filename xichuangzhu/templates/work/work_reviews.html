@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block page_title %}《{{ work.Title }}》的点评{% endblock %}
+{% block page_id%}page-work-reviews{% endblock %}
+
+{% block body %}
+
+<div class="row">
+   <div class="span8">
+      <h2>《{{ work.Title }}》的点评 / {{ reviews_num }}</h2>
+
+      {% from "widget/reviews.widget" import render_reviews %}
+      {{ render_reviews(reviews)|safe }}
+
+      {% from "widget/pagination.widget" import render_pagination %}
+      {{ render_pagination(pagination)|safe }}
+   </div>
+
+   <div class="span4">
+   </div>
+</div>
+
+{% endblock %}

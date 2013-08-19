@@ -73,7 +73,7 @@ def add_comment_to_review(review_id):
     else:
         return redirect(url_for('review', review_id=review_id))
 
-# page all reviews
+# page - all reviews
 #--------------------------------------------------
 @app.route('/reviews')
 def reviews():
@@ -93,7 +93,7 @@ def reviews():
 
     return render_template('review/reviews.html', reviews=reviews, reviewers=reviewers, pagination=pagination)
 
-# page add review
+# page - add review
 #--------------------------------------------------
 @app.route('/review/add/<int:work_id>', methods=['GET', 'POST'])
 @require_login
@@ -114,7 +114,7 @@ def add_review(work_id):
         else:
             return render_template('review/add_review.html', work=work, form=form)
 
-# page edit review
+# page - edit review
 #--------------------------------------------------
 @app.route('/review/edit/<int:review_id>', methods=['GET', 'POST'])
 @require_login
