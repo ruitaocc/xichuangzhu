@@ -19,14 +19,14 @@ class Collect:
         g.cursor.execute(query)
         return g.cursor.fetchall()
 
-    # get works num collected by user
+    # get num of works collected by user
     @staticmethod
     def get_works_num_by_user(user_id):
         query = "SELECT COUNT(*) AS WorksNum FROM collect_work WHERE UserID = %d" % user_id
         g.cursor.execute(query)
         return g.cursor.fetchone()['WorksNum']
 
-    # get all users who collect the work
+    # get all users who collect this work
     @staticmethod
     def get_users_by_work(work_id, num):
         query = '''SELECT user.UserID, user.Name, user.Signature, user.Abbr, user.Avatar, COUNT(*) AS ReviewNum\n
@@ -38,7 +38,7 @@ class Collect:
         g.cursor.execute(query)
         return g.cursor.fetchall()
 
-    # get tags
+    # get tags of work collected by the user
     @staticmethod
     def get_tags(user_id, work_id):
         query = "SELECT Tags FROM collect_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
@@ -49,34 +49,46 @@ class Collect:
 
     # check if user collected this work
     @staticmethod
-    def check(user_id, work_id):
+    def check_collect_work(user_id, work_id):
         query = "SELECT * FROM collect_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
+        g.cursor.execute(query)
+        return g.cursor.rowcount > 0
+
+    # check if user collect this work image
+    @staticmethod
+    def check_collect_work_image(user_id, work_image_id):
+        query = "SELECT * FROM collect_work_image WHERE user_id = %d AND work_image_id = %d" % (user_id, work_image_id)
         g.cursor.execute(query)
         return g.cursor.rowcount > 0
 
 # NEW
     
-    # collect a work
+    # collect work
     @staticmethod
-    def add(user_id, work_id, tags):
+    def collect_work(user_id, work_id, tags):
         query = "INSERT INTO collect_work (UserID, WorkID, Tags) VALUES (%d, %d, '%s')" % (user_id, work_id, tags)
         g.cursor.execute(query)
         return g.conn.commit()
 
-# UPDATE
-
-    # edit work tags
+    # collect work image
     @staticmethod
-    def edit(user_id, work_id, tags):
-        query = "UPDATE collect_work SET Tags = '%s' WHERE UserID = %d AND WorkID = %d" % (tags, user_id, work_id)
+    def collect_work_image(user_id, work_image_id):
+        query = "INSERT INTO collect_work_image (user_id, work_image_id) VALUES (%d, %d)" % (user_id, work_image_id)
         g.cursor.execute(query)
         return g.conn.commit()
 
 # DELETE
 
-    # discollect a work
+    # discollect work
     @staticmethod
-    def remove(user_id, work_id):
+    def discollect_work(user_id, work_id):
         query = "DELETE FROM collect_work WHERE UserID = %d AND WorkID = %d" % (user_id, work_id)
+        g.cursor.execute(query)
+        return g.conn.commit()
+
+    # discollect work image
+    @staticmethod
+    def discollect_work_image(user_id, work_image_id):
+        query = "DELETE FROM collect_work_image WHERE user_id = %d AND work_image_id = %d" % (user_id, work_image_id)
         g.cursor.execute(query)
         return g.conn.commit()

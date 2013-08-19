@@ -33,7 +33,7 @@ def work(work_id):
 
     # check if is collected
     if 'user_id' in session:
-        is_collected = Collect.check(session['user_id'], work_id)
+        is_collected = Collect.check_collect_work(session['user_id'], work_id)
         tags = Collect.get_tags(session['user_id'], work_id) if is_collected else ""
         my_tags = Tag.get_user_tags(session['user_id'], 20)
         popular_tags = Tag.get_work_tags(work_id, 20)
@@ -73,7 +73,7 @@ def collect_work(work_id):
     new_tags = list(set(new_tags))
 
     # collect work
-    Collect.add(session['user_id'], work_id, ' '.join(new_tags) + ' ')
+    Collect.collect_work(session['user_id'], work_id, ' '.join(new_tags) + ' ')
 
     # update user tags & work tags
     for t in new_tags:
@@ -87,7 +87,7 @@ def collect_work(work_id):
 @app.route('/work/<int:work_id>/discollect')
 @require_login
 def discollect_work(work_id):
-    Collect.remove(session['user_id'], work_id)
+    Collect.discollect_work(session['user_id'], work_id)
     return redirect(url_for('work', work_id=work_id))
 
 # page - all works
@@ -173,8 +173,6 @@ def edit_work(work_id):
         Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
         return redirect(url_for('work', work_id=work_id))
 
-
-
 # page - work image
 #--------------------------------------------------
 @app.route('/work_image/<int:work_image_id>', methods=['GET'])
@@ -182,7 +180,42 @@ def work_image(work_image_id):
     work_image = Work.get_image(work_image_id)
     work = Work.get_work(work_image['work_id'])
     work['Content'] = content_clean(work['Content'])
-    return render_template('work/work_image.html', work=work, work_image=work_image)
+
+    if 'user_id' in session:
+        is_collected = Collect.check_collect_work_image(session['user_id'], work_image_id)
+    else:
+        is_collected = False
+
+    return render_template('work/work_image.html', work=work, work_image=work_image, is_collected=is_collected)
+
+# proc - delete work image
+@app.route('/work_image/<int:work_image_id>/delete', methods=['GET'])
+@require_login
+def delete_work_image(work_image_id):
+    work_image = Work.get_image(work_image_id)
+    if not work_image or work_image['user_id'] != session['user_id']:
+        abort(404)
+
+    # delete image file
+    if os.path.isfile(config.IMAGE_PATH + work_image['filename']):
+        os.remove(config.IMAGE_PATH + work_image['filename'])
+
+    Work.delete_image(work_image_id)
+    return redirect(url_for('work', work_id=work_image['work_id']))
+
+# proc - collect work image
+@app.route('/work_image/<int:work_image_id>/collect', methods=['GET'])
+@require_login
+def collect_work_image(work_image_id):
+    Collect.collect_work_image(session['user_id'], work_image_id)
+    return redirect(url_for('work_image', work_image_id=work_image_id))
+
+# proc - discollect work image
+@app.route('/work_image/<int:work_image_id>/discollect', methods=['GET'])
+@require_login
+def discollect_work_image(work_image_id):
+    Collect.discollect_work_image(session['user_id'], work_image_id)
+    return redirect(url_for('work_image', work_image_id=work_image_id))
 
 # page - add work image
 #--------------------------------------------------
@@ -204,7 +237,6 @@ def add_work_image(work_id):
             return redirect(url_for('work_image', work_image_id=image_id))
         else:
             return render_template('work/add_work_image.html', work=work, form=form)
-
 
 # page - edit work image
 #--------------------------------------------------
@@ -231,21 +263,6 @@ def edit_work_image(work_image_id):
             return redirect(url_for('work_image', work_image_id=work_image['id']))
         else:
             return render_template('work/edit_work_image.html', work_image=work_image, form=form)
-
-# proc - delete work image
-@app.route('/work_image/<int:work_image_id>/delete', methods=['GET'])
-@require_login
-def delete_work_image(work_image_id):
-    work_image = Work.get_image(work_image_id)
-    if not work_image or work_image['user_id'] != session['user_id']:
-        abort(404)
-
-    # delete image file
-    if os.path.isfile(config.IMAGE_PATH + work_image['filename']):
-        os.remove(config.IMAGE_PATH + work_image['filename'])
-
-    Work.delete_image(work_image_id)
-    return redirect(url_for('work', work_id=work_image['work_id']))
 
 # json - search authors in page add & edit work
 #--------------------------------------------------

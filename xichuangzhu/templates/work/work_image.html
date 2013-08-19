@@ -29,9 +29,9 @@
             <a class='btn btn-small' href="{{ url_for('delete_work_image', work_image_id=work_image.id) }}"><i class='icon-trash'></i> 删除</a>
             {% else %}
                {% if is_collected %}
-               <a href="#"><i class='icon-heart'></i> 已收藏</a>
+               <a class='btn btn-small' title='点击取消收藏' href="{{ url_for('discollect_work_image', work_image_id=work_image.id) }}"><i class='icon-bookmark'></i> 已收藏</a>
                {% else %}
-               <a href="#"><i class='icon-heart'></i> 收藏</a>
+               <a class='btn btn-small' title='点击收藏' href="{{ url_for('collect_work_image', work_image_id=work_image.id) }}"><i class='icon-bookmark'></i> 收藏</a>
                {% endif %}
             {% endif %}
          {% endif %}
