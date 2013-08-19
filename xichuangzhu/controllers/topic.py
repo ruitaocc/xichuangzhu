@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 import cgi
-from flask import render_template, request, redirect, url_for, json, session
+from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.node_model import Node

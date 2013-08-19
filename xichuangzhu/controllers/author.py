@@ -80,7 +80,7 @@ def add_author():
         deathYear = request.form['deathYear']
         dynastyID = int(request.form['dynastyID'])
         Author.add_author(author, abbr, introduction, birthYear, deathYear, dynastyID)
-        return redirect(url_for('author/author', author_abbr=abbr))
+        return redirect(url_for('author', author_abbr=abbr))
 
 # page edit author
 #--------------------------------------------------
@@ -99,7 +99,7 @@ def edit_author(authorID):
         deathYear = request.form['deathYear']
         dynastyID = int(request.form['dynastyID'])      
         Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
-        return redirect(url_for('author/author', author_abbr=abbr))
+        return redirect(url_for('author', author_abbr=abbr))
 
 # page - admin quotes
 #--------------------------------------------------
@@ -118,7 +118,7 @@ def add_quote(author_id):
     work_id = int(request.form['work-id'])
     work_title = Work.get_work(work_id)['Title'] 
     Quote.add(author_id, quote, work_id, work_title)
-    return redirect(url_for('author/admin_quotes', author_id=author_id))
+    return redirect(url_for('admin_quotes', author_id=author_id))
 
 # proc - delete quote
 @app.route('/quote/delete/<int:quote_id>')
@@ -126,7 +126,7 @@ def add_quote(author_id):
 def delete_quote(quote_id):
     author_id = int(request.args['author_id'])
     Quote.delete(quote_id)
-    return redirect(url_for('author/admin_quotes', author_id=author_id))
+    return redirect(url_for('admin_quotes', author_id=author_id))
 
 # page edit quote
 #--------------------------------------------------
