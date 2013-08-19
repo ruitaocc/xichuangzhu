@@ -31,8 +31,8 @@ def index():
         a['QuoteID'] = quote['QuoteID'] if quote else 0
     
     dynasties = Dynasty.get_dynasties()
-    topics = Topic.get_topics(8)
-    return render_template('site/index.html', works=works, work_images=work_images, reviews=reviews, authors=authors, dynasties=dynasties, topics=topics)
+    
+    return render_template('site/index.html', works=works, work_images=work_images, reviews=reviews, authors=authors, dynasties=dynasties)
 
 # json - gene works data for index page
 @app.route('/4works', methods=['POST'])
