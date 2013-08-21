@@ -9,10 +9,6 @@ class Dynasty(db.Model):
     intro = db.Column(db.Text())
     start_year = db.Column(db.Integer)
     end_year = db.Column(db.Integer)
-    
-    # def __init__(self, username, email):
-    #     self.username = username
-    #     self.email = email
 
     def __repr__(self):
         return '<Dynasty %s>' % self.name

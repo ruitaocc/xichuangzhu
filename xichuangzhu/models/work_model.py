@@ -1,7 +1,7 @@
 #-*- coding: UTF-8 -*-
+import re
 from flask import g
 from xichuangzhu import db
-from xichuangzhu.utils import content_clean
 
 class Work(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,7 +15,11 @@ class Work(db.Model):
 
     @property
     def clean_content(self):
-        return content_clean(self.content)
+        c = re.sub(r'<([^<]+)>', '', self.content)
+        c = c.replace('%', '')
+        c = c.replace('（一）', "")
+        c = c.replace('(一)', "")
+        return c
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     author = db.relationship('Author', backref=db.backref('works'))

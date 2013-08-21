@@ -3,9 +3,11 @@ import re
 from flask import render_template, request, redirect, url_for, json
 from xichuangzhu import app
 from xichuangzhu.models.work_model import Work
+from xichuangzhu.models.work_image import WorkImage
 from xichuangzhu.models.author_model import Author
+from xichuangzhu.models.author_quote import AuthorQuote
 from xichuangzhu.models.dynasty_model import Dynasty
-from xichuangzhu.models.review_model import Review
+from xichuangzhu.models.review_model import WorkReview
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.quote_model import Quote
 from xichuangzhu.utils import time_diff
@@ -18,23 +20,20 @@ def index():
     # need to be random
     works = Work.query.order_by(func.rand()).limit(4)
 
-    work_images = Work.get_images_by_random(9)
+    # work_images = Work.get_images_by_random(9)
+    work_images = WorkImage.query.order_by(func.rand()).limit(9)
 
-    reviews = Review.get_reviews_by_random(4)
-    for r in reviews:
-        r['Time'] = time_diff(r['Time'])
-    
-    # authors = Author.get_authors_by_random(5)
-    # for a in authors:
-    #     quote = Quote.get_quote_by_random(a['AuthorID'])
-    #     a['Quote'] = quote['Quote'] if quote else ""
-    #     a['QuoteID'] = quote['QuoteID'] if quote else 0
+    # reviews = Review.get_reviews_by_random(4)
+    # for r in reviews:
+    #     r['Time'] = time_diff(r['Time'])
 
-    authors = Author.query.order_by(func.rand()).limit(5)
+    work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(func.rand()).limit(4)
+
+    authors = Author.query.order_by(func.rand()).limit(5).all()
 
     dynasties = Dynasty.query.all()
 
-    return render_template('site/index.html', works=works, work_images=work_images, reviews=reviews, authors=authors, dynasties=dynasties)
+    return render_template('site/index.html', works=works, work_images=work_images, work_reviews=work_reviews, authors=authors, dynasties=dynasties)
 
 # json - gene works data for index page
 @app.route('/4works', methods=['POST'])

@@ -5,9 +5,9 @@ from functools import wraps
 from math import ceil
 from flask import url_for, session, abort, g
 import config
-from xichuangzhu.models.user_model import User
-from xichuangzhu.models.topic_model import Topic
-from xichuangzhu.models.review_model import Review
+# from xichuangzhu.models.user_model import User
+# from xichuangzhu.models.topic_model import Topic
+# from xichuangzhu.models.review_model import Review
 
 # count the time diff by timedelta, return a user-friendly format
 # dt must be format as 2013-4-1 14:25:10
@@ -38,37 +38,37 @@ def content_clean(content):
     c = c.replace('(一)', "")
     return c
 
-# check if @replyee is in comment
-# if so, return user_id, otherwise -1 
-def get_comment_replyee_id(comment):
-    replyee_id = -1
-    header = comment.split(' ')[0]
-    if header.find('@') == 0:
-        if User.check_exist_by_name(header.lstrip('@')):
-            replyee_name = header.lstrip('@')
-            replyee_id = User.get_id_by_name(replyee_name)
-    return replyee_id
+# # check if @replyee is in comment
+# # if so, return user_id, otherwise -1 
+# def get_comment_replyee_id(comment):
+#     replyee_id = -1
+#     header = comment.split(' ')[0]
+#     if header.find('@') == 0:
+#         if User.check_exist_by_name(header.lstrip('@')):
+#             replyee_name = header.lstrip('@')
+#             replyee_id = User.get_id_by_name(replyee_name)
+#     return replyee_id
 
-# inject <a> tag to @user in the comment
-def rebuild_comment(comment, replyee_id):
-    replyee_name = User.get_name_by_id(replyee_id)
-    replyee_abbr = User.get_abbr_by_id(replyee_id)
-    comment = "@" + "<a href=" + url_for('user', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + "&nbsp;&nbsp;" + comment.split(' ')[1]
-    return comment
+# # inject <a> tag to @user in the comment
+# def rebuild_comment(comment, replyee_id):
+#     replyee_name = User.get_name_by_id(replyee_id)
+#     replyee_abbr = User.get_abbr_by_id(replyee_id)
+#     comment = "@" + "<a href=" + url_for('user', user_abbr=replyee_abbr) + ">" + replyee_name + "</a>" + "&nbsp;&nbsp;" + comment.split(' ')[1]
+#     return comment
 
-# build HTML code for topic inform's header 
-def build_topic_inform_title(replyer_id, topic_id):
-    replyer = User.get_user_by_id(replyer_id)
-    topic = Topic.get_topic(topic_id)
-    inform_title = "<a href=" + url_for('user', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在话题&nbsp;&nbsp;" + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
-    return inform_title
+# # build HTML code for topic inform's header 
+# def build_topic_inform_title(replyer_id, topic_id):
+#     replyer = User.get_user_by_id(replyer_id)
+#     topic = Topic.get_topic(topic_id)
+#     inform_title = "<a href=" + url_for('user', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在话题&nbsp;&nbsp;" + "<a href=" + url_for('single_topic', topic_id=topic_id) + ">" + topic['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
+#     return inform_title
 
-# Build HTML code for review inform's header 
-def build_review_inform_title(replyer_id, review_id):
-    replyer = User.get_user_by_id(replyer_id)
-    review = Review.get_review(review_id)
-    inform_title = "<a href=" + url_for('user', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在评论&nbsp;&nbsp;" + "<a href=" + url_for('single_review', review_id=review_id) + ">" + review['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
-    return inform_title
+# # Build HTML code for review inform's header 
+# def build_review_inform_title(replyer_id, review_id):
+#     replyer = User.get_user_by_id(replyer_id)
+#     review = Review.get_review(review_id)
+#     inform_title = "<a href=" + url_for('user', user_abbr=replyer['Abbr']) + ">" + replyer['Name'] + "</a>&nbsp;&nbsp;在评论&nbsp;&nbsp;" + "<a href=" + url_for('single_review', review_id=review_id) + ">" + review['Title'] + "</a>" + "&nbsp;&nbsp;中回复了你"
+#     return inform_title
 
 # Check if is Administrator
 def require_admin(func):

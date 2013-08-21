@@ -1,6 +1,8 @@
 #-*- coding: UTF-8 -*-
 from flask import g
 from xichuangzhu import db
+from author_quote import AuthorQuote
+from sqlalchemy import func
 
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +17,13 @@ class Author(db.Model):
 
     def __repr__(self):
         return '<Author %s>' % self.name
+
+    @property
+    def random_quote(self):
+        """
+        Get a random quote of the author
+        """
+        return AuthorQuote.query.filter(AuthorQuote.author_id == self.id).order_by(func.rand()).first()
 
     # get authors by random
     @staticmethod

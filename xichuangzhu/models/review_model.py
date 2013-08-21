@@ -1,5 +1,25 @@
 #-*- coding: UTF-8 -*-
 from flask import g
+from xichuangzhu import db
+from xichuangzhu.utils import time_diff
+
+class WorkReview(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    content = db.Column(db.Text)
+    is_publish = db.Column(db.Boolean)
+    click_num = db.Column(db.Integer)
+    create_time = db.Column(db.DateTime)
+
+    work_id = db.Column(db.Integer, db.ForeignKey('work.id'))
+    work = db.relationship('Work', backref=db.backref('reviews'))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('reviews'))
+
+    @property
+    def friendly_create_time(self):
+        return time_diff(self.create_time)
 
 class Review:
 

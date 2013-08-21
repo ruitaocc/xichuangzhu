@@ -8,8 +8,8 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import TopicForm, CommentForm
-from xichuangzhu.utils import time_diff, require_login, get_comment_replyee_id, rebuild_comment, build_topic_inform_title, Pagination
-
+# from xichuangzhu.utils import time_diff, require_login, get_comment_replyee_id, rebuild_comment, build_topic_inform_title, Pagination
+from xichuangzhu.utils import time_diff, require_login, Pagination
 # page topics
 #--------------------------------------------------
 @app.route('/topics')
@@ -56,30 +56,31 @@ def topic(topic_id):
 def add_comment_to_topic(topic_id):
     form = CommentForm(request.form)    
     if form.validate():
-        comment = cgi.escape(form.comment.data)
+        # comment = cgi.escape(form.comment.data)
 
-        # add comment
-        replyer_id = session['user_id']
-        replyee_id = get_comment_replyee_id(comment)    # check if @people exist
-        if replyee_id != -1:
-            comment = rebuild_comment(comment, replyee_id)
-        new_comment_id = Comment.add_comment_to_topic(topic_id, replyer_id, comment)
+        # # add comment
+        # replyer_id = session['user_id']
+        # replyee_id = get_comment_replyee_id(comment)    # check if @people exist
+        # if replyee_id != -1:
+        #     comment = rebuild_comment(comment, replyee_id)
+        # new_comment_id = Comment.add_comment_to_topic(topic_id, replyer_id, comment)
 
-        # plus comment num by 1
-        Topic.add_comment_num(topic_id)
+        # # plus comment num by 1
+        # Topic.add_comment_num(topic_id)
 
-        # add inform
-        topic_user_id = Topic.get_topic(topic_id)['UserID']
-        inform_title = build_topic_inform_title(replyer_id, topic_id)
-        # if the topic not add by me
-        if replyer_id != topic_user_id:
-            Inform.add(replyer_id, topic_user_id, inform_title, comment)
-        # if replyee exist,
-        # and the topic not add by me,
-        # and not topic_user_id, because if so, the inform has already been sended above
-        if replyee_id != -1 and  replyee_id != replyer_id and replyee_id != topic_user_id:
-            Inform.add(replyer_id, replyee_id, inform_title, comment)
-        return redirect(url_for('topic', topic_id=topic_id) + "#" + str(new_comment_id))
+        # # add inform
+        # topic_user_id = Topic.get_topic(topic_id)['UserID']
+        # inform_title = build_topic_inform_title(replyer_id, topic_id)
+        # # if the topic not add by me
+        # if replyer_id != topic_user_id:
+        #     Inform.add(replyer_id, topic_user_id, inform_title, comment)
+        # # if replyee exist,
+        # # and the topic not add by me,
+        # # and not topic_user_id, because if so, the inform has already been sended above
+        # if replyee_id != -1 and  replyee_id != replyer_id and replyee_id != topic_user_id:
+        #     Inform.add(replyer_id, replyee_id, inform_title, comment)
+        # return redirect(url_for('topic', topic_id=topic_id) + "#" + str(new_comment_id))
+        return "1"
     else:
         return redirect(url_for('topic', topic_id=topic_id))
 

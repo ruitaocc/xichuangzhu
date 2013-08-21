@@ -1,7 +1,20 @@
 #-*- coding: UTF-8 -*-
 from flask import g
+from xichuangzhu import db
 
-class User:
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    abbr = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    avatar = db.Column(db.String(200))
+    is_active = db.Column(db.Boolean)
+    signature = db.Column(db.Text)
+    check_inform_time = db.Column(db.DateTime)
+    create_time = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<User %s>' % self.name
 
 # GET
 
@@ -67,7 +80,7 @@ class User:
 
     # add a new user
     @staticmethod
-    def add_user(userID, name, abbr, avatar, signature, desc, locationID, location):
+    def add_user(userID, name, abbr, avatar, signature):
         query = '''INSERT INTO user (UserID, Name, Abbr, Avatar, Signature, Description, LocationID, Location, CheckInformTime)\n
             VALUES (%d, '%s', '%s', '%s', '%s', '%s', %d, '%s', NOW())''' % (userID, name, abbr, avatar, signature, desc, locationID, location)
         g.cursor.execute(query)

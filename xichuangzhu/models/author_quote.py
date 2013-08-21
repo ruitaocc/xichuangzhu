@@ -11,3 +11,6 @@ class AuthorQuote(db.Model):
 
     work_id = db.Column(db.Integer, db.ForeignKey('work.id'))
     work = db.relationship('Work', backref=db.backref('quotes'))
+
+    def __repr__(self):
+        return '<AuthorQuote %s>' % self.quote

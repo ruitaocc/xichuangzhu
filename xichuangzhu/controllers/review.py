@@ -13,7 +13,8 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import ReviewForm, CommentForm
-from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login, Pagination
+# from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login, Pagination
+from xichuangzhu.utils import time_diff, require_admin, require_login, Pagination
 
 # page review
 #--------------------------------------------------
@@ -47,29 +48,30 @@ def review(review_id):
 def add_comment_to_review(review_id):
     form = CommentForm(request.form)
     if form.validate():
-        comment = cgi.escape(form.comment.data)
+        # comment = cgi.escape(form.comment.data)
 
-        # add comment
-        replyer_id = session['user_id']
-        replyee_id = get_comment_replyee_id(comment)    # check if @people exist
-        if replyee_id != -1:
-            comment = rebuild_comment(comment, replyee_id)
-        new_comment_id = Comment.add_comment_to_review(review_id, replyer_id, comment)
+        # # add comment
+        # replyer_id = session['user_id']
+        # replyee_id = get_comment_replyee_id(comment)    # check if @people exist
+        # if replyee_id != -1:
+        #     comment = rebuild_comment(comment, replyee_id)
+        # new_comment_id = Comment.add_comment_to_review(review_id, replyer_id, comment)
 
-        Review.add_comment_num(review_id)
+        # Review.add_comment_num(review_id)
 
-        # add inform
-        review_user_id = Review.get_review(review_id)['UserID']
-        inform_title = build_review_inform_title(replyer_id, review_id)
-        # if the review not add by me
-        if  replyer_id != review_user_id:
-            Inform.add(replyer_id, review_user_id, inform_title, comment)
-        # if replyee exist,
-        # and the topic not add by me,
-        # and not review_user_id, because if so, the inform has already been sended above
-        if replyee_id != -1 and replyee_id != replyer_id and replyee_id != review_user_id:
-            Inform.add(replyer_id, replyee_id, inform_title, comment)
-        return redirect(url_for('review', review_id=review_id) + "#" + str(new_comment_id))
+        # # add inform
+        # review_user_id = Review.get_review(review_id)['UserID']
+        # inform_title = build_review_inform_title(replyer_id, review_id)
+        # # if the review not add by me
+        # if  replyer_id != review_user_id:
+        #     Inform.add(replyer_id, review_user_id, inform_title, comment)
+        # # if replyee exist,
+        # # and the topic not add by me,
+        # # and not review_user_id, because if so, the inform has already been sended above
+        # if replyee_id != -1 and replyee_id != replyer_id and replyee_id != review_user_id:
+        #     Inform.add(replyer_id, replyee_id, inform_title, comment)
+        # return redirect(url_for('review', review_id=review_id) + "#" + str(new_comment_id))
+        return '1'
     else:
         return redirect(url_for('review', review_id=review_id))
 
