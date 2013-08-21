@@ -36,7 +36,7 @@ def user(user_abbr):
         t['Time'] = time_diff(t['Time'])
     topics_num = Topic.get_topics_num_by_user(user['UserID'])
 
-    # handwritings
+    # work images
     work_images = Work.get_images_by_user(user['UserID'], 1, 9)
     work_images_num = Work.get_images_num_by_user(user['UserID'])
 

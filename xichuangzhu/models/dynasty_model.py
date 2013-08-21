@@ -1,9 +1,21 @@
 #-*- coding: UTF-8 -*-
 from flask import g
+from xichuangzhu import db
 
-class Dynasty:
+class Dynasty(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    abbr = db.Column(db.String(50), unique=True)
+    intro = db.Column(db.Text())
+    start_year = db.Column(db.Integer)
+    end_year = db.Column(db.Integer)
+    
+    # def __init__(self, username, email):
+    #     self.username = username
+    #     self.email = email
 
-# GET
+    def __repr__(self):
+        return '<Dynasty %s>' % self.name
 
     # get all dynasties
     @staticmethod

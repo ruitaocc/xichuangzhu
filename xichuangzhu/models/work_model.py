@@ -1,7 +1,30 @@
 #-*- coding: UTF-8 -*-
 from flask import g
+from xichuangzhu import db
+from xichuangzhu.utils import content_clean
 
-class Work:
+class Work(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
+    foreword = db.Column(db.Text())
+    content = db.Column(db.Text())
+    intro = db.Column(db.Text())
+    type = db.Column(db.String(10))
+    type_name = db.Column(db.String(10))
+    create_time = db.Column(db.DateTime)
+
+    @property
+    def clean_content(self):
+        return content_clean(self.content)
+
+    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
+    author = db.relationship('Author', backref=db.backref('works'))
+
+    dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))
+    dynasty = db.relationship('Dynasty', backref=db.backref('works'))
+
+    def __repr__(self):
+        return '<Work %s>' % self.title
 
 # GET
 

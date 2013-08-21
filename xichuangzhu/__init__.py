@@ -5,7 +5,7 @@ import config
 import MySQLdb
 import MySQLdb.cursors
 from flask import Flask, session, g, request, url_for
-from xichuangzhu.models.inform_model import Inform
+from flask.ext.sqlalchemy import SQLAlchemy
 
 # convert python's encoding to utf8
 reload(sys)
@@ -18,7 +18,12 @@ app.config.update(
     SESSION_COOKIE_NAME = config.SESSION_COOKIE_NAME,
     PERMANENT_SESSION_LIFETIME = config.PERMANENT_SESSION_LIFETIME)
 
+# SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:xiaowangzi@localhost/xcz'
+db = SQLAlchemy(app)
+
 # inject vars into template context
+from xichuangzhu.models.inform_model import Inform
 @app.context_processor
 def inject_vars():
     return dict(
@@ -49,3 +54,4 @@ def teardown_request(exception):
 
 import log
 import controllers
+import models

@@ -1,5 +1,5 @@
 #-*- coding: UTF-8 -*-
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import TextField, TextAreaField, HiddenField, validators
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 

@@ -8,15 +8,15 @@ from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.topic_model import Topic
 from xichuangzhu.models.quote_model import Quote
-from xichuangzhu.utils import time_diff, content_clean
+from xichuangzhu.utils import time_diff
+from sqlalchemy import func
 
 # page home
 #--------------------------------------------------
 @app.route('/')
 def index():
-    works = Work.get_works_by_random(4)
-    for work in works:
-        work['Content'] = content_clean(work['Content'])
+    # need to be random
+    works = Work.query.order_by(func.rand()).limit(4)
 
     work_images = Work.get_images_by_random(9)
 
@@ -24,22 +24,22 @@ def index():
     for r in reviews:
         r['Time'] = time_diff(r['Time'])
     
-    authors = Author.get_authors_by_random(5)
-    for a in authors:
-        quote = Quote.get_quote_by_random(a['AuthorID'])
-        a['Quote'] = quote['Quote'] if quote else ""
-        a['QuoteID'] = quote['QuoteID'] if quote else 0
-    
-    dynasties = Dynasty.get_dynasties()
-    
+    # authors = Author.get_authors_by_random(5)
+    # for a in authors:
+    #     quote = Quote.get_quote_by_random(a['AuthorID'])
+    #     a['Quote'] = quote['Quote'] if quote else ""
+    #     a['QuoteID'] = quote['QuoteID'] if quote else 0
+
+    authors = Author.query.order_by(func.rand()).limit(5)
+
+    dynasties = Dynasty.query.all()
+
     return render_template('site/index.html', works=works, work_images=work_images, reviews=reviews, authors=authors, dynasties=dynasties)
 
 # json - gene works data for index page
 @app.route('/4works', methods=['POST'])
 def four_works():
-    works = Work.get_works_by_random(4)
-    for work in works:
-        work['Content'] = content_clean(work['Content'])
+    works = Work.query.order_by(func.rand()).limit(4)
     return render_template('widget/index_works.widget', works=works)
 
 # page about

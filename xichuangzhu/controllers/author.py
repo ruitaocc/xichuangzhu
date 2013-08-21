@@ -52,7 +52,7 @@ def author(author_abbr):
     for work in works:
         work['Content'] = content_clean(work['Content'])
 
-    # count num of different type work.
+    # count num of different type works.
     # return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}.
     work_types = Work.get_types()
     works_num = {}
@@ -84,12 +84,12 @@ def add_author():
 
 # page edit author
 #--------------------------------------------------
-@app.route('/author/edit/<int:authorID>', methods=['GET', 'POST'])
+@app.route('/author/<int:author_id>/edit', methods=['GET', 'POST'])
 @require_admin
-def edit_author(authorID):
+def edit_author(author_id):
     if request.method == 'GET':
         dynasties = Dynasty.get_dynasties()
-        author = Author.get_author_by_id(authorID)
+        author = Author.get_author_by_id(author_id)
         return render_template('author/edit_author.html', dynasties=dynasties, author=author)
     else:
         author = request.form['author']
@@ -98,12 +98,12 @@ def edit_author(authorID):
         birthYear = request.form['birthYear']
         deathYear = request.form['deathYear']
         dynastyID = int(request.form['dynastyID'])      
-        Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, authorID)
+        Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, author_id)
         return redirect(url_for('author', author_abbr=abbr))
 
 # page - admin quotes
 #--------------------------------------------------
-@app.route('/quote/admin/<int:author_id>')
+@app.route('/author/<int:author_id>/admin_quote')
 @require_admin
 def admin_quotes(author_id):
     author = Author.get_author_by_id(author_id)
@@ -111,7 +111,7 @@ def admin_quotes(author_id):
     return render_template('author/admin_quotes.html', quotes=quotes, author=author)
 
 # proc - add quote
-@app.route('/quote/add/<int:author_id>', methods=['POST'])
+@app.route('/author/<int:author_id>/add_quote', methods=['POST'])
 @require_admin
 def add_quote(author_id):
     quote = request.form['quote']
@@ -121,7 +121,7 @@ def add_quote(author_id):
     return redirect(url_for('admin_quotes', author_id=author_id))
 
 # proc - delete quote
-@app.route('/quote/delete/<int:quote_id>')
+@app.route('/quote/<int:quote_id>/delete')
 @require_admin
 def delete_quote(quote_id):
     author_id = int(request.args['author_id'])
@@ -130,7 +130,7 @@ def delete_quote(quote_id):
 
 # page edit quote
 #--------------------------------------------------
-@app.route('/quote/edit/<int:quote_id>', methods=['GET', 'POST'])
+@app.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
 @require_admin
 def edit_quote(quote_id):   
     if request.method == 'GET':
@@ -140,5 +140,5 @@ def edit_quote(quote_id):
         quote = request.form['quote']
         work_id = int(request.form['work-id'])
         work = Work.get_work(work_id)
-        Quote.edit(quote_id, work['AuthorID'], quote, work['WorkID'], work['Title'])
-        return redirect(url_for('admin_quotes', author_id=work['AuthorID']))
+        Quote.edit(quote_id, work['Author_id'], quote, work['WorkID'], work['Title'])
+        return redirect(url_for('admin_quotes', author_id=work['Author_id']))

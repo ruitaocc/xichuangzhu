@@ -1,9 +1,20 @@
 #-*- coding: UTF-8 -*-
 from flask import g
+from xichuangzhu import db
 
-class Author:
+class Author(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    abbr = db.Column(db.String(50), unique=True)
+    intro = db.Column(db.Text())
+    brith_year = db.Column(db.String(20))
+    death_year = db.Column(db.String(20))
 
-# GET
+    dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))
+    dynasty = db.relationship('Dynasty', backref=db.backref('authors'))
+
+    def __repr__(self):
+        return '<Author %s>' % self.name
 
     # get authors by random
     @staticmethod

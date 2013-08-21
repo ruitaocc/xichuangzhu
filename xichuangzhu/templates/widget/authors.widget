@@ -3,7 +3,7 @@
 {% for author in authors %}
 <div class='author-item'>
    <div>
-      <a class='author' href="{{ url_for('author', author_abbr=author.Abbr, q=author.QuoteID) }}">{{ author.Author }}</a><sup class='author-dynasty'>〔<a href="{{ url_for('dynasty', dynasty_abbr=author.DynastyAbbr) }}">{{ author.Dynasty }}</a>〕</sup>
+      <a class='author' href="{{ url_for('author', author_abbr=author.abbr, q=author.QuoteID) }}">{{ author.fuck }}</a><sup class='author-dynasty'>〔<a href="{{ url_for('dynasty', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕</sup>
    </div>
    <div class='author-quote'>{{ author.Quote }}</div>
 </div>
