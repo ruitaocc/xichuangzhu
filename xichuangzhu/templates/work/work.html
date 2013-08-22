@@ -110,7 +110,7 @@ $(document).ready(function(){
       <h2>题解</h2>
       <div class="work-introduction">{{ work.WorkIntroduction }}</div>
       
-      {% if reviews|length != 0 %}
+      {% if reviews_num != 0 %}
       <h2>
          点评
          <span class='link-more'>
@@ -168,10 +168,6 @@ $(document).ready(function(){
          <span class="other-work-content">{{ work.Content|truncate(8, True) }}</span>
       </div>
       {% endfor %}
-      
-      <!-- <a class="ad" title="{{ product.Product }}" href="{{ url_for('product', product_id=product.ProductID) }}">
-         <img src="{{ product.ImageUrl }}">
-      </a> -->
 
       <h2>谁收藏了它？</h2>
 

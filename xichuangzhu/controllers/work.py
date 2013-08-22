@@ -8,9 +8,11 @@ import uuid
 import config
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
+from xichuangzhu import db
 from xichuangzhu.models.work_model import Work
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
+from xichuangzhu.models.review_model import WorkReview
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.product_model import Product
@@ -43,12 +45,8 @@ def work(work_id):
         my_tags = []
         popular_tags = []
 
-    reviews = Review.get_reviews_by_work(work_id, 1, 4)
-    for r in reviews:
-        r['Time'] = time_diff(r['Time'])
+    reviews = WorkReview.query.filter(WorkReview.work_id==work_id).order_by(WorkReview.create_time).limit(4)
     reviews_num = Review.get_reviews_num_by_work(work_id)
-
-    product = Product.get_product_by_random()
 
     work_images = Work.get_images_by_work(work_id, 1, 9)
     work_images_num = Work.get_images_num_by_work(work_id)
@@ -59,7 +57,7 @@ def work(work_id):
 
     collectors = Collect.get_users_by_work(work_id, 4)
 
-    return render_template('work/work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, reviews_num=reviews_num, is_collected=is_collected, product=product, other_works=other_works, collectors=collectors, work_images=work_images, work_images_num=work_images_num)
+    return render_template('work/work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, reviews_num=reviews_num, is_collected=is_collected, other_works=other_works, collectors=collectors, work_images=work_images, work_images_num=work_images_num)
 
 # proc - collect work
 @app.route('/work/<int:work_id>/collect', methods=['POST'])

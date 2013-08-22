@@ -1,10 +1,11 @@
 #-*- coding: UTF-8 -*-
+import datetime
 from flask import g
 from xichuangzhu import db
 
 class CollectWork(db.Model):
     tags = db.Column(db.String(100))
-    create_time = db.Column(db.DateTime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     user = db.relationship('User', backref=db.backref('collect_works'))

@@ -68,8 +68,7 @@
                         {{ session.user_name }} <b class="caret"></b>
                      </a>
                      <ul class="dropdown-menu">
-                        <!-- <li><a href="{{ url_for('user', user_abbr=session.user_abbr) }}">个人主页</a></li> -->
-                        <li><a href="{{ url_for('logout') }}">退出</a></li>
+                        <li><a href="{{ url_for('signout') }}">退出</a></li>
                      </ul>
                   </li>
                </ul>
@@ -85,7 +84,6 @@
                         <li><a href="{{ url_for('add_work') }}">作品</a></li>
                         <li><a href="{{ url_for('add_author') }}">文学家</a></li>
                         <li><a href="{{ url_for('add_dynasty') }}">朝代</a></li>
-                        <li><a href="{{ url_for('add_product') }}">商品</a></li>
                      </ul>
                   </li>
                </ul>

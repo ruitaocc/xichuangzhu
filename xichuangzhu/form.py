@@ -27,7 +27,7 @@ class TopicForm(Form):
 
 # Comment form
 class CommentForm(Form):
-    comment = TextAreaField('回复', [
+    content = TextAreaField('回复', [
         validators.Required(message="回复不能为空")
     ])
 

@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
-{% block page_title %}绑定邮箱{% endblock %}
-{% block page_id%}page-verify-email{% endblock %}
+{% block page_title %}发送激活邮件{% endblock %}
+{% block page_id%}page-send-active-email{% endblock %}
 
 {% block body %}
 
-<form id="form-verify-email" class="form-horizontal" method="post" action="{{ url_for('send_verify_email') }}">
+<form id="form-verify-email" class="form-horizontal" method="post" action="{{ url_for('send_active_email', user_id=user.id) }}">
    <fieldset>
-      <legend>欢迎{{ user_name }}，请绑定邮箱来创建帐号</legend>
+      <legend>欢迎{{ user.name }}，即将发送激活邮件，请填写你的常用邮箱：</legend>
       
       {{ form.csrf_token }}
       

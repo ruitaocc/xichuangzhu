@@ -1,4 +1,5 @@
 #-*- coding: UTF-8 -*-
+import datetime
 from flask import g
 from xichuangzhu import db
 
@@ -8,10 +9,10 @@ class User(db.Model):
     abbr = db.Column(db.String(50))
     email = db.Column(db.String(50))
     avatar = db.Column(db.String(200))
-    is_active = db.Column(db.Boolean)
     signature = db.Column(db.Text)
-    check_inform_time = db.Column(db.DateTime)
-    create_time = db.Column(db.DateTime)
+    is_active = db.Column(db.Boolean, default=False)
+    check_inform_time = db.Column(db.DateTime, default=datetime.datetime.now)
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __repr__(self):
         return '<User %s>' % self.name

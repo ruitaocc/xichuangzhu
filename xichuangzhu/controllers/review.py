@@ -5,10 +5,13 @@ import cgi
 import markdown2
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
+from xichuangzhu import db
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work
-from xichuangzhu.models.dynasty_model import Dynasty
+from xichuangzhu.models.review_model import WorkReview
+from xichuangzhu.models.review_model import WorkReviewComment
 from xichuangzhu.models.review_model import Review
+from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
@@ -22,56 +25,35 @@ from xichuangzhu.utils import time_diff, require_admin, require_login, Paginatio
 def review(review_id):
     form = CommentForm()
 
-    # check exist
-    review = Review.get_review(review_id)
-    if not review:
+    review = WorkReview.query.get_or_404(review_id)
+
+    # others cannot see draft
+    is_me = True if "user_id" in session and session['user_id'] == review.user_id else False
+    if not is_me and not review.is_publish: 
         abort(404)
+    
+    # Click num + 1
+    review.click_num += 1 
+    db.session.add(review)
+    db.session.commit()
 
-    # the others cannot see draft 
-    is_me = True if "user_id" in session and session['user_id'] == review['UserID'] else False
-    if not is_me and review['IsPublish'] == 0: 
-        abort(404)
-
-    # review['Content'] = markdown2.markdown(review['Content'])
-    review['Content'] = review['Content'].replace('\n', "<div class='text-gap'></div>")
-    review['Time'] = time_diff(review['Time'])
-    Review.add_click_num(review_id)
-    comments = Comment.get_comments_by_review(review_id)
-    for c in comments:
-        c['Time'] = time_diff(c['Time'])
-
-    return render_template('review/review.html', review=review, comments=comments, form=form)
+    return render_template('review/review.html', review=review, form=form)
 
 # proc - add comment
-@app.route('/review/add_comment/<int:review_id>', methods=['POST'])
+@app.route('/review/<int:review_id>/comment', methods=['POST'])
 @require_login
-def add_comment_to_review(review_id):
+def comment_review(review_id):
     form = CommentForm(request.form)
     if form.validate():
-        # comment = cgi.escape(form.comment.data)
+        comment = WorkReviewComment(content=cgi.escape(form.content.data), review_id=review_id, user_id=session['user_id'])
+        db.session.add(comment)
 
-        # # add comment
-        # replyer_id = session['user_id']
-        # replyee_id = get_comment_replyee_id(comment)    # check if @people exist
-        # if replyee_id != -1:
-        #     comment = rebuild_comment(comment, replyee_id)
-        # new_comment_id = Comment.add_comment_to_review(review_id, replyer_id, comment)
+        review = Review.query.get_or_404(review_id)
+        review.click_num += 1
+        db.session.add(review)
 
-        # Review.add_comment_num(review_id)
-
-        # # add inform
-        # review_user_id = Review.get_review(review_id)['UserID']
-        # inform_title = build_review_inform_title(replyer_id, review_id)
-        # # if the review not add by me
-        # if  replyer_id != review_user_id:
-        #     Inform.add(replyer_id, review_user_id, inform_title, comment)
-        # # if replyee exist,
-        # # and the topic not add by me,
-        # # and not review_user_id, because if so, the inform has already been sended above
-        # if replyee_id != -1 and replyee_id != replyer_id and replyee_id != review_user_id:
-        #     Inform.add(replyer_id, replyee_id, inform_title, comment)
-        # return redirect(url_for('review', review_id=review_id) + "#" + str(new_comment_id))
-        return '1'
+        db.session.commit()
+        return redirect(url_for('review', review_id=review_id) + "#" + str(comment.id))
     else:
         return redirect(url_for('review', review_id=review_id))
 
@@ -79,73 +61,68 @@ def add_comment_to_review(review_id):
 #--------------------------------------------------
 @app.route('/reviews')
 def reviews():
-    # pagination
-    per_page = 10
-    page = int(request.args['page'] if 'page' in request.args else 1)
+    page = int(request.args.get('page', 1))
+    pagination = WorkReview.query.paginate(page, 10)
 
-    reviews = Review.get_reviews(page, per_page)
-    for r in reviews:
-        r['Time'] = time_diff(r['Time'])
+    # get reviews
+    stmt = db.session.query(WorkReview.user_id, db.func.count(WorkReview.user_id).label('reviews_num')).group_by(WorkReview.user_id).subquery()
+    hot_reviewers = db.session.query(User).join(stmt, User.id==stmt.c.user_id).order_by(stmt.c.reviews_num)
 
-    reviews_num = Review.get_reviews_num()
-
-    pagination = Pagination(page, per_page, reviews_num)
-
-    reviewers = Review.get_hot_reviewers(8)
-
-    return render_template('review/reviews.html', reviews=reviews, reviewers=reviewers, pagination=pagination)
+    return render_template('review/reviews.html', pagination=pagination, hot_reviewers=hot_reviewers)
 
 # page - add review
 #--------------------------------------------------
-@app.route('/review/add/<int:work_id>', methods=['GET', 'POST'])
+@app.route('/work/<int:work_id>/add_review', methods=['GET', 'POST'])
 @require_login
 def add_review(work_id):
-    work = Work.get_work(work_id)
+    work = Work.query.get_or_404(work_id)
     if request.method == 'GET':
         form = ReviewForm()
         return render_template('review/add_review.html', work=work, form=form)
     else:
         form = ReviewForm(request.form)
         if form.validate():
-            user_id = session['user_id']
-            title = cgi.escape(form.title.data)
-            content = cgi.escape(form.content.data)
-            is_publish = 1 if 'publish' in request.form else 0
-            new_review_id = Review.add_review(work_id, user_id, title, content, is_publish)
-            return redirect(url_for('review', review_id=new_review_id))
+            is_publish = True if 'publish' in request.form else False
+            review = WorkReview(title=cgi.escape(form.title.data), content=cgi.escape(form.content.data), user_id=session['user_id'], work_id=work_id, is_publish=is_publish)
+            db.session.add(review)
+            db.session.commit()
+            return redirect(url_for('review', review_id=review.id))
         else:
             return render_template('review/add_review.html', work=work, form=form)
 
 # page - edit review
 #--------------------------------------------------
-@app.route('/review/edit/<int:review_id>', methods=['GET', 'POST'])
+@app.route('/review/<int:review_id>/edit', methods=['GET', 'POST'])
 @require_login
 def edit_review(review_id):
-    review = Review.get_review(review_id)
-    if review['UserID'] != session['user_id']:
+    review = WorkReview.query.get_or_404(review_id)
+    if review.user_id != session['user_id']:
         abort(404)
 
     if request.method == 'GET':
-        form = ReviewForm(title=review['Title'], content=review['Content'])
+        form = ReviewForm(title=review.title, content=review.content)
         return render_template('review/edit_review.html', review=review, form=form)
     else:
         form = ReviewForm(request.form)
         if form.validate():
-            title = cgi.escape(form.title.data)
-            content = cgi.escape(form.content.data)
-            is_publish = 1 if 'publish' in request.form else 0
-            Review.edit_review(review_id, title, content, is_publish)
+            review.title = cgi.escape(form.title.data)
+            review.content = cgi.escape(form.content.data)
+            review.is_publish = True if 'publish' in request.form else False
+            db.session.add(review)
+            db.session.commit()
             return redirect(url_for('review', review_id=review_id))
         else:
             return render_template('review/edit_review.html', review=review, form=form)
 
 # proc delete review
 #--------------------------------------------------
-@app.route('/review/delete/<int:review_id>')
+@app.route('/review/<int:review_id>/delete')
 @require_login
 def delete_review(review_id):
-    review = Review.get_review(review_id)
-    if review['UserID'] != session['user_id']:
+    review = WorkReview.query.get_or_404(review_id)
+    if review.user_id != session['user_id']:
         abort(404)
-    Review.delete(review_id)
+
+    db.session.delete(review)
+    db.session.commit()
     return redirect(url_for('index'))

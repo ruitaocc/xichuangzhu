@@ -7,6 +7,7 @@ import math
 import config
 from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app
+from xichuangzhu import db
 from xichuangzhu.models.user_model import User
 from xichuangzhu.utils import require_login
 from xichuangzhu.form import EmailForm
@@ -14,7 +15,7 @@ from xichuangzhu.form import EmailForm
 # proc - login by douban's oauth2.0 (public)
 #--------------------------------------------------
 @app.route('/login/douban')
-def auth():
+def signin():
     # get current authed userID
     code = request.args['code']
     url = "https://www.douban.com/service/auth2/token"
@@ -29,16 +30,17 @@ def auth():
     user_id = int(r['douban_user_id'])
 
     # if user exist
-    if User.check_exist_by_id(user_id):
+    if User.query.get(user_id):
         # if user unactive
-        if not User.check_active(user_id):
-            return redirect(url_for('verify_email_callback', state='unactive', user_id=user_id))
+        if User.query.filter(User.is_active==False).filter(User.id==user_id).first():
+            return redirect(url_for('active_state', state='unactive', user_id=user_id))
         else:
             # set session
             session.permanent = True
+            user = User.query.get(user_id)
             session['user_id'] = user_id
-            session['user_name'] = User.get_name_by_id(user_id)
-            session['user_abbr'] = User.get_abbr_by_id(user_id)
+            session['user_name'] = user.name
+            session['user_abbr'] = user.abbr
             return redirect(url_for('index'))
     # if not exist
     else:
@@ -46,92 +48,83 @@ def auth():
         url = "https://api.douban.com/v2/user/" + str(user_id)
         user_info = requests.get(url).json()
 
-        # add user
-        user_id = int(user_info['id'])
-        user_name = user_info['name']
-        abbr = user_info['uid']
-        avatar = user_info['avatar']
-        signature = user_info['signature']
-        User.add_user(user_id, user_name, abbr, avatar, signature)
+        user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'], avatar=user_info['avatar'], signature=user_info['signature'])
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('send_active_email', user_id=user_id))
 
-        # redirect to the verify email page
-        return redirect(url_for('send_verify_email', user_id=user_id))
-
-# page - send verify email
+# page - send active email
 #--------------------------------------------------
-@app.route('/send_verify_email/douban', methods=['GET', 'POST'])
-def send_verify_email():
+@app.route('/send_active_email/<int:user_id>', methods=['GET', 'POST'])
+def send_active_email(user_id):
+    user = User.query.get_or_404(user_id)
     if request.method == 'GET':
-        user_id = int(request.args['user_id'])
         form = EmailForm(user_id=user_id)
-        user_name = User.get_name_by_id(user_id)
-        return render_template('sign/send_verify_email.html', user_name=user_name, form=form)
+        return render_template('sign/send_active_email.html', user=user, form=form)
     else:
         form = EmailForm(request.form)
 
         if form.validate():
+            # email address will be send to
+            to_addr = form.email.data
 
-            # email
-            t_addr = form.email.data
+            # update user email
+            user.email = to_addr
+            db.session.add(user)
+            db.session.commit()
 
-            # user info
-            user_id = int(form.user_id.data)
-            user_name = User.get_name_by_id(user_id)
-
-            # add this email to user
-            User.add_email(user_id, t_addr)
-
-            # gene verify url
-            verify_code = hashlib.sha1(user_name).hexdigest()
-            verify_url = config.SITE_DOMAIN + "verify_email/douban/" + str(user_id) + "/" + verify_code
+            # gene active url
+            active_code = hashlib.sha1(user.name).hexdigest()
+            active_url = config.SITE_DOMAIN + "active_user/" + str(user_id) + "/" + active_code
 
             # prepare email content
-            msgText = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % verify_url
+            msgText = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
             msg = MIMEText(msgText, 'html', 'utf-8')
             msg['From'] = "西窗烛 <" + config.SMTP_FROM + ">"
-            msg['To'] = user_name + "<" + t_addr + ">"
+            msg['To'] = user.name + "<" + to_addr + ">"
             msg['Subject'] = "欢迎来到西窗烛！"
 
             # send email
             s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
             s.login(config.SMTP_USER, config.SMTP_PASSWORD)
-            s.sendmail(config.SMTP_FROM, t_addr, msg.as_string())
+            s.sendmail(config.SMTP_FROM, to_addr, msg.as_string())
 
-            return redirect(url_for('verify_email_callback', state='send_succ'))
+            return redirect(url_for('active_state', state='send_succ'))
         else:
-            user_id = int(form.user_id.data)
-            user_name = User.get_name_by_id(user_id)
-            return render_template('sign/send_verify_email.html', user_name=user_name, form=form)
+            return render_template('sign/send_active_email.html', user=user, form=form)
 
-# proc - verify the code and active user
+# proc - active the code and active user
 #--------------------------------------------------
-@app.route('/verify_email/douban/<int:user_id>/<verify_code>')
-def verify_email(user_id, verify_code):
-    user_name = User.get_name_by_id(user_id)
-    user_abbr = User.get_abbr_by_id(user_id)
-    if verify_code == hashlib.sha1(user_name).hexdigest():
-        User.active_user(user_id)
+@app.route('/active_user/<int:user_id>/<active_code>')
+def active_user(user_id, active_code):
+    user = User.query.get_or_404(user_id)
+    if active_code == hashlib.sha1(user.name).hexdigest():
+        # active user
+        user.is_active = True
+        db.session.add(user)
+        db.session.commit()
+
         session.permanent = True
         session['user_id'] = user_id
-        session['user_name'] = user_name
-        session['user_abbr'] = user_abbr
-        return redirect(url_for('verify_email_callback', state='active_succ'))
+        session['user_name'] = user.name
+        session['user_abbr'] = user.abbr
+        return redirect(url_for('active_state', state='active_succ'))
     else:
-        return redirect(url_for('verify_email_callback', state='active_failed'))
+        return redirect(url_for('active_state', state='active_failed'))
 
-# page - show the state of verify
+# page - show the state of active
 #--------------------------------------------------
-@app.route('/verify_email_callback/douban/')
-def verify_email_callback():
+@app.route('/active_state/')
+def active_state():
     state = request.args['state']
-    user_id = int(request.args['user_id']) if 'user_id' in request.args else 0
-    return render_template('sign/verify_email_callback.html', state=state, user_id=user_id)
+    user_id = int(request.args.get('user_id', 0))
+    return render_template('sign/active_state.html', state=state, user_id=user_id)
 
 # proc - logout
 #--------------------------------------------------
 @app.route('/logout')
 @require_login
-def logout():
+def signout():
     session.pop('user_id', None)
     session.pop('user_name', None)
     session.pop('user_abbr', None)

@@ -28,9 +28,7 @@ def authors():
 #--------------------------------------------------
 @app.route('/author/<author_abbr>')
 def author(author_abbr):
-    author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr==author_abbr).one()
-    if not author:
-        abort(404)
+    author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr==author_abbr).first_or_404()
     
     if 'q' in request.args:
         quote = AuthorQuote.get(int(request.args['q']))
@@ -65,7 +63,7 @@ def edit_author(author_id):
         author = Author.query.get(author_id)
         return render_template('author/edit_author.html', dynasties=dynasties, author=author)
     else:
-        author = Author.query.get(author_id)
+        author = Author.query.get_or_404(author_id)
         author.name = request.form['name']
         author.abbr = request.form['abbr']
         author.intro = request.form['intro']
@@ -97,7 +95,7 @@ def add_quote(author_id):
 @app.route('/quote/<int:quote_id>/delete')
 @require_admin
 def delete_quote(quote_id):
-    quote = AuthorQuote.query.get(quote_id)
+    quote = AuthorQuote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()
     return redirect(url_for('admin_quotes', author_id=quote.author_id))
@@ -108,10 +106,10 @@ def delete_quote(quote_id):
 @require_admin
 def edit_quote(quote_id):   
     if request.method == 'GET':
-        quote = AuthorQuote.query.get(quote_id)
+        quote = AuthorQuote.query.get_or_404(quote_id)
         return render_template('author/edit_quote.html', quote=quote)
     else:
-        quote = AuthorQuote.query.get(quote_id)
+        quote = AuthorQuote.query.get_or_404(quote_id)
         quote.quote = request.form['quote']
         quote.work_id = int(request.form['work_id'])
         db.session.add(quote)

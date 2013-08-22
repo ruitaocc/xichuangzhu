@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}评论{% endblock %}
+{% block page_title %}最新点评{% endblock %}
 {% block page_id%}page-reviews{% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
       <h2>最新点评</h2>
 
       {% from "widget/reviews.widget" import render_reviews %}
-      {{ render_reviews(reviews)|safe }}
+      {{ render_reviews(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
@@ -20,7 +20,7 @@
       <h2>点评人</h2>
 
       {% from 'widget/users.widget' import render_users %}
-      {{ render_users(reviewers)|safe }}
+      {{ render_users(hot_reviewers)|safe }}
    </div>
 </div>
 

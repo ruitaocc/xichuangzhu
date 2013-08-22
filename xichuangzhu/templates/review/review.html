@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ review.Title }} (评论：{{review.WorkTitle}}){% endblock %}
+{% block page_title %}{{ review.title }} (评论：{{review.work.title}}){% endblock %}
 {% block page_id%}page-review{% endblock %}
 
 {% block body %}
@@ -52,51 +52,51 @@ $(document).ready(function(){
 
 <div class="row">
    <div class="span8">
-      <a href="{{ url_for('user', user_abbr=review.UserAbbr) }}" class="user-avatar">
-         <img src="{{ review.Avatar }}">
+      <a href="{{ url_for('user', user_abbr=review.user.abbr) }}" class="user-avatar">
+         <img src="{{ review.user.avatar }}">
       </a>
       
       <h1 class="review-title">
-         {{ review.Title }}
-         {% if not review.IsPublish %}
+         {{ review.title }}
+         {% if not review.is_publish %}
          <sup><span class='label label-inverse'>草稿</span></sup>
          {% endif %}
       </h1>
 
       <div class="review-extra-info">
-         <a href="{{ url_for('user', user_abbr=review.UserAbbr) }}">{{ review.Name }}</a>
+         <a href="{{ url_for('user', user_abbr=review.user.abbr) }}">{{ review.user.name }}</a>
          <span style="color:#333;">评</span>
-         <a href="{{ url_for('work', work_id=review.WorkID) }}">{{ review.WorkTitle }}</a><span style="color:#333;">〔{{ review.Author }}〕</span>
+         <a href="{{ url_for('work', work_id=review.work_id) }}">{{ review.work.title }}</a><span style="color:#333;">〔{{ review.work.author.name }}〕</span>
          ·
-         <span class="review-time">{{ review.Time }}</span>
+         <span class="review-time">{{ review.friendly_create_time }}</span>
          ·
-         <span>{{ review.ClickNum }} 点击</span>
+         <span>{{ review.click_num }} 点击</span>
 
-         {% if session.user_id == review.UserID %}
-         <a id="btn-edit-review" href="{{ url_for('edit_review', review_id=review.ReviewID) }}">编辑</a>
+         {% if session.user_id == review.user_id %}
+         <a id="btn-edit-review" href="{{ url_for('edit_review', review_id=review.id) }}">编辑</a>
          /
-         <a id="btn-delete-review" href="{{ url_for('delete_review', review_id=review.ReviewID) }}">删除</a>
+         <a id="btn-delete-review" href="{{ url_for('delete_review', review_id=review.id) }}">删除</a>
          {% endif %}
       </div>
 
-      <div class="review-content">{{ review.Content|safe }}</div>
+      <div class="review-content">{{ review.friendly_content|safe }}</div>
       
-      {% if comments|length != 0 %}
+      {% if review.comments|length != 0 %}
       <h2>回复</h2>
 
       {% from 'widget/comments.widget' import render_comments %}
-      {{ render_comments(comments)|safe }}
+      {{ render_comments(review.comments)|safe }}
 
       {% endif %}
 
       {% if session.user_id %}
-      <form id="add-review-comment" method="post" action="{{ url_for('add_comment_to_review', review_id=review.ReviewID) }}">
+      <form id="add-review-comment" method="post" action="{{ url_for('comment_review', review_id=review.id) }}">
          {{ form.csrf_token }}
 
          {% from "widget/form.widget" import render_form_error %}
          {{ render_form_error(form)|safe }}
 
-         {{ form.comment(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
+         {{ form.content(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
          <input type="submit" class="btn btn-small" value="回复" />
       </form>
       {% endif %}
