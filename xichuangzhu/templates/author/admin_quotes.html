@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
-{% block page_title %}管理引语{% endblock %}
+{% block page_title %}引语管理{% endblock %}
 {% block page_id%}page-admin-quotes{% endblock %}
 
 {% block body %}
 
-<h2>〔{{ author.Dynasty }}〕{{ author.Author }}</h2>
+<h2>〔{{ author.dynasty.name }}〕{{ author.name }} / 引语</h2>
 
 <table class="table table-bordered table-striped">
    <thead>
@@ -15,20 +15,20 @@
    </thead>
 
    <tbody>
-      {% for q in quotes %}
+      {% for q in author.quotes %}
       <tr>
-         <td>{{ q.Quote }}</td>
-         <td>{{ q.WorkTitle }}</td>
+         <td>{{ q.quote }}</td>
+         <td>{{ q.work.title }}</td>
          <td>
-            <a class="btn btn-small" href="{{ url_for('edit_quote', quote_id=q.QuoteID) }}"><span class="icon-edit"></span> 编辑</a>
-            <a class="btn btn-small" href="{{ url_for('delete_quote', quote_id=q.QuoteID, author_id=author.AuthorID) }}"><span class="icon-remove"></span> 删除</a>
+            <a class="btn btn-small" href="{{ url_for('edit_quote', quote_id=q.id) }}"><span class="icon-edit"></span> 编辑</a>
+            <a class="btn btn-small" href="{{ url_for('delete_quote', quote_id=q.id) }}"><span class="icon-remove"></span> 删除</a>
          </td>
       </tr>
       {% endfor %}
    </tbody>
 </table>
 
-<form id="form-add-quote" class="form-horizontal" method="post" action="{{ url_for('add_quote', author_id=author.AuthorID) }}">
+<form id="form-add-quote" class="form-horizontal" method="post" action="{{ url_for('add_quote', author_id=author.id) }}">
    <fieldset>
       <legend>添加引语</legend>
 
@@ -42,7 +42,7 @@
       <div class="control-group">
          <label class="control-label">出自</label>
          <div class="controls">
-            <input type="text" class="input-xlarge" name="work-id" />
+            <input type="text" class="input-xlarge" name="work_id" />
          </div>
       </div>
 

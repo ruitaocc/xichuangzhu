@@ -2,9 +2,12 @@
 import re
 from flask import render_template, request, redirect, url_for, json, abort, session
 from xichuangzhu import app
+from xichuangzhu import db
 import config
 from xichuangzhu.models.author_model import Author
+from xichuangzhu.models.author_model import AuthorQuote
 from xichuangzhu.models.work_model import Work
+from xichuangzhu.models.collect_work import CollectWork
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.quote_model import Quote
 from xichuangzhu.utils import content_clean, require_admin
@@ -13,20 +16,11 @@ from xichuangzhu.utils import content_clean, require_admin
 #--------------------------------------------------
 @app.route('/authors')
 def authors():
-    dynasties = Dynasty.get_dynasties()
-    for d in dynasties:
-        d['authors'] = Author.get_authors_by_dynasty(d['DynastyID'], 30, False)
-        for a in d['authors']:
-            quote = Quote.get_quote_by_random(a['AuthorID'])
-            a['Quote'] = quote['Quote'] if quote else ""
-            a['QuoteID'] = quote['QuoteID'] if quote else 0
-            a['QuotesNum'] = Quote.get_quotes_num_by_author(a['AuthorID'])
+    dynasties = Dynasty.query.options(db.subqueryload(Dynasty.authors)).order_by(Dynasty.start_year)
 
-    hot_authors = Author.get_hot_authors(8)
-    for a in hot_authors:
-        quote = Quote.get_quote_by_random(a['AuthorID'])
-        a['Quote'] = quote['Quote'] if quote else ""
-        a['QuoteID'] = quote['QuoteID'] if quote else 0
+    # get the authors who's works are latest collected by user
+    stmt = db.session.query(Author.id, CollectWork.create_time).join(Work).join(CollectWork).group_by(Author.id).having(db.func.max(CollectWork.create_time)).subquery()
+    hot_authors = Author.query.join(stmt, Author.id==stmt.c.id).order_by(stmt.c.create_time).limit(8)
 
     return render_template('author/authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
@@ -34,35 +28,18 @@ def authors():
 #--------------------------------------------------
 @app.route('/author/<author_abbr>')
 def author(author_abbr):
-    author = Author.get_author_by_abbr(author_abbr)
+    author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr==author_abbr).one()
     if not author:
         abort(404)
     
-    # if 'q' in form.args, then display it,
-    # otherwise, display a random quote
     if 'q' in request.args:
-        q_id = int(request.args['q'])
-        quote = Quote.get_quote_by_id(q_id)
+        quote = AuthorQuote.get(int(request.args['q']))
     else:
-        quote = Quote.get_quote_by_random(author['AuthorID'])
-    
-    quotes_num = Quote.get_quotes_num_by_author(author['AuthorID'])
+        quote = author.random_quote
 
-    works = Work.get_works_by_author(author['AuthorID'])
-    for work in works:
-        work['Content'] = content_clean(work['Content'])
+    work_types_num = db.session.query(Work.type, Work.type_name, db.func.count(Work.type_name).label('type_num')).filter(Work.author_id==author.id).group_by(Work.type_name)
 
-    # count num of different type works.
-    # return like this - works_num['shi'] = {'type_name': '诗', 'num': 0}.
-    work_types = Work.get_types()
-    works_num = {}
-    for wt in work_types:
-        works_num[wt['WorkType']] = {'type_name': wt['TypeName'], 'num': 0}
-    for work in works:
-        work_type = work['Type']  
-        works_num[work_type]['num'] += 1
-
-    return render_template('author/author.html', author=author, quote=quote, quotes_num=quotes_num, works=works, works_num=works_num)
+    return render_template('author/author.html', author=author, quote=quote, work_types_num=work_types_num)
 
 # page add author
 #--------------------------------------------------
@@ -70,17 +47,13 @@ def author(author_abbr):
 @require_admin
 def add_author():
     if request.method == 'GET':
-        dynasties = Dynasty.get_dynasties()
+        dynasties = Dynasty.query.order_by(Dynasty.start_year)
         return render_template('author/add_author.html', dynasties=dynasties)
     else:
-        author = request.form['author']
-        abbr = request.form['abbr']
-        introduction = request.form['introduction']
-        birthYear = request.form['birthYear']
-        deathYear = request.form['deathYear']
-        dynastyID = int(request.form['dynastyID'])
-        Author.add_author(author, abbr, introduction, birthYear, deathYear, dynastyID)
-        return redirect(url_for('author', author_abbr=abbr))
+        author = Author(name=request.form['name'], abbr=request.form['abbr'], intro=request.form['intro'], birth_year=request.form['birth_year'], death_year=request.form['death_year'], dynasty_id=int(request.form['dynasty_id']))
+        db.session.add(author)
+        db.session.commit()
+        return redirect(url_for('author', author_abbr=author.abbr))
 
 # page edit author
 #--------------------------------------------------
@@ -88,45 +61,46 @@ def add_author():
 @require_admin
 def edit_author(author_id):
     if request.method == 'GET':
-        dynasties = Dynasty.get_dynasties()
-        author = Author.get_author_by_id(author_id)
+        dynasties = Dynasty.query.order_by(Dynasty.start_year)
+        author = Author.query.get(author_id)
         return render_template('author/edit_author.html', dynasties=dynasties, author=author)
     else:
-        author = request.form['author']
-        abbr = request.form['abbr']
-        introduction = request.form['introduction']
-        birthYear = request.form['birthYear']
-        deathYear = request.form['deathYear']
-        dynastyID = int(request.form['dynastyID'])      
-        Author.edit_author(author, abbr, introduction, birthYear, deathYear, dynastyID, author_id)
-        return redirect(url_for('author', author_abbr=abbr))
+        author = Author.query.get(author_id)
+        author.name = request.form['name']
+        author.abbr = request.form['abbr']
+        author.intro = request.form['intro']
+        author.birth_year = request.form['birth_year']
+        author.death_year = request.form['death_year']
+        author.dynasty_id = int(request.form['dynasty_id'])
+        db.session.add(author)
+        db.session.commit()
+        return redirect(url_for('author', author_abbr=author.abbr))
 
 # page - admin quotes
 #--------------------------------------------------
 @app.route('/author/<int:author_id>/admin_quote')
 @require_admin
 def admin_quotes(author_id):
-    author = Author.get_author_by_id(author_id)
-    quotes = Quote.get_quotes_by_author(author_id)
-    return render_template('author/admin_quotes.html', quotes=quotes, author=author)
+    author = Author.query.options(db.subqueryload(Author.quotes)).get(author_id)
+    return render_template('author/admin_quotes.html', author=author)
 
 # proc - add quote
 @app.route('/author/<int:author_id>/add_quote', methods=['POST'])
 @require_admin
 def add_quote(author_id):
-    quote = request.form['quote']
-    work_id = int(request.form['work-id'])
-    work_title = Work.get_work(work_id)['Title'] 
-    Quote.add(author_id, quote, work_id, work_title)
+    quote = AuthorQuote(quote=request.form['quote'], author_id=author_id, work_id=int(request.form['work_id']))
+    db.session.add(quote)
+    db.session.commit()
     return redirect(url_for('admin_quotes', author_id=author_id))
 
 # proc - delete quote
 @app.route('/quote/<int:quote_id>/delete')
 @require_admin
 def delete_quote(quote_id):
-    author_id = int(request.args['author_id'])
-    Quote.delete(quote_id)
-    return redirect(url_for('admin_quotes', author_id=author_id))
+    quote = AuthorQuote.query.get(quote_id)
+    db.session.delete(quote)
+    db.session.commit()
+    return redirect(url_for('admin_quotes', author_id=quote.author_id))
 
 # page edit quote
 #--------------------------------------------------
@@ -134,11 +108,12 @@ def delete_quote(quote_id):
 @require_admin
 def edit_quote(quote_id):   
     if request.method == 'GET':
-        quote = Quote.get_quote_by_id(quote_id)
+        quote = AuthorQuote.query.get(quote_id)
         return render_template('author/edit_quote.html', quote=quote)
     else:
-        quote = request.form['quote']
-        work_id = int(request.form['work-id'])
-        work = Work.get_work(work_id)
-        Quote.edit(quote_id, work['Author_id'], quote, work['WorkID'], work['Title'])
-        return redirect(url_for('admin_quotes', author_id=work['Author_id']))
+        quote = AuthorQuote.query.get(quote_id)
+        quote.quote = request.form['quote']
+        quote.work_id = int(request.form['work_id'])
+        db.session.add(quote)
+        db.session.commit()
+        return redirect(url_for('admin_quotes', author_id=quote.work.author_id))

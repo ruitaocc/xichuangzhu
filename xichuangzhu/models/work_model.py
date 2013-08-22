@@ -3,6 +3,9 @@ import re
 from flask import g
 from xichuangzhu import db
 
+# class WorkType(db.Model):
+    
+
 class Work(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))

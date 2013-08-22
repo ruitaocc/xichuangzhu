@@ -13,6 +13,17 @@ class Dynasty(db.Model):
     def __repr__(self):
         return '<Dynasty %s>' % self.name
 
+    @property
+    def friendly_start_year(self):
+        return "%s年" % str(self.start_year).replace('-', '前')
+
+    @property
+    def friendly_end_year(self):
+        if self.end_year == 2012:
+            return "至今"
+        else:
+            return "%s年" % str(self.end_year).replace('-', '前') 
+
     # get all dynasties
     @staticmethod
     def get_dynasties():

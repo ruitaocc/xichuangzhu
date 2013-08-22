@@ -1,0 +1,7 @@
+Flask
+WTForms
+Flask-WTF
+Flask-SQLAlchemy
+flask-debugtoolbar
+requests
+MySQL-python

@@ -9,7 +9,7 @@ class Author(db.Model):
     name = db.Column(db.String(50), unique=True)
     abbr = db.Column(db.String(50), unique=True)
     intro = db.Column(db.Text())
-    brith_year = db.Column(db.String(20))
+    birth_year = db.Column(db.String(20))
     death_year = db.Column(db.String(20))
 
     dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))

@@ -6,6 +6,7 @@ import MySQLdb
 import MySQLdb.cursors
 from flask import Flask, session, g, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask_debugtoolbar import DebugToolbarExtension
 
 # convert python's encoding to utf8
 reload(sys)
@@ -17,6 +18,10 @@ app.config.update(
     SECRET_KEY = config.SECRET_KEY,
     SESSION_COOKIE_NAME = config.SESSION_COOKIE_NAME,
     PERMANENT_SESSION_LIFETIME = config.PERMANENT_SESSION_LIFETIME)
+
+# Debug toolbar
+app.debug = True
+toolbar = DebugToolbarExtension(app)
 
 # SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:xiaowangzi@localhost/xcz'

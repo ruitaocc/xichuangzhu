@@ -1,1 +1,1 @@
-import author_model, dynasty_model, work_model, work_image, author_quote, review_model, user_model
+import author_model, dynasty_model, work_model, work_image, author_quote, review_model, user_model, collect_work

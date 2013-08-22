@@ -8,7 +8,7 @@
 <div class="row">
    <div class="span8">
       <h2 class="node-info">
-         <a href="{{ url_for('forum') }}" class="root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;{{ node.Name }}
+         <a href="{{ url_for('topics') }}" class="root-node">话题</a>&nbsp;&nbsp;›&nbsp;&nbsp;{{ node.Name }}
          {% if session.user_id %}
          <a class="btn btn-small new-topic" href="{{ url_for('add_topic', node_id=node.NodeID) }}">发起新话题</a>
          {% endif %}
