@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ user_name }}的话题{% endblock %}
+{% block page_title %}{{ user.friendly_name }}的话题{% endblock %}
 {% block page_id%}page-user-topics{% endblock %}
 
 {% block body %}
 
 <div class="row">
    <div class="span8">
-      <h2>{{ user_name }}的话题 / {{ topics_num }}</h2>
+      <h2>{{ user.friendly_name }}的话题 / {{ pagination.total }}</h2>
 
       {% from "widget/topics.widget" import render_topics %}
-      {{ render_topics(topics)|safe }}
+      {{ render_topics(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}

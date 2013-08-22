@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*-
 import datetime
-from flask import g
+from flask import g, session
 from xichuangzhu import db
 
 class User(db.Model):
@@ -16,6 +16,10 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %s>' % self.name
+
+    @property
+    def friendly_name(self):
+        return '我' if "user_id" in session and session['user_id'] == self.id else self.name
 
 # GET
 

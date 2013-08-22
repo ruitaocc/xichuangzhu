@@ -6,7 +6,6 @@
    <div class="user-info">
       <div class="user-name"><a href="{{ url_for('user', user_abbr=u.abbr) }}">{{ u.name }}</a></div>
       <div class="user-signature">{{ u.signature }}</div>
-      <div class="reviews-num">点评 {{ u.reviews|length }}</div>
    </div>
 </div>
 {% endfor %}

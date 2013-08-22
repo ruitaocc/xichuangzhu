@@ -1,38 +1,37 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ user.Name }}的主页{% endblock %}
+{% block page_title %}{{ user.name }}的主页{% endblock %}
 {% block page_id%}page-user{% endblock %}
 
 {% block body %}
 
 <div class="row">
    <div class="span8">
-
       <div class="clearfix">
-         <a id="user-avatar" href="{{ url_for('user', user_abbr=user.Abbr) }}">
-            <img src="{{ user.Avatar }}" />
+         <a id="user-avatar" href="{{ url_for('user', user_abbr=user.abbr) }}">
+            <img src="{{ user.avatar }}" />
          </a>
          
          <div class="user-info">
-            <div class="user-name">{{ user.Name }}</div>
-            <div class="user-signature">{{ user.Signature }}</div>
+            <div class="user-name">{{ user.name }}</div>
+            <div class="user-signature">{{ user.signature }}</div>
          </div>
       </div>
 
       <h2>
          点评
          <span class='link-more'>
-            <a href="{{ url_for('user_reviews', user_abbr=user.Abbr) }}">全部 / {{ reviews_num }} »</a>
+            <a href="{{ url_for('user_reviews', user_abbr=user.abbr) }}">全部 / {{ work_reviews_num }} »</a>
          </span>
       </h2>
 
       {% from "widget/reviews.widget" import render_reviews %}
-      {{ render_reviews(reviews)|safe }}
+      {{ render_reviews(work_reviews)|safe }}
 
       <h2>
          话题
          <span class='link-more'>
-            <a href="{{ url_for('user_topics', user_abbr=user.Abbr) }}">全部 / {{ topics_num }} »</a>
+            <a href="{{ url_for('user_topics', user_abbr=user.abbr) }}">全部 / {{ topics_num }} »</a>
          </span>
       </h2>
 
@@ -42,7 +41,7 @@
       <h2>
          书法
          <span class='link-more'>
-            <a href="{{ url_for('user_work_images', user_abbr=user.Abbr) }}">全部 / {{ work_images_num }} »</a>
+            <a href="{{ url_for('user_work_images', user_abbr=user.abbr) }}">全部 / {{ work_images_num }} »</a>
          </span>
       </h2>
 

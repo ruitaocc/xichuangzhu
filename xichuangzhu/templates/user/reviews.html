@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ user_name }}的点评{% endblock %}
+{% block page_title %}{{ user.friendly_name }}的点评{% endblock %}
 {% block page_id%}page-user-reviews{% endblock %}
 
 {% block body %}
 
 <div class="row">
    <div class="span8">
-      <h2>{{ user_name }}的点评 / {{ reviews_num }}</h2>
+      <h2>{{ user.friendly_name }}的点评 / {{ pagination.total }}</h2>
       
       {% from "widget/reviews.widget" import render_reviews %}
-      {{ render_reviews(reviews)|safe }}
+      {{ render_reviews(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}

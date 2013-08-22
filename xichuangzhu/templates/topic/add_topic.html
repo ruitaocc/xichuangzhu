@@ -5,27 +5,6 @@
 
 {% block body %}
 
-<script type="text/javascript">
-
-$(document).ready(function(){
-   $('#modal-nodes').modal({
-      backdrop: false,
-      show: false
-   });
-
-   // select node
-   $(".node a").click(function(){
-      $("#modal-nodes").modal('hide');
-
-      var node = $(this).text();
-      var node_id = $(this).attr('data-node-id');
-      $("#node").text(node);
-      $("#node_id").val(node_id);
-   });
-});
-
-</script>
-
 <form id="form-add-topic" class="form-horizontal" method="post" action="{{ url_for('add_topic') }}">
    <fieldset>
       <legend>发起新话题</legend>
