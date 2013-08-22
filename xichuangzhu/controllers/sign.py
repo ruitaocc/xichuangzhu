@@ -65,7 +65,6 @@ def send_active_email(user_id):
         form = EmailForm(request.form)
 
         if form.validate():
-            # email address will be send to
             to_addr = form.email.data
 
             # update user email
@@ -87,9 +86,12 @@ def send_active_email(user_id):
             # send email
             s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
             s.login(config.SMTP_USER, config.SMTP_PASSWORD)
-            s.sendmail(config.SMTP_FROM, to_addr, msg.as_string())
-
-            return redirect(url_for('active_state', state='send_succ'))
+            try:
+                s.sendmail(config.SMTP_FROM, to_addr, msg.as_string())
+            except:
+                return redirect(url_for('active_state', state='send_failed'))
+            else:
+                return redirect(url_for('active_state', state='send_succ'))
         else:
             return render_template('sign/send_active_email.html', user=user, form=form)
 

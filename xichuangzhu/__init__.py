@@ -15,13 +15,16 @@ sys.setdefaultencoding('utf8')
 # app
 app = Flask(__name__)
 app.config.update(
-    SECRET_KEY = config.SECRET_KEY,
-    SESSION_COOKIE_NAME = config.SESSION_COOKIE_NAME,
-    PERMANENT_SESSION_LIFETIME = config.PERMANENT_SESSION_LIFETIME)
+    SECRET_KEY=config.SECRET_KEY,
+    SESSION_COOKIE_NAME=config.SESSION_COOKIE_NAME,
+    PERMANENT_SESSION_LIFETIME=config.PERMANENT_SESSION_LIFETIME,
+    DEBUG_TB_INTERCEPT_REDIRECTS=False,
+    DEBUG=config.DEBUG
+)
 
 # Debug toolbar
-app.debug = True
-toolbar = DebugToolbarExtension(app)
+if app.debug:
+    toolbar = DebugToolbarExtension(app)
 
 # SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:xiaowangzi@localhost/xcz'
@@ -34,7 +37,8 @@ def inject_vars():
     return dict(
         douban_login_url = config.DOUBAN_LOGIN_URL, # douban oauth url
         admin_id = config.ADMIN_ID, # admin id
-        informs_num = Inform.get_new_informs_num(session['user_id']) if 'user_id' in session else 0)    # new informs num
+        informs_num = Inform.get_new_informs_num(session['user_id']) if 'user_id' in session else 0 # new informs num
+    )    
 
 # url generator for pagination
 def url_for_other_page(page):

@@ -47,11 +47,6 @@ def comment_review(review_id):
     if form.validate():
         comment = WorkReviewComment(content=cgi.escape(form.content.data), review_id=review_id, user_id=session['user_id'])
         db.session.add(comment)
-
-        review = Review.query.get_or_404(review_id)
-        review.click_num += 1
-        db.session.add(review)
-
         db.session.commit()
         return redirect(url_for('review', review_id=review_id) + "#" + str(comment.id))
     else:

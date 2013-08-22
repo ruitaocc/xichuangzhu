@@ -10,7 +10,6 @@
 <div class="row">
    <div class="span8">
       <h2 class="node-info">
-         <!-- <a href="{{ url_for('topics') }}" class="root-node">话题</a> -->
          <span>话题</span>
          {% if session.user_id %}
          <a class="btn btn-small new-topic" href="{{ url_for('add_topic') }}">发起新话题</a>
@@ -18,43 +17,13 @@
       </h2>
 
       {% from "widget/topics.widget" import render_topics %}
-      {{ render_topics(topics)|safe }}
-
-      <!-- <h2>节点导航</h2>
-      {% for nt in node_types %}
-      {% if nt.nodes|length != 0 %}
-      <div class="type-item clearfix">
-         <div class="node-type">{{ nt.Type }}</div>
-         <ul class="node-list">
-            {% for n in nt.nodes %}
-            <li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
-            {% endfor %}
-         </ul>
-      </div>
-      {% endif %}
-      {% endfor %} -->
+      {{ render_topics(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
    </div>
 
    <div class="span4">
-      <!-- <h2>最热节点</h2>
-
-      <ul class="node-list">
-      {% for n in nodes %}
-      <li class="node"><a href="{{ url_for('node', node_abbr=n.Abbr) }}">{{ n.Name }}</a></li>
-      {% endfor %}
-      </ul> -->
-
-      <!-- <h2>近期热议</h2>
-
-      {% for t in hot_topics %}
-      <div class="ht-item">
-         <a class="ht-user-avatar" href="{{ url_for('user', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
-         <span class="ht-title"><a href="{{ url_for('topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></span>
-      </div>
-      {% endfor %} -->
       <ul class='topic-tips'>
          <li>话题讨论</li>
          <li>建议与反馈</li>

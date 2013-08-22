@@ -2,17 +2,16 @@
 
 {% for t in topics %}
 <div class="topic-item">
-   <a class="topic-user-avatar" href="{{ url_for('user', user_abbr=t.UserAbbr) }}"><img src="{{ t.Avatar }}"></a>
+   <a class="topic-user-avatar" href="{{ url_for('user', user_abbr=t.user.abbr) }}"><img src="{{ t.user.avatar }}"></a>
 
    <div class="topic-info">
-      <div class="topic-title"><a href="{{ url_for('topic', topic_id=t.TopicID) }}">{{ t.Title }}</a></div>
+      <div class="topic-title"><a href="{{ url_for('topic', topic_id=t.id) }}">{{ t.title }}</a></div>
       <div class="topic-extra-info">
-         <!-- <a class="topic-node" href="{{ url_for('node', node_abbr=t.NodeAbbr) }}">{{ t.NodeName }}</a> -->
-         <a class="topic-launcher" href="{{ url_for('user', user_abbr=t.UserAbbr) }}">{{ t.UserName }}</a>
-         <span class="topic-time">{{ t.Time }}</span>
+         <a class="topic-launcher" href="{{ url_for('user', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
+         <span class="topic-time">{{ t.friendly_create_time }}</span>
       </div>
-      {% if t.CommentNum != 0 %}
-      <div class="topic-comment-num">{{ t.CommentNum }}</div>
+      {% if t.comments|length != 0 %}
+      <div class="topic-comment-num">{{ t.comments|length }}</div>
       {% endif %}
    </div>
 </div>
