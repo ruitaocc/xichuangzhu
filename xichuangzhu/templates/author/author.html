@@ -74,7 +74,7 @@ $(document).ready(function(){
       </h2>
 
       {% for work in author.works %}
-      <a href="{{url_for('work', work_id=work.id)}}" data-work-type="{{ work.type }}" class="work-item">
+      <a href="{{url_for('work', work_id=work.id)}}" data-work-type="{{ work.type.en }}" class="work-item">
          <div class='work-title'>{{ work.title }}</div>
          <div class='work-content'>{{ work.clean_content|truncate(23, True) }}</div>
       </a>
