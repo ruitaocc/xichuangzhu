@@ -51,7 +51,7 @@ def comment_review(review_id):
 @app.route('/reviews')
 def reviews():
     page = int(request.args.get('page', 1))
-    pagination = WorkReview.query.paginate(page, 10)
+    pagination = WorkReview.query.filter(WorkReview.is_publish==True).order_by(WorkReview.create_time.desc()).paginate(page, 10)
 
     # get reviews
     stmt = db.session.query(WorkReview.user_id, db.func.count(WorkReview.user_id).label('reviews_num')).group_by(WorkReview.user_id).subquery()
