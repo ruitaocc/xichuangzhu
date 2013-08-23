@@ -115,7 +115,7 @@ def edit_work_image(work_image_id):
             image.save(config.IMAGE_PATH + image_filename)
 
             # update image info
-            work_image.url = config.IMAGE_URL+image_filename
+            work_image.url = config.IMAGE_URL + image_filename
             work_image.filename = image_filename
             db.session.add(work_image)
             db.session.commit()
