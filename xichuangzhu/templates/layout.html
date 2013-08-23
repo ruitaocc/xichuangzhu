@@ -27,7 +27,7 @@
                   <li><a href="{{ url_for('index') }}">首页</a></li>
                   
                   {% if session.user_id %}
-                  <li><a href="{{ url_for('collects') }}">收藏</a></li>
+                  <li><a href="{{ url_for('my_collects') }}">收藏</a></li>
                   <li><a href="{{ url_for('user', user_abbr=session.user_abbr) }}">个人主页</a></li>
                   {% endif %}
 

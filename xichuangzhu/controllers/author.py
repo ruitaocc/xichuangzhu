@@ -4,13 +4,27 @@ from flask import render_template, request, redirect, url_for, json, abort, sess
 from xichuangzhu import app
 from xichuangzhu import db
 import config
-from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.author_model import AuthorQuote
+from xichuangzhu.models.author_model import Author, AuthorQuote
 from xichuangzhu.models.work_model import Work, WorkType
-from xichuangzhu.models.collect import CollectWork
+from xichuangzhu.models.collect_model import CollectWork
 from xichuangzhu.models.dynasty_model import Dynasty
-from xichuangzhu.models.quote_model import Quote
-from xichuangzhu.utils import content_clean, require_admin
+from xichuangzhu.utils import require_admin
+
+# page author
+#--------------------------------------------------
+@app.route('/author/<author_abbr>')
+def author(author_abbr):
+    author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr==author_abbr).first_or_404()
+    
+    if 'q' in request.args:
+        quote = AuthorQuote.query.get_or_404(int(request.args['q']))
+    else:
+        quote = author.random_quote
+
+    stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(Work.author_id==author.id).group_by(Work.type_id).subquery()
+    work_types = db.session.query(WorkType, stmt.c.type_num).join(stmt, WorkType.id==stmt.c.type_id)
+
+    return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
 
 # page all authors
 #--------------------------------------------------
@@ -23,22 +37,6 @@ def authors():
     hot_authors = Author.query.join(stmt, Author.id==stmt.c.id).order_by(stmt.c.create_time).limit(8)
 
     return render_template('author/authors.html', dynasties=dynasties, hot_authors=hot_authors)
-
-# page author
-#--------------------------------------------------
-@app.route('/author/<author_abbr>')
-def author(author_abbr):
-    author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr==author_abbr).first_or_404()
-    
-    if 'q' in request.args:
-        quote = AuthorQuote.get(int(request.args['q']))
-    else:
-        quote = author.random_quote
-
-    stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(Work.author_id==author.id).group_by(Work.type_id).subquery()
-    work_types = db.session.query(WorkType, stmt.c.type_num).join(stmt, WorkType.id==stmt.c.type_id)
-
-    return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
 
 # page add author
 #--------------------------------------------------
@@ -59,12 +57,11 @@ def add_author():
 @app.route('/author/<int:author_id>/edit', methods=['GET', 'POST'])
 @require_admin
 def edit_author(author_id):
+    author = Author.query.get_or_404(author_id)
     if request.method == 'GET':
         dynasties = Dynasty.query.order_by(Dynasty.start_year)
-        author = Author.query.get(author_id)
         return render_template('author/edit_author.html', dynasties=dynasties, author=author)
     else:
-        author = Author.query.get_or_404(author_id)
         author.name = request.form['name']
         author.abbr = request.form['abbr']
         author.intro = request.form['intro']
@@ -80,7 +77,7 @@ def edit_author(author_id):
 @app.route('/author/<int:author_id>/admin_quote')
 @require_admin
 def admin_quotes(author_id):
-    author = Author.query.options(db.subqueryload(Author.quotes)).get(author_id)
+    author = Author.query.options(db.subqueryload(Author.quotes)).get_or_404(author_id)
     return render_template('author/admin_quotes.html', author=author)
 
 # proc - add quote

@@ -5,17 +5,16 @@ from xichuangzhu import app
 from xichuangzhu import db
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.quote_model import Quote
 from xichuangzhu.utils import require_admin
 
 # page dynasty
 #--------------------------------------------------
 @app.route('/dynasty/<dynasty_abbr>')
 def dynasty(dynasty_abbr):
-    dynasty = Dynasty.query.filter(Dynasty.abbr==dynasty_abbr).first_or_404()
     dynasties = Dynasty.query.order_by(Dynasty.start_year)
-    authors = Author.query.filter(Author.dynasty_id==dynasty.id).order_by(db.func.rand()).limit(5)
-    authors_num = Author.query.filter(Author.dynasty_id==dynasty.id).count()
+    dynasty = Dynasty.query.filter(Dynasty.abbr==dynasty_abbr).first_or_404()
+    authors = dynasty.authors.order_by(db.func.rand()).limit(5)
+    authors_num = dynasty.authors.count()
     return render_template('dynasty/dynasty.html', dynasty=dynasty, authors=authors, authors_num=authors_num, dynasties=dynasties)
 
 # page add dynasty

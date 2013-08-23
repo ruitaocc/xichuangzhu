@@ -5,20 +5,6 @@
 
 {% block body %}
 
-<script type="text/javascript">
-
-$(document).ready(function(){
-
-   // comments
-   $('.work-content sup').tooltip();
-
-   $('.work-content sup').each(function(index){
-      $(this).text('〔' + (index + 1) + '〕');
-   });
-});
-
-</script>
-
 <div class="row">
    <div class="span8">
       <div class="work-title">{{ work.title }}</div>
@@ -35,7 +21,15 @@ $(document).ready(function(){
       {% endif %}
 
       <div class="work-content work-type-{{ work.type.en }}">{{ work.friendly_content|safe }}</div>
-      
+
+      <script type="text/javascript">
+         $('.work-content sup').tooltip();
+
+         $('.work-content sup').each(function(index){
+            $(this).text('〔' + (index + 1) + '〕');
+         });
+      </script>
+
       {% if session.user_id %}
       <div class="btn-group pull-right" id="work-cmds">
          {% if session.user_id == admin_id %}
@@ -93,9 +87,9 @@ $(document).ready(function(){
 
       <h2>作者简介</h2>
       <div>{{ work.author.intro|truncate(55, True) }}
-         <!-- <span class='link-more'>
+         <span class='link-more'>
             <a href="{{ url_for('author', author_abbr=work.author.abbr) }}">更多»</a>
-         </span> -->
+         </span>
       </div>
 
       <h2>其他作品</h2>

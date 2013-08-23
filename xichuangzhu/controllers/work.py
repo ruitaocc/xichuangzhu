@@ -1,25 +1,18 @@
 #-*- coding: UTF-8 -*-
-from __future__ import division
 import os
 import re
-import math
 import uuid
 import config
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu import db
-from xichuangzhu.models.work_model import Work, WorkType, WorkTag
-from xichuangzhu.models.work_image import WorkImage
+from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkImage, WorkReview
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.review_model import WorkReview
-from xichuangzhu.models.review_model import Review
-from xichuangzhu.models.collect_model import Collect
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.collect import CollectWork, CollectWorkImage
-from xichuangzhu.models.tag_model import Tag
+from xichuangzhu.models.collect_model import CollectWork, CollectWorkImage
 from xichuangzhu.form import WorkImageForm
-from xichuangzhu.utils import time_diff, require_login, require_admin
+from xichuangzhu.utils import require_login, require_admin
 
 # page - work
 #--------------------------------------------------
@@ -32,8 +25,8 @@ def work(work_id):
     else:
         is_collected = False
 
-    reviews = work.reviews.order_by(WorkReview.create_time).limit(4)
-    reviews_num = work.reviews.count()
+    reviews = work.reviews.order_by(WorkReview.create_time.desc()).filter(WorkReview.is_publish==True).limit(4)
+    reviews_num = work.reviews.filter(WorkReview.is_publish==True).count()
 
     images = work.images.order_by(WorkImage.create_time).limit(9)
     images_num = work.images.count()
@@ -130,7 +123,7 @@ def edit_work(work_id):
 def work_reviews(work_id):
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
-    pagination = work.reviews.paginate(page, 10)
+    pagination = work.reviews.filter(WorkReview.is_publish==True).order_by(WorkReview.create_time.desc()).paginate(page, 10)
     return render_template('work/work_reviews.html', work=work , pagination=pagination)
 
 # page - images of this work
@@ -139,7 +132,7 @@ def work_reviews(work_id):
 def work_images(work_id):
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
-    pagination = work.images.paginate(page, 12)
+    pagination = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 12)
     return render_template('work/work_images.html', work=work, pagination=pagination)
 
 # json - search authors in page add & edit work
@@ -150,7 +143,7 @@ def search_authors():
     author_name = request.form['author_name']
     authors = Author.query.filter(Author.name.like('%%%s%%' % author_name))
 
-    # build the json data
+    # build json data of authors
     dict_authors = []
     for a in authors:
         dict_authors.append({ 'id': a.id, 'dynasty': a.dynasty.name, 'name': a.name })

@@ -3,13 +3,10 @@ import cgi
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu import db
-from xichuangzhu.models.topic_model import Topic
-from xichuangzhu.models.topic_model import TopicComment
+from xichuangzhu.models.topic_model import Topic, TopicComment
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import TopicForm, CommentForm
-# from xichuangzhu.utils import time_diff, require_login, get_comment_replyee_id, rebuild_comment, build_topic_inform_title, Pagination
-from xichuangzhu.utils import time_diff, require_login, Pagination
+from xichuangzhu.utils import require_login
 # page topics
 #--------------------------------------------------
 @app.route('/topics')

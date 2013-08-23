@@ -8,17 +8,13 @@ import config
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu import db
-from xichuangzhu.models.work_model import Work, WorkType, WorkTag
-from xichuangzhu.models.work_image import WorkImage
+from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkImage, WorkReview
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.review_model import WorkReview
-from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.collect import CollectWork, CollectWorkImage
-from xichuangzhu.models.tag_model import Tag
+from xichuangzhu.models.collect_model import CollectWork, CollectWorkImage
 from xichuangzhu.form import WorkImageForm
-from xichuangzhu.utils import time_diff, require_login, require_admin
+from xichuangzhu.utils import require_login, require_admin
 
 # page - single work image
 #--------------------------------------------------
@@ -31,7 +27,7 @@ def work_image(work_image_id):
     else:
         is_collected = False
 
-    return render_template('work/work_image.html', work_image=work_image, is_collected=is_collected)
+    return render_template('work_image/work_image.html', work_image=work_image, is_collected=is_collected)
 
 # proc - delete work image
 @app.route('/work_image/<int:work_image_id>/delete', methods=['GET'])
@@ -73,7 +69,7 @@ def discollect_work_image(work_image_id):
 def all_work_images():
     page = int(request.args.get('page', 1))
     pagination = WorkImage.query.paginate(page, 12)
-    return render_template('work/all_work_images.html', pagination=pagination)
+    return render_template('work_image/all_work_images.html', pagination=pagination)
 
 # page - add work image
 #--------------------------------------------------
@@ -83,7 +79,7 @@ def add_work_image(work_id):
     work = Work.query.get_or_404(work_id)
     form = WorkImageForm()
     if request.method == 'GET':        
-        return render_template('work/add_work_image.html', work=work, form=form)
+        return render_template('work_image/add_work_image.html', work=work, form=form)
     else:
         if form.validate():
             # Save image
@@ -96,17 +92,17 @@ def add_work_image(work_id):
             db.session.commit()
             return redirect(url_for('work_image', work_image_id=work_image.id))
         else:
-            return render_template('work/add_work_image.html', work=work, form=form)
+            return render_template('work_image/add_work_image.html', work=work, form=form)
 
 # page - edit work image
 #--------------------------------------------------
 @app.route('/work_image/<int:work_image_id>/edit', methods=['GET', 'POST'])
 @require_login
 def edit_work_image(work_image_id):
-    work_image = Work.query.get_or_404(work_image_id)
+    work_image = WorkImage.query.get_or_404(work_image_id)
     form = WorkImageForm()
     if request.method == 'GET':
-        return render_template('work/edit_work_image.html', work_image=work_image, form=form)
+        return render_template('work_image/edit_work_image.html', work_image=work_image, form=form)
     else:
         if form.validate():
             # Delete old image
@@ -125,4 +121,4 @@ def edit_work_image(work_image_id):
             db.session.commit()
             return redirect(url_for('work_image', work_image_id=work_image_id))
         else:
-            return render_template('work/edit_work_image.html', work_image=work_image, form=form)
+            return render_template('work_image/edit_work_image.html', work_image=work_image, form=form)

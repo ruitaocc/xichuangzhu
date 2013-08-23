@@ -37,7 +37,7 @@ def signin():
         else:
             # set session
             session.permanent = True
-            user = User.query.get(user_id)
+            user = User.query.get_or_404(user_id)
             session['user_id'] = user_id
             session['user_name'] = user.name
             session['user_abbr'] = user.abbr
@@ -95,7 +95,7 @@ def send_active_email(user_id):
         else:
             return render_template('sign/send_active_email.html', user=user, form=form)
 
-# proc - active the code and active user
+# proc - active user
 #--------------------------------------------------
 @app.route('/active_user/<int:user_id>/<active_code>')
 def active_user(user_id, active_code):
