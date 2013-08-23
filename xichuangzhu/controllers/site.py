@@ -15,7 +15,7 @@ from sqlalchemy import func
 @app.route('/')
 def index():
     works = Work.query.order_by(func.rand()).limit(4)
-    work_images = WorkImage.query.order_by(func.rand()).limit(9)
+    work_images = WorkImage.query.order_by(func.rand()).order_by(WorkImage.create_time.desc()).limit(9)
     work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(func.rand()).limit(4)
     authors = Author.query.order_by(func.rand()).limit(5)
     dynasties = Dynasty.query.order_by(Dynasty.start_year)

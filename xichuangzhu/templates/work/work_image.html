@@ -18,12 +18,12 @@ $(function(){
 <div class='row'>
    <div class='span8'>
       <p class='image-info'>
-         <a href="{{ url_for('user', user_abbr=work_image.user_abbr) }}">{{ work_image.user_name }}</a> 发表于 <a href="{{ url_for('work', work_id=work.WorkID) }}">{{ work.Title }}</a>：
+         <a href="{{ url_for('user', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a> 发表于 <a href="{{ url_for('work', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>：
       </p>
 
       <blockquote>
-         <p>{{ work.Content|truncate(100, True) }}</p>
-         <small>〔{{ work.Dynasty }}〕{{ work.Author }}</small>
+         <p>{{ work_image.work.clean_content|truncate(100, True) }}</p>
+         <small>〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
       </blockquote>
 
       <div class='image-wap'>

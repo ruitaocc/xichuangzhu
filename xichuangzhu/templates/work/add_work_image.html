@@ -5,9 +5,9 @@
 
 {% block body %}
 
-<form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work_image', work_id=work.WorkID) }}" enctype="multipart/form-data">
+<form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work_image', work_id=work.id) }}" enctype="multipart/form-data">
    <fieldset>
-      <legend>为《{{ work.Title }}》添加书法作品</legend>
+      <legend>为《{{ work.title }}》添加书法作品</legend>
 
       {{ form.csrf_token }}
 
