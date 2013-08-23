@@ -1,5 +1,7 @@
 #-*- coding:utf-8 -*-
 
+DEBUG = True
+
 # site
 SITE_DOMAIN = "http://localhost:5000"
 
