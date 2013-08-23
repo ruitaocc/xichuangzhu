@@ -5,34 +5,14 @@
 
 {% block body %}
 
-<script type="text/javascript">
 
-$(document).ready(function(){
-   var dynasty = $("#dynasty-selector li[class='active']").text();
-   var work_type = $("#type-selector li[class='active']").text();
-
-   if(dynasty == '全部' && work_type == '全部'){
-      $('#dynasty_type_tag').text('作品');
-   }
-   else if(dynasty == '全部'){
-      $('#dynasty_type_tag').text(work_type);
-   }
-   else if(work_type == '全部'){
-      $('#dynasty_type_tag').text(dynasty);
-   }
-   else{
-      $('#dynasty_type_tag').text(dynasty + ' / ' + work_type);
-   }
-});
-
-</script>
 
 <div class="row">
    <div class="span8">
-      <h2><span id="dynasty_type_tag"></span> / {{ works_num }}</h2>
+      <h2><span id="dynasty_type_tag"></span> / {{ pagination.total }}</h2>
 
       {% from "widget/works.widget" import render_works %}
-      {{ render_works(works)|safe }}
+      {{ render_works(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
@@ -44,9 +24,9 @@ $(document).ready(function(){
          <li {% if dynasty_abbr == 'all' %}class="active"{% endif %}
          ><a href="{{ url_for('works') }}?type={{ work_type }}&dynasty=all">全部</a></li>
 
-         {% for dynasty in dynasties %}
-         <li {% if dynasty_abbr == dynasty.Abbr %}class="active"{% endif %}
-         ><a href="{{ url_for('works') }}?type={{ work_type }}&dynasty={{ dynasty.Abbr }}">{{ dynasty.Dynasty }}</a></li>
+         {% for d in dynasties %}
+         <li {% if dynasty_abbr == d.abbr %}class="active"{% endif %}
+         ><a href="{{ url_for('works') }}?type={{ work_type }}&dynasty={{ d.abbr }}">{{ d.name }}</a></li>
          {% endfor %}
       </ul>
 
@@ -55,12 +35,30 @@ $(document).ready(function(){
          <li {% if work_type == 'all' %}class="active"{% endif %}
          ><a href="{{ url_for('works') }}?type=all&dynasty={{ dynasty_abbr }}">全部</a></li>
 
-         {% for type in work_types %}
-         <li {% if work_type == type.WorkType %}class="active"{% endif %}
-         ><a href="{{ url_for('works') }}?type={{ type.WorkType }}&dynasty={{ dynasty_abbr }}">{{ type.TypeName }}</a></li>
+         {% for t in work_types %}
+         <li {% if work_type == t.en %}class="active"{% endif %}
+         ><a href="{{ url_for('works') }}?type={{ t.en }}&dynasty={{ dynasty_abbr }}">{{ t.cn }}</a></li>
          {% endfor %}
       </ul>
    </div>
+
+   <script type="text/javascript">
+      var dynasty = $("#dynasty-selector li[class='active']").text();
+      var work_type = $("#type-selector li[class='active']").text();
+
+      if(dynasty == '全部' && work_type == '全部'){
+         $('#dynasty_type_tag').text('作品');
+      }
+      else if(dynasty == '全部'){
+         $('#dynasty_type_tag').text(work_type);
+      }
+      else if(work_type == '全部'){
+         $('#dynasty_type_tag').text(dynasty);
+      }
+      else{
+         $('#dynasty_type_tag').text(dynasty + ' / ' + work_type);
+      }
+   </script>
 </div>
 
 {% endblock %}

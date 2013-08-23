@@ -8,24 +8,21 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-   var authors;
-
    // search authors
    $('#btn-search-author').click(function(){
-      var author = $('#input-author').val();
+      var author_name = $('#input-author-name').val();
       $.ajax({
-         'url': "{{ url_for('get_authors_by_name') }}",
+         'url': "{{ url_for('search_authors') }}",
          'type': 'POST',
          'dataType': 'json',
          'data': {
-            'author': author
+            'author_name': author_name
          },
-         'success': function(data){
-            authors = data;
+         'success': function(authors){
             $('#select-author').empty();
 
             $.each(authors, function(index, author){
-               var option = "<option value=" + author['AuthorID'] + ">〔" + author['Dynasty'] + '〕' + author['Author'] + "</option>";
+               var option = "<option value=" + author['id'] + ">〔" + author['dynasty'] + '〕' + author['name'] + "</option>";
                $(option).appendTo('#select-author');
             });
          }
@@ -42,9 +39,9 @@ $(document).ready(function(){
       <div class="control-group">
          <label class="control-label">类别</label>
          <div class="controls">
-            <select name='type'>
+            <select name='type_id'>
                {% for type in work_types %}
-               <option value='{{ type.WorkType }}'>{{ type.TypeName }}</option>
+               <option value='{{ type.id }}'>{{ type.cn }}</option>
                {% endfor %}
             </select>
          </div>
@@ -60,16 +57,16 @@ $(document).ready(function(){
       <div class="control-group">
          <label class="control-label">作者</label>
          <div class="controls">
-            <input id="input-author" type="text" class="span2" />
+            <input id="input-author-name" type="text" class="span2" />
             <input id="btn-search-author" type="button" class="btn" value="搜索" />
-            <select id="select-author" name="authorID" class="span2">
+            <select id="select-author" name="author_id" class="span2">
                <option>作者</option>
             </select>
          </div>
       </div>
 
       <div class="control-group">
-         <label class="control-label">小序</label>
+         <label class="control-label">序</label>
          <div class="controls">
             <textarea class="input-xxlarge" name="foreword" rows='5'></textarea>
          </div>
@@ -78,7 +75,7 @@ $(document).ready(function(){
       <div class="control-group">
          <label class="control-label">题解</label>
          <div class="controls">
-            <textarea class="input-xxlarge" name="introduction" rows='5'></textarea>
+            <textarea class="input-xxlarge" name="intro" rows='5'></textarea>
          </div>
       </div>
 
@@ -91,7 +88,7 @@ $(document).ready(function(){
 
       <div class="control-group">
          <div class="controls">
-            <input type="submit" value="提交" class="btn btn-primary" />
+            <input type="submit" value="提交" class="btn btn-small btn-primary" />
          </div>
       </div>
    </fieldset>

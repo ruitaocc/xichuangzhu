@@ -6,8 +6,8 @@ from xichuangzhu import db
 import config
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.author_model import AuthorQuote
-from xichuangzhu.models.work_model import Work
-from xichuangzhu.models.collect_work import CollectWork
+from xichuangzhu.models.work_model import Work, WorkType
+from xichuangzhu.models.collect import CollectWork
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.quote_model import Quote
 from xichuangzhu.utils import content_clean, require_admin
@@ -35,9 +35,10 @@ def author(author_abbr):
     else:
         quote = author.random_quote
 
-    work_types_num = db.session.query(Work.type, Work.type_name, db.func.count(Work.type_name).label('type_num')).filter(Work.author_id==author.id).group_by(Work.type_name)
+    stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(Work.author_id==author.id).group_by(Work.type_id).subquery()
+    work_types = db.session.query(WorkType, stmt.c.type_num).join(stmt, WorkType.id==stmt.c.type_id)
 
-    return render_template('author/author.html', author=author, quote=quote, work_types_num=work_types_num)
+    return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
 
 # page add author
 #--------------------------------------------------

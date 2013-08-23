@@ -38,18 +38,6 @@ def comment_topic(topic_id):
         comment = TopicComment(content=cgi.escape(form.content.data), topic_id=topic_id, user_id=session['user_id'])
         db.session.add(comment)
         db.session.commit()
-
-        # # add inform
-        # topic_user_id = Topic.get_topic(topic_id)['UserID']
-        # inform_title = build_topic_inform_title(replyer_id, topic_id)
-        # # if the topic not add by me
-        # if replyer_id != topic_user_id:
-        #     Inform.add(replyer_id, topic_user_id, inform_title, comment)
-        # # if replyee exist,
-        # # and the topic not add by me,
-        # # and not topic_user_id, because if so, the inform has already been sended above
-        # if replyee_id != -1 and  replyee_id != replyer_id and replyee_id != topic_user_id:
-        #     Inform.add(replyer_id, replyee_id, inform_title, comment)
         return redirect(url_for('topic', topic_id=topic_id) + "#" + str(comment.id))
     else:
         return redirect(url_for('topic', topic_id=topic_id))

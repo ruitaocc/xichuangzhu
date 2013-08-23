@@ -8,12 +8,12 @@
 <div class="row">
    <div class="span8">
       <h2>
-         书法收藏 / {{ collect_work_images_num }} »</a>
+         书法收藏 / {{ pagination.total }} »</a>
          </span>
       </h2>
 
       {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(collect_work_images)|safe }}
+      {{ render_work_images(pagination.items)|safe }}
       
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}

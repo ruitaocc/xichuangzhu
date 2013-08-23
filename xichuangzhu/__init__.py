@@ -31,13 +31,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:xiaowangzi@localho
 db = SQLAlchemy(app)
 
 # inject vars into template context
-from xichuangzhu.models.inform_model import Inform
 @app.context_processor
 def inject_vars():
     return dict(
         douban_login_url = config.DOUBAN_LOGIN_URL, # douban oauth url
         admin_id = config.ADMIN_ID, # admin id
-        informs_num = Inform.get_new_informs_num(session['user_id']) if 'user_id' in session else 0 # new informs num
     )    
 
 # url generator for pagination

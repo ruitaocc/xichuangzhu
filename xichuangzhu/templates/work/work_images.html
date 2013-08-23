@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
-{% block page_title %}《{{ work.Title }}》的书法作品{% endblock %}
+{% block page_title %}《{{ work.title }}》的书法作品{% endblock %}
 {% block page_id%}page-work-images{% endblock %}
 
 {% block body %}
 
 <div class="row">
    <div class="span8">
-      <h2>《{{ work.Title }}》的书法作品 / {{ work_images_num }}</h2>
+      <h2>《{{ work.title }}》的书法作品 / {{ pagination.total }}</h2>
 
       {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(work_images)|safe }}
+      {{ render_work_images(pagination.items)|safe }}
       
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}

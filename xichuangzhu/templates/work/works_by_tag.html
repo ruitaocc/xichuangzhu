@@ -7,10 +7,10 @@
 
 <div class="row">
    <div class="span8">
-      <h2>标签 - {{ tag }}</h2>
+      <h2>作品标签 - {{ tag }}</h2>
 
       {% from "widget/works.widget" import render_works %}
-      {{ render_works(works)|safe }}
+      {{ render_works(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}

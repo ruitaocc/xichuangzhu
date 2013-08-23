@@ -1,10 +1,19 @@
 #-*- coding: UTF-8 -*-
 import re
+import markdown2
 from flask import g
 from xichuangzhu import db
 
-# class WorkType(db.Model):
-    
+class WorkType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    en = db.Column(db.String(50))
+    cn = db.Column(db.String(50))
+
+class WorkTag(db.Model):
+    tag = db.Column(db.String(50), primary_key=True)
+
+    work_id = db.Column(db.Integer, db.ForeignKey('work.id'), primary_key=True)
+    work = db.relationship('Work', backref=db.backref('tags'))
 
 class Work(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,9 +21,16 @@ class Work(db.Model):
     foreword = db.Column(db.Text())
     content = db.Column(db.Text())
     intro = db.Column(db.Text())
-    type = db.Column(db.String(10))
-    type_name = db.Column(db.String(10))
     create_time = db.Column(db.DateTime)
+
+    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
+    author = db.relationship('Author', backref=db.backref('works'))
+
+    type_id = db.Column(db.Integer, db.ForeignKey('work_type.id'))
+    type = db.relationship('WorkType', backref=db.backref('works'))
+
+    def __repr__(self):
+        return '<Work %s>' % self.title
 
     @property
     def clean_content(self):
@@ -24,14 +40,15 @@ class Work(db.Model):
         c = c.replace('(一)', "")
         return c
 
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    author = db.relationship('Author', backref=db.backref('works'))
-
-    dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))
-    dynasty = db.relationship('Dynasty', backref=db.backref('works'))
-
-    def __repr__(self):
-        return '<Work %s>' % self.title
+    @property
+    def friendly_content(self):
+        """
+        Add comment -> Split ci -> Generate paragraph
+        """
+        c = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", self.content)
+        c = c.replace('%', "&nbsp;&nbsp;")
+        c = markdown2.markdown(c)
+        return c
 
 # GET
 

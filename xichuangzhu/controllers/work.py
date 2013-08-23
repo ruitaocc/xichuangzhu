@@ -3,132 +3,92 @@ from __future__ import division
 import os
 import re
 import math
-import markdown2
 import uuid
 import config
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app
 from xichuangzhu import db
-from xichuangzhu.models.work_model import Work
+from xichuangzhu.models.work_model import Work, WorkType, WorkTag
+from xichuangzhu.models.work_image import WorkImage
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.review_model import WorkReview
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.collect_model import Collect
-from xichuangzhu.models.product_model import Product
+from xichuangzhu.models.user_model import User
+from xichuangzhu.models.collect import CollectWork, CollectWorkImage
 from xichuangzhu.models.tag_model import Tag
 from xichuangzhu.form import WorkImageForm
-from xichuangzhu.utils import time_diff, content_clean, require_login, require_admin, Pagination
+from xichuangzhu.utils import time_diff, require_login, require_admin
 
 # page - work
 #--------------------------------------------------
 @app.route('/work/<int:work_id>')
 def work(work_id):
-    work = Work.get_work(work_id)
-    if not work:
-        abort(404)
+    work = Work.query.get_or_404(work_id)
 
-    # add comment, split ci, gene paragraph
-    work['Content'] = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", work['Content'])
-    work['Content'] = work['Content'].replace('%', "&nbsp;&nbsp;")
-    work['Content'] = markdown2.markdown(work['Content'])
-
-    # check if is collected
     if 'user_id' in session:
-        is_collected = Collect.check_collect_work(session['user_id'], work_id)
-        tags = Collect.get_tags(session['user_id'], work_id) if is_collected else ""
-        my_tags = Tag.get_user_tags(session['user_id'], 20)
-        popular_tags = Tag.get_work_tags(work_id, 20)
+        is_collected = CollectWork.query.filter(CollectWork.work_id==work_id).filter(CollectWork.user_id==session['user_id']).count() > 0
     else:
         is_collected = False
-        tags = ""
-        my_tags = []
-        popular_tags = []
 
-    reviews = WorkReview.query.filter(WorkReview.work_id==work_id).order_by(WorkReview.create_time).limit(4)
-    reviews_num = Review.get_reviews_num_by_work(work_id)
+    reviews = work.reviews.order_by(WorkReview.create_time).limit(4)
+    reviews_num = work.reviews.count()
 
-    work_images = Work.get_images_by_work(work_id, 1, 9)
-    work_images_num = Work.get_images_num_by_work(work_id)
+    images = work.images.order_by(WorkImage.create_time).limit(9)
+    images_num = work.images.count()
 
-    other_works = Work.get_other_works_by_author(work['AuthorID'], work_id, 5)
-    for ow in other_works:
-        ow['Content'] = content_clean(ow['Content'])
+    other_works = Work.query.filter(Work.author_id==work.author_id).filter(Work.id!=work_id).limit(5)
 
-    collectors = Collect.get_users_by_work(work_id, 4)
+    collectors = User.query.join(CollectWork).join(Work).filter(Work.id==work_id).limit(4)
 
-    return render_template('work/work.html', work=work, tags=tags, my_tags=my_tags, popular_tags=popular_tags, reviews=reviews, reviews_num=reviews_num, is_collected=is_collected, other_works=other_works, collectors=collectors, work_images=work_images, work_images_num=work_images_num)
+    return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num, images=images, images_num=images_num, collectors=collectors, is_collected=is_collected, other_works=other_works)
 
 # proc - collect work
-@app.route('/work/<int:work_id>/collect', methods=['POST'])
+@app.route('/work/<int:work_id>/collect', methods=['GET'])
 @require_login
 def collect_work(work_id):
-    tags = request.form['tags'].split(' ')
-
-    # remove the empty & repeat item
-    new_tags = []
-    for t in tags:
-        if t != '':
-            new_tags.append(t)
-    new_tags = list(set(new_tags))
-
-    # collect work
-    Collect.collect_work(session['user_id'], work_id, ' '.join(new_tags) + ' ')
-
-    # update user tags & work tags
-    for t in new_tags:
-        Tag.add_tag(t)
-        Tag.add_user_tag(session['user_id'], t)
-        Tag.add_work_tag(work_id, t)
-
+    collect = CollectWork(user_id=session['user_id'], work_id=work_id)
+    db.session.add(collect)
+    db.session.commit()
     return redirect(url_for('work', work_id=work_id))
 
 # proc - discollect work
 @app.route('/work/<int:work_id>/discollect')
 @require_login
 def discollect_work(work_id):
-    Collect.discollect_work(session['user_id'], work_id)
+    db.session.query(CollectWork).filter(CollectWork.user_id==session['user_id']).filter(CollectWork.work_id==work_id).delete()
+    db.session.commit()
     return redirect(url_for('work', work_id=work_id))
 
 # page - all works
 #--------------------------------------------------
 @app.route('/works')
 def works():
-    per_page = 10
-    work_type = request.args['type'] if 'type' in request.args else 'all'
-    dynasty_abbr = request.args['dynasty'] if 'dynasty' in request.args else 'all'
-    page = int(request.args['page'] if 'page' in request.args else 1)
+    work_type = request.args.get('type', 'all')
+    dynasty_abbr = request.args.get('dynasty', 'all')
+    page = int(request.args.get('page', 1))
 
-    works = Work.get_works(work_type, dynasty_abbr, page, per_page)
-    for work in works:
-        work['Content'] = content_clean(work['Content'])
+    query = Work.query
+    if work_type != 'all':
+        query = query.filter(Work.type.has(WorkType.en==work_type))
+    if dynasty_abbr != 'all':
+        query = query.filter(Work.dynasty.has(Dynasty.abbr==dynasty_abbr))
+    pagination = query.paginate(page, 10)
 
-    works_num = Work.get_works_num(work_type, dynasty_abbr)
+    work_types = WorkType.query
 
-    pagination = Pagination(page, per_page, works_num)
+    dynasties = Dynasty.query.order_by(Dynasty.start_year)
 
-    work_types = Work.get_types()
-
-    dynasties = Dynasty.get_dynasties()
-
-    return render_template('work/works.html', works=works, works_num=works_num, work_types=work_types, dynasties=dynasties, pagination=pagination, work_type=work_type, dynasty_abbr=dynasty_abbr)
+    return render_template('work/works.html', pagination=pagination, work_type=work_type, dynasty_abbr=dynasty_abbr, work_types=work_types, dynasties=dynasties)
 
 # page - works by tag
 #--------------------------------------------------
-@app.route('/tag/<tag>')
+@app.route('/works_by_tag/<tag>')
 def works_by_tag(tag):
-    per_page = 10
-    page = int(request.args['page'] if 'page' in request.args else 1)
-
-    works = Work.get_works_by_tag(tag, page, per_page)
-    for work in works:
-        work['Content'] = content_clean(work['Content'])
-
-    works_num = Work.get_works_num_by_tag(tag)
-
-    pagination = Pagination(page, per_page, works_num)
-
-    return render_template('work/works_by_tag.html', works=works, tag=tag, pagination=pagination)
+    page = int(request.args.get('page', 1))
+    pagination = Work.query.filter(Work.tags.any(WorkTag.tag==tag)).paginate(page, 10)
+    return render_template('work/works_by_tag.html', tag=tag, pagination=pagination)
 
 # page - add work
 #--------------------------------------------------
@@ -136,191 +96,62 @@ def works_by_tag(tag):
 @require_admin
 def add_work():
     if request.method == 'GET':
-        work_types = Work.get_types()
+        work_types = WorkType.query
         return render_template('work/add_work.html', work_types=work_types)
-    else:
-        title = request.form['title']
-        content = request.form['content']
-        foreword = request.form['foreword']
-        intro = request.form['introduction']
-        authorID = int(request.form['authorID'])
-        dynastyID = int(Dynasty.get_dynastyID_by_author(authorID))
-        work_type = request.form['type']
-        type_name = Work.get_type_name(work_type)
-        
-        new_work_id = Work.add_work(title, content, foreword, intro, authorID, dynastyID, work_type, type_name)
-        return redirect(url_for('work', work_id=new_work_id))
+    else:        
+        work = Work(title=request.form['title'], content=request.form['content'], foreword=request.form['foreword'], intro=request.form['intro'], author_id = int(request.form['author_id']), type_id=request.form['type_id'])
+        db.session.add(work)
+        db.session.commit()
+        return redirect(url_for('work', work_id=work.id))
 
 # page - edit work
 #--------------------------------------------------
 @app.route('/work/<int:work_id>/edit', methods=['GET', 'POST'])
 @require_admin
 def edit_work(work_id):
+    work = Work.query.get_or_404(work_id)
     if request.method == 'GET':
-        work = Work.get_work(work_id)
-        work_types = Work.get_types()
+        work_types = WorkType.query
         return render_template('work/edit_work.html', work=work, work_types=work_types)
     else:
-        title = request.form['title']
-        content = request.form['content']
-        foreword = request.form['foreword']
-        intro = request.form['introduction']
-        author_id = int(request.form['authorID'])
-        dynasty_id = int(Dynasty.get_dynastyID_by_author(author_id))
-        work_type = request.form['type']
-        type_name = Work.get_type_name(work_type)
-
-        Work.edit_work(title, content, foreword, intro ,author_id, dynasty_id, work_type, type_name, work_id)
+        work.title = request.form['title']
+        work.content = request.form['content']
+        work.foreword = request.form['foreword']
+        work.intro = request.form['intro']
+        work.author_id = int(request.form['author_id'])
+        work.type_id = request.form['type_id']
+        db.session.add(work)
+        db.session.commit()
         return redirect(url_for('work', work_id=work_id))
 
 # page - reviews of this work
 #--------------------------------------------------
 @app.route('/work/<int:work_id>/reviews')
 def work_reviews(work_id):
-    work = Work.get_work(work_id)
-
-    # pagination
-    per_page = 10
-    page = int(request.args['page'] if 'page' in request.args else 1)
-
-    reviews = Review.get_reviews_by_work(work_id, page, per_page)
-    for r in reviews:
-        r['Time'] = time_diff(r['Time'])
-
-    reviews_num = Review.get_reviews_num_by_work(work_id)
-
-    pagination = Pagination(page, per_page, reviews_num)
-
-    return render_template('work/work_reviews.html', work=work, reviews=reviews, reviews_num=reviews_num, pagination=pagination)
-
-# page - work image
-#--------------------------------------------------
-@app.route('/work_image/<int:work_image_id>', methods=['GET'])
-def work_image(work_image_id):
-    work_image = Work.get_image(work_image_id)
-    work = Work.get_work(work_image['work_id'])
-    work['Content'] = content_clean(work['Content'])
-
-    if 'user_id' in session:
-        is_collected = Collect.check_collect_work_image(session['user_id'], work_image_id)
-    else:
-        is_collected = False
-
-    return render_template('work/work_image.html', work=work, work_image=work_image, is_collected=is_collected)
+    work = Work.query.get_or_404(work_id)
+    page = int(request.args.get('page', 1))
+    pagination = work.reviews.paginate(page, 10)
+    return render_template('work/work_reviews.html', work=work , pagination=pagination)
 
 # page - images of this work
 #--------------------------------------------------
 @app.route('/work/<int:work_id>/images', methods=['GET'])
 def work_images(work_id):
-    # pagination
-    per_page = 9
-    page = int(request.args['page'] if 'page' in request.args else 1)
-
-    work = Work.get_work(work_id)
-
-    work_images = Work.get_images_by_work(work_id, page, per_page)
-    work_images_num = Work.get_images_num_by_work(work_id)
-
-    pagination = Pagination(page, per_page, work_images_num)
-
-    return render_template('work/work_images.html', work=work, work_images=work_images, work_images_num=work_images_num, pagination=pagination)
-
-# page - all work images
-#--------------------------------------------------
-@app.route('/all_work_images', methods=['GET'])
-def all_work_images():
-    # pagination
-    per_page = 9
-    page = int(request.args['page'] if 'page' in request.args else 1)
-
-    work_images = Work.get_images(page, per_page)
-    work_images_num = Work.get_images_num()
-
-    pagination = Pagination(page, per_page, work_images_num)
-
-    return render_template('work/all_work_images.html', work_images=work_images, work_images_num=work_images_num, pagination=pagination)
-
-# proc - delete work image
-@app.route('/work_image/<int:work_image_id>/delete', methods=['GET'])
-@require_login
-def delete_work_image(work_image_id):
-    work_image = Work.get_image(work_image_id)
-    if not work_image or work_image['user_id'] != session['user_id']:
-        abort(404)
-
-    # delete image file
-    if os.path.isfile(config.IMAGE_PATH + work_image['filename']):
-        os.remove(config.IMAGE_PATH + work_image['filename'])
-
-    Work.delete_image(work_image_id)
-    return redirect(url_for('work', work_id=work_image['work_id']))
-
-# proc - collect work image
-@app.route('/work_image/<int:work_image_id>/collect', methods=['GET'])
-@require_login
-def collect_work_image(work_image_id):
-    Collect.collect_work_image(session['user_id'], work_image_id)
-    return redirect(url_for('work_image', work_image_id=work_image_id))
-
-# proc - discollect work image
-@app.route('/work_image/<int:work_image_id>/discollect', methods=['GET'])
-@require_login
-def discollect_work_image(work_image_id):
-    Collect.discollect_work_image(session['user_id'], work_image_id)
-    return redirect(url_for('work_image', work_image_id=work_image_id))
-
-# page - add work image
-#--------------------------------------------------
-@app.route('/work/<int:work_id>/add_image', methods=['GET', 'POST'])
-@require_login
-def add_work_image(work_id):
-    work = Work.get_work(work_id)
-    form = WorkImageForm()
-    if request.method == 'GET':        
-        return render_template('work/add_work_image.html', work=work, form=form)
-    else:
-        if form.validate():
-            # Save image
-            image = request.files['image']
-            image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
-            image.save(config.IMAGE_PATH + image_filename)
-
-            image_id = Work.add_image(work_id, session['user_id'], config.IMAGE_URL+image_filename, image_filename)
-            return redirect(url_for('work_image', work_image_id=image_id))
-        else:
-            return render_template('work/add_work_image.html', work=work, form=form)
-
-# page - edit work image
-#--------------------------------------------------
-@app.route('/work_image/<int:work_image_id>/edit', methods=['GET', 'POST'])
-@require_login
-def edit_work_image(work_image_id):
-    work_image = Work.get_image(work_image_id)
-    form = WorkImageForm()
-    if request.method == 'GET':
-        return render_template('work/edit_work_image.html', work_image=work_image, form=form)
-    else:
-        if form.validate():
-            # Delete old image
-            if os.path.isfile(config.IMAGE_PATH + work_image['filename']):
-                os.remove(config.IMAGE_PATH + work_image['filename'])
-
-            # Save new image
-            image = request.files['image']
-            image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
-            image.save(config.IMAGE_PATH + image_filename)
-
-            # update image info
-            Work.update_image(work_image_id, config.IMAGE_URL+image_filename, image_filename)
-            return redirect(url_for('work_image', work_image_id=work_image['id']))
-        else:
-            return render_template('work/edit_work_image.html', work_image=work_image, form=form)
+    work = Work.query.get_or_404(work_id)
+    page = int(request.args.get('page', 1))
+    pagination = work.images.paginate(page, 12)
+    return render_template('work/work_images.html', work=work, pagination=pagination)
 
 # json - search authors in page add & edit work
 #--------------------------------------------------
 @app.route('/work/search_authors', methods=['POST'])
 @require_admin
-def get_authors_by_name():
-    name = request.form['author']
-    authors = Author.get_authors_by_name(name)
-    return json.dumps(authors)
+def search_authors():
+    author_name = request.form['author_name']
+    authors = Author.query.filter(Author.name.like('%%%s%%' % author_name))
+
+    # build the json data
+    dict_authors = []
+    for a in authors:
+        dict_authors.append({ 'id': a.id, 'dynasty': a.dynasty.name, 'name': a.name })
+    return json.dumps(dict_authors)

@@ -11,6 +11,7 @@ from xichuangzhu import db
 import config
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.collect_model import Collect
+from xichuangzhu.models.collect import CollectWork, CollectWorkImage
 from xichuangzhu.models.review_model import Review
 from xichuangzhu.models.review_model import WorkReview
 from xichuangzhu.models.work_image import WorkImage
@@ -82,41 +83,18 @@ def user_work_images(user_abbr):
 
     return render_template('user/work_images.html', user=user, pagination=pagination)
 
-# reflaction stops here
-
-# page - informs
-#--------------------------------------------------
-@app.route('/informs')
-@require_login
-def informs():  
-    per_page = 10
-    page = int(request.args['page'] if 'page' in request.args else 1)
-    
-    informs = Inform.get_informs(session['user_id'], page, per_page)
-    for i in informs:
-        i['Time'] = time_diff(i['Time'])
-
-    informs_num = Inform.get_informs_num(session['user_id'])
-    new_informs_num = Inform.get_new_informs_num(session['user_id'])
-
-    pagination = Pagination(page, per_page, informs_num)
-    
-    Inform.update_check_inform_time(session['user_id'])
-
-    return render_template('user/informs.html', informs=informs, new_informs_num=new_informs_num, pagination=pagination)
-
 # page - user collects
 #--------------------------------------------------
 @app.route('/collects')
 @require_login
 def collects():
-    collect_works = Collect.get_works_by_user(session['user_id'], 1, 6)
-    for w in collect_works:
-        w['Content'] = content_clean(w['Content'])
-    collect_works_num = Collect.get_works_num_by_user(session['user_id'])
+    query = Work.query.join(CollectWork).filter(CollectWork.user_id==session['user_id']).order_by(CollectWork.create_time)
+    collect_works = query.limit(6)
+    collect_works_num = query.count()
 
-    collect_work_images = Collect.get_work_images_by_user(session['user_id'], 1, 9)
-    collect_work_images_num = Collect.get_work_images_num_by_user(session['user_id'])
+    query = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id==session['user_id']).order_by(CollectWorkImage.create_time)
+    collect_work_images = query.limit(9)
+    collect_work_images_num = query.count()
 
     return render_template('/user/collects.html', collect_works=collect_works, collect_works_num=collect_works_num, collect_work_images=collect_work_images, collect_work_images_num=collect_work_images_num)
 
@@ -125,31 +103,15 @@ def collects():
 @app.route('/collect_works')
 @require_login
 def collect_works():
-    # pagination
-    per_page = 10
-    page = int(request.args['page'] if 'page' in request.args else 1)
-
-    collect_works = Collect.get_works_by_user(session['user_id'], page, per_page)
-    for w in collect_works:
-        w['Content'] = content_clean(w['Content'])
-    collect_works_num = Collect.get_works_num_by_user(session['user_id'])
-
-    pagination = Pagination(page, per_page, collect_works_num)
-
-    return render_template('user/collect_works.html', collect_works=collect_works, collect_works_num=collect_works_num, pagination=pagination)
+    page = int(request.args.get('page', 1))
+    pagination = Work.query.join(CollectWork).filter(CollectWork.user_id==session['user_id']).order_by(CollectWork.create_time).paginate(page, 10)
+    return render_template('user/collect_works.html', pagination=pagination)
 
 # page - user's collect work images
 #--------------------------------------------------
 @app.route('/collect_work_images')
 @require_login
 def collect_work_images():
-    # pagination
-    per_page = 18
-    page = int(request.args['page'] if 'page' in request.args else 1)
-
-    collect_work_images = Collect.get_work_images_by_user(session['user_id'], page, per_page)
-    collect_work_images_num = Collect.get_work_images_num_by_user(session['user_id'])
-
-    pagination = Pagination(page, per_page, collect_work_images_num)
-
-    return render_template('user/collect_work_images.html', collect_work_images=collect_work_images, collect_work_images_num=collect_work_images_num, pagination=pagination)
+    page = int(request.args.get('page', 1))
+    pagination = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id==session['user_id']).order_by(CollectWorkImage.create_time).paginate(page, 12)
+    return render_template('user/collect_work_images.html', pagination=pagination)

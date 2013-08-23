@@ -65,9 +65,9 @@ $(document).ready(function(){
          作品
          <div class="works-num-wap">
             <span data-work-type="all" class="active">全部</span>
-            {% for w in work_types_num %}
-            {% if w.type_num != 0 %}
-            <span data-work-type="{{ w.type }}">{{ w.type_name }}{{ w.type_num }}</span>
+            {% for t in work_types %}
+            {% if t.type_num != 0 %}
+            <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
             {% endif %}
             {% endfor %}
          </div>

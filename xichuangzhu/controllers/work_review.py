@@ -16,7 +16,6 @@ from xichuangzhu.models.comment_model import Comment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.inform_model import Inform
 from xichuangzhu.form import ReviewForm, CommentForm
-# from xichuangzhu.utils import time_diff, get_comment_replyee_id, rebuild_comment, build_review_inform_title, require_admin, require_login, Pagination
 from xichuangzhu.utils import time_diff, require_admin, require_login, Pagination
 
 # page review

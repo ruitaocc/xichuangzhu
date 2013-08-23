@@ -28,7 +28,7 @@ body #footer .container #extra-info{float:right;margin-right:20px}body #footer .
 #page-work .work-type-qu{text-indent:2em;line-height:30px;padding:0 2em}
 #page-work .work-type-wen,#page-work .work-type-fu{text-indent:2em;font-size:16px;line-height:30px;padding:0 .5em}#page-work .work-type-wen p,#page-work .work-type-fu p{margin-bottom:18px}
 #page-work #work-cmds{margin-right:15px}#page-work #work-cmds .dropdown-toggle .caret{margin-top:8px}
-#page-work .work-tags{list-style:none;margin:0}#page-work .work-tags li{list-style:none;display:inline-block}#page-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 2px 0 2px;cursor:pointer;color:#666;background-color:#f2f2f2;box-shadow:1px 1px 0 #bbb}#page-work .work-tags li a:hover{background-color:#ebebeb}
+#page-work .work-tags{list-style:none;margin:0}#page-work .work-tags li{list-style:none;display:inline-block}#page-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 4px 4px 0;cursor:pointer;color:#666;background-color:#f2f2f2;box-shadow:1px 1px 0 #bbb}#page-work .work-tags li a:hover{background-color:#ebebeb}
 #page-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #ddd;padding-bottom:5px}#page-work .other-work-item:last-child{border:0}
 #page-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:#808080}
 #page-work .ad{display:block;margin-top:20px}

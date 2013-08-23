@@ -14,10 +14,9 @@
 .review-item .review-wap .review-title .label{font-weight:normal;border-radius:0}
 .review-item .review-wap .review-content{font-size:12px;line-height:22px}
 .review-item .review-wap .review-extra-info{font-size:12px;line-height:22px}.review-item .review-wap .review-extra-info .review-time{color:#808080}
-.user-item{margin-bottom:10px}.user-item .user-avatar{float:left;display:block;margin-top:6px}
-.user-item .user-info{margin-left:60px}.user-item .user-info .user-name{font-size:13px}
+.user-item{margin-bottom:10px}.user-item .user-avatar{float:left;display:block;margin-top:3px;width:36px}
+.user-item .user-info{margin-left:46px}.user-item .user-info .user-name{font-size:13px}
 .user-item .user-info .user-signature{color:#666;font-size:12px;line-height:14px}
-.user-item .user-info .reviews-num{color:#666;font-size:12px;line-height:24px}
 #main-wap .node-info{margin-bottom:18px}#main-wap .node-info a{color:#999;text-decoration:none}#main-wap .node-info a:hover{color:#8b0000}
 #main-wap .node-info .new-topic{float:right;margin:0 5px 0 0;color:#777}#main-wap .node-info .new-topic:hover{color:#555}
 .topic-item{border-bottom:1px dashed #ddd;margin-top:10px;padding-bottom:18px;position:relative;clear:both}.topic-item .topic-user-avatar{float:left;margin-top:3px}
