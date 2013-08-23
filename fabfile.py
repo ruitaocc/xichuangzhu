@@ -20,6 +20,5 @@ def ldeploy():
     with cd('/var/www/xichuangzhu'):
         run('git pull')
 
-# back up database files
 def backup():
     pass

@@ -2,7 +2,6 @@
 import re
 import datetime
 import markdown2
-from flask import g
 from xichuangzhu import db
 from xichuangzhu.utils import time_diff
 

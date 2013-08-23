@@ -1,5 +1,4 @@
 #-*- coding: UTF-8 -*-
-from flask import g
 from xichuangzhu import db
 
 class Dynasty(db.Model):

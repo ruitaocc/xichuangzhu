@@ -18,23 +18,19 @@ $(document).ready(function(){
       <h2>历代文学家</h2>
 
       {% for dynasty in dynasties %}
-         {% if dynasty.authors|length != 0 %}
+      <a name="{{ dynasty.abbr }}"></a>
 
-         <a name="{{ dynasty.abbr }}"></a>
+      <div class="author-wap">
+         <a class='author-dynasty' href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
 
-         <div class="author-wap">
-            <a class='author-dynasty' href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
-
-            <ul class="author-group clearfix">
-               {% for author in dynasty.authors %}
-               <li class='author'>
-                  <a href="{{ url_for('author', author_abbr=author.abbr) }}">{{ author.name }}</a>
-               </li>
-               {% endfor %}
-            </ul>
-         </div>
-
-         {% endif %}
+         <ul class="author-group clearfix">
+            {% for author in dynasty.authors %}
+            <li class='author'>
+               <a href="{{ url_for('author', author_abbr=author.abbr) }}">{{ author.name }}</a>
+            </li>
+            {% endfor %}
+         </ul>
+      </div>
       {% endfor %}
    </div>
 

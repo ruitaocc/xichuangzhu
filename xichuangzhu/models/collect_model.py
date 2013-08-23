@@ -1,6 +1,5 @@
 #-*- coding: UTF-8 -*-
 import datetime
-from flask import g
 from xichuangzhu import db
 
 class CollectWork(db.Model):

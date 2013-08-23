@@ -4,7 +4,7 @@ sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config
 import MySQLdb
 import MySQLdb.cursors
-from flask import Flask, session, g, request, url_for
+from flask import Flask, request, url_for, session, g
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -28,6 +28,7 @@ if app.debug:
 
 # SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:xiaowangzi@localhost/xcz'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://%s:%s@%s/%s' % (config.DB_USER, config.DB_PASSWD, config.DB_HOST, config.DB_NAME)
 db = SQLAlchemy(app)
 
 # inject vars into template context
@@ -51,13 +52,6 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 @app.before_request
 def before_request():
     g.user_id =  session['user_id'] if 'user_id' in session else None
-    g.conn = MySQLdb.connect(host=config.DB_HOST, user=config.DB_USER, passwd=config.DB_PASSWD, db=config.DB_NAME, use_unicode=True, charset='utf8', cursorclass=MySQLdb.cursors.DictCursor)
-    g.cursor = g.conn.cursor()
-
-# after every request
-@app.teardown_request
-def teardown_request(exception):
-    g.conn.close()
 
 import log
 import controllers

@@ -1,6 +1,5 @@
 #-*- coding: UTF-8 -*-
 import datetime
-from flask import g, session
 from xichuangzhu import db
 from xichuangzhu.utils import check_is_me
 

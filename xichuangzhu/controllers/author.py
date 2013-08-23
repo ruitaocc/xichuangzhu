@@ -30,7 +30,7 @@ def author(author_abbr):
 #--------------------------------------------------
 @app.route('/authors')
 def authors():
-    dynasties = Dynasty.query.options(db.subqueryload(Dynasty.authors)).order_by(Dynasty.start_year)
+    dynasties = Dynasty.query.filter(Dynasty.authors.any()).order_by(Dynasty.start_year)
 
     # get the authors who's works are latest collected by user
     stmt = db.session.query(Author.id, CollectWork.create_time).join(Work).join(CollectWork).group_by(Author.id).having(db.func.max(CollectWork.create_time)).subquery()
