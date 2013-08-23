@@ -66,7 +66,7 @@ def works():
     if work_type != 'all':
         query = query.filter(Work.type.has(WorkType.en==work_type))
     if dynasty_abbr != 'all':
-        query = query.filter(Work.dynasty.has(Dynasty.abbr==dynasty_abbr))
+        query = query.filter(Work.author.has(Author.dynasty.has(Dynasty.abbr==dynasty_abbr)))
     pagination = query.paginate(page, 10)
 
     work_types = WorkType.query
