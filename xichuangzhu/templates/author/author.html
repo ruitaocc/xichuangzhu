@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ author.name }}{% endblock %}
 {% block page_id%}page-author{% endblock %}
+{% block page_title %}{{ author.name }} - {{ author.dynasty.name }}{% endblock %}
+{% block description %}{{ author.name }}简介、{{ author.name }}诗词文作品。{% endblock %}
 
 {% block body %}
 

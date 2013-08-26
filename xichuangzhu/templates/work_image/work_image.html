@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}作品图片{% endblock %}
+{% block page_title %}《{{ work_image.work.title }}》书法作品{% endblock %}
 {% block page_id%}page-work-image{% endblock %}
 
 {% block body %}
@@ -27,7 +27,7 @@ $(function(){
       </blockquote>
 
       <div class='image-wap'>
-         <img src="{{ work_image.url }}" />
+         <img src="{{ work_image.url }}" alt="《{{ work_image.work.title }}》书法作品" />
       </div>
    </div>
 

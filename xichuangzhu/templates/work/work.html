@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ work.title }}{% endblock %}
+{% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
+{% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}》正文、注释、题解、点评、书法创作等。{% endblock %}
 {% block page_id%}page-work{% endblock %}
 
 {% block body %}

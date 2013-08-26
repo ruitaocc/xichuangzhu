@@ -2,7 +2,7 @@
 
 <div class='work-image-wap'>
     {% for w in work_images %}
-    <a href="{{ url_for('work_image', work_image_id=w.id) }}"><img class='work-image' src="{{ w.url }}"></a>
+    <a href="{{ url_for('work_image', work_image_id=w.id) }}"><img class='work-image' src="{{ w.url }}" alt='《{{ w.work.title }}》书法作品'></a>
     {% endfor %}
 </div>
 

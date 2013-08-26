@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}《{{ work.title }}》的点评{% endblock %}
+{% block page_title %}{{ work.author.name }}《{{ work.title }}》的点评{% endblock %}
 {% block page_id%}page-work-reviews{% endblock %}
 
 {% block body %}
