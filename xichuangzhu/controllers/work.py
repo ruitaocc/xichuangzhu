@@ -60,7 +60,7 @@ def discollect_work(work_id):
 def works():
     work_type = request.args.get('type', 'all')
     dynasty_abbr = request.args.get('dynasty', 'all')
-    page = int(request.args.get('page', 1))
+    page = int(float(request.args.get('page', 1)))
 
     query = Work.query
     if work_type != 'all':

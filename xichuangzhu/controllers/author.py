@@ -17,7 +17,7 @@ def author(author_abbr):
     author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr==author_abbr).first_or_404()
     
     if 'q' in request.args:
-        quote = AuthorQuote.query.get_or_404(int(request.args['q']))
+        quote = AuthorQuote.query.get_or_404(int(float(request.args['q'])))
     else:
         quote = author.random_quote
 
