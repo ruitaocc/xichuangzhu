@@ -19,8 +19,8 @@ def index():
     return render_template('site/index.html', works=works, work_images=work_images, work_reviews=work_reviews, authors=authors, dynasties=dynasties)
 
 # json - gene works data for index page
-@app.route('/4works', methods=['POST'])
-def four_works():
+@app.route('/index_works', methods=['POST'])
+def index_works():
     works = Work.query.order_by(db.func.rand()).limit(4)
     return render_template('widget/index_works.widget', works=works)
 
@@ -29,12 +29,6 @@ def four_works():
 @app.route('/about')
 def about():
     return render_template('site/about.html')
-
-# page ad
-#--------------------------------------------------
-@app.route('/ad')
-def ad():
-    return render_template('site/ad.html')
 
 # page 404
 #-------------------------------------------------- 

@@ -11,10 +11,10 @@
 $(document).ready(function(){
    $('#work-refresh').click(function(){
       $.ajax({
-         url: "{{ url_for('four_works') }}",
+         url: "{{ url_for('index_works') }}",
          type: 'POST',
          success: function(data){
-            $('#4works-wap').html(data);
+            $('#index-works-wap').html(data);
 
             // s2t
             var bodyIsFt = $.cookie("bodyIsFt");
@@ -38,7 +38,7 @@ $(document).ready(function(){
          </span>
       </h2>
 
-      <div id="4works-wap">
+      <div id="index-works-wap">
          {% include "widget/index_works.widget" %}
       </div>
 

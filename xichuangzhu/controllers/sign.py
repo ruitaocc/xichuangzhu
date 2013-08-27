@@ -14,7 +14,7 @@ from xichuangzhu.form import EmailForm
 
 # proc - login by douban's oauth2.0 (public)
 #--------------------------------------------------
-@app.route('/login/douban')
+@app.route('/signin')
 def signin():
     # get current authed userID
     code = request.args['code']
@@ -122,7 +122,7 @@ def active_state():
     user_id = int(request.args.get('user_id', 0))
     return render_template('sign/active_state.html', state=state, user_id=user_id)
 
-# proc - logout
+# proc - signout
 #--------------------------------------------------
 @app.route('/logout')
 @require_login
