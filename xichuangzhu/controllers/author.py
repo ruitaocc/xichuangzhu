@@ -1,9 +1,7 @@
 #-*- coding: UTF-8 -*-
 import re
 from flask import render_template, request, redirect, url_for, json, abort, session
-from xichuangzhu import app
-from xichuangzhu import db
-import config
+from xichuangzhu import app, db
 from xichuangzhu.models.author_model import Author, AuthorQuote
 from xichuangzhu.models.work_model import Work, WorkType
 from xichuangzhu.models.collect_model import CollectWork

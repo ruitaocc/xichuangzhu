@@ -1,8 +1,7 @@
 #-*- coding: UTF-8 -*-
 import markdown2
 from flask import render_template, request, redirect, url_for, json, abort
-from xichuangzhu import app
-from xichuangzhu import db
+from xichuangzhu import app, db
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.utils import require_admin

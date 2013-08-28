@@ -1,8 +1,7 @@
 #-*- coding: UTF-8 -*-
 import re
 from flask import render_template, request, redirect, url_for, json
-from xichuangzhu import app
-from xichuangzhu import db
+from xichuangzhu import app, db
 from xichuangzhu.models.work_model import Work, WorkImage, WorkReview
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.dynasty_model import Dynasty

@@ -1,8 +1,7 @@
 #-*- coding: UTF-8 -*-
 import cgi
 from flask import render_template, request, redirect, url_for, json, session, abort
-from xichuangzhu import app
-from xichuangzhu import db
+from xichuangzhu import app, db
 from xichuangzhu.models.topic_model import Topic, TopicComment
 from xichuangzhu.models.user_model import User
 from xichuangzhu.form import TopicForm, CommentForm

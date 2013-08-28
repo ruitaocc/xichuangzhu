@@ -4,8 +4,7 @@ import math
 import cgi
 import markdown2
 from flask import render_template, request, redirect, url_for, json, session, abort
-from xichuangzhu import app
-from xichuangzhu import db
+from xichuangzhu import app, db
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.work_model import Work, WorkReview, WorkReviewComment
 from xichuangzhu.models.dynasty_model import Dynasty

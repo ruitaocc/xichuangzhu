@@ -1,5 +1,5 @@
 import unittest
-import xichuangzhu as xcz 
+import xichuangzhu as xcz
 
 class XczTestCase(unittest.TestCase):
 

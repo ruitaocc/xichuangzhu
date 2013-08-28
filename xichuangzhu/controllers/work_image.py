@@ -4,10 +4,8 @@ import os
 import re
 import math
 import uuid
-import config
 from flask import render_template, request, redirect, url_for, json, session, abort
-from xichuangzhu import app
-from xichuangzhu import db
+from xichuangzhu import app, db, config
 from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkImage, WorkReview
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author

@@ -6,9 +6,7 @@ from email.mime.text import MIMEText
 import hashlib
 import math
 from flask import render_template, request, redirect, url_for, json, session
-from xichuangzhu import app
-from xichuangzhu import db
-import config
+from xichuangzhu import app, db, config
 from xichuangzhu.models.user_model import User
 from xichuangzhu.models.collect_model import CollectWork, CollectWorkImage
 from xichuangzhu.models.topic_model import Topic
