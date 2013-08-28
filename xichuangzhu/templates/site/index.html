@@ -51,16 +51,6 @@ $(document).ready(function(){
 
       {% from "widget/reviews.widget" import render_reviews %}
       {{ render_reviews(work_reviews)|safe }}
-
-      <h2>
-         书法
-         <span class='link-more'>
-            <a href="{{ url_for('all_work_images') }}">更多»</a>
-         </span>
-      </h2>
-
-      {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(work_images)|safe }}
       
    </div>
 

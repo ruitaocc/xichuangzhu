@@ -16,16 +16,6 @@
 
       {% from "widget/works.widget" import render_works %}
       {{ render_works(collect_works)|safe }}
-
-      <h2>
-         书法收藏
-         <span class='link-more'>
-            <a href="{{ url_for('my_collect_work_images') }}">全部 / {{ collect_work_images_num }} »</a>
-         </span>
-      </h2>
-
-      {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(collect_work_images)|safe }}
       
    </div>
 
