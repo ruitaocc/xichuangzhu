@@ -77,7 +77,7 @@ def send_active_email(user_id):
             # prepare email content
             msgText = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
             msg = MIMEText(msgText, 'html', 'utf-8')
-            msg['From'] = "西窗烛 <" + config.SMTP_FROM + ">"
+            msg['From'] = "西窗烛 <" + config.SMTP_USER + ">"
             msg['To'] = user.name + "<" + to_addr + ">"
             msg['Subject'] = "欢迎来到西窗烛！"
 
@@ -85,7 +85,7 @@ def send_active_email(user_id):
             s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
             s.login(config.SMTP_USER, config.SMTP_PASSWORD)
             try:
-                s.sendmail(config.SMTP_FROM, to_addr, msg.as_string())
+                s.sendmail(config.SMTP_USER, to_addr, msg.as_string())
             except:
                 return redirect(url_for('active_state', state='send_failed'))
             else:
