@@ -3,4 +3,5 @@ Flask-WTF
 Flask-SQLAlchemy
 flask-debugtoolbar
 requests
+markdown2
 MySQL-python
