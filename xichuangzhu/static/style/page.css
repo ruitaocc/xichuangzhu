@@ -16,7 +16,6 @@ body #footer .container #links{float:right;margin:0;list-style-type:none}body #f
 body #footer .container #extra-info{float:right;margin-right:20px}body #footer .container #extra-info a{color:#666}
 .navbar-search .search-query{font-size:12px;padding:2px 0 2px 16px;margin-top:2px}
 .form-horizontal .input-append{display:block}
-.modal{border:8px solid rgba(0,0,0,0.35);box-shadow:none;border-radius:3px}.modal h4{font-size:18px}
 .tooltip{font-family:'arial','宋体';text-indent:0;font-weight:normal;font-size:12px;line-height:200%}
 .tooltip-inner{padding-top:5px;padding-bottom:5px}
 #page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 2px 2px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:2px;text-decoration:none;color:#fbfbfb}#page-index .work-item .work-type:hover{background-color:#fff;color:#a40000}
