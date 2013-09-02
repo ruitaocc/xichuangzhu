@@ -4,11 +4,12 @@ import re
 import uuid
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app, db, config
-from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkReview
+from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkImage, WorkReview
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.user_model import User
-from xichuangzhu.models.collect_model import CollectWork
+from xichuangzhu.models.collect_model import CollectWork, CollectWorkImage
+from xichuangzhu.form import WorkImageForm
 from xichuangzhu.utils import require_login, require_admin
 
 # page - work
@@ -25,11 +26,14 @@ def work(work_id):
     reviews = work.reviews.order_by(WorkReview.create_time.desc()).filter(WorkReview.is_publish==True).limit(4)
     reviews_num = work.reviews.filter(WorkReview.is_publish==True).count()
 
+    images = work.images.order_by(WorkImage.create_time).limit(9)
+    images_num = work.images.count()
+
     other_works = Work.query.filter(Work.author_id==work.author_id).filter(Work.id!=work_id).limit(5)
 
     collectors = User.query.join(CollectWork).join(Work).filter(Work.id==work_id).limit(4)
 
-    return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num, collectors=collectors, is_collected=is_collected, other_works=other_works)
+    return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num, images=images, images_num=images_num, collectors=collectors, is_collected=is_collected, other_works=other_works)
 
 # proc - collect work
 @app.route('/work/<int:work_id>/collect', methods=['GET'])
@@ -119,7 +123,16 @@ def work_reviews(work_id):
     page = int(request.args.get('page', 1))
     pagination = work.reviews.filter(WorkReview.is_publish==True).order_by(WorkReview.create_time.desc()).paginate(page, 10)
     return render_template('work/work_reviews.html', work=work , pagination=pagination)
-    
+
+# page - images of this work
+#--------------------------------------------------
+@app.route('/work/<int:work_id>/images', methods=['GET'])
+def work_images(work_id):
+    work = Work.query.get_or_404(work_id)
+    page = int(request.args.get('page', 1))
+    pagination = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 12)
+    return render_template('work/work_images.html', work=work, pagination=pagination)
+
 # json - search authors in page add & edit work
 #--------------------------------------------------
 @app.route('/work/search_authors', methods=['POST'])

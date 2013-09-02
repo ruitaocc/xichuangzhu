@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
-{% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}》正文、注释、题解、点评等。{% endblock %}
+{% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}》正文、注释、题解、点评、书法创作等。{% endblock %}
 {% block page_id%}page-work{% endblock %}
 
 {% block body %}
@@ -40,6 +40,8 @@
 
          <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.id) }}"><span class="icon-align-left"></span> 点评</a>
 
+         <a class="btn btn-small" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="icon-picture"></span> 书法</a>
+
          {% if is_collected %}
          <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="icon-bookmark"></span> 已收藏</a>
          {% else %}
@@ -70,6 +72,19 @@
 
       {% from "widget/reviews.widget" import render_reviews %}
       {{ render_reviews(reviews)|safe }}
+      {% endif %}
+
+      {% if images_num != 0 %}
+      <h2>
+         书法
+         <span class='link-more'>
+            <a href="{{ url_for('work_images', work_id=work.id) }}">更多 / {{ images_num }} »</a>
+         </span>
+      </h2>
+
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(images)|safe }}
+
       {% endif %}
    </div>
 

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block page_title %}书法作品{% endblock %}
+{% block page_id%}page-all-work-images{% endblock %}
+
+{% block body %}
+
+<div class="row">
+   <div class="span8">
+      <h2>最新书法作品</h2>
+
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(pagination.items)|safe }}
+      
+      {% from "widget/pagination.widget" import render_pagination %}
+      {{ render_pagination(pagination)|safe }}
+      
+   </div>
+
+   <div class="span4">
+   </div>
+</div>
+
+{% endblock %}

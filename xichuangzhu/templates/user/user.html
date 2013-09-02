@@ -38,6 +38,16 @@
       {% from "widget/topics.widget" import render_topics %}
       {{ render_topics(topics)|safe }}
 
+      <h2>
+         书法
+         <span class='link-more'>
+            <a href="{{ url_for('user_work_images', user_abbr=user.abbr) }}">全部 / {{ work_images_num }} »</a>
+         </span>
+      </h2>
+
+      {% from "widget/work_images.widget" import render_work_images %}
+      {{ render_work_images(work_images)|safe }}
+
    </div>
 
    <div class="span4">

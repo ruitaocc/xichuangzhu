@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block page_title %}添加书法作品{% endblock %}
+{% block page_id%}page-add-work-image{% endblock %}
+
+{% block body %}
+
+<form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work_image', work_id=work.id) }}" enctype="multipart/form-data">
+   <fieldset>
+      <legend>为《{{ work.title }}》添加书法作品</legend>
+
+      {{ form.csrf_token }}
+
+      {% from "widget/form.widget" import render_form_error %}
+      {{ render_form_error(form)|safe }}
+
+      <div class="control-group">
+         <label class="control-label">作品</label>
+         <div class="controls">
+            {{ form.image }}
+         </div>
+      </div>
+
+      <div class="control-group">
+         <div class="controls">
+            <input type="submit" value="提交" class="btn btn-small btn-primary" />
+         </div>
+      </div>
+   </fieldset>
+</form>
+
+{% endblock %}

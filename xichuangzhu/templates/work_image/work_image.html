@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block page_title %}《{{ work_image.work.title }}》书法作品{% endblock %}
+{% block page_id%}page-work-image{% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">
+$(function(){
+   $('.btn-remove').click(function(){
+      if(!confirm('确定删除此作品？')){
+         return false;
+      }
+   });
+});
+</script>
+
+<div class='row'>
+   <div class='span8'>
+      <p class='image-info'>
+         <a href="{{ url_for('user', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a> 发表于 <a href="{{ url_for('work', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>：
+      </p>
+
+      <blockquote>
+         <p>{{ work_image.work.clean_content|truncate(100, True) }}</p>
+         <small>〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
+      </blockquote>
+
+      <div class='image-wap'>
+         <img src="{{ work_image.url }}" alt="《{{ work_image.work.title }}》书法作品" />
+      </div>
+   </div>
+
+   <div class='span4'>
+      <div class='btn-group'>
+         {% if session.user_id %}
+            {% if work_image.user_id == session.user_id %}
+            <a class='btn btn-small' href="{{ url_for('edit_work_image', work_image_id=work_image.id) }}"><i class='icon-edit'></i> 编辑</a>
+            <a class='btn btn-small btn-remove' href="{{ url_for('delete_work_image', work_image_id=work_image.id) }}"><i class='icon-trash'></i> 删除</a>
+            {% else %}
+               {% if is_collected %}
+               <a class='btn btn-small' title='点击取消收藏' href="{{ url_for('discollect_work_image', work_image_id=work_image.id) }}"><i class='icon-bookmark'></i> 已收藏</a>
+               {% else %}
+               <a class='btn btn-small' title='点击收藏' href="{{ url_for('collect_work_image', work_image_id=work_image.id) }}"><i class='icon-bookmark'></i> 收藏</a>
+               {% endif %}
+            {% endif %}
+         {% endif %}
+      </div>
+   </div>
+</div>
+
+{% endblock %}
