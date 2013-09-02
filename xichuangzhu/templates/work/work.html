@@ -46,9 +46,19 @@
          {% endif %}
       </div>
       {% endif %}
-
+      <h2>注释</h2>
+      <div class='work-annotate'></div>
+      <script type="text/javascript">
+         var work_annotate = $('.work-annotate');
+         $('.work-content sup').each(function(index, element){
+            var annotate = $(element).data('original-title');
+            $('.work-annotate').append('<div>[' + (index+1) + ']&nbsp;&nbsp' + annotate + '</div>');
+         });
+      </script>
       <h2>题解</h2>
       <div class="work-introduction">{{ work.intro }}</div>
+
+
       
       {% if reviews_num != 0 %}
       <h2>
