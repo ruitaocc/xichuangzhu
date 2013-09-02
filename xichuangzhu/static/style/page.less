@@ -1,10 +1,13 @@
+@import "fonts.less";
+
 html{
     position: relative;
     min-height: 100%;
 }
 
 body{
-    font-family: 'arial', '宋体';
+    .font-song;
+
     margin: 0 0 6em 0;
 
     #main-wap{
@@ -19,8 +22,8 @@ body{
 
         h2{
             font-size: 15px;
+            .font-hei;
             line-height: 15px;
-            font-family: '微软雅黑';
             font-weight: normal;
             margin: 20px 0 15px 0;
             color: rgb(173,22,22);
@@ -45,10 +48,10 @@ body{
         z-index: 10;
         text-align: center;
         font-size: 12px;
-        font-family: '微软雅黑';
         width: 100%;
         color: #666;
         padding-top: 3px;
+        .font-hei;
 
         a{
             color: #37a;
@@ -131,7 +134,7 @@ body{
     .work-item{
         .work-type{
             background-color: lighten(darkred, 5%);
-            padding: 2px 2px 3px 3px;
+            padding: 2px 2px 2px 2px;
             border: 1px solid lighten(darkred, 5%);
             font-size: 12px;
             line-height: 12px;
@@ -232,17 +235,16 @@ body{
 
     .work-foreword{
         font-size: 17px;
-        font-family: 'kaiti';
+        .font-kai;
         margin-bottom: 10px;
     }
 
     .work-content{
-        font-family: '宋体';
         font-size: 17px;
         margin-bottom: 30px;
 
         sup{
-            font-family: '黑体';
+            .font-hei;
             font-size: 12px;
             font-weight: normal;
             padding: 5px 0px;
@@ -347,7 +349,6 @@ body{
             font-size: 12px;
             margin-bottom: 15px;
             width: 400px;
-            font-family: '宋体';
         }
 
         .tags-wap{
@@ -408,7 +409,7 @@ body{
             font-size: 15px;
             line-height: 15px;
             color: rgb(29, 86, 172);
-            font-family: '微软雅黑';
+            .font-hei;
             width: 100px;
             float: left;
             display: inline-block;
@@ -462,7 +463,8 @@ body{
             line-height: 12px;
             cursor: pointer;
             margin-right: 3px;
-            padding: 0px 7px 1px 8px;
+            // padding: 0px 7px 1px 8px;
+            padding: 1px 5px 2px 6px;
             color: gray;
             letter-spacing: 1px;
 
@@ -495,7 +497,6 @@ body{
 
         &:hover{
             background-color: #FBFBFB;
-            // border-color: #D16E6E;
             
             .work-content{
                 color: #333;
@@ -505,7 +506,7 @@ body{
         .work-title{
             font-size: 14px;
             padding-bottom: 3px;
-            font-family: '微软雅黑';
+            .font-hei;
             color: rgb(39, 125, 221);
             line-height: 24px;
         }
@@ -553,18 +554,6 @@ body{
         #dynasty-wap{
             .dynasty-period{
                 font-size: 16px;
-            }
-
-            .dynasty-extra{
-
-                h3{
-                    font-size: 15px;
-                    font-family: '微软雅黑';
-                }
-                
-                p{
-                    margin-bottom: 15px;
-                }
             }
         }
 
@@ -658,7 +647,7 @@ body{
             line-height: 30px;
             margin-top: 15px;
             font-weight: bold;
-            font-family: '微软雅黑';
+            .font-hei;
         }
 
         .user-signature{
@@ -799,20 +788,6 @@ body{
         .btn-edit-topic{
             margin-left: 10px;
         }
-    }
-}
-
-// page add topic
-//-----------------------------------------------------
-#page-add-topic,
-#page-edit-topic{
-    #node{
-        font-size: 14px;
-        line-height: 14px;
-        margin-right: 10px;
-        font-family: '微软雅黑';
-        vertical-align: middle;
-        color: darkred;
     }
 }
 

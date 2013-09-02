@@ -1,8 +1,14 @@
+.font-hei{font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp"}
+.font-kai{font-family:"TW\-Kai","AR PL UKai CN","AR PL UKai HK","AR PL UKai TW","AR PL UKai TW MBE","KaiTi","KaiTi_GB2312","STKaiti"}
+.font-song{font-family:"arial","NSimSun","SimSun","STSong","TW\-Sung","WenQuanYi Bitmap Song"}
+.font-song-medium{font-family:"STZhongsong"}
+.font-fang-song{font-family:"FangSong","FangSong_GB2312","STFangsong"}
+.font-ming{font-family:"AR PL UMing CN","AR PL UMing HK","AR PL UMing TW","AR PL UMing TW MBE","PMingLiU","MingLiU"}
 .navbar #btn-s2t{margin-top:7px;margin-right:10px;background-image:none}
 .navbar #douban-icon{float:right;margin-top:8px;margin-left:2px;cursor:pointer}
 .navbar .label{border-radius:0}
 .alert-error ul{margin:0 0 0 20px;list-style:square}.alert-error ul li{margin:0 0 5px 0}.alert-error ul li:last-child{margin:0}
-.link-more a{margin-left:5px;font-size:12px;font-family:'微软雅黑';font-weight:normal;color:#37a;cursor:pointer}
+.link-more a{margin-left:5px;font-size:12px;font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp";font-weight:normal;color:#37a;cursor:pointer}
 .work-item{margin-bottom:8px;border-bottom:1px dashed #ddd;padding-bottom:8px}.work-item .work-header .work-title{font-size:16px;line-height:32px;font-weight:bold;letter-spacing:1px}
 .work-item .work-header .work-author{font-size:12px;font-weight:normal;margin-left:3px}.work-item .work-header .work-author a{color:#333}
 .work-item .work-content{font-size:14px;line-height:22px}
