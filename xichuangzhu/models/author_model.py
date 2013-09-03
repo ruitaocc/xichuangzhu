@@ -20,7 +20,9 @@ class Author(db.Model):
         """
         Get a random quote of the author
         """
-        return AuthorQuote.query.filter(AuthorQuote.author_id == self.id).order_by(db.func.rand()).first()
+        if not hasattr(self, '_random_quote'):
+            self._random_quote = AuthorQuote.query.filter(AuthorQuote.author_id == self.id).order_by(db.func.rand()).first()
+        return self._random_quote
 
 class AuthorQuote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
