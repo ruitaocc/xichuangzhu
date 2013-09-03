@@ -15,7 +15,7 @@
 .author-item{margin-bottom:8px}.author-item .author{font-size:16px;line-height:22px;font-weight:bold;letter-spacing:1px}
 .author-item .author-dynasty{font-size:12px;font-weight:normal;margin-left:3px}.author-item .author-dynasty a{color:#333}
 .author-item .author-quote{font-size:12px;line-height:22px}
-.review-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd}.review-item .user-avatar{float:left;margin-top:3px}
+.review-item{margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ddd}.review-item .user-avatar{float:left;margin-top:3px}
 .review-item .review-wap{margin-left:60px}.review-item .review-wap .review-title a{font-size:16px;font-weight:bold;letter-spacing:1px;display:inline-block;margin-right:2px}
 .review-item .review-wap .review-title .label{font-weight:normal;border-radius:0}
 .review-item .review-wap .review-content{font-size:12px;line-height:22px}

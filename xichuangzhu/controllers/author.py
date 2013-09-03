@@ -32,7 +32,7 @@ def authors():
 
     # get the authors who's works are latest collected by user
     stmt = db.session.query(Author.id, CollectWork.create_time).join(Work).join(CollectWork).group_by(Author.id).having(db.func.max(CollectWork.create_time)).subquery()
-    hot_authors = Author.query.join(stmt, Author.id==stmt.c.id).order_by(stmt.c.create_time).limit(8)
+    hot_authors = Author.query.join(stmt, Author.id==stmt.c.id).order_by(stmt.c.create_time.desc()).limit(8)
 
     return render_template('author/authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
