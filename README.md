@@ -12,4 +12,5 @@ http://www.xichuangzhu.com
 3. sudo pip install -r requirements.txt（安装过程中遇到的任何问题，请google解决）
 4. git clone项目文件夹到/var/www
 5. 将config另存为/var/www/flaskconfig/xichuangzhu/config.py，并填充其中的缺失配置项
-6. python run.py
+6. 根据config.py中IMAGE_PATH建立同名同路径的文件夹（即：/var/www/xcz_uploads/work_imgs/）
+7. python run.py
