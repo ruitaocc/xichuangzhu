@@ -14,22 +14,22 @@
       {% from "widget/form.widget" import render_form_error %}
       {{ render_form_error(form)|safe }}
 
-      <div class="control-group">
-         {{ form.title.label(class="control-label") }}
-         <div class="controls">
+      <div class="form-group">
+         {{ form.title.label(class="col-md-2 col-md-2 control-label") }}
+         <div class="col-md-3">
             {{ form.title(class="input-xlarge")|safe }}
          </div>
       </div>
 
-      <div class="control-group">
-         {{ form.content.label(class="control-label") }}
-         <div class="controls">
+      <div class="form-group">
+         {{ form.content.label(class="col-md-2 col-md-2 control-label") }}
+         <div class="col-md-3">
             {{ form.content(class="input-xxlarge", rows="20")|safe }}
          </div>
       </div>
 
-      <div class="control-group">
-         <div class="controls btn-group">
+      <div class="form-group">
+         <div class="col-md-3 btn-group">
             {% if review.is_publish %}
             <input type="submit" name="publish" value="更新" class="btn btn-small btn-primary" />
             {% else %}

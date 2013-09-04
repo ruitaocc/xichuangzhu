@@ -35,9 +35,9 @@ $(document).ready(function(){
    <fieldset>
       <legend>编辑作品</legend>
 
-      <div class="control-group">
-         <label class="control-label">类别</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="col-md-2 control-label">类别</label>
+         <div class="col-md-3">
             <select name='type_id'>
                {% for type in work_types %}
                <option value='{{ type.id }}' {% if work.type_id == type.id %}selected="selected"{% endif %}>{{ type.cn }}</option>
@@ -46,16 +46,16 @@ $(document).ready(function(){
          </div>
       </div>
 
-      <div class="control-group">
-         <label class="control-label">标题</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="col-md-2 control-label">标题</label>
+         <div class="col-md-3">
             <input type="text" name="title" value="{{ work.title }}" />
          </div>
       </div>
 
-      <div class="control-group">
-         <label class="control-label">作者</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="col-md-2 control-label">作者</label>
+         <div class="col-md-3">
             <input id="input-author-name" type="text" class="span2" value="{{ work.author.name }}" />
             <input id="btn-search-author" type="button" class="btn" value="搜索" />
             <select id="select-author" name="author_id" class="span2">
@@ -64,29 +64,29 @@ $(document).ready(function(){
          </div>
       </div>
 
-      <div class="control-group">
-         <label class="control-label">小序</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="col-md-2 control-label">小序</label>
+         <div class="col-md-3">
             <textarea class="input-xxlarge" name="foreword" rows='5'>{{ work.foreword }}</textarea>
          </div>
       </div>
 
-      <div class="control-group">
-         <label class="control-label">题解</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="col-md-2 control-label">题解</label>
+         <div class="col-md-3">
             <textarea class="input-xxlarge" name="intro" rows='5'>{{ work.intro }}</textarea>
          </div>
       </div>
 
-      <div class="control-group">
-         <label class="control-label">内容</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="col-md-2 control-label">内容</label>
+         <div class="col-md-3">
             <textarea class="input-xxlarge" name="content" id="work-content" rows='15'>{{ work.content }}</textarea>
          </div>
       </div>
 
-      <div class="control-group">
-         <div class="controls">
+      <div class="form-group">
+         <div class="col-md-3">
             <input type="submit" value="提交" class="btn btn-small btn-primary" />
          </div>
       </div>
