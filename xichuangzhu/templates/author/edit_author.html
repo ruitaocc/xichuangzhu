@@ -5,69 +5,67 @@
 
 {% block body %}
 
+<h2>编辑文学家</h2>
+
 <form id="form-edit-author" class="form-horizontal" method="post" action="{{ url_for('edit_author', author_id=author.id) }}">
-   <fieldset>
-      <legend>编辑文学家</legend>
+   <div class="form-group">
+      <label class="col-md-2 control-label">姓名</label>
+      <div class="col-md-3">
+         <input type="text" class="form-control" name="name" value="{{ author.name }}" />
+      </div>
+   </div>
 
-      <div class="control-group">
-         <label class="control-label">姓名</label>
-         <div class="controls">
-            <input type="text" name="name" value="{{ author.name }}" />
-         </div>
+   <div class="form-group">
+      <label class="col-md-2 control-label">拼音缩写</label>
+      <div class="col-md-3">
+         <input type="text" class="form-control" name="abbr" value="{{ author.abbr }}" />
       </div>
+   </div>
 
-      <div class="control-group">
-         <label class="control-label">拼音缩写</label>
-         <div class="controls">
-            <input type="text" name="abbr" value="{{ author.abbr }}" />
-         </div>
+   <div class="form-group">
+      <label class="col-md-2 control-label">朝代</label>
+      <div class="col-md-3">
+         <select name='dynasty_id' class="form-control">
+            {% for d in dynasties %}
+            <option value="{{ d.id }}"
+               {% if d.id == author.dynasty_id %}
+               selected="selected"
+               {% endif %}>
+               {{ d.name }}
+            </option>
+            {% endfor %}
+         </select>
       </div>
+   </div>
+   
+   <div class="form-group">
+      <label class="col-md-2 control-label">生年</label>
+      <div class="col-md-3 input-group">
+         <input type="text" class="form-control" name="birth_year" value="{{ author.birth_year }}" />
+         <span class="input-group-addon">年</span>
+      </div>
+   </div>
+   
+   <div class="form-group">
+      <label class="col-md-2 control-label">卒年</label>
+      <div class="col-md-3 input-group">
+         <input type="text" class="form-control" name="death_year" value="{{ author.death_year }}" />
+         <span class="input-group-addon">年</span>
+      </div>
+   </div>
 
-      <div class="control-group">
-         <label class="control-label">朝代</label>
-         <div class="controls">
-            <select name='dynasty_id'>
-               {% for d in dynasties %}
-               <option value="{{ d.id }}"
-                  {% if d.id == author.dynasty_id %}
-                  selected="selected"
-                  {% endif %}>
-                  {{ d.name }}
-               </option>
-               {% endfor %}
-            </select>
-         </div>
+   <div class="form-group">
+      <label class="col-md-2 control-label">简介</label>
+      <div class="col-md-6">
+         <textarea rows="10" class="form-control" name="intro">{{ author.intro }}</textarea>
       </div>
-      
-      <div class="control-group">
-         <label class="control-label">生年</label>
-         <div class="controls input-append">
-            <input type="text" name="birth_year" value="{{ author.birth_year }}" />
-            <span class="add-on">年</span>
-         </div>
-      </div>
-      
-      <div class="control-group">
-         <label class="control-label">卒年</label>
-         <div class="controls input-append">
-            <input type="text" name="death_year" value="{{ author.death_year }}" />
-            <span class="add-on">年</span>
-         </div>
-      </div>
+   </div>
 
-      <div class="control-group">
-         <label class="control-label">简介</label>
-         <div class="controls">
-            <textarea rows="10" class="input-xxlarge" name="intro">{{ author.intro }}</textarea>
-         </div>
+   <div class="form-group">
+      <div class="col-md-6 col-md-offset-2">
+         <input type="submit" value="提交" class="btn btn-primary" />
       </div>
-
-      <div class="control-group">
-         <div class="controls">
-            <input type="submit" value="提交" class="btn btn-small btn-primary" />
-         </div>
-      </div>
-   </fieldset>
+   </div>
 </form>
 
 {% endblock %}

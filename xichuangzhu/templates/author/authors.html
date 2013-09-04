@@ -6,7 +6,7 @@
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <h2>历代文学家</h2>
 
       {% for dynasty in dynasties %}
@@ -26,7 +26,7 @@
       {% endfor %}
    </div>
 
-   <div class="span4">
+   <div class="col-md-4">
       <h2>近期热门</h2>
 
       {% from 'widget/authors.widget' import render_authors %}

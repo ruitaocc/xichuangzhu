@@ -6,7 +6,7 @@
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <h2>{{ user.friendly_name }}的话题 / {{ pagination.total }}</h2>
 
       {% from "widget/topics.widget" import render_topics %}
@@ -15,7 +15,7 @@
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
 
-   <div class="span4"></div>
+   <div class="col-md-4"></div>
 </div>
 
 {% endblock %}

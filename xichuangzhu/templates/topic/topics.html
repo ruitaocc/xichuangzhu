@@ -8,7 +8,7 @@
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <h2 class="node-info">
          <span>话题</span>
          {% if session.user_id %}
@@ -23,7 +23,7 @@
       {{ render_pagination(pagination)|safe }}
    </div>
 
-   <div class="span4">
+   <div class="col-md-4">
       <ul class='topic-tips'>
          <li>话题讨论</li>
          <li>建议与反馈</li>
