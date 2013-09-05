@@ -31,5 +31,5 @@
 .comment-item .comment-wap .comment-extra-info .btn-reply-somebody{cursor:pointer;display:none;color:#999;margin-left:5px}
 .comment-item .comment-wap .comment-body{line-height:20px}.comment-item .comment-wap .comment-body .replyee{color:#333;margin-right:5px}
 .textarea-comment{display:block;width:85%;margin:20px 0 12px 0}
-.work-image-wap{position:relative}.work-image-wap .work-image{display:none;position:absolute}
+.work-image-wap{position:relative}.work-image-wap .work-image{margin-bottom:10px}
 .text-gap{height:7px}
