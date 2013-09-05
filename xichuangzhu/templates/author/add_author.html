@@ -5,62 +5,64 @@
 
 {% block body %}
 
-<h2>添加文学家</h2>
-
 <form id="form-add-author" class="form-horizontal" role="form" method="post" action="{{ url_for('add_author') }}">
-   <div class="form-group">
-      <label class="col-md-2 control-label">姓名</label>
-      <div class="col-md-3">
-         <input type="text" name="name" class='form-control' />
-      </div>
-   </div>
+   <fieldset>
+      <legend>添加文学家</legend>
 
-   <div class="form-group">
-      <label class="col-md-2 control-label">拼音缩写</label>
-      <div class="col-md-3">
-         <input type="text" name="abbr" class='form-control' />
+      <div class="form-group">
+         <label class="col-md-2 control-label">姓名</label>
+         <div class="col-md-3">
+            <input type="text" name="name" class='form-control' />
+         </div>
       </div>
-   </div>
 
-   <div class="form-group">
-      <label class="col-md-2 control-label">朝代</label>
-      <div class="col-md-3">
-         <select name='dynasty_id' class='form-control'>
-            {% for d in dynasties %}
-            <option value="{{ d.id }}">{{ d.name }}</option>
-            {% endfor %}
-         </select>
+      <div class="form-group">
+         <label class="col-md-2 control-label">拼音缩写</label>
+         <div class="col-md-3">
+            <input type="text" name="abbr" class='form-control' />
+         </div>
       </div>
-   </div>
-   
-   <div class="form-group">
-      <label class="col-md-2 control-label">生年</label>
-      <div class="col-md-3 input-group">
-         <input type="text" name="birth_year" class='form-control' />
-         <span class="input-group-addon">年</span>
-      </div>
-   </div>
-   
-   <div class="form-group">
-      <label class="col-md-2 control-label">卒年</label>
-      <div class="col-md-3 input-group">
-         <input type="text" name="death_year" class='form-control' />
-         <span class="input-group-addon">年</span>
-      </div>
-   </div>
 
-   <div class="form-group">
-      <label class="col-md-2 control-label">简介</label>
-      <div class="col-md-6">
-         <textarea id="author-introduction" rows="10" name="intro" class='form-control'></textarea>
+      <div class="form-group">
+         <label class="col-md-2 control-label">朝代</label>
+         <div class="col-md-3">
+            <select name='dynasty_id' class='form-control'>
+               {% for d in dynasties %}
+               <option value="{{ d.id }}">{{ d.name }}</option>
+               {% endfor %}
+            </select>
+         </div>
       </div>
-   </div>
+      
+      <div class="form-group">
+         <label class="col-md-2 control-label">生年</label>
+         <div class="col-md-3 input-group">
+            <input type="text" name="birth_year" class='form-control' />
+            <span class="input-group-addon">年</span>
+         </div>
+      </div>
+      
+      <div class="form-group">
+         <label class="col-md-2 control-label">卒年</label>
+         <div class="col-md-3 input-group">
+            <input type="text" name="death_year" class='form-control' />
+            <span class="input-group-addon">年</span>
+         </div>
+      </div>
 
-   <div class="form-group">
-      <div class="col-md-6 col-md-offset-2">
-         <input type="submit" value="提交" class="btn btn-primary" />
+      <div class="form-group">
+         <label class="col-md-2 control-label">简介</label>
+         <div class="col-md-6">
+            <textarea id="author-introduction" rows="10" name="intro" class='form-control'></textarea>
+         </div>
       </div>
-   </div>
+
+      <div class="form-group">
+         <div class="col-md-6 col-md-offset-2">
+            <input type="submit" value="提交" class="btn btn-primary" />
+         </div>
+      </div>
+   </fieldset>
 </form>
 
 {% endblock %}
