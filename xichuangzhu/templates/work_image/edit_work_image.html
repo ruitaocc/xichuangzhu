@@ -14,22 +14,23 @@
       {% from "widget/form.widget" import render_form_error %}
       {{ render_form_error(form)|safe }}
 
-      <div class="control-group">
-         <label class="control-label">原作</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="control-label col-md-2">原作</label>
+         <div class="col-md-6">
             <img src="{{ work_image.url }}">
          </div>
       </div>
 
-      <div class="control-group">
-         <label class="control-label">新作</label>
-         <div class="controls">
+      <div class="form-group">
+         <label class="control-label col-md-2">新作</label>
+         <div class="col-md-6">
             {{ form.image }}
+            <p class="help-block">图片大小不要超过5M</p>
          </div>
       </div>
 
-      <div class="control-group">
-         <div class="controls">
+      <div class="form-group">
+         <div class="col-md-6 col-md-offset-2">
             <input type="submit" value="提交" class="btn btn-small btn-primary" />
          </div>
       </div>

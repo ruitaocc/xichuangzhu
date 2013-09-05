@@ -1,0 +1,20 @@
+.font-hei{font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp"}
+.font-kai{font-family:"TW\-Kai","AR PL UKai CN","AR PL UKai HK","AR PL UKai TW","AR PL UKai TW MBE","KaiTi","KaiTi_GB2312","STKaiti"}
+.font-song{font-family:"arial","NSimSun","SimSun","STSong","TW\-Sung","WenQuanYi Bitmap Song"}
+.font-song-medium{font-family:"STZhongsong"}
+.font-fang-song{font-family:"FangSong","FangSong_GB2312","STFangsong"}
+.font-ming{font-family:"AR PL UMing CN","AR PL UMing HK","AR PL UMing TW","AR PL UMing TW MBE","PMingLiU","MingLiU"}
+@media (min-width:1200px){.container{max-width:970px}}h1{font-size:25px;line-height:35px;margin:20px 0 10px 0}
+h2{font-size:15px;font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp";line-height:15px;font-weight:normal;margin:20px 0 15px 0;color:#ad1616;clear:both}
+ul{padding-left:30px;list-style:square}
+legend{line-height:40px;padding-bottom:5px}
+label{font-weight:normal}
+blockquote{padding:0 0 0 20px}blockquote p{font-size:14px;line-height:180%;margin-bottom:5px}
+.label{border-radius:0}
+.tooltip{font-family:"arial","NSimSun","SimSun","STSong","TW\-Sung","WenQuanYi Bitmap Song";text-indent:0;font-weight:normal;font-size:12px;line-height:180%}
+.tooltip-inner{padding-top:8px;padding-bottom:8px}
+.alert-danger ul li{margin:0 0 5px 0}.alert-danger ul li:last-child{margin:0}
+.input-group-btn:last-child>.btn{border-left:0}
+.table thead>tr>th{border-bottom:1px solid #ddd}
+.table-bordered>thead>tr>th,.table-bordered>thead>tr>td{border-bottom-width:1px}
+.form-horizontal input[type='file']{padding-top:7px}

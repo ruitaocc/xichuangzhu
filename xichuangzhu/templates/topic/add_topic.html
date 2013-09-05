@@ -14,22 +14,22 @@
       {% from "widget/form.widget" import render_form_error %}
       {{ render_form_error(form)|safe }}
 
-      <div class="control-group">
-         {{ form.title.label(class="control-label") }}
-         <div class="controls">
-            {{ form.title(class="input-xlarge") }}
+      <div class="form-group">
+         {{ form.title.label(class="col-md-2 control-label") }}
+         <div class="col-md-6">
+            {{ form.title(class="form-control") }}
          </div>
       </div>
 
-      <div class="control-group">
-         {{ form.content.label(class="control-label") }}
-         <div class="controls">
-            {{ form.content(class="input-xxlarge", rows="15") }}
+      <div class="form-group">
+         {{ form.content.label(class="col-md-2 control-label") }}
+         <div class="col-md-6">
+            {{ form.content(class="form-control", rows="15") }}
          </div>
       </div>
 
-      <div class="control-group">
-         <div class="controls">
+      <div class="form-group">
+         <div class="col-md-6 col-md-offset-2">
             <input type="submit" value="提交" class="btn btn-primary btn-small" />
          </div>
       </div>

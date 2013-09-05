@@ -1,131 +1,90 @@
 @import "fonts.less";
 
+// layout
+//-----------------------------------------------------
 html{
     position: relative;
     min-height: 100%;
-}
 
-body{
-    .font-song;
+    body{
+        .font-song;
+        margin: 0 0 6em 0;
 
-    margin: 0 0 6em 0;
+        .navbar{
+            margin-bottom: 15px;
 
-    #main-wap{
-        font-size: 14px;
-        line-height: 180%;
+            .navbar-form {
+                margin-top: 10px;
+              
+                .input-group{
+                    width: 250px;
+                }
+            }
 
-        h1{
-            font-size: 25px;
-            line-height: 35px;
-            margin: 20px 0 10px 0;
+            #btn-s2t{
+                margin-top: 10px;
+                margin-right: 10px; 
+            }
+
+            #douban-icon{
+                margin-top: 12px;
+                margin-left: 2px;
+                cursor: pointer;
+            }
         }
 
-        h2{
-            font-size: 15px;
+        #main-wap{
+            line-height: 180%;
+        }
+
+        #footer{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2.2em;
+            z-index: 10;
+            text-align: center;
+            font-size: 12px;
+            width: 100%;
+            color: #666;
+            padding-top: 3px;
             .font-hei;
-            line-height: 15px;
-            font-weight: normal;
-            margin: 20px 0 15px 0;
-            color: rgb(173,22,22);
-            clear: both;
-        }
 
-        .span4{
-            width: 290px;
-            margin-left: 30px;
-        }
-
-        .text-gap{
-            height: 7px;
-        }
-    }
-
-    #footer{
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 2.2em;
-        z-index: 10;
-        text-align: center;
-        font-size: 12px;
-        width: 100%;
-        color: #666;
-        padding-top: 3px;
-        .font-hei;
-
-        a{
-            color: #37a;
-        }
-
-        img{
-            display: none;
-        }
-
-        .container{
-            #copyright{
-                float: left;
+            a{
+                color: #37a;
             }
 
-            #links{
-                float: right;
-                margin: 0;
-                list-style-type: none;
+            img{
+                display: none;
+            }
 
-                li{
-                    display: inline-block;
-                    margin-right: 15px;
+            .container{
+                #copyright{
+                    float: left;
                 }
-            }
 
-            #extra-info{
-                float: right;
-                margin-right: 20px;
+                #links{
+                    float: right;
+                    margin: 0;
+                    list-style-type: none;
 
-                a{
-                    color: #666;
+                    li{
+                        display: inline-block;
+                        margin-right: 15px;
+                    }
+                }
+
+                #extra-info{
+                    float: right;
+                    margin-right: 20px;
+
+                    a{
+                        color: #666;
+                    }
                 }
             }
         }
     }
-}
-
-// fix bootstrap css
-//-----------------------------------------------------
-
-// nav
-.navbar-search .search-query{
-    font-size: 12px;
-    padding: 2px 0 2px 16px;
-    margin-top: 2px;
-}
-
-.form-horizontal .input-append{
-    display: block;
-}
-
-// modal
-.modal{
-    border: 8px solid rgba(0, 0, 0, 0.35);
-    box-shadow: none;
-    border-radius: 3px;
-
-    h4{
-        font-size: 18px;
-    }
-}
-
-// tooltip
-.tooltip{
-    font-family: 'arial', '宋体';
-    text-indent: 0;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 200%;
-}
-
-.tooltip-inner{
-    padding-top: 5px;
-    padding-bottom: 5px;
 }
 
 // page index
@@ -155,6 +114,7 @@ body{
 
     #dynasties-wap{
         margin: 0;
+        padding: 0;
         list-style: none;
 
         .dynasty-item{
@@ -168,46 +128,6 @@ body{
 
             span{
                 margin-right: 5px;
-            }
-        }
-    }
-}
-
-// page add work
-//-----------------------------------------------------
-#page-works{
-    #type-selector,
-    #dynasty-selector{
-        list-style: none;
-        margin: 0;
-
-        li{
-            margin-bottom: 8px;
-            margin-right: 2px;
-            display: inline-block;
-
-            a{
-                font-size: 12px;
-                line-height: 12px;
-                background-color: #EEE;
-                padding: 4px 12px 5px 12px;
-                text-decoration: none;
-                color: #777;
-            }
-
-            &:hover{
-                background-color: #DDD;
-                a{
-                    color: #333;
-                }
-            }
-
-            &.active{
-                
-                a{
-                    background-color: #0088cc;
-                    color: white;
-                }
             }
         }
     }
@@ -300,11 +220,11 @@ body{
     }
 
     .work-tags{
-        list-style: none;
+        list-style-type: none;
         margin: 0;
+        padding: 0;
 
         li{
-            list-style: none;
             display: inline-block;
 
             a{
@@ -312,7 +232,7 @@ body{
                 font-size: 12px;
                 line-height: 12px;
                 padding: 5px 5px;
-                margin: 0 4px 4px 0;
+                margin: 0 5px 5px 0;
                 cursor: pointer;
 
                 color: #666;
@@ -343,62 +263,41 @@ body{
             color: gray;
         }
     }
-
-    .ad{
-        display: block;
-        margin-top: 20px;
-    }
-
-    #modal-tags{
-        #input-tags{
-            font-size: 12px;
-            margin-bottom: 15px;
-            width: 400px;
-        }
-
-        .tags-wap{
-            clear: both;
-            margin-bottom: 10px;
-
-            .tags-title{
-                float: left;
-            }
-
-            ul{
-                margin: 0 0 0 10px;
-                float: left;
-                width: 450px;
-
-                li{
-                    list-style: none;
-                    display: inline-block;
-                    font-size: 12px;
-                    line-height: 12px;
-                    padding: 5px 5px;
-                    margin: 0 5px 5px 0;
-                    cursor: pointer;
-
-                    color: rgb(167, 35, 35);
-                    background-color: rgb(247, 231, 231);
-                    box-shadow: 1px 1px 0 rgb(192, 154, 154);
-                    &:hover{
-                        background-color: rgb(240, 221, 221);
-                    }
-                }           
-            }
-        }
-    }
 }
 
-// page collection
+// page works
 //-----------------------------------------------------
-#page-collection{
-    .collection-author{
-        font-size: 16px;
-    }
+#page-works{
+    #type-selector,
+    #dynasty-selector{
+        list-style: none;
+        margin: 0;
+        padding: 0;
 
-    .work-item .work-author{
-        display: none;
+        li{
+            margin-bottom: 8px;
+            margin-right: 2px;
+            display: inline-block;
+
+            a{
+                font-size: 12px;
+                line-height: 12px;
+                background-color: #EEE;
+                padding: 4px 12px 5px 12px;
+                text-decoration: none;
+                color: #777;
+
+                &:hover{
+                    color: #333;
+                    background-color: #DDD;
+                }
+            }
+
+            &.active a{
+                background-color: #0088cc;
+                color: white;
+            }
+        }
     }
 }
 
@@ -491,8 +390,8 @@ body{
     .work-item{
         float: left;
         display: block;
-        width: 120px;
-        height: 120px;
+        width: 130px;
+        height: 135px;
         border: 1px solid #E8E8E8;
         margin: 5px 15px 10px 0;
         padding: 5px 5px 5px 10px;
@@ -528,8 +427,9 @@ body{
 #page-dynasty{
     #dyn-selector{
         margin: 0;
+        padding: 0;
         position: absolute;
-        top: 40px;
+        top: 51px;
         left: 0px;
         list-style: none;
 
@@ -553,7 +453,7 @@ body{
     }
 
     .row{
-        margin-top: 20px;
+        margin-top: 15px;
 
         #dynasty-wap{
             .dynasty-period{
@@ -661,68 +561,14 @@ body{
     }
 }
 
-// page products
-//-----------------------------------------------------
-#page-products{
-    .products-wap{
-        margin-top: 15px;
-        position: relative;
-        
-        .product-item{
-            .product-image{
-                opacity: 0.9;
-                display: none;
-                position: absolute;
-                
-                &:hover{
-                    opacity: 1;
-                }
-            }
-        }
-    }
-}
-
-// page product
-//-----------------------------------------------------
-#page-product{
-    .image-wap{
-        text-align: center;
-
-        .product-image{
-            margin: 15px auto 0 auto;
-        }
-    }
-
-    .product-name{
-        border-bottom: 2px solid darkred;
-        padding-bottom: 10px;
-        margin-bottom: 18px;
-    }
-
-    .product-introduction{
-        margin-bottom: 18px;
-
-        p{
-            margin-bottom: 10px;
-        }
-    }
-}
-
 // page forum
 //-----------------------------------------------------
 #page-topics{
     .topic-tips{
-        margin-top: 20px;
-        list-style-type: square;
+        margin-top: 15px;
 
         li{
             margin-bottom: 3px;
-        }
-    }
-
-    .topic-item{
-        .topic-user-avatar{
-            margin-top: 0;
         }
     }
 
@@ -830,9 +676,5 @@ body{
         img{
             margin-bottom: 15px;
         }
-    }
-
-    .span4{
-        margin-top: 15px;
     }
 }

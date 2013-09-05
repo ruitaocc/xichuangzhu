@@ -2,6 +2,7 @@
 <html>
    <head>
       <title>{% block page_title %}{% endblock %}</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name='description' content="{% block description %}{% endblock %}" />
       {% block meta %}{% endblock %}
       <meta name="google-site-verification" content="zJepc6vImx49zVPi4ID-67OUzuetR1JQNKrHN26bU7E" />
@@ -9,22 +10,31 @@
       <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
       <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
       <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/xichuangzhu.ico') }}">
-      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}">
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0.min.css') }}">
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0-theme.css') }}">
       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
-      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.9.0.min.js') }}"></script>
-      <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-3.0.0.min.js') }}"></script>
       <script src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
       <script src="{{ url_for('static', filename='js/s2t.js') }}"></script>
    </head>
 
    <body id="{% block page_id %}{% endblock %}">
-      <div class="navbar">
-         <div class="navbar-inner">
-            <div class="container">
-               <a class="brand" href="{{ url_for('index') }}">西窗烛</a>
+      <nav class="navbar navbar-default navbar-static-top" role="navigation">
+         <div class='container'>
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="{{ url_for('index') }}">西窗烛</a>
+            </div>
 
-               <ul class="nav">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+               <ul class="nav navbar-nav">
                   <li><a href="{{ url_for('index') }}">首页</a></li>
                   
                   {% if session.user_id %}
@@ -39,13 +49,20 @@
                   {% endif %}
                </ul>
 
-               <form class="navbar-search">
-                  <input type="text" class="search-query" title="按下 Enter 键开始搜索" placeholder="作品 / 文学家">
+               <form class="navbar-form navbar-left" role="search">
+                  <div class="form-group">
+                     <div class='input-group input-group-sm'>
+                        <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
+                        <span class='input-group-btn'>
+                           <button type="submit" title='搜索' class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+                        </span>
+                     </div>
+                  </div>
                </form>
 
                <script type="text/javascript">
-                  $('.navbar-search').submit(function(){
-                     var query = $('.search-query').val();
+                  $('.navbar-form').submit(function(){
+                     var query = $('.search-content').val();
                      var url = "http://www.google.com.hk/search?q=site:www.xichuangzhu.com/work " + query;
                      window.open(url, "_blank")
                      return false;
@@ -54,7 +71,7 @@
                
                {% if session.user_id %}
                
-               <ul class="nav pull-right">
+               <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{ session.user_name }} <b class="caret"></b>
@@ -66,7 +83,7 @@
                </ul>
 
                {% if session.user_id == admin_id %}
-               <ul class="nav pull-right">
+               <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         添加 <span class="caret"></span>
@@ -83,11 +100,11 @@
 
                {% else %}
 
-               <a href="{{ douban_login_url }}"><img id="douban-icon" title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_24.png" /></a>
+               <a href="{{ douban_login_url }}"><img id="douban-icon" class='navbar-right' title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_24.png" /></a>
 
                {% endif %}
 
-               <button id="btn-s2t" class="btn btn-small pull-right">简</button>
+               <button id="btn-s2t" class="btn btn-sm btn-default navbar-btn navbar-right">简</button>
 
                <script type="text/javascript">
                   var bodyIsFt = $.cookie("bodyIsFt");
@@ -110,7 +127,7 @@
                </script>
             </div>
          </div>
-      </div>
+      </nav>
 
       <div id="main-wap" class="container">
       {% block body %}{% endblock %}

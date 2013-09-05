@@ -6,7 +6,7 @@
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <h2>作品标签 - {{ tag }}</h2>
 
       {% from "widget/works.widget" import render_works %}
@@ -16,7 +16,7 @@
       {{ render_pagination(pagination)|safe }}
    </div>
 
-   <div class="span4"></div>
+   <div class="col-md-4"></div>
 </div>
 
 {% endblock %}

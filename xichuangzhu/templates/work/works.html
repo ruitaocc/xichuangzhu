@@ -8,7 +8,7 @@
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <h2><span id="dynasty_type_tag"></span> / {{ pagination.total }}</h2>
 
       {% from "widget/works.widget" import render_works %}
@@ -18,7 +18,7 @@
       {{ render_pagination(pagination)|safe }}
    </div>
 
-   <div class="span4">
+   <div class="col-md-4">
       <h2>年代</h2>
       <ul id="dynasty-selector">
          <li {% if dynasty_abbr == 'all' %}class="active"{% endif %}

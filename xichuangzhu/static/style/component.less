@@ -1,42 +1,5 @@
 @import "fonts.less";
 
-// component - navbar's content
-//-----------------------------------------------------
-.navbar{
-    #btn-s2t{
-        margin-top: 7px;
-        margin-right: 10px; 
-        background-image: none;
-    }
-
-    #douban-icon{
-        float: right;
-        margin-top: 8px;
-        margin-left: 2px;
-        cursor: pointer;
-    }
-
-    .label{
-        border-radius: 0px;
-    }
-}
-
-// component - link more btn
-//-----------------------------------------------------
-.alert-error{
-    ul{
-        margin: 0 0 0 20px;
-        list-style: square;
-        li{
-            margin: 0 0 5px 0;
-
-            &:last-child{
-                margin: 0;
-            }
-        }
-    }
-}
-
 // component - link more btn
 //-----------------------------------------------------
 .link-more a{
@@ -117,7 +80,7 @@
 
     .user-avatar{
         float: left;
-        margin-top: 3px;
+        margin-top: 2px;
     }
 
     .review-wap{
@@ -159,7 +122,7 @@
 .user-item{
     margin-bottom: 10px;
 
-    .user-avatar{
+    .user-avatar img{
         float: left;
         display: block;
         margin-top: 3px;
@@ -186,23 +149,9 @@
 #main-wap .node-info{ 
     margin-bottom: 18px;
 
-    a{
-        color: #999;
-        text-decoration: none;
-    
-        &:hover{
-            color: darkred;
-        }
-    }
-
     .new-topic{
         float: right;
-        margin: 0 5px 0 0;
-        color: #777;
-
-        &:hover{
-            color:#555;
-        }
+        margin-right: 5px;
     }
 }
 
@@ -217,7 +166,6 @@
 
     .topic-user-avatar{
         float: left;
-        margin-top: 3px;
     }
 
     .topic-info{
@@ -270,57 +218,7 @@
     }
 }
 
-// component node list
-//----------------------------------------------------- 
-.node-list{
-    list-style: none;
-    margin: 0;
-
-    .node{
-        font-size:12px;
-        line-height:12px;
-        display: inline-block;
-        margin:0 6px 6px 0;
-        background-color: #f3f3f3;
-        border-radius: 2px;
-        border: 1px solid #e5e5e5;
-
-        a{
-            color:rgb(98, 104, 107);
-            text-decoration: none;
-            padding: 4px 10px;
-            display: inline-block;
-            cursor: pointer;
-            
-            &:hover{
-                color:#4d5256;
-            }
-        }
-    }
-}
-
-// component nodes nav
-//----------------------------------------------------- 
-.type-item{
-    clear: both;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed #DDD;
-
-    .node-type{
-        float: left;
-        font-size: 12px;
-        font-weight: bold;
-    }
-
-    .node-list{
-        float: left;
-        margin: 0 0 0 25px;
-    }
-}
-
-
-// component comment
+// component - comment
 //----------------------------------------------------- 
 .comment-item{
     margin-bottom: 15px;
@@ -370,10 +268,11 @@
 
 .textarea-comment{
     display: block;
-    margin-top: 20px;
+    width: 85%;
+    margin: 20px 0 12px 0;
 }
 
-// component work image
+// component - work image
 //----------------------------------------------------- 
 .work-image-wap{
     position: relative;
@@ -382,4 +281,10 @@
         display: none;
         position: absolute;
     }
+}
+
+// component - text gap style in work review and topic
+//----------------------------------------------------- 
+.text-gap{
+    height: 7px;
 }

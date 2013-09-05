@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ user.name }}的主页{% endblock %}
+{% block page_title %}{{ user.friendly_name }}的主页{% endblock %}
 {% block page_id%}page-user{% endblock %}
 
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <div class="clearfix">
          <a id="user-avatar" href="{{ url_for('user', user_abbr=user.abbr) }}">
             <img src="{{ user.avatar }}" />
@@ -50,7 +50,7 @@
 
    </div>
 
-   <div class="span4">
+   <div class="col-md-4">
    </div>
 </div>
 

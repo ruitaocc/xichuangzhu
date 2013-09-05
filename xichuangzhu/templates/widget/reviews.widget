@@ -10,7 +10,7 @@
       <div class="review-title">
          <a href="{{ url_for('review', review_id = r.id) }}">{{ r.title }}</a>
          {% if not r.is_publish %}
-         <span class="label label-inverse">草稿</span>
+         <span class="label label-primary">草稿</span>
          {% endif %}
       </div>
 

@@ -7,7 +7,7 @@
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <div class="work-title">{{ work.title }}</div>
 
       <div class="work-author">
@@ -33,22 +33,23 @@
       </script>
 
       {% if session.user_id %}
-      <div class="btn-group pull-right" id="work-cmds">
+      <div class="btn-group btn-group-sm pull-right" id="work-cmds">
          {% if session.user_id == admin_id %}
-         <a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.id) }}"><span class="icon-edit"></span> 编辑</a>
+         <a class="btn btn-default" href="{{ url_for('edit_work', work_id=work.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
          {% endif %}
 
-         <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.id) }}"><span class="icon-align-left"></span> 点评</a>
+         <a class="btn btn-default" target="_blank" href="{{ url_for('add_review', work_id=work.id) }}"><span class="glyphicon glyphicon-pencil"></span> 点评</a>
 
-         <a class="btn btn-small" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="icon-picture"></span> 书法</a>
+         <a class="btn btn-default" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="glyphicon glyphicon-picture"></span> 书法</a>
 
          {% if is_collected %}
-         <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="icon-bookmark"></span> 已收藏</a>
+         <a class="btn btn-default" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 已收藏</a>
          {% else %}
-         <a class="btn btn-small" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}"><span class="icon-bookmark"></span> 收藏</a>
+         <a class="btn btn-default" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a>
          {% endif %}
       </div>
       {% endif %}
+
       <h2>注释</h2>
       <div class='work-annotate'></div>
       <script type="text/javascript">
@@ -59,6 +60,7 @@
             // $('.work-annotate').append("<div><span class='annotate-index'>〔" + (index+1) + '〕</span>' + annotate + '</div>');
          });
       </script>
+
       <h2>题解</h2>
       <div class="work-introduction">{{ work.intro }}</div>
 
@@ -88,7 +90,7 @@
       {% endif %}
    </div>
 
-   <div class="span4">
+   <div class="col-md-4">
       <h2>标签</h2>
       <ul class="work-tags">
          {% for t in work.tags %}

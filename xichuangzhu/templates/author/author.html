@@ -38,9 +38,9 @@ $(document).ready(function(){
 </script>
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       {% if session.user_id == admin_id %}
-      <a class="btn btn-small pull-right" href="{{ url_for('edit_author', author_id=author.id) }}"><span class="icon-edit"></span> 编辑</a>
+      <a class="btn btn-default pull-right" href="{{ url_for('edit_author', author_id=author.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
       {% endif %}
    
       <div class="author">
@@ -51,7 +51,7 @@ $(document).ready(function(){
          {% endif %}
 
          {% if session.user_id == 45197381 %}
-         <a class="btn btn-mini" target="_blank" href="{{ url_for('admin_quotes', author_id=author.id) }}">Edit / {{ author.quotes|length }}</a>
+         <a class="btn btn-default btn-xs" target="_blank" href="{{ url_for('admin_quotes', author_id=author.id) }}">Edit / {{ author.quotes|length }}</a>
          {% endif %}
       </div>
       
@@ -82,7 +82,7 @@ $(document).ready(function(){
       {% endfor %}
    </div>
 
-   <div class="span4"></div>
+   <div class="col-md-4"></div>
 </div>
 
 {% endblock %}

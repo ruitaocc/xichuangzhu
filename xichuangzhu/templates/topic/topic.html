@@ -48,7 +48,7 @@ $(document).ready(function(){
 {% endif %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <div class="topic-wap">
          <a class="topic-user-avatar" href="{{ url_for('user', user_abbr=topic.user.abbr) }}"><img src="{{ topic.user.avatar }}"></a>
          <h1 class="topic-title">{{ topic.title|safe }}</h1>
@@ -82,13 +82,14 @@ $(document).ready(function(){
          {% from "widget/form.widget" import render_form_error %}
          {{ render_form_error(form)|safe }}
 
-         {{ form.content(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
-         <input type="submit" class="btn btn-small" value="回复" />
+         {{ form.content(class="form-control textarea-comment", rows="4", placeholder="添加回复")|safe }}
+
+         <input type="submit" class="btn btn-sm btn-default" value="回复" />
       </form>
       {% endif %}
    </div>
 
-   <div class="span4"></div>
+   <div class="col-md-4"></div>
 </div>
 
 {% endblock %}
