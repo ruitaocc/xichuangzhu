@@ -82,8 +82,9 @@ $(document).ready(function(){
          {% from "widget/form.widget" import render_form_error %}
          {{ render_form_error(form)|safe }}
 
-         {{ form.content(class="input-xxlarge textarea-comment", rows="4", placeholder="添加回复")|safe }}
-         <input type="submit" class="btn btn-small" value="回复" />
+         {{ form.content(class="form-control textarea-comment", rows="4", placeholder="添加回复")|safe }}
+
+         <input type="submit" class="btn btn-sm btn-default" value="回复" />
       </form>
       {% endif %}
    </div>

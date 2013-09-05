@@ -1,0 +1,68 @@
+@import "fonts.less";
+
+h1{
+    font-size: 25px;
+    line-height: 35px;
+    margin: 20px 0 10px 0;
+}
+
+h2{
+    font-size: 15px;
+    .font-hei;
+    line-height: 15px;
+    font-weight: normal;
+    margin: 20px 0 15px 0;
+    color: rgb(173,22,22);
+    clear: both;
+}
+
+ul{
+  padding-left: 30px;
+  list-style: square;
+}
+
+legend{
+  line-height: 40px;
+  padding-bottom: 5px;
+}
+
+label{
+  font-weight: normal;
+}
+
+.label{
+  border-radius: 0;
+}
+
+.tooltip{
+  .font-song;
+  text-indent: 0;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 180%;
+}
+
+.tooltip-inner{
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.alert-danger ul li{
+  margin: 0 0 5px 0;
+
+  &:last-child{
+    margin: 0;
+  }
+}
+
+.input-group-btn:last-child > .btn{
+  border-left: 0;
+}
+
+.table thead>tr>th {
+  border-bottom: 1px solid #ddd;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>thead>tr>td {
+  border-bottom-width: 1px;
+}

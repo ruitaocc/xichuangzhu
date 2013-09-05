@@ -1,5 +1,7 @@
 @import "fonts.less";
 
+// layout
+//-----------------------------------------------------
 html{
     position: relative;
     min-height: 100%;
@@ -11,24 +13,7 @@ body{
     margin: 0 0 6em 0;
 
     #main-wap{
-        font-size: 14px;
         line-height: 180%;
-
-        h1{
-            font-size: 25px;
-            line-height: 35px;
-            margin: 20px 0 10px 0;
-        }
-
-        h2{
-            font-size: 15px;
-            .font-hei;
-            line-height: 15px;
-            font-weight: normal;
-            margin: 20px 0 15px 0;
-            color: rgb(173,22,22);
-            clear: both;
-        }
 
         .text-gap{
             height: 7px;
@@ -84,42 +69,13 @@ body{
     }
 }
 
-// fix bootstrap css
-//-----------------------------------------------------
-
-// // search box in nav
-// .navbar-search .search-query{
-//     font-size: 12px;
-//     padding: 2px 0 2px 16px;
-//     margin-top: 2px;
-// }
-
-// // form
-// .form-horizontal .input-append{
-//     display: block;
-// }
-
-// // tooltip
-// .tooltip{
-//     font-family: 'arial', '宋体';
-//     text-indent: 0;
-//     font-weight: normal;
-//     font-size: 12px;
-//     line-height: 200%;
-// }
-
-// .tooltip-inner{
-//     padding-top: 5px;
-//     padding-bottom: 5px;
-// }
-
 // page index
 //-----------------------------------------------------
 #page-index{
     .work-item{
         .work-type{
             background-color: lighten(darkred, 5%);
-            padding: 2px 2px 2px 2px;
+            padding: 2px 2px 2px 3px;
             border: 1px solid lighten(darkred, 5%);
             font-size: 12px;
             line-height: 12px;
@@ -154,46 +110,6 @@ body{
 
             span{
                 margin-right: 5px;
-            }
-        }
-    }
-}
-
-// page add work
-//-----------------------------------------------------
-#page-works{
-    #type-selector,
-    #dynasty-selector{
-        list-style: none;
-        margin: 0;
-
-        li{
-            margin-bottom: 8px;
-            margin-right: 2px;
-            display: inline-block;
-
-            a{
-                font-size: 12px;
-                line-height: 12px;
-                background-color: #EEE;
-                padding: 4px 12px 5px 12px;
-                text-decoration: none;
-                color: #777;
-            }
-
-            &:hover{
-                background-color: #DDD;
-                a{
-                    color: #333;
-                }
-            }
-
-            &.active{
-                
-                a{
-                    background-color: #0088cc;
-                    color: white;
-                }
             }
         }
     }
@@ -281,11 +197,11 @@ body{
     }
 
     .work-tags{
-        list-style: none;
+        list-style-type: none;
         margin: 0;
+        padding: 0;
 
         li{
-            list-style: none;
             display: inline-block;
 
             a{
@@ -293,7 +209,7 @@ body{
                 font-size: 12px;
                 line-height: 12px;
                 padding: 5px 5px;
-                margin: 0 4px 4px 0;
+                margin: 0 5px 5px 0;
                 cursor: pointer;
 
                 color: #666;
@@ -324,65 +240,43 @@ body{
             color: gray;
         }
     }
-
-    .ad{
-        display: block;
-        margin-top: 20px;
-    }
-
-    #modal-tags{
-        #input-tags{
-            font-size: 12px;
-            margin-bottom: 15px;
-            width: 400px;
-        }
-
-        .tags-wap{
-            clear: both;
-            margin-bottom: 10px;
-
-            .tags-title{
-                float: left;
-            }
-
-            ul{
-                margin: 0 0 0 10px;
-                float: left;
-                width: 450px;
-
-                li{
-                    list-style: none;
-                    display: inline-block;
-                    font-size: 12px;
-                    line-height: 12px;
-                    padding: 5px 5px;
-                    margin: 0 5px 5px 0;
-                    cursor: pointer;
-
-                    color: rgb(167, 35, 35);
-                    background-color: rgb(247, 231, 231);
-                    box-shadow: 1px 1px 0 rgb(192, 154, 154);
-                    &:hover{
-                        background-color: rgb(240, 221, 221);
-                    }
-                }           
-            }
-        }
-    }
 }
 
-// page collection
+// page works
 //-----------------------------------------------------
-#page-collection{
-    .collection-author{
-        font-size: 16px;
-    }
+#page-works{
+    #type-selector,
+    #dynasty-selector{
+        list-style: none;
+        margin: 0;
+        padding: 0;
 
-    .work-item .work-author{
-        display: none;
+        li{
+            margin-bottom: 8px;
+            margin-right: 2px;
+            display: inline-block;
+
+            a{
+                font-size: 12px;
+                line-height: 12px;
+                background-color: #EEE;
+                padding: 4px 12px 5px 12px;
+                text-decoration: none;
+                color: #777;
+
+                &:hover{
+                    color: #333;
+                    background-color: #DDD;
+                }
+            }
+
+            &.active a{
+                background-color: #0088cc;
+                color: white;
+            }
+        }
     }
 }
-
 
 // page authors
 //-----------------------------------------------------
@@ -644,53 +538,6 @@ body{
     }
 }
 
-// page products
-//-----------------------------------------------------
-#page-products{
-    .products-wap{
-        margin-top: 15px;
-        position: relative;
-        
-        .product-item{
-            .product-image{
-                opacity: 0.9;
-                display: none;
-                position: absolute;
-                
-                &:hover{
-                    opacity: 1;
-                }
-            }
-        }
-    }
-}
-
-// page product
-//-----------------------------------------------------
-#page-product{
-    .image-wap{
-        text-align: center;
-
-        .product-image{
-            margin: 15px auto 0 auto;
-        }
-    }
-
-    .product-name{
-        border-bottom: 2px solid darkred;
-        padding-bottom: 10px;
-        margin-bottom: 18px;
-    }
-
-    .product-introduction{
-        margin-bottom: 18px;
-
-        p{
-            margin-bottom: 10px;
-        }
-    }
-}
-
 // page forum
 //-----------------------------------------------------
 #page-topics{
@@ -700,12 +547,6 @@ body{
 
         li{
             margin-bottom: 3px;
-        }
-    }
-
-    .topic-item{
-        .topic-user-avatar{
-            margin-top: 0;
         }
     }
 

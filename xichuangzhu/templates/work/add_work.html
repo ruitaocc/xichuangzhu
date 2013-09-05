@@ -27,6 +27,8 @@ $(document).ready(function(){
             });
          }
       });
+
+      return false;
    });
 
 });
@@ -39,7 +41,7 @@ $(document).ready(function(){
       <div class="form-group">
          <label class="col-md-2 control-label">类别</label>
          <div class="col-md-3">
-            <select name='type_id'>
+            <select name='type_id' class='form-control'>
                {% for type in work_types %}
                <option value='{{ type.id }}'>{{ type.cn }}</option>
                {% endfor %}
@@ -50,16 +52,23 @@ $(document).ready(function(){
       <div class="form-group">
          <label class="col-md-2 control-label">标题</label>
          <div class="col-md-3">
-            <input type="text" name="title" />
+            <input type="text" name="title" class='form-control' />
          </div>
       </div>
 
       <div class="form-group">
          <label class="col-md-2 control-label">作者</label>
-         <div class="col-md-3">
-            <input id="input-author-name" type="text" class="span2" />
-            <input id="btn-search-author" type="button" class="btn" value="搜索" />
-            <select id="select-author" name="author_id" class="span2">
+         <div class=" col-md-3 input-group">
+            <input id="input-author-name" type="text" class='form-control' />
+            <span class='input-group-btn'>
+               <button id="btn-search-author" class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+            </span>
+         </div>
+      </div>
+
+      <div class="form-group">
+         <div class="col-md-3 col-md-offset-2">
+            <select id="select-author" name="author_id" class='form-control'>
                <option>作者</option>
             </select>
          </div>
@@ -67,28 +76,28 @@ $(document).ready(function(){
 
       <div class="form-group">
          <label class="col-md-2 control-label">序</label>
-         <div class="col-md-3">
-            <textarea class="input-xxlarge" name="foreword" rows='5'></textarea>
+         <div class="col-md-6">
+            <textarea name="foreword" rows='5' class='form-control'></textarea>
          </div>
       </div>
 
       <div class="form-group">
          <label class="col-md-2 control-label">题解</label>
-         <div class="col-md-3">
-            <textarea class="input-xxlarge" name="intro" rows='5'></textarea>
+         <div class="col-md-6">
+            <textarea name="intro" rows='5' class='form-control'></textarea>
          </div>
       </div>
 
       <div class="form-group">
          <label class="col-md-2 control-label">内容</label>
-         <div class="col-md-3">
-            <textarea class="input-xxlarge" name="content" rows='15'></textarea>
+         <div class="col-md-6">
+            <textarea name="content" rows='15' class='form-control'></textarea>
          </div>
       </div>
 
       <div class="form-group">
-         <div class="col-md-3">
-            <input type="submit" value="提交" class="btn btn-small btn-primary" />
+         <div class="col-md-6 col-md-offset-2">
+            <input type="submit" value="提交" class="btn btn-primary" />
          </div>
       </div>
    </fieldset>

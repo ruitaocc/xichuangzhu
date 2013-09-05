@@ -33,20 +33,21 @@
       </script>
 
       {% if session.user_id %}
-      <div class="btn-group pull-right" id="work-cmds">
+      <div class="btn-group btn-group-sm pull-right" id="work-cmds">
          {% if session.user_id == admin_id %}
-         <a class="btn btn-small" href="{{ url_for('edit_work', work_id=work.id) }}"><span class="icon-edit"></span> 编辑</a>
+         <a class="btn btn-default" href="{{ url_for('edit_work', work_id=work.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
          {% endif %}
 
-         <a class="btn btn-small" target="_blank" href="{{ url_for('add_review', work_id=work.id) }}"><span class="icon-align-left"></span> 点评</a>
+         <a class="btn btn-default" target="_blank" href="{{ url_for('add_review', work_id=work.id) }}"><span class="glyphicon glyphicon-align-center"></span> 点评</a>
 
          {% if is_collected %}
-         <a class="btn btn-small" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="icon-bookmark"></span> 已收藏</a>
+         <a class="btn btn-default" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 已收藏</a>
          {% else %}
-         <a class="btn btn-small" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}"><span class="icon-bookmark"></span> 收藏</a>
+         <a class="btn btn-default" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a>
          {% endif %}
       </div>
       {% endif %}
+
       <h2>注释</h2>
       <div class='work-annotate'></div>
       <script type="text/javascript">
@@ -56,11 +57,10 @@
             $('.work-annotate').append('<div>[' + (index+1) + ']&nbsp;&nbsp' + annotate + '</div>');
          });
       </script>
+
       <h2>题解</h2>
       <div class="work-introduction">{{ work.intro }}</div>
 
-
-      
       {% if reviews_num != 0 %}
       <h2>
          点评

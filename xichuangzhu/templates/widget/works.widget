@@ -6,7 +6,7 @@
       <a class="work-title" href="{{ url_for('work', work_id = work.id) }}">{{ work.title }}</a><sup class="work-author">〔<a href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>〕</sup>
    </div>
    
-   <div class="work-content">{{ work.clean_content|truncate(38, True) }}</div>
+   <div class="work-content">{{ work.clean_content|truncate(35, True) }}</div>
 </div>
 {% endfor %}
 

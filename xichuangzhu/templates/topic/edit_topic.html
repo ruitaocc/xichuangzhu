@@ -16,48 +16,24 @@
 
       <div class="form-group">
          {{ form.title.label(class="col-md-2 control-label") }}
-         <div class="col-md-3">
-            {{ form.title(class="input-xlarge") }}
+         <div class="col-md-6">
+            {{ form.title(class="form-control") }}
          </div>
       </div>
 
       <div class="form-group">
          {{ form.content.label(class="col-md-2 control-label") }}
-         <div class="col-md-3">
-            {{ form.content(class="input-xxlarge", rows="15") }}
+         <div class="col-md-6">
+            {{ form.content(class="form-control", rows="15") }}
          </div>
       </div>
 
       <div class="form-group">
-         <div class="col-md-3">
+         <div class="col-md-6 col-md-offset-2">
             <input type="submit" value="提交" class="btn btn-primary btn-small" />
          </div>
       </div>
    </fieldset>
 </form>
-
-{% if session.user_id %}
-<div class="modal hide fade" id="modal-nodes">
-   <div class="modal-header">
-      <a class="close" data-dismiss="modal">×</a>
-      <h4>全部节点</h4>
-   </div>
-
-   <div class="modal-body">
-      {% for nt in node_types %}
-      {% if nt.nodes|length != 0 %}
-      <div class="type-item clearfix">
-         <div class="node-type">{{ nt.Type }}</div>
-         <ul class="node-list">
-            {% for n in nt.nodes %}
-            <li class="node"><a data-node-id="{{ n.NodeID }}">{{ n.Name }}</a></li>
-            {% endfor %}
-         </ul>
-      </div>
-      {% endif %}
-      {% endfor %}
-   </div>
-</div>
-{% endif %}
 
 {% endblock %}

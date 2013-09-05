@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block page_title %}点评：{{ work.Title }}{% endblock %}
+{% block page_title %}点评：{{ work.title }}{% endblock %}
 {% block page_id%}page-add-review{% endblock %}
 
 {% block body %}
@@ -15,23 +15,23 @@
       {{ render_form_error(form)|safe }}
 
       <div class="form-group">
-         {{ form.title.label(class='col-md-2 col-md-2 control-label') }}
-         <div class="col-md-3">
-            {{ form.title(class='input-xlarge') }}
+         {{ form.title.label(class='col-md-2 control-label') }}
+         <div class="col-md-6">
+            {{ form.title(class="form-control") }}
          </div>
       </div>
 
       <div class="form-group">
-         {{ form.content.label(class="col-md-2 col-md-2 control-label") }}
-         <div class="col-md-3">
-            {{ form.content(class="input-xxlarge", rows="20") }}
+         {{ form.content.label(class="col-md-2 control-label") }}
+         <div class="col-md-6">
+            {{ form.content(class="form-control", rows="20") }}
          </div>
       </div>
 
       <div class="form-group">
-         <div class="col-md-3 btn-group">
-            <input type="submit" name="draft" value="保存草稿" class="btn btn-small" />
-            <input type="submit" name="publish" value="发布" class="btn btn-primary btn-small" />
+         <div class="col-md-3 col-md-offset-2 btn-group">
+            <input type="submit" name="draft" value="保存草稿" class="btn btn-default" />
+            <input type="submit" name="publish" value="发布" class="btn btn-primary btn-default" />
          </div>
       </div>
 
