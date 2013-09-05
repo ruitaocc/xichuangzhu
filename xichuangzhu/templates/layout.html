@@ -51,9 +51,13 @@
 
                <form class="navbar-form navbar-left" role="search">
                   <div class="form-group">
-                     <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
+                     <div class='input-group'>
+                        <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
+                        <span class='input-group-btn'>
+                           <button type="submit" title='搜索' class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+                        </span>
+                     </div>
                   </div>
-                  <button type="submit" title='搜索' class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
                </form>
 
                <script type="text/javascript">
@@ -96,7 +100,7 @@
 
                {% else %}
 
-               <a href="{{ douban_login_url }}"><img id="douban-icon" title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_24.png" /></a>
+               <a href="{{ douban_login_url }}"><img id="douban-icon" title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png" /></a>
 
                {% endif %}
 
