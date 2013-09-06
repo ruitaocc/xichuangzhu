@@ -26,7 +26,6 @@ html body #footer .container #extra-info{float:right;margin-right:20px}html body
 #page-work .work-type-wen,#page-work .work-type-fu{text-indent:2em;line-height:30px;padding:0 .5em}#page-work .work-type-wen p,#page-work .work-type-fu p{margin-bottom:18px}
 #page-work #work-cmds{margin-right:15px;margin-bottom:5px}
 #page-work .work-annotate div{margin-bottom:3px}#page-work .work-annotate div .annotate-index{padding:0 1px}
-#page-work .work-tags{list-style-type:none;margin:0;padding:0}#page-work .work-tags li{display:inline-block}#page-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 5px 5px 0;cursor:pointer;color:#666;background-color:#f2f2f2;box-shadow:1px 1px 0 #bbb}#page-work .work-tags li a:hover{background-color:#ebebeb}
 #page-work .other-work-item{margin-bottom:5px;border-bottom:1px dashed #ddd;padding-bottom:5px}#page-work .other-work-item:last-child{border:0}
 #page-work .other-work-item .other-work-content{font-size:12px;margin-left:5px;color:#808080}
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;padding:0}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#eee;padding:4px 12px 5px 12px;text-decoration:none;color:#777}#page-works #type-selector li a:hover,#page-works #dynasty-selector li a:hover{color:#333;background-color:#ddd}
