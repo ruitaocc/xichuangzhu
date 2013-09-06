@@ -22,7 +22,7 @@ SESSION_COOKIE_NAME = 'xcz_session'
 DB_HOST = "localhost"
 DB_USER = ""
 DB_PASSWD = ""
-DB_NAME = "xichuangzhu"
+DB_NAME = "xcz"
 
 # smtp config
 SMTP_SERVER = ""
