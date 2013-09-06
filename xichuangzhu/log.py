@@ -2,7 +2,7 @@
 from xichuangzhu import app
 import config
 
-# send log msg using smtp
+# Send error log to admin's mailbox by smtp
 if not app.debug:
     import logging
     from logging.handlers import SMTPHandler

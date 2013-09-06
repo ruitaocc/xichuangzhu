@@ -2,8 +2,6 @@
 import sys
 sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config
-import MySQLdb
-import MySQLdb.cursors
 from flask import Flask, request, url_for, session, g
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
@@ -27,7 +25,6 @@ if app.debug:
     toolbar = DebugToolbarExtension(app)
 
 # SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:xiaowangzi@localhost/xcz'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://%s:%s@%s/%s' % (config.DB_USER, config.DB_PASSWD, config.DB_HOST, config.DB_NAME)
 db = SQLAlchemy(app)
 

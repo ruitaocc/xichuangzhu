@@ -3,7 +3,7 @@ from flask_wtf import Form
 from wtforms import TextField, TextAreaField, HiddenField, validators
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
-# Review form
+# Work Review form
 class ReviewForm(Form):
     title = TextField('标题', [
         validators.Required(message="标题不能为空")
@@ -14,9 +14,7 @@ class ReviewForm(Form):
     ])
 
 # Topic form
-class TopicForm(Form):
-    node_id = HiddenField('节点', [])
-    
+class TopicForm(Form):    
     title = TextField('标题', [
         validators.Required(message="标题不能为空")
     ])

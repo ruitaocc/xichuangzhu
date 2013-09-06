@@ -1,13 +1,8 @@
 #-*- coding: UTF-8 -*-
 import datetime, time
-import re
 from functools import wraps
-from math import ceil
-from flask import url_for, session, abort, g
+from flask import session, abort, g
 import config
-# from xichuangzhu.models.user_model import User
-# from xichuangzhu.models.topic_model import Topic
-# from xichuangzhu.models.review_model import Review
 
 # count the time diff by timedelta, return a user-friendly format
 # dt must be format as 2013-4-1 14:25:10

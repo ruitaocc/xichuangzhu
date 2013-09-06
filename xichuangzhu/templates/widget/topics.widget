@@ -7,7 +7,7 @@
    <div class="topic-info">
       <div class="topic-title"><a href="{{ url_for('topic', topic_id=t.id) }}">{{ t.title }}</a></div>
       <div class="topic-extra-info">
-         <a class="topic-launcher" href="{{ url_for('user', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
+         <a class="topic-creator" href="{{ url_for('user', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
          <span class="topic-time">{{ t.friendly_create_time }}</span>
       </div>
       {% if t.comments|length != 0 %}

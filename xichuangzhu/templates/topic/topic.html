@@ -54,7 +54,7 @@ $(document).ready(function(){
          <h1 class="topic-title">{{ topic.title|safe }}</h1>
          <div class="topic-extra-info">
             By
-            <a class="topic-launcher" href="{{ url_for('user', user_abbr=topic.user.abbr) }}">{{ topic.user.name }}</a>
+            <a class="topic-creator" href="{{ url_for('user', user_abbr=topic.user.abbr) }}">{{ topic.user.name }}</a>
             ·
             <span class="topic-time">{{ topic.friendly_create_time }}</span>
             ·

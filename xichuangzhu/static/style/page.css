@@ -14,9 +14,9 @@ html body #footer .container #copyright{float:left}
 html body #footer .container #links{float:right;margin:0;list-style-type:none}html body #footer .container #links li{display:inline-block;margin-right:15px}
 html body #footer .container #extra-info{float:right;margin-right:20px}html body #footer .container #extra-info a{color:#666}
 #page-index .work-item .work-type{background-color:#a40000;padding:2px 2px 2px 3px;border:1px solid #a40000;font-size:12px;line-height:12px;font-weight:normal;border-radius:2px;margin-right:5px;display:inline-block;vertical-align:2px;text-decoration:none;color:#fbfbfb}#page-index .work-item .work-type:hover{background-color:#fff;color:#a40000}
-#page-index #dynasties-wap{margin:0;padding:0;list-style:none}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:5px}#page-index #dynasties-wap .dynasty-item a{font-weight:bold}
+#page-index #dynasties-wap{margin:0;padding:0;list-style:none}#page-index #dynasties-wap .dynasty-item{float:left;font-size:16px;margin-bottom:2px}#page-index #dynasties-wap .dynasty-item a{font-weight:bold}
 #page-index #dynasties-wap .dynasty-item span{margin-right:5px}
-#page-work .work-title{font-size:25px;line-height:35px;margin-top:30px;margin-bottom:12px;font-weight:bold;text-align:center;clear:both}
+#page-work .work-title{font-size:25px;line-height:35px;margin-top:30px;margin-bottom:12px;text-align:center;clear:both}
 #page-work .work-author{text-align:center;margin-bottom:15px;padding-right:10px;font-size:16px}
 #page-work .work-foreword{font-size:17px;font-family:"TW\-Kai","AR PL UKai CN","AR PL UKai HK","AR PL UKai TW","AR PL UKai TW MBE","KaiTi","KaiTi_GB2312","STKaiti";margin-bottom:10px}
 #page-work .work-content{font-size:17px;margin-bottom:30px}#page-work .work-content sup{font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp";font-size:12px;font-weight:normal;padding:5px 0;cursor:pointer;color:#666}
@@ -56,15 +56,11 @@ html body #footer .container #extra-info{float:right;margin-right:20px}html body
 #page-user #user-avatar{float:left;margin-top:15px}
 #page-user .user-info{margin-left:60px}#page-user .user-info .user-name{font-size:25px;line-height:30px;margin-top:15px;font-weight:bold;font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp"}
 #page-user .user-info .user-signature{font-size:12px;color:#666}
-#page-topics .topic-tips{margin-top:15px}#page-topics .topic-tips li{margin-bottom:3px}
-#page-topics .ht-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd}#page-topics .ht-item .ht-user-avatar img{width:24px;margin-left:2px;border-radius:2px}
-#page-topics .ht-item .ht-title{margin-left:6px;font-size:14px}
-#page-topic .node-info{color:#999}
-#page-topic .topic-user-avatar{float:right;margin-right:5px}
-#page-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid #eee;color:#999}#page-topic .topic-extra-info .topic-node{font-size:12px;background-color:#f5f5f5;display:inline-block;padding:4px 5px;border-radius:2px;text-decoration:none;color:#999;margin-right:5px}#page-topic .topic-extra-info .topic-node:hover{background-color:#eaeaea}
-#page-topic .topic-extra-info .topic-launcher{margin-right:5px;color:#999}
-#page-topic .topic-extra-info .topic-time{color:#999;display:inline-block}
-#page-topic .topic-extra-info .btn-edit-topic{margin-left:10px}
+#page-topic .topic-user-avatar{float:right}
+#page-topic .topic-extra-info{font-size:14px;line-height:14px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid #eee;color:#999}#page-topic .topic-extra-info .btn-edit-topic{margin-left:10px}
+#page-topics h2{margin-bottom:18px}
+#page-topics .btn-new-topic{position:absolute;right:15px;top:15px}
+#page-topics .topic-tips{margin-top:15px}
 #page-informs .inform-item{clear:both;margin-bottom:10px;padding-bottom:15px;border-bottom:1px dashed #ddd}#page-informs .inform-item .user-avatar{margin-top:5px;float:left}
 #page-informs .inform-item .inform-wap{margin-left:60px}#page-informs .inform-item .inform-wap .inform-title{font-size:12px;color:#999}
 #page-work-image .image-info{margin-top:15px;margin-bottom:10px}
