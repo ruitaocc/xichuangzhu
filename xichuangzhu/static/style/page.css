@@ -8,7 +8,7 @@ html{position:relative;min-height:100%}html body{font-family:"arial","NSimSun","
 html body .navbar #btn-s2t{margin-top:10px;margin-right:10px}
 html body .navbar #douban-icon{margin-top:10px;cursor:pointer;text-decoration:none}html body .navbar #douban-icon img{height:30px}
 html body #main-wap{line-height:180%}
-html body #footer{position:absolute;left:0;bottom:0;height:2.5em;z-index:10;text-align:center;font-size:12px;width:100%;color:#666;padding-top:3px;font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp"}html body #footer a{color:#37a}
+html body #footer{position:absolute;left:0;bottom:0;height:2.8em;z-index:10;text-align:center;font-size:12px;width:100%;color:#666;padding-top:3px;font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp"}html body #footer a{color:#37a}
 html body #footer img{display:none}
 html body #footer .container #copyright{float:left}
 html body #footer .container #links{float:right;margin:0;list-style-type:none}html body #footer .container #links li{display:inline-block;margin-right:15px}
@@ -32,7 +32,7 @@ html body #footer .container #extra-info{float:right;margin-right:20px}html body
 #page-works #type-selector,#page-works #dynasty-selector{list-style:none;margin:0;padding:0}#page-works #type-selector li,#page-works #dynasty-selector li{margin-bottom:8px;margin-right:2px;display:inline-block}#page-works #type-selector li a,#page-works #dynasty-selector li a{font-size:12px;line-height:12px;background-color:#eee;padding:4px 12px 5px 12px;text-decoration:none;color:#777}#page-works #type-selector li a:hover,#page-works #dynasty-selector li a:hover{color:#333;background-color:#ddd}
 #page-works #type-selector li.active a,#page-works #dynasty-selector li.active a{background-color:#08c;color:#fff}
 #page-authors .author-wap{border-top:1px dashed #d3d3d3;padding-top:15px}#page-authors .author-wap .author-dynasty{font-size:15px;line-height:15px;color:#1d56ac;font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp";width:100px;float:left;display:inline-block;padding-top:2px}
-#page-authors .author-wap .author-group{list-style:none;margin:0 0 0 100px}#page-authors .author-wap .author-group li{float:left;margin-bottom:15px}#page-authors .author-wap .author-group li.author{font-size:16px;line-height:20px;width:100px}
+#page-authors .author-wap .author-group{list-style:none;margin:0 0 0 100px}#page-authors .author-wap .author-group li{float:left;margin-bottom:15px}#page-authors .author-wap .author-group li.author{font-size:16px;line-height:20px;width:120px}
 #page-author .author h1{display:inline-block}
 #page-author .author .author-quote{font-size:12px;font-weight:normal;color:#808080;margin-left:12px;text-decoration:none}
 #page-author .author-period{font-size:16px;margin-bottom:10px}

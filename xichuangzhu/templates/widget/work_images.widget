@@ -18,14 +18,13 @@
             tops = [0, 0, 0];
 
         $('.work-image').each(function(index){
+            // init css style
             $(this).css({
                 'width': width + 'px',
                 'display': 'none',
                 'position': 'absolute'
             });
-        });
 
-        $('.work-image').each(function(index){
             // only when a img loaded, it's height becomes known.
             $(this).imagesLoaded(function(){
                 // get the min height column

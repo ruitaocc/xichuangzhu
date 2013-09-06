@@ -7,11 +7,15 @@ DEBUG = True
 SITE_DOMAIN = "http://localhost:5000"
 
 # your douban id
-ADMIN_ID = 0000000
+ADMIN_ID = 0
+
+# image upload path
+IMAGE_URL = '/static/xcz_uploads/work_imgs/'
+IMAGE_PATH = '/var/www/xichuangzhu/xichuangzhu' + IMAGE_URL
 
 # app config
 SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT" # replace to your secret key
-PERMANENT_SESSION_LIFETIME = 3600*24*7
+PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7
 SESSION_COOKIE_NAME = 'xcz_session'
 
 # db config
