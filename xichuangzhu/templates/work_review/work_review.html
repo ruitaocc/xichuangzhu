@@ -73,9 +73,9 @@ $(document).ready(function(){
          <span>{{ review.click_num }} 点击</span>
 
          {% if session.user_id == review.user_id %}
-         <a id="btn-edit-review" href="{{ url_for('edit_review', review_id=review.id) }}">编辑</a>
+         <a id="btn-edit-review" href="{{ url_for('edit_work_review', review_id=review.id) }}">编辑</a>
          /
-         <a id="btn-delete-review" href="{{ url_for('delete_review', review_id=review.id) }}">删除</a>
+         <a id="btn-delete-review" href="{{ url_for('delete_work_review', review_id=review.id) }}">删除</a>
          {% endif %}
       </div>
 
@@ -90,7 +90,7 @@ $(document).ready(function(){
       {% endif %}
 
       {% if session.user_id %}
-      <form id="add-review-comment" method="post" action="{{ url_for('comment_review', review_id=review.id) }}">
+      <form id="add-review-comment" method="post" action="{{ url_for('comment_work_review', review_id=review.id) }}">
          {{ form.csrf_token }}
 
          {% from "widget/form.widget" import render_form_error %}

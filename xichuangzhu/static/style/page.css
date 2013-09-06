@@ -19,11 +19,11 @@ html body #footer .container #extra-info{float:right;margin-right:20px}html body
 #page-work .work-title{font-size:25px;line-height:35px;margin-top:30px;margin-bottom:12px;text-align:center;clear:both}
 #page-work .work-author{text-align:center;margin-bottom:15px;padding-right:10px;font-size:16px}
 #page-work .work-foreword{font-size:17px;font-family:"TW\-Kai","AR PL UKai CN","AR PL UKai HK","AR PL UKai TW","AR PL UKai TW MBE","KaiTi","KaiTi_GB2312","STKaiti";margin-bottom:10px}
-#page-work .work-content{font-size:17px;margin-bottom:30px}#page-work .work-content sup{font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp";font-size:12px;font-weight:normal;padding:5px 0;cursor:pointer;color:#666}
+#page-work .work-content{font-size:16px;margin-bottom:30px}#page-work .work-content sup{font-family:"Hiragino Sans GB","Microsoft YaHei","Wenquanyi Micro Hei","WenQuanYi Micro Hei Mono","WenQuanYi Zen Hei","WenQuanYi Zen Hei","Apple LiGothic Medium","SimHei","ST Heiti","WenQuanYi Zen Hei Sharp";font-size:12px;font-weight:normal;padding:5px 0;cursor:pointer;color:#666}
 #page-work .work-type-shi{text-align:center}#page-work .work-type-shi p{margin-bottom:10px}
 #page-work .work-type-ci{text-indent:2em;line-height:30px;padding:0 2em}
 #page-work .work-type-qu{text-indent:2em;line-height:30px;padding:0 2em}
-#page-work .work-type-wen,#page-work .work-type-fu{text-indent:2em;font-size:16px;line-height:30px;padding:0 .5em}#page-work .work-type-wen p,#page-work .work-type-fu p{margin-bottom:18px}
+#page-work .work-type-wen,#page-work .work-type-fu{text-indent:2em;line-height:30px;padding:0 .5em}#page-work .work-type-wen p,#page-work .work-type-fu p{margin-bottom:18px}
 #page-work #work-cmds{margin-right:15px;margin-bottom:5px}
 #page-work .work-annotate div{margin-bottom:3px}#page-work .work-annotate div .annotate-index{padding:0 1px}
 #page-work .work-tags{list-style-type:none;margin:0;padding:0}#page-work .work-tags li{display:inline-block}#page-work .work-tags li a{text-decoration:none;font-size:12px;line-height:12px;padding:5px 5px;margin:0 5px 5px 0;cursor:pointer;color:#666;background-color:#f2f2f2;box-shadow:1px 1px 0 #bbb}#page-work .work-tags li a:hover{background-color:#ebebeb}

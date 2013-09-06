@@ -38,7 +38,7 @@
          <a class="btn btn-default" href="{{ url_for('edit_work', work_id=work.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
          {% endif %}
 
-         <a class="btn btn-default" target="_blank" href="{{ url_for('add_review', work_id=work.id) }}"><span class="glyphicon glyphicon-pencil"></span> 点评</a>
+         <a class="btn btn-default" target="_blank" href="{{ url_for('add_work_review', work_id=work.id) }}"><span class="glyphicon glyphicon-pencil"></span> 点评</a>
 
          <a class="btn btn-default" title='上传书法作品' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="glyphicon glyphicon-picture"></span> 书法</a>
 
@@ -72,8 +72,8 @@
          </span>
       </h2>
 
-      {% from "widget/reviews.widget" import render_reviews %}
-      {{ render_reviews(reviews)|safe }}
+      {% from "widget/work_reviews.widget" import render_work_reviews %}
+      {{ render_work_reviews(reviews)|safe }}
       {% endif %}
 
       {% if images_num != 0 %}

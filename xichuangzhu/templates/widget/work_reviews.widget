@@ -1,6 +1,6 @@
-{% macro render_reviews(reviews) %}
+{% macro render_work_reviews(work_reviews) %}
 
-{% for r in reviews %}
+{% for r in work_reviews %}
 <div class="review-item">
    <a class="user-avatar" href="{{ url_for('user', user_abbr=r.user.abbr) }}" >
       <img src="{{ r.user.avatar }}" />
@@ -8,7 +8,7 @@
 
    <div class="review-wap">
       <div class="review-title">
-         <a href="{{ url_for('review', review_id = r.id) }}">{{ r.title }}</a>
+         <a href="{{ url_for('work_review', review_id = r.id) }}">{{ r.title }}</a>
          {% if not r.is_publish %}
          <span class="label label-primary">草稿</span>
          {% endif %}

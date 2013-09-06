@@ -9,8 +9,8 @@
    <div class="col-md-8">
       <h2>{{ user.friendly_name }}的点评 / {{ pagination.total }}</h2>
       
-      {% from "widget/reviews.widget" import render_reviews %}
-      {{ render_reviews(pagination.items)|safe }}
+      {% from "widget/work_reviews.widget" import render_work_reviews %}
+      {{ render_work_reviews(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}

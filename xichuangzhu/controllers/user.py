@@ -20,7 +20,7 @@ from xichuangzhu.form import EmailForm
 def user(user_abbr):
     user = User.query.filter(User.abbr==user_abbr).first_or_404()
 
-    query = user.reviews.order_by(WorkReview.create_time.desc())
+    query = user.work_reviews.order_by(WorkReview.create_time.desc())
     if check_is_me(user.id):
         work_reviews = query.limit(3)
         work_reviews_num =query.count()
@@ -43,7 +43,7 @@ def user_reviews(user_abbr):
     user = User.query.filter(User.abbr==user_abbr).first_or_404()
 
     page = int(request.args.get('page', 1))
-    query = user.reviews.order_by(WorkReview.create_time.desc())
+    query = user.work_reviews.order_by(WorkReview.create_time.desc())
     if check_is_me(user.id):
         pagination = query.paginate(page, 10)
     else:

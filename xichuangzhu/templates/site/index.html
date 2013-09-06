@@ -45,12 +45,12 @@ $(document).ready(function(){
       <h2>
          点评
          <span class='link-more'>
-            <a href="{{ url_for('reviews') }}">更多»</a>
+            <a href="{{ url_for('all_work_reviews') }}">更多»</a>
          </span>
       </h2>
 
-      {% from "widget/reviews.widget" import render_reviews %}
-      {{ render_reviews(work_reviews)|safe }}
+      {% from "widget/work_reviews.widget" import render_work_reviews %}
+      {{ render_work_reviews(work_reviews)|safe }}
 
       <h2>
          书法

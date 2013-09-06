@@ -14,8 +14,8 @@ from xichuangzhu.utils import require_admin, require_login
 
 # page review
 #--------------------------------------------------
-@app.route('/review/<int:review_id>')
-def review(review_id):
+@app.route('/work_review/<int:review_id>')
+def work_review(review_id):
     form = CommentForm()
 
     review = WorkReview.query.get_or_404(review_id)
@@ -33,22 +33,22 @@ def review(review_id):
     return render_template('work_review/work_review.html', review=review, form=form)
 
 # proc - add comment
-@app.route('/review/<int:review_id>/comment', methods=['POST'])
+@app.route('/work_review/<int:review_id>/comment', methods=['POST'])
 @require_login
-def comment_review(review_id):
+def comment_work_review(review_id):
     form = CommentForm(request.form)
     if form.validate():
         comment = WorkReviewComment(content=cgi.escape(form.content.data), review_id=review_id, user_id=session['user_id'])
         db.session.add(comment)
         db.session.commit()
-        return redirect(url_for('review', review_id=review_id) + "#" + str(comment.id))
+        return redirect(url_for('work_review', review_id=review_id) + "#" + str(comment.id))
     else:
-        return redirect(url_for('review', review_id=review_id))
+        return redirect(url_for('work_review', review_id=review_id))
 
 # page - all work reviews
 #--------------------------------------------------
-@app.route('/reviews')
-def reviews():
+@app.route('/all_work_reviews')
+def all_work_reviews():
     page = int(request.args.get('page', 1))
     pagination = WorkReview.query.filter(WorkReview.is_publish==True).order_by(WorkReview.create_time.desc()).paginate(page, 10)
 
@@ -58,11 +58,11 @@ def reviews():
 
     return render_template('work_review/all_work_reviews.html', pagination=pagination, hot_reviewers=hot_reviewers)
 
-# page - add review
+# page - add review to a work
 #--------------------------------------------------
 @app.route('/work/<int:work_id>/add_review', methods=['GET', 'POST'])
 @require_login
-def add_review(work_id):
+def add_work_review(work_id):
     work = Work.query.get_or_404(work_id)
     if request.method == 'GET':
         form = ReviewForm()
@@ -74,15 +74,15 @@ def add_review(work_id):
             review = WorkReview(title=cgi.escape(form.title.data), content=cgi.escape(form.content.data), user_id=session['user_id'], work_id=work_id, is_publish=is_publish)
             db.session.add(review)
             db.session.commit()
-            return redirect(url_for('review', review_id=review.id))
+            return redirect(url_for('work_review', review_id=review.id))
         else:
             return render_template('work_review/add_work_review.html', work=work, form=form)
 
 # page - edit review
 #--------------------------------------------------
-@app.route('/review/<int:review_id>/edit', methods=['GET', 'POST'])
+@app.route('/work_review/<int:review_id>/edit', methods=['GET', 'POST'])
 @require_login
-def edit_review(review_id):
+def edit_work_review(review_id):
     review = WorkReview.query.get_or_404(review_id)
     if review.user_id != session['user_id']:
         abort(404)
@@ -98,7 +98,7 @@ def edit_review(review_id):
             review.is_publish = True if 'publish' in request.form else False
             db.session.add(review)
             db.session.commit()
-            return redirect(url_for('review', review_id=review_id))
+            return redirect(url_for('work_review', review_id=review_id))
         else:
             return render_template('work_review/edit_work_review.html', review=review, form=form)
 
@@ -106,7 +106,7 @@ def edit_review(review_id):
 #--------------------------------------------------
 @app.route('/review/<int:review_id>/delete')
 @require_login
-def delete_review(review_id):
+def delete_work_review(review_id):
     review = WorkReview.query.get_or_404(review_id)
     if review.user_id != session['user_id']:
         abort(404)

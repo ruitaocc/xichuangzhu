@@ -84,7 +84,7 @@ class WorkReview(db.Model):
     work = db.relationship('Work', backref=db.backref('reviews', lazy='dynamic'))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('reviews', lazy='dynamic'))
+    user = db.relationship('User', backref=db.backref('work_reviews', lazy='dynamic'))
 
     @property
     def friendly_create_time(self):

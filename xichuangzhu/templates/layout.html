@@ -96,6 +96,19 @@
                      </ul>
                   </li>
                </ul>
+
+               <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        管理 <span class="caret"></span>
+                     </a>
+
+                     <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('admin_authors') }}">文学家</a></li>
+                        <li><a href="{{ url_for('admin_works') }}">作品</a></li>
+                     </ul>
+                  </li>
+               </ul>               
                {% endif %}
 
                {% else %}
@@ -138,6 +151,7 @@
       <div id="footer">
          <div class='container'>
             <div id='copyright'>西窗烛 ©2013 by <a href="http://hustlzp.com" target="_blank">hustlzp</a></div>
+            
             <ul id='links'>
                <li><a href="{{ url_for('about') }}">关于</a></li
                ><li><a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a></li>
@@ -147,7 +161,7 @@
             {% block extra_info %}{% endblock %}
             </div>
   
-            <script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script>
+            <!-- <script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script> -->
          </div>
       </div>
 
