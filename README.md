@@ -5,6 +5,8 @@ http://www.xichuangzhu.com
 
 何当共剪西窗烛，却话巴山夜雨时。
 
+Lovely build with Flask.
+
 部署：
 
 1. 在MySQL中新建数据库'xcz'，使用phpmyadmin导入xcz.sql
