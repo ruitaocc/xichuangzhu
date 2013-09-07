@@ -36,7 +36,7 @@ $(document).ready(function(){
 
 <form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work') }}">
    <fieldset>
-      <legend>添加作品</legend>
+      <legend>添加作品{% if author %} - {{ author.name }}{% endif %}</legend>
 
       <div class="form-group">
          <label class="col-md-2 control-label">类别</label>
@@ -59,7 +59,7 @@ $(document).ready(function(){
       <div class="form-group">
          <label class="col-md-2 control-label">作者</label>
          <div class=" col-md-3 input-group">
-            <input id="input-author-name" type="text" class='form-control' />
+            <input id="input-author-name" type="text" class='form-control' value="{{ author.name }}" />
             <span class='input-group-btn'>
                <button id="btn-search-author" class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
             </span>
@@ -69,7 +69,11 @@ $(document).ready(function(){
       <div class="form-group">
          <div class="col-md-3 col-md-offset-2">
             <select id="select-author" name="author_id" class='form-control'>
+               {% if author %}
+               <option value='{{ author.id }}'>〔{{ author.dynasty.name }}〕{{ author.name }}</option>
+               {% else %}
                <option>作者</option>
+               {% endif %}
             </select>
          </div>
       </div>

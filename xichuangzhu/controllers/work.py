@@ -87,8 +87,12 @@ def works_by_tag(tag):
 @require_admin
 def add_work():
     if request.method == 'GET':
+        if 'author_id' in request.args:
+            author = Author.query.get_or_404(request.args['author_id'])
+        else:
+            author = None
         work_types = WorkType.query
-        return render_template('work/add_work.html', work_types=work_types)
+        return render_template('work/add_work.html', work_types=work_types, author=author)
     else:        
         work = Work(title=request.form['title'], content=request.form['content'], foreword=request.form['foreword'], intro=request.form['intro'], author_id = int(request.form['author_id']), type_id=request.form['type_id'])
         db.session.add(work)
