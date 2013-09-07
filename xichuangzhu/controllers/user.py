@@ -38,8 +38,8 @@ def user(user_abbr):
 
 # page - user reviews
 #--------------------------------------------------
-@app.route('/u/<user_abbr>/reviews')
-def user_reviews(user_abbr):
+@app.route('/u/<user_abbr>/work_reviews')
+def user_work_reviews(user_abbr):
     user = User.query.filter(User.abbr==user_abbr).first_or_404()
 
     page = int(request.args.get('page', 1))
@@ -49,7 +49,7 @@ def user_reviews(user_abbr):
     else:
         pagination = query.filter(WorkReview.is_publish==True).paginate(page, 10)
 
-    return render_template('user/user_reviews.html', user=user, pagination=pagination)
+    return render_template('user/user_work_reviews.html', user=user, pagination=pagination)
 
 # page - user topics
 #--------------------------------------------------

@@ -19,5 +19,6 @@ def admin_authors():
 @app.route('/admin_works', methods=['GET', 'POST'])
 @require_admin
 def admin_works():
-    works = Work.query
-    return render_template('admin/admin_works.html', works=works)
+    page = int(request.args.get('page', 1))
+    pagination = Work.query.paginate(page, 15)
+    return render_template('admin/admin_works.html', pagination=pagination)
