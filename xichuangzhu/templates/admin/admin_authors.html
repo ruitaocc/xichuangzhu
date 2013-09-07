@@ -15,6 +15,7 @@
             <th>朝代</th>
             <th>作品</th>
             <th>引语</th>
+            <th>操作</th>
          </thead>
 
          <tbody>
@@ -32,6 +33,10 @@
                
                <td {% if a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}class='danger'{% endif %}>
                   {{ a.quotes|length }}
+               </td>
+
+               <td>
+                  <a class='btn btn-sm btn-default' target="_blank" title='为{{ a.name }}添加作品' href="{{ url_for('add_work', author_id=a.id) }}"><span class='glyphicon glyphicon-file'></span> 添加作品</a>
                </td>
             </tr>
             {% endif %}
