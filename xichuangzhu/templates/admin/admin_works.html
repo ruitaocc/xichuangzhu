@@ -14,12 +14,14 @@
       <th>标签</th>
       <th>注释</th>
       <th>题解</th>
-      <th>点评</th>
-      <th>书法</th>
+      <!-- <th>点评</th>
+      <th>书法</th> -->
    </thead>
 
    <tbody>
       {% for w in pagination.items %}
+
+      {% if w.tags|length == 0 or '<' not in w.content or w.intro == '' %}
       <tr>
          <td>[{{ w.type.cn }}] <a target="_blank" href="{{ url_for('work', work_id=w.id) }}">{{ w.title|truncate(12, True) }}</a></td>
 
@@ -47,13 +49,13 @@
             {% endif %}
          </td>
 
-         <td {% if not w.intro %}class='danger'{% endif %}>
-            {% if not w.intro %}
+         <td {% if w.intro == '' %}class='danger'{% endif %}>
+            {% if w.intro == '' %}
             <a title="编辑《{{ w.title }}》" target="_blank" class="btn btn-sm btn-default" href="{{ url_for('edit_work', work_id=w.id) }}"><span class="glyphicon glyphicon-edit"></span></a>
             {% endif %}
          </td>
 
-         <td {% if w.reviews.count() == 0 %}class='danger'{% endif %}>
+         <!-- <td {% if w.reviews.count() == 0 %}class='danger'{% endif %}>
             {% if w.reviews.count() == 0 %}
             <a title="点评《{{ w.title }}》" target="_blank" class='btn btn-sm btn-default' href="{{ url_for('add_work_review', work_id=w.id) }}"><span class='glyphicon glyphicon-pencil'></span></a>
             {% endif %}
@@ -63,8 +65,10 @@
             {% if w.images.count() == 0 %}
             <a title="为《{{ w.title }}》添加书法作品" target="_blank" class='btn btn-sm btn-default' href="{{ url_for('add_work_image', work_id=w.id) }}"><span class='glyphicon glyphicon-picture'></span></a>
             {% endif %}
-         </td>
+         </td> -->
       </tr>
+      {% endif %}
+
       {% endfor %}
    </tbody>
 </table>
