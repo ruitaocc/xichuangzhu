@@ -10,7 +10,7 @@ ul{padding-left:30px;list-style:square}
 legend{line-height:40px;padding-bottom:5px}
 label{font-weight:normal}
 blockquote{padding:0 0 0 20px}blockquote p{font-size:14px;line-height:180%;margin-bottom:5px}
-.label{border-radius:0}
+.label{border-radius:0;padding:.2em .5em;font-weight:normal}
 .tooltip{font-family:"arial","NSimSun","SimSun","STSong","TW\-Sung","WenQuanYi Bitmap Song";text-indent:0;font-weight:normal;font-size:12px;line-height:160%}
 .tooltip-inner{padding-top:8px;padding-bottom:8px}
 .alert-danger ul li{margin:0 0 5px 0}.alert-danger ul li:last-child{margin:0}
