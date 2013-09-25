@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ user.friendly_name }} 的书法作品{% endblock %}
+{% block page_title %}{{ user.friendly_name }}上传的图片{% endblock %}
 {% block page_id%}page-user-work-images{% endblock %}
 
 {% block body %}
 
 <div class="row">
-   <div class="span8">
+   <div class="col-md-8">
       <h2>
          {{ user.friendly_name }}上传的图片 / {{ pagination.total }}</a>
          </span>
@@ -20,7 +20,7 @@
       
    </div>
 
-   <div class="span4"></div>
+   <div class="col-md-4"></div>
 </div>
 
 {% endblock %}

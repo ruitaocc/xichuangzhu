@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
-{% block page_title %}{{ work.author.name}}《{{ work.title }}》书法作品{% endblock %}
+{% block page_title %}{{ work.author.name}}《{{ work.title }}》相关图片{% endblock %}
 {% block page_id%}page-work-images{% endblock %}
 
 {% block body %}
 
 <div class="row">
    <div class="span8">
-      <h2>《{{ work.title }}》的书法作品 / {{ pagination.total }}</h2>
+      <h2>《{{ work.title }}》相关图片 / {{ pagination.total }}</h2>
 
       {% from "widget/work_images.widget" import render_work_images %}
       {{ render_work_images(pagination.items)|safe }}

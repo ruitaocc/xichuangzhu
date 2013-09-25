@@ -26,7 +26,7 @@ def work(work_id):
     reviews = work.reviews.order_by(WorkReview.create_time.desc()).filter(WorkReview.is_publish==True).limit(4)
     reviews_num = work.reviews.filter(WorkReview.is_publish==True).count()
 
-    images = work.images.order_by(WorkImage.create_time).limit(9)
+    images = work.images.order_by(WorkImage.create_time).limit(16)
     images_num = work.images.count()
 
     other_works = Work.query.filter(Work.author_id==work.author_id).filter(Work.id!=work_id).limit(5)
@@ -134,7 +134,7 @@ def work_reviews(work_id):
 def work_images(work_id):
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
-    pagination = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 12)
+    pagination = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
     return render_template('work/work_images.html', work=work, pagination=pagination)
 
 # json - search authors in page add & edit work

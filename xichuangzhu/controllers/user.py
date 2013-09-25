@@ -31,7 +31,7 @@ def user(user_abbr):
     topics = user.topics.order_by(Topic.create_time.desc()).limit(3)
     topics_num = user.topics.count()
 
-    work_images = user.work_images.order_by(WorkImage.create_time.desc()).limit(9)
+    work_images = user.work_images.order_by(WorkImage.create_time.desc()).limit(16)
     work_images_num = user.work_images.count()
 
     return render_template('user/user.html', user=user, work_reviews=work_reviews, work_reviews_num=work_reviews_num, topics=topics, topics_num=topics_num, work_images=work_images, work_images_num=work_images_num)
@@ -69,7 +69,7 @@ def user_work_images(user_abbr):
     user = User.query.filter(User.abbr==user_abbr).first_or_404()
 
     page = int(request.args.get('page', 1))
-    pagination = user.work_images.order_by(WorkImage.create_time.desc()).paginate(page, 10)
+    pagination = user.work_images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
 
     return render_template('user/user_work_images.html', user=user, pagination=pagination)
 
