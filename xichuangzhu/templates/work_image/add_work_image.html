@@ -7,7 +7,7 @@
 
 <form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work_image', work_id=work.id) }}" enctype="multipart/form-data">
    <fieldset>
-      <legend>为《{{ work.title }}》上传书法作品</legend>
+      <legend>为《{{ work.title }}》上传图片</legend>
 
       {{ form.csrf_token }}
 
@@ -15,7 +15,7 @@
       {{ render_form_error(form)|safe }}
 
       <div class="form-group">
-         <label class="control-label col-md-2">作品</label>
+         <label class="control-label col-md-2">图片</label>
          <div class="col-md-6">
             {{ form.image }}
             <p class="help-block">图片大小不超过5M</p>
