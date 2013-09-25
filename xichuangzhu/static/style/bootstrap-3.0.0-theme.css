@@ -18,3 +18,6 @@ blockquote{padding:0 0 0 20px}blockquote p{font-size:14px;line-height:180%;margi
 .table thead>tr>th{border-bottom:1px solid #ddd}
 .table-bordered>thead>tr>th,.table-bordered>thead>tr>td{border-bottom-width:1px}
 .form-horizontal input[type='file']{padding-top:7px}
+.pagination li:first-child>a{border-bottom-left-radius:0;border-top-left-radius:0}
+.pagination li:last-child>a{border-bottom-right-radius:0;border-top-right-radius:0}
+.pagination li a{color:#555;font-size:13px;background-color:#eee}
