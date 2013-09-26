@@ -104,6 +104,7 @@
          {% for t in work.tags %}
          <li><a href="{{ url_for('tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
          {% endfor %}
+         <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span> 添加</a></li>
       </ul>
 
       <h2>作者简介</h2>

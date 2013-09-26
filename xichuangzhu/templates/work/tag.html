@@ -8,22 +8,28 @@
 <div class="row">
    <div class="col-md-8">
       <div class="media">
-         <img class="media-object pull-right" src="{{ tag.icon }}">
+         <img class="media-object pull-left" src="{{ tag.icon }}">
 
          <div class="media-body">
-            <div class="media-heading">「{{ tag.title }}」</div>
+            <div class="media-heading">{{ tag.title }}</div>
             <div class='media-content'>{{ tag.desc }}</div>
          </div>
+
+         <button class='btn btn-primary btn-sm pull-right add-work-btn'>添加作品</button>
       </div>
 
-      {% from "widget/works.widget" import render_works %}
-      {{ render_works(pagination.items)|safe }}
+
+
+      {% from "widget/works.widget" import render_works_with_type %}
+      {{ render_works_with_type(pagination.items)|safe }}
 
       {% from "widget/pagination.widget" import render_pagination %}
       {{ render_pagination(pagination)|safe }}
    </div>
 
-   <div class="col-md-4"></div>
+   <div class="col-md-4">
+
+   </div>
 </div>
 
 {% endblock %}
