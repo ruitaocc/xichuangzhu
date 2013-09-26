@@ -54,10 +54,10 @@ import log
 import controllers
 import models
 
-# admin
-from flask.ext.admin import Admin
-from flask.ext.admin.contrib.sqlamodel import ModelView
-from models.author_model import Author
+# # admin
+# from flask.ext.admin import Admin
+# from flask.ext.admin.contrib.sqlamodel import ModelView
+# from models.author_model import Author
 
-admin = Admin(app, name='西窗烛Admin')
-admin.add_view(ModelView(Author, db.session))
+# admin = Admin(app, name='西窗烛Admin')
+# admin.add_view(ModelView(Author, db.session))
