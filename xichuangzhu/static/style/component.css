@@ -29,3 +29,6 @@
 .textarea-comment{display:block;width:85%;margin:20px 0 12px 0}
 .work-image-wap{position:relative}.work-image-wap .work-image{margin-bottom:10px}
 .text-gap{height:7px}
+.tag-item{float:left;margin-right:10px;margin-bottom:10px;padding-top:10px}.tag-item .icon{width:60px;height:60px;float:left}
+.tag-item .content{float:left;margin-left:12px;width:140px}.tag-item .content .title{display:block;font-size:16px}
+.tag-item .content .desc{font-size:12px;line-height:18px;color:#808080}

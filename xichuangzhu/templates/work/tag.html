@@ -1,13 +1,20 @@
 {% extends "layout.html" %}
 
-{% block page_title %}作品标签 - {{ tag }}{% endblock %}
-{% block page_id%}page-works-by-tag{% endblock %}
+{% block page_title %}标签 - {{ tag.title }}{% endblock %}
+{% block page_id%}page-tag{% endblock %}
 
 {% block body %}
 
 <div class="row">
    <div class="col-md-8">
-      <h2>作品标签 - {{ tag }}</h2>
+      <div class="media">
+         <img class="media-object pull-right" src="{{ tag.icon }}">
+
+         <div class="media-body">
+            <div class="media-heading">「{{ tag.title }}」</div>
+            <div class='media-content'>{{ tag.desc }}</div>
+         </div>
+      </div>
 
       {% from "widget/works.widget" import render_works %}
       {{ render_works(pagination.items)|safe }}

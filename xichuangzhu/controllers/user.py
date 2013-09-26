@@ -80,7 +80,7 @@ def user_work_images(user_abbr):
 def my_collects():
     user = User.query.get_or_404(session['user_id'])
 
-    collect_works = Work.query.join(CollectWork).filter(CollectWork.user_id==user.id).order_by(CollectWork.create_time.desc()).limit(6)
+    collect_works = Work.query.join(CollectWork).filter(CollectWork.user_id==user.id).order_by(CollectWork.create_time.desc()).limit(12)
     collect_works_num = user.collect_works.count()
 
     collect_work_images = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id==user.id).order_by(CollectWorkImage.create_time.desc()).limit(9)

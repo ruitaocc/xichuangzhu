@@ -48,11 +48,20 @@ class WorkType(db.Model):
     def __repr__(self):
         return '<WorkType %s>' % self.cn
 
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
+    desc = db.Column(db.String(200))
+    icon = db.Column(db.String(200))
+
 class WorkTag(db.Model):
-    tag = db.Column(db.String(50), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
 
     work_id = db.Column(db.Integer, db.ForeignKey('work.id'), primary_key=True)
     work = db.relationship('Work', backref=db.backref('tags'))
+
+    tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'), primary_key=True)
+    tag = db.relationship('Tag', backref=db.backref('works'))
 
     def __repr__(self):
         return '<WorkTag %s>' % self.tag

@@ -21,7 +21,11 @@
       <div class="work-foreword" style="text-align:center;">{{ work.foreword }}</div>
       {% endif %}
 
-      <div class="work-content work-type-{{ work.type.en }}">{{ work.friendly_content|safe }}</div>
+      <div class="work-content work-type-{{ work.type.en }}"
+         {% if work.friendly_content|length < 32 %}
+         style="text-indent:0; text-align: center;"
+         {% endif %}
+         >{{ work.friendly_content|safe }}</div>
 
       <script type="text/javascript">
          $('.work-content sup').tooltip();
@@ -40,7 +44,7 @@
 
          <a class="btn btn-default" target="_blank" href="{{ url_for('add_work_review', work_id=work.id) }}"><span class="glyphicon glyphicon-pencil"></span> 点评</a>
 
-         <a class="btn btn-default" title='上传插画、美图、书法作品' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="glyphicon glyphicon-picture"></span> 上传图片</a>
+         <a class="btn btn-default" title='上传图片' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="glyphicon glyphicon-picture"></span> 传图</a>
 
          {% if is_collected %}
          <a class="btn btn-default" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 已收藏</a>
@@ -98,7 +102,7 @@
       <h2>标签</h2>
       <ul class="work-tags">
          {% for t in work.tags %}
-         <li><a href="{{ url_for('works_by_tag', tag=t.tag) }}">{{ t.tag }}</a></li>
+         <li><a href="{{ url_for('tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
          {% endfor %}
       </ul>
 

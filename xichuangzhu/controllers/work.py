@@ -4,7 +4,7 @@ import re
 import uuid
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app, db, config
-from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkImage, WorkReview
+from xichuangzhu.models.work_model import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag
 from xichuangzhu.models.dynasty_model import Dynasty
 from xichuangzhu.models.author_model import Author
 from xichuangzhu.models.user_model import User
@@ -73,13 +73,21 @@ def works():
 
     return render_template('work/works.html', pagination=pagination, work_type=work_type, dynasty_abbr=dynasty_abbr, work_types=work_types, dynasties=dynasties)
 
-# page - works by tag
+# page - tags
 #--------------------------------------------------
-@app.route('/works_by_tag/<tag>')
-def works_by_tag(tag):
+@app.route('/tags')
+def tags():
+    tags = Tag.query.all()
+    return render_template('work/tags.html', tags=tags)
+
+# page - work tag
+#--------------------------------------------------
+@app.route('/tag/<int:tag_id>')
+def tag(tag_id):
+    tag = Tag.query.get_or_404(tag_id)
     page = int(request.args.get('page', 1))
-    pagination = Work.query.filter(Work.tags.any(WorkTag.tag==tag)).paginate(page, 10)
-    return render_template('work/works_by_tag.html', tag=tag, pagination=pagination)
+    pagination = Work.query.filter(Work.tags.any(WorkTag.tag_id==tag_id)).paginate(page, 12)
+    return render_template('work/tag.html', tag=tag, pagination=pagination)
 
 # page - add work
 #--------------------------------------------------

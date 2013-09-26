@@ -10,8 +10,9 @@ class Dynasty(db.Model):
     end_year = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<Dynasty %s>' % self.name
-
+        # return '<Dynasty %s>' % self.name
+        return self.name
+    
     @property
     def friendly_start_year(self):
         return "%s年" % str(self.start_year).replace('-', '前')
