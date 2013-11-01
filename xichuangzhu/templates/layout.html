@@ -14,10 +14,10 @@
       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0-theme.css') }}">
       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
-      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
-      <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-3.0.0.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/bootstrap-3.0.0.min.js') }}"></script>
       <script src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/s2t.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.s2t.js') }}"></script>
    </head>
 
    <body id="{% block page_id %}{% endblock %}">
@@ -65,7 +65,7 @@
                   $('.navbar-form').submit(function(){
                      var query = $('.search-content').val();
                      var url = "http://www.google.com.hk/search?q=site:www.xichuangzhu.com/work " + query;
-                     window.open(url, "_blank")
+                     window.open(url, "_blank");
                      return false;
                   });
                </script>
@@ -127,18 +127,18 @@
                   var bodyIsFt = $.cookie("bodyIsFt");
 
                   $('#btn-s2t').click(function(){
-                     // to simple
-                     if(bodyIsFt == "1"){
+                     // to simplified
+                     if (bodyIsFt == "1") {
                         $.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
                         bodyIsFt = "0";
                         $('#btn-s2t').text('简');
-                        StranObj(document.body, 0);
-                     }
-                     else{ // to traditional
+                        $(document.body).t2s();
+                     } else {
+                        // to traditional
                         $.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
                         bodyIsFt = "1";
                         $('#btn-s2t').text('繁');
-                        StranObj(document.body, 1);
+                        $(document.body).s2t();
                      }               
                   });
                </script>
@@ -172,7 +172,7 @@
          var bodyIsFt = $.cookie("bodyIsFt");
 
          if(bodyIsFt == "1"){
-            StranObj(document.body, 1);
+            $(document.body).s2t();
             $('#btn-s2t').text('繁');
          }
          else{
