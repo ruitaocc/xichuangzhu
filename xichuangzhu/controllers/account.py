@@ -1,12 +1,11 @@
-#-*- coding: UTF-8 -*-
+# coding: utf-8
 import requests
 import smtplib
 from email.mime.text import MIMEText
 import hashlib
-import math
-from flask import render_template, request, redirect, url_for, json, session
+from flask import render_template, request, redirect, url_for, session
 from xichuangzhu import app, db, config
-from xichuangzhu.models.user_model import User
+from xichuangzhu.models.user import User
 from xichuangzhu.utils import require_login
 from xichuangzhu.form import EmailForm
 
@@ -30,7 +29,7 @@ def signin():
     # if user exist
     if User.query.get(user_id):
         # if user unactive
-        if User.query.filter(User.is_active==False).filter(User.id==user_id).first():
+        if User.query.filter(User.is_active == False).filter(User.id == user_id).first():
             return redirect(url_for('active_state', state='unactive', user_id=user_id))
         else:
             # set session
@@ -46,7 +45,8 @@ def signin():
         url = "https://api.douban.com/v2/user/" + str(user_id)
         user_info = requests.get(url).json()
 
-        user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'], avatar=user_info['avatar'], signature=user_info['signature'])
+        user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'], avatar=user_info['avatar'],
+                    signature=user_info['signature'])
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('send_active_email', user_id=user_id))

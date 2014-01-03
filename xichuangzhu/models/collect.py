@@ -1,6 +1,7 @@
-#-*- coding: UTF-8 -*-
+# coding: utf-8
 import datetime
 from xichuangzhu import db
+
 
 class CollectWork(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
@@ -13,6 +14,7 @@ class CollectWork(db.Model):
 
     def __repr__(self):
         return '<User %d collect Work %d>' % (self.user_id, self.work_id)
+
 
 class CollectWorkImage(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)

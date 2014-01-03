@@ -1,22 +1,22 @@
 {% extends "layout.html" %}
 
 {% block page_title %}最新图片{% endblock %}
-{% block page_id%}page-all-work-images{% endblock %}
+{% block page_id %}page-all-work-images{% endblock %}
 
 {% block body %}
 
-<div class="row">
-    <div class="col-md-8">
-    <h2>最新图片</h2>
-    
-       	{% from "widget/work_images.widget" import render_work_images %}
-  	 	{{ render_work_images(pagination.items)|safe }}
-      
-       	{% from "widget/pagination.widget" import render_pagination %}
-       	{{ render_pagination(pagination)|safe }}
-    </div>
+   <div class="row">
+      <div class="col-md-8">
+         <h2>最新图片</h2>
 
-    <div class="col-md-4"></div>
-</div>
+         {% from "widget/work_images.widget" import render_work_images %}
+         {{ render_work_images(pagination.items)|safe }}
+
+         {% from "widget/pagination.widget" import render_pagination %}
+         {{ render_pagination(pagination)|safe }}
+      </div>
+
+      <div class="col-md-4"></div>
+   </div>
 
 {% endblock %}

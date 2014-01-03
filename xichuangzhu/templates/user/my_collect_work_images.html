@@ -1,27 +1,27 @@
 {% extends "layout.html" %}
 
 {% block page_title %}图片收藏{% endblock %}
-{% block page_id%}page-user-collect-work-images{% endblock %}
+{% block page_id %}page-user-collect-work-images{% endblock %}
 
 {% block body %}
 
-<div class="row">
-   <div class="span8">
-      <h2>
-         图片收藏 / {{ pagination.total }} »</a>
-         </span>
-      </h2>
+   <div class="row">
+      <div class="span8">
+         <h2>
+            图片收藏 / {{ pagination.total }} »</a>
+            </span>
+         </h2>
 
-      {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(pagination.items)|safe }}
-      
-      {% from "widget/pagination.widget" import render_pagination %}
-      {{ render_pagination(pagination)|safe }}
-      
-   </div>
+         {% from "widget/work_images.widget" import render_work_images %}
+         {{ render_work_images(pagination.items)|safe }}
 
-   <div class="span4">
+         {% from "widget/pagination.widget" import render_pagination %}
+         {{ render_pagination(pagination)|safe }}
+
+      </div>
+
+      <div class="span4">
+      </div>
    </div>
-</div>
 
 {% endblock %}

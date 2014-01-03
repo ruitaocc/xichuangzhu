@@ -1,110 +1,117 @@
 {% extends "layout.html" %}
 
 {% block page_title %}添加作品{% endblock %}
-{% block page_id%}page-add-work{% endblock %}
+{% block page_id %}page-add-work{% endblock %}
 
 {% block body %}
 
-<script type="text/javascript">
-$(document).ready(function(){
+   <script type="text/javascript">
+      $(document).ready(function () {
 
-   // search authors
-   $('#btn-search-author').click(function(){
-      var author_name = $('#input-author-name').val();
-      $.ajax({
-         'url': "{{ url_for('search_authors') }}",
-         'type': 'POST',
-         'dataType': 'json',
-         'data': {
-            'author_name': author_name
-         },
-         'success': function(authors){
-            $('#select-author').empty();
+         // search authors
+         $('#btn-search-author').click(function () {
+            var author_name = $('#input-author-name').val();
+            $.ajax({
+               'url': "{{ url_for('search_authors') }}",
+               'type': 'POST',
+               'dataType': 'json',
+               'data': {
+                  'author_name': author_name
+               },
+               'success': function (authors) {
+                  $('#select-author').empty();
 
-            $.each(authors, function(index, author){
-               var option = "<option value=" + author['id'] + ">〔" + author['dynasty'] + '〕' + author['name'] + "</option>";
-               $(option).appendTo('#select-author');
+                  $.each(authors, function (index, author) {
+                     var option = "<option value=" + author['id'] + ">〔" + author['dynasty'] + '〕' + author['name'] + "</option>";
+                     $(option).appendTo('#select-author');
+                  });
+               }
             });
-         }
+
+            return false;
+         });
+
       });
+   </script>
 
-      return false;
-   });
+   <form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work') }}">
+      <fieldset>
+         <legend>添加作品{% if author %} - {{ author.name }}{% endif %}</legend>
 
-});
-</script>
+         <div class="form-group">
+            <label class="col-md-2 control-label">类别</label>
 
-<form id="form-add-work" class="form-horizontal" method="post" action="{{ url_for('add_work') }}">
-   <fieldset>
-      <legend>添加作品{% if author %} - {{ author.name }}{% endif %}</legend>
-
-      <div class="form-group">
-         <label class="col-md-2 control-label">类别</label>
-         <div class="col-md-3">
-            <select name='type_id' class='form-control'>
-               {% for type in work_types %}
-               <option value='{{ type.id }}'>{{ type.cn }}</option>
-               {% endfor %}
-            </select>
+            <div class="col-md-3">
+               <select name='type_id' class='form-control'>
+                  {% for type in work_types %}
+                     <option value='{{ type.id }}'>{{ type.cn }}</option>
+                  {% endfor %}
+               </select>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">标题</label>
-         <div class="col-md-3">
-            <input type="text" name="title" class='form-control' />
+         <div class="form-group">
+            <label class="col-md-2 control-label">标题</label>
+
+            <div class="col-md-3">
+               <input type="text" name="title" class='form-control'/>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">作者</label>
-         <div class=" col-md-3 input-group">
-            <input id="input-author-name" type="text" class='form-control' value="{{ author.name }}" />
+         <div class="form-group">
+            <label class="col-md-2 control-label">作者</label>
+
+            <div class=" col-md-3 input-group">
+               <input id="input-author-name" type="text" class='form-control' value="{{ author.name }}"/>
             <span class='input-group-btn'>
-               <button id="btn-search-author" class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+               <button id="btn-search-author" class="btn btn-default"><span class='glyphicon glyphicon-search'></span>
+               </button>
             </span>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <div class="col-md-3 col-md-offset-2">
-            <select id="select-author" name="author_id" class='form-control'>
-               {% if author %}
-               <option value='{{ author.id }}'>〔{{ author.dynasty.name }}〕{{ author.name }}</option>
-               {% else %}
-               <option>作者</option>
-               {% endif %}
-            </select>
+         <div class="form-group">
+            <div class="col-md-3 col-md-offset-2">
+               <select id="select-author" name="author_id" class='form-control'>
+                  {% if author %}
+                     <option value='{{ author.id }}'>〔{{ author.dynasty.name }}〕{{ author.name }}</option>
+                  {% else %}
+                     <option>作者</option>
+                  {% endif %}
+               </select>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">序</label>
-         <div class="col-md-6">
-            <textarea name="foreword" rows='5' class='form-control'></textarea>
-         </div>
-      </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label">序</label>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">题解</label>
-         <div class="col-md-6">
-            <textarea name="intro" rows='5' class='form-control'></textarea>
+            <div class="col-md-6">
+               <textarea name="foreword" rows='5' class='form-control'></textarea>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">内容</label>
-         <div class="col-md-6">
-            <textarea name="content" rows='15' class='form-control'></textarea>
-         </div>
-      </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label">题解</label>
 
-      <div class="form-group">
-         <div class="col-md-6 col-md-offset-2">
-            <input type="submit" value="提交" class="btn btn-primary" />
+            <div class="col-md-6">
+               <textarea name="intro" rows='5' class='form-control'></textarea>
+            </div>
          </div>
-      </div>
-   </fieldset>
-</form>
+
+         <div class="form-group">
+            <label class="col-md-2 control-label">内容</label>
+
+            <div class="col-md-6">
+               <textarea name="content" rows='15' class='form-control'></textarea>
+            </div>
+         </div>
+
+         <div class="form-group">
+            <div class="col-md-6 col-md-offset-2">
+               <input type="submit" value="提交" class="btn btn-primary"/>
+            </div>
+         </div>
+      </fieldset>
+   </form>
 
 {% endblock %}

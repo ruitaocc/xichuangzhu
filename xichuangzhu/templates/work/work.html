@@ -2,134 +2,145 @@
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
 {% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}》正文、注释、题解、点评、书法创作等。{% endblock %}
-{% block page_id%}page-work{% endblock %}
+{% block page_id %}page-work{% endblock %}
 
 {% block body %}
 
-<div class="row">
-   <div class="col-md-8">
-      <div class="work-title">{{ work.title }}</div>
+   <div class="row">
+      <div class="col-md-8">
+         <div class="work-title">{{ work.title }}</div>
 
-      <div class="work-author">
-         〔<a href="{{ url_for('dynasty', dynasty_abbr = work.author.dynasty.abbr) }}">{{ work.author.dynasty.name }}</a>〕<a href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>
-      </div>
+         <div class="work-author">
+            〔<a
+               href="{{ url_for('dynasty', dynasty_abbr = work.author.dynasty.abbr) }}">{{ work.author.dynasty.name }}</a>〕<a
+               href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>
+         </div>
 
-      <!-- 32 is a experienced value -->
-      {% if work.foreword|length > 32 %}
-      <div class="work-foreword" style="text-indent:2em; padding:0 2em;">{{ work.foreword }}</div>
-      {% else %}
-      <div class="work-foreword" style="text-align:center;">{{ work.foreword }}</div>
-      {% endif %}
-
-      <div class="work-content work-type-{{ work.type.en }}"
-         {% if work.friendly_content|length < 32 %}
-         style="text-indent:0; text-align: center;"
-         {% endif %}
-         >{{ work.friendly_content|safe }}</div>
-
-      <script type="text/javascript">
-         $('.work-content sup').tooltip();
-
-         $('.work-content sup').each(function(index){
-            $(this).text('〔' + (index + 1) + '〕');
-            // $(this).text(' [' + (index + 1) + '] ');
-         });
-      </script>
-
-      {% if session.user_id %}
-      <div class="btn-group btn-group-sm pull-right" id="work-cmds">
-         {% if session.user_id == admin_id %}
-         <a class="btn btn-default" href="{{ url_for('edit_work', work_id=work.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
-         {% endif %}
-
-         <a class="btn btn-default" target="_blank" href="{{ url_for('add_work_review', work_id=work.id) }}"><span class="glyphicon glyphicon-pencil"></span> 点评</a>
-
-         <a class="btn btn-default" title='上传图片' href="{{ url_for('add_work_image', work_id=work.id) }}"><span class="glyphicon glyphicon-picture"></span> 传图</a>
-
-         {% if is_collected %}
-         <a class="btn btn-default" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 已收藏</a>
+         <!-- 32 is a experienced value -->
+         {% if work.foreword|length > 32 %}
+            <div class="work-foreword" style="text-indent:2em; padding:0 2em;">{{ work.foreword }}</div>
          {% else %}
-         <a class="btn btn-default" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a>
+            <div class="work-foreword" style="text-align:center;">{{ work.foreword }}</div>
          {% endif %}
-      </div>
-      {% endif %}
 
-      <h2>注释</h2>
-      <div class='work-annotate'></div>
-      <script type="text/javascript">
-         var work_annotate = $('.work-annotate');
-         $('.work-content sup').each(function(index, element){
-            var annotate = $(element).data('original-title');
-            $('.work-annotate').append("<div>[<span class='annotate-index'>" + (index+1) + '</span>]&nbsp;&nbsp' + annotate + '</div>');
-            // $('.work-annotate').append("<div><span class='annotate-index'>〔" + (index+1) + '〕</span>' + annotate + '</div>');
-         });
-      </script>
+         <div class="work-content work-type-{{ work.type.en }}"
+               {% if work.friendly_content|length < 32 %}
+              style="text-indent:0; text-align: center;"
+               {% endif %}
+               >{{ work.friendly_content|safe }}</div>
 
-      <h2>题解</h2>
-      <div class="work-introduction">{{ work.intro }}</div>
+         <script type="text/javascript">
+            $('.work-content sup').tooltip();
 
-      {% if reviews_num != 0 %}
-      <h2>
-         点评
-         {% if reviews_num > 4 %}
-         <span class='link-more'>
+            $('.work-content sup').each(function (index) {
+               $(this).text('〔' + (index + 1) + '〕');
+               // $(this).text(' [' + (index + 1) + '] ');
+            });
+         </script>
+
+         {% if session.user_id %}
+            <div class="btn-group btn-group-sm pull-right" id="work-cmds">
+               {% if session.user_id == admin_id %}
+                  <a class="btn btn-default" href="{{ url_for('edit_work', work_id=work.id) }}"><span
+                        class="glyphicon glyphicon-edit"></span> 编辑</a>
+               {% endif %}
+
+               <a class="btn btn-default" target="_blank" href="{{ url_for('add_work_review', work_id=work.id) }}"><span
+                     class="glyphicon glyphicon-pencil"></span> 点评</a>
+
+               <a class="btn btn-default" title='上传图片' href="{{ url_for('add_work_image', work_id=work.id) }}"><span
+                     class="glyphicon glyphicon-picture"></span> 传图</a>
+
+               {% if is_collected %}
+                  <a class="btn btn-default" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}"><span
+                        class="glyphicon glyphicon-bookmark"></span> 已收藏</a>
+               {% else %}
+                  <a class="btn btn-default" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}"><span
+                        class="glyphicon glyphicon-bookmark"></span> 收藏</a>
+               {% endif %}
+            </div>
+         {% endif %}
+
+         <h2>注释</h2>
+
+         <div class='work-annotate'></div>
+         <script type="text/javascript">
+            var work_annotate = $('.work-annotate');
+            $('.work-content sup').each(function (index, element) {
+               var annotate = $(element).data('original-title');
+               $('.work-annotate').append("<div>[<span class='annotate-index'>" + (index + 1) + '</span>]&nbsp;&nbsp' + annotate + '</div>');
+               // $('.work-annotate').append("<div><span class='annotate-index'>〔" + (index+1) + '〕</span>' + annotate + '</div>');
+            });
+         </script>
+
+         <h2>题解</h2>
+
+         <div class="work-introduction">{{ work.intro }}</div>
+
+         {% if reviews_num != 0 %}
+            <h2>
+               点评
+               {% if reviews_num > 4 %}
+                  <span class='link-more'>
             <a href="{{ url_for('work_reviews', work_id=work.id) }}">更多 / {{ reviews_num }} »</a>
          </span>
+               {% endif %}
+            </h2>
+
+            {% from "widget/work_reviews.widget" import render_work_reviews %}
+            {{ render_work_reviews(reviews)|safe }}
          {% endif %}
-      </h2>
 
-      {% from "widget/work_reviews.widget" import render_work_reviews %}
-      {{ render_work_reviews(reviews)|safe }}
-      {% endif %}
-
-      {% if images_num != 0 %}
-      <h2>
-         图片
-         {% if images_num > 9 %}
-         <span class='link-more'>
+         {% if images_num != 0 %}
+            <h2>
+               图片
+               {% if images_num > 9 %}
+                  <span class='link-more'>
             <a href="{{ url_for('work_images', work_id=work.id) }}">更多 / {{ images_num }} »</a>
          </span>
+               {% endif %}
+            </h2>
+
+            {% from "widget/work_images.widget" import render_work_images %}
+            {{ render_work_images(images)|safe }}
+
          {% endif %}
-      </h2>
+      </div>
 
-      {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(images)|safe }}
+      <div class="col-md-4">
+         <h2>标签</h2>
+         <ul class="work-tags">
+            {% for t in work.tags %}
+               <li><a href="{{ url_for('tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
+            {% endfor %}
+            <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span> 添加</a></li>
+         </ul>
 
-      {% endif %}
-   </div>
+         <h2>作者简介</h2>
 
-   <div class="col-md-4">
-      <h2>标签</h2>
-      <ul class="work-tags">
-         {% for t in work.tags %}
-         <li><a href="{{ url_for('tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
-         {% endfor %}
-         <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span> 添加</a></li>
-      </ul>
-
-      <h2>作者简介</h2>
-      <div>{{ work.author.intro|truncate(55, True) }}
+         <div>{{ work.author.intro|truncate(55, True) }}
          <span class='link-more'>
             <a href="{{ url_for('author', author_abbr=work.author.abbr) }}">更多»</a>
          </span>
+         </div>
+
+         <h2>其他作品</h2>
+
+         {% for work in other_works %}
+            <div class="other-work-item">
+               <a class="other-work-title"
+                  href="{{ url_for('work', work_id = work.id) }}">{{ work.title|truncate(12, True, '') }}</a>
+               <span class="other-work-content">{{ work.clean_content|truncate(8, True) }}</span>
+            </div>
+         {% endfor %}
+
+         {% if collectors.count() > 0 %}
+            <h2>谁收藏了它？</h2>
+
+            {% from 'widget/users.widget' import render_users %}
+            {{ render_users(collectors)|safe }}
+         {% endif %}
       </div>
-
-      <h2>其他作品</h2>
-
-      {% for work in other_works %}
-      <div class="other-work-item">
-         <a class="other-work-title" href="{{ url_for('work', work_id = work.id) }}">{{ work.title|truncate(12, True, '') }}</a>
-         <span class="other-work-content">{{ work.clean_content|truncate(8, True) }}</span>
-      </div>
-      {% endfor %}
-
-      {% if collectors.count() > 0 %}
-      <h2>谁收藏了它？</h2>
-
-      {% from 'widget/users.widget' import render_users %}
-      {{ render_users(collectors)|safe }}
-      {% endif %}
    </div>
-</div>
 
 {% endblock %}

@@ -1,57 +1,62 @@
 {% extends "layout.html" %}
 
 {% block page_title %}添加朝代{% endblock %}
-{% block page_id%}page-add-dynasty{% endblock %}
+{% block page_id %}page-add-dynasty{% endblock %}
 
 {% block body %}
 
-<form id="form-add-dynasty" class="form-horizontal" method="post" action="{{ url_for('add_dynasty') }}">
-   <fieldset>
-      <legend>添加朝代</legend>
+   <form id="form-add-dynasty" class="form-horizontal" method="post" action="{{ url_for('add_dynasty') }}">
+      <fieldset>
+         <legend>添加朝代</legend>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">朝代</label>
-         <div class="col-md-3">
-            <input type="text" name="name" class='form-control' />
-         </div>
-      </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label">朝代</label>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">拼音缩写</label>
-         <div class="col-md-3">
-            <input type="text" name="abbr" class='form-control' />
+            <div class="col-md-3">
+               <input type="text" name="name" class='form-control'/>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">起始年</label>
-         <div class="col-md-3 input-group">
-            <input type="text" name="start_year" class='form-control' />
-            <span class="input-group-addon">年</span>
-         </div>
-      </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label">拼音缩写</label>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">结束年</label>
-         <div class="col-md-3 input-group">
-            <input type="text" name="end_year" class='form-control' />
-            <span class="input-group-addon">年</span>
+            <div class="col-md-3">
+               <input type="text" name="abbr" class='form-control'/>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">简介</label>
-         <div class="col-md-6">
-            <textarea rows="10" name="intro" class='form-control'></textarea>
-         </div>
-      </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label">起始年</label>
 
-      <div class="form-group">
-         <div class="col-md-6 col-md-offset-2">
-            <input type="submit" value="提交" class="btn btn-primary" />
+            <div class="col-md-3 input-group">
+               <input type="text" name="start_year" class='form-control'/>
+               <span class="input-group-addon">年</span>
+            </div>
          </div>
-      </div>
-   </field>
-</form>
+
+         <div class="form-group">
+            <label class="col-md-2 control-label">结束年</label>
+
+            <div class="col-md-3 input-group">
+               <input type="text" name="end_year" class='form-control'/>
+               <span class="input-group-addon">年</span>
+            </div>
+         </div>
+
+         <div class="form-group">
+            <label class="col-md-2 control-label">简介</label>
+
+            <div class="col-md-6">
+               <textarea rows="10" name="intro" class='form-control'></textarea>
+            </div>
+         </div>
+
+         <div class="form-group">
+            <div class="col-md-6 col-md-offset-2">
+               <input type="submit" value="提交" class="btn btn-primary"/>
+            </div>
+         </div>
+         </field>
+   </form>
 
 {% endblock %}

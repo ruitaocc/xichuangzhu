@@ -22,10 +22,7 @@ class CommentForm(Form):
     content = TextAreaField('回复', [DataRequired(message="回复不能为空")])
 
 
-class EmailForm(Form):
-    """Form for send email"""
-    email = TextField('邮箱', [DataRequired(message="邮箱不能为空"), Email(message="无效的邮箱")])
-    user_id = HiddenField('用户ID', [DataRequired(message="用户ID不能为空")])
+
 
 
 class WorkImageForm(Form):

@@ -1,24 +1,23 @@
-#-*- coding: UTF-8 -*-
-import re
-from flask import render_template, request, redirect, url_for, json, abort, session
-from xichuangzhu import app, db
-from xichuangzhu.models.author_model import Author
-from xichuangzhu.models.work_model import Work
+# coding: utf-8
+from flask import render_template, request
+from xichuangzhu import app
+from xichuangzhu.models.author import Author
+from xichuangzhu.models.work import Work
 from xichuangzhu.utils import require_admin
 
-# page admin authors
-#--------------------------------------------------
+
 @app.route('/admin_authors', methods=['GET', 'POST'])
 @require_admin
 def admin_authors():
+    """管理文学家"""
     authors = Author.query
     return render_template('admin/admin_authors.html', authors=authors)
 
-# page admin works
-#--------------------------------------------------
+
 @app.route('/admin_works', methods=['GET', 'POST'])
 @require_admin
 def admin_works():
+    """管理作品"""
     page = int(request.args.get('page', 1))
     pagination = Work.query.paginate(page, 15)
     return render_template('admin/admin_works.html', pagination=pagination)

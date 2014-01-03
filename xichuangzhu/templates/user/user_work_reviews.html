@@ -1,22 +1,22 @@
 {% extends "layout.html" %}
 
 {% block page_title %}{{ user.friendly_name }}的点评{% endblock %}
-{% block page_id%}page-user-reviews{% endblock %}
+{% block page_id %}page-user-reviews{% endblock %}
 
 {% block body %}
 
-<div class="row">
-   <div class="col-md-8">
-      <h2>{{ user.friendly_name }}的点评 / {{ pagination.total }}</h2>
-      
-      {% from "widget/work_reviews.widget" import render_work_reviews %}
-      {{ render_work_reviews(pagination.items)|safe }}
+   <div class="row">
+      <div class="col-md-8">
+         <h2>{{ user.friendly_name }}的点评 / {{ pagination.total }}</h2>
 
-      {% from "widget/pagination.widget" import render_pagination %}
-      {{ render_pagination(pagination)|safe }}
+         {% from "widget/work_reviews.widget" import render_work_reviews %}
+         {{ render_work_reviews(pagination.items)|safe }}
+
+         {% from "widget/pagination.widget" import render_pagination %}
+         {{ render_pagination(pagination)|safe }}
+      </div>
+
+      <div class="col-md-4"></div>
    </div>
-
-   <div class="col-md-4"></div>
-</div>
 
 {% endblock %}

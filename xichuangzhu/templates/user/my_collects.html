@@ -1,23 +1,23 @@
 {% extends "layout.html" %}
 
 {% block page_title %}我的收藏{% endblock %}
-{% block page_id%}page-user-collects{% endblock %}
+{% block page_id %}page-user-collects{% endblock %}
 
 {% block body %}
 
-<div class="row">
-   <div class="col-md-8">
-      <h2>
-         我的收藏
+   <div class="row">
+      <div class="col-md-8">
+         <h2>
+            我的收藏
          <span class='link-more'>
             <a href="{{ url_for('my_collect_works') }}">全部 / {{ collect_works_num }} »</a>
          </span>
-      </h2>
+         </h2>
 
-      {% from "widget/works.widget" import render_works %}
-      {{ render_works(collect_works)|safe }}
+         {% from "widget/works.widget" import render_works %}
+         {{ render_works(collect_works)|safe }}
 
-      <!-- 
+         <!--
       <h2>
          图片收藏
          <span class='link-more'>
@@ -27,10 +27,10 @@
 
       {% from "widget/work_images.widget" import render_work_images %}
       {{ render_work_images(collect_work_images)|safe }} -->
-   </div>
+      </div>
 
-   <div class="col-md-4">
+      <div class="col-md-4">
+      </div>
    </div>
-</div>
 
 {% endblock %}

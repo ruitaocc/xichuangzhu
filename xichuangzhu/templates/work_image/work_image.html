@@ -1,54 +1,60 @@
 {% extends "layout.html" %}
 
 {% block page_title %}《{{ work_image.work.title }}》相关图片{% endblock %}
-{% block page_id%}page-work-image{% endblock %}
+{% block page_id %}page-work-image{% endblock %}
 
 {% block body %}
 
-<script type="text/javascript">
-$(function(){
-   $('.btn-remove').click(function(){
-      if(!confirm('确定删除此图片？')){
-         return false;
-      }
-   });
-});
-</script>
+   <script type="text/javascript">
+      $(function () {
+         $('.btn-remove').click(function () {
+            if (!confirm('确定删除此图片？')) {
+               return false;
+            }
+         });
+      });
+   </script>
 
-<div class='row'>
-   <div class='col-md-8'>
-      <p class='image-info'>
-         <a href="{{ url_for('user', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a> 上传于《<a href="{{ url_for('work', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>》：
-      </p>
+   <div class='row'>
+      <div class='col-md-8'>
+         <p class='image-info'>
+            <a href="{{ url_for('user', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a> 上传于《<a
+               href="{{ url_for('work', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>》：
+         </p>
 
-      <blockquote>
-         <p>{{ work_image.work.clean_content|truncate(100, True) }}</p>
-         <small>〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
-      </blockquote>
-   </div>
+         <blockquote>
+            <p>{{ work_image.work.clean_content|truncate(100, True) }}</p>
+            <small>〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
+         </blockquote>
+      </div>
 
-   <div class='col-md-2'>
-      <div class='btn-group btn-group-sm'>
-         {% if session.user_id %}
-            {% if work_image.user_id == session.user_id %}
-            <a class='btn btn-default' href="{{ url_for('edit_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-edit'></span> 编辑</a>
-            <a class='btn btn-default btn-remove' href="{{ url_for('delete_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-trash'></span> 删除</a>
-            {% else %}
-<!--                {% if is_collected %}
-               <a class='btn btn-default' title='取消收藏' href="{{ url_for('discollect_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-bookmark'></span> 已收藏</a>
+      <div class='col-md-2'>
+         <div class='btn-group btn-group-sm'>
+            {% if session.user_id %}
+               {% if work_image.user_id == session.user_id %}
+                  <a class='btn btn-default' href="{{ url_for('edit_work_image', work_image_id=work_image.id) }}"><span
+                        class='glyphicon glyphicon-edit'></span> 编辑</a>
+                  <a class='btn btn-default btn-remove'
+                     href="{{ url_for('delete_work_image', work_image_id=work_image.id) }}"><span
+                        class='glyphicon glyphicon-trash'></span> 删除</a>
                {% else %}
-               <a class='btn btn-default' title='点击收藏' href="{{ url_for('collect_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-bookmark'></span> 收藏</a>
+                  <!--                {% if is_collected %}
+               <a class='btn btn-default' title='取消收藏' href="
+                     {{ url_for('discollect_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-bookmark'></span> 已收藏</a>
+               {% else %}
+               <a class='btn btn-default' title='点击收藏' href="
+                     {{ url_for('collect_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-bookmark'></span> 收藏</a>
                {% endif %} -->
+               {% endif %}
             {% endif %}
-         {% endif %}
+         </div>
       </div>
    </div>
-</div>
 
-<div class='row'>
-   <div class='col-md-10'>
-      <img src="{{ work_image.url }}" class='work-image img-responsive' alt="《{{ work_image.work.title }}》书法作品" />
+   <div class='row'>
+      <div class='col-md-10'>
+         <img src="{{ work_image.url }}" class='work-image img-responsive' alt="《{{ work_image.work.title }}》书法作品"/>
+      </div>
    </div>
-</div>
 
 {% endblock %}

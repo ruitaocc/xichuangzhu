@@ -1,91 +1,98 @@
 {% extends "layout.html" %}
 
-{% block page_id%}page-author{% endblock %}
+{% block page_id %}page-author{% endblock %}
 {% block page_title %}{{ author.name }} - {{ author.dynasty.name }}{% endblock %}
 {% block description %}{{ author.name }}简介、{{ author.name }}诗词文作品。{% endblock %}
 
 {% block body %}
 
-<script type="text/javascript">
+   <script type="text/javascript">
 
-$(document).ready(function(){
-   $('.works-num-wap span').click(function(){
-      $('.works-num-wap span').removeClass('active');
-      $(this).addClass('active');
+      $(document).ready(function () {
+         $('.works-num-wap span').click(function () {
+            $('.works-num-wap span').removeClass('active');
+            $(this).addClass('active');
 
-      // show works of certain type
-      type = $(this).attr('data-work-type');
-      if(type == 'all'){
-         $('.work-item').show();
-      }
-      else{
-         $('.work-item').each(function(){
-            if($(this).attr('data-work-type') == type){
-               $(this).show();
+            // show works of certain type
+            type = $(this).attr('data-work-type');
+            if (type == 'all') {
+               $('.work-item').show();
             }
-            else{
-               $(this).hide();
+            else {
+               $('.work-item').each(function () {
+                  if ($(this).attr('data-work-type') == type) {
+                     $(this).show();
+                  }
+                  else {
+                     $(this).hide();
+                  }
+               });
             }
          });
-      }
-   });
 
-   $('.author-quote').tooltip({
-      placement: 'right'
-   });
-});
+         $('.author-quote').tooltip({
+            placement: 'right'
+         });
+      });
 
-</script>
+   </script>
 
-<div class="row">
-   <div class="col-md-8">
-      {% if session.user_id == admin_id %}
-      <div class='btn-group pull-right'>
-         <a class="btn btn-default " href="{{ url_for('edit_author', author_id=author.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
-         <a class="btn btn-default" href="{{ url_for('add_work', author_id=author.id) }}"><span class="glyphicon glyphicon-file"></span> 添加作品</a>
-      </div>
-      {% endif %}
-   
-      <div class="author">
-         <h1>{{ author.name }}</h1>
-         
-         {% if author.quotes|length != 0 %}
-         <a href="{{ url_for('work', work_id=quote.work.id) }}" class="author-quote" title="《{{ quote.work.title }}》">{{ quote.quote }}</a>
+   <div class="row">
+      <div class="col-md-8">
+         {% if session.user_id == admin_id %}
+            <div class='btn-group pull-right'>
+               <a class="btn btn-default " href="{{ url_for('edit_author', author_id=author.id) }}"><span
+                     class="glyphicon glyphicon-edit"></span> 编辑</a>
+               <a class="btn btn-default" href="{{ url_for('add_work', author_id=author.id) }}"><span
+                     class="glyphicon glyphicon-file"></span> 添加作品</a>
+            </div>
          {% endif %}
 
-         {% if session.user_id == 45197381 %}
-         <a class="btn btn-default btn-xs" target="_blank" href="{{ url_for('admin_quotes', author_id=author.id) }}">Edit / {{ author.quotes|length }}</a>
-         {% endif %}
-      </div>
-      
-      <div class='author-period'>
-         〔<a href="{{ url_for('dynasty', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕{% if author.death_year == "?" or author.death_year|int != 0 %}{{ author.birth_year|replace('-', '前') }}年 ~ {{ author.death_year|replace('-', '前') }}年{% endif %}
-      </div>
+         <div class="author">
+            <h1>{{ author.name }}</h1>
 
-      <h2>简介</h2>
-      <div class='author-introduction'>{{ author.intro }}</div>
-
-      <h2>
-         作品
-         <div class="works-num-wap">
-            <span data-work-type="all" class="active">全部</span>
-            {% for t in work_types %}
-            {% if t.type_num != 0 %}
-            <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
+            {% if author.quotes|length != 0 %}
+               <a href="{{ url_for('work', work_id=quote.work.id) }}" class="author-quote"
+                  title="《{{ quote.work.title }}》">{{ quote.quote }}</a>
             {% endif %}
-            {% endfor %}
+
+            {% if session.user_id == 45197381 %}
+               <a class="btn btn-default btn-xs" target="_blank"
+                  href="{{ url_for('admin_quotes', author_id=author.id) }}">Edit / {{ author.quotes|length }}</a>
+            {% endif %}
          </div>
-      </h2>
 
-      {% for work in author.works %}
-      <a href="{{url_for('work', work_id=work.id)}}" data-work-type="{{ work.type.en }}" class="work-item">
-         <div class='work-title'>{{ work.title }}</div>
-         <div class='work-content'>{{ work.clean_content|truncate(23, True) }}</div>
-      </a>
-      {% endfor %}
+         <div class='author-period'>
+            〔<a
+               href="{{ url_for('dynasty', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕{% if author.death_year == "?" or author.death_year|int != 0 %}
+            {{ author.birth_year|replace('-', '前') }}年 ~ {{ author.death_year|replace('-', '前') }}年{% endif %}
+         </div>
+
+         <h2>简介</h2>
+
+         <div class='author-introduction'>{{ author.intro }}</div>
+
+         <h2>
+            作品
+            <div class="works-num-wap">
+               <span data-work-type="all" class="active">全部</span>
+               {% for t in work_types %}
+                  {% if t.type_num != 0 %}
+                     <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
+                  {% endif %}
+               {% endfor %}
+            </div>
+         </h2>
+
+         {% for work in author.works %}
+            <a href="{{ url_for('work', work_id=work.id) }}" data-work-type="{{ work.type.en }}" class="work-item">
+               <div class='work-title'>{{ work.title }}</div>
+               <div class='work-content'>{{ work.clean_content|truncate(23, True) }}</div>
+            </a>
+         {% endfor %}
+      </div>
+
+      <div class="col-md-4"></div>
    </div>
-
-   <div class="col-md-4"></div>
-</div>
 
 {% endblock %}

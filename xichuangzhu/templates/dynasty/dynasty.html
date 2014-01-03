@@ -1,75 +1,79 @@
 {% extends "layout.html" %}
 
 {% block page_title %}{{ dynasty.name }}{% endblock %}
-{% block page_id%}page-dynasty{% endblock %}
+{% block page_id %}page-dynasty{% endblock %}
 {% block description %}{{ dynasty.name }}简介、{{ dynasty.name }}文学家{% endblock %}
 
 {% block body %}
 
-<ul id="dyn-selector" class="clearfix">
-   {% for dyn in dynasties %}
-   <li>
-      <a href="{{ url_for('dynasty', dynasty_abbr=dyn.abbr) }}" id="dyn-{{ dyn.id }}" data-dynasty-id="{{ dyn.id }}" style="{% if dyn.id == dynasty.id %}margin-top: 10px{% endif %}">{{ dyn.name }}</a>
-   </li>
-   {% endfor %}
-</ul>
+   <ul id="dyn-selector" class="clearfix">
+      {% for dyn in dynasties %}
+         <li>
+            <a href="{{ url_for('dynasty', dynasty_abbr=dyn.abbr) }}" id="dyn-{{ dyn.id }}"
+               data-dynasty-id="{{ dyn.id }}"
+               style="{% if dyn.id == dynasty.id %}margin-top: 10px{% endif %}">{{ dyn.name }}</a>
+         </li>
+      {% endfor %}
+   </ul>
 
-<script type="text/javascript">
+   <script type="text/javascript">
 
-// get random rgb color in css style
-function random_color(){
-   var r, g, b;
+      // get random rgb color in css style
+      function random_color() {
+         var r, g, b;
 
-   r = Math.floor(Math.random()*255+1);
-   g = Math.floor(Math.random()*200+1);
-   b = Math.floor(Math.random()*255+1);
-   return 'rgb(' + r + ',' + g + ',' + b + ')';
-}
+         r = Math.floor(Math.random() * 255 + 1);
+         g = Math.floor(Math.random() * 200 + 1);
+         b = Math.floor(Math.random() * 255 + 1);
+         return 'rgb(' + r + ',' + g + ',' + b + ')';
+      }
 
-// set random color
-$('#dyn-selector a').each(function(){
-   $(this).css({
-      'height': '22px',
-      'width': $(window).width() / 17 + 'px',
-      'background-color': random_color()
-   });
-});
+      // set random color
+      $('#dyn-selector a').each(function () {
+         $(this).css({
+            'height': '22px',
+            'width': $(window).width() / 17 + 'px',
+            'background-color': random_color()
+         });
+      });
 
-// when change window size
-$(window).resize(function(){
-   $('#dyn-selector a').css({
-      'width': $(window).width() / 17 + 'px'
-   });
-});
-</script>
+      // when change window size
+      $(window).resize(function () {
+         $('#dyn-selector a').css({
+            'width': $(window).width() / 17 + 'px'
+         });
+      });
+   </script>
 
-<div class="row">
-   <div class="col-md-8">
-      <div id="dynasty-wap">
-         {% if session.user_id == admin_id %}
-         <a class="btn btn-default pull-right" href="{{ url_for('edit_dynasty', dynasty_id=dynasty.id) }}"><span class="glyphicon glyphicon-edit"></span> 编辑</a>
-         {% endif %}
+   <div class="row">
+      <div class="col-md-8">
+         <div id="dynasty-wap">
+            {% if session.user_id == admin_id %}
+               <a class="btn btn-default pull-right" href="{{ url_for('edit_dynasty', dynasty_id=dynasty.id) }}"><span
+                     class="glyphicon glyphicon-edit"></span> 编辑</a>
+            {% endif %}
 
-         <h1 class='dynasty'>{{ dynasty.name }}</h1>
+            <h1 class='dynasty'>{{ dynasty.name }}</h1>
 
-         <div class="dynasty-period">{{ dynasty.friendly_start_year }} ~ {{ dynasty.friendly_end_year }}</div>
+            <div class="dynasty-period">{{ dynasty.friendly_start_year }} ~ {{ dynasty.friendly_end_year }}</div>
 
-         <h2>简介</h2>
-         <div class='dynasty-introduction'>{{ dynasty.intro }}</div>
+            <h2>简介</h2>
+
+            <div class='dynasty-introduction'>{{ dynasty.intro }}</div>
+         </div>
+      </div>
+
+      <div class="col-md-4">
+         <h2>
+            文学家
+         <span class='link-more'>
+            <a href="{{ url_for('authors') }}#{{ dynasty.abbr }}">更多 / {{ authors_num }} »</a>
+         </span>
+         </h2>
+
+         {% from 'widget/authors.widget' import render_authors %}
+         {{ render_authors(authors)|safe }}
       </div>
    </div>
-
-   <div class="col-md-4">
-      <h2>
-         文学家
-         <span class='link-more'>
-            <a href="{{ url_for('authors') }}#{{dynasty.abbr}}">更多 / {{ authors_num }} »</a>
-         </span>
-      </h2>
-
-      {% from 'widget/authors.widget' import render_authors %}
-      {{ render_authors(authors)|safe }}
-   </div>
-</div>
 
 {% endblock %}

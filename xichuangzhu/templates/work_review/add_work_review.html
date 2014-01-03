@@ -1,41 +1,42 @@
 {% extends "layout.html" %}
 
 {% block page_title %}点评《{{ work.title }}》{% endblock %}
-{% block page_id%}page-add-review{% endblock %}
+{% block page_id %}page-add-review{% endblock %}
 
 {% block body %}
 
-<form id="form-add-review" class="form-horizontal" method="post" action="{{ url_for('add_work_review', work_id=work.id) }}">
-   <fieldset>
-      <legend>点评《{{ work.title }}》</legend>
-      
-      {{ form.csrf_token }}
+   <form id="form-add-review" class="form-horizontal" method="post"
+         action="{{ url_for('add_work_review', work_id=work.id) }}">
+      <fieldset>
+         <legend>点评《{{ work.title }}》</legend>
 
-      {% from "widget/form.widget" import render_form_error %}
-      {{ render_form_error(form)|safe }}
+         {{ form.csrf_token }}
 
-      <div class="form-group">
-         {{ form.title.label(class='col-md-2 control-label') }}
-         <div class="col-md-6">
-            {{ form.title(class="form-control") }}
+         {% from "widget/form.widget" import render_form_error %}
+         {{ render_form_error(form)|safe }}
+
+         <div class="form-group">
+            {{ form.title.label(class='col-md-2 control-label') }}
+            <div class="col-md-6">
+               {{ form.title(class="form-control") }}
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         {{ form.content.label(class="col-md-2 control-label") }}
-         <div class="col-md-6">
-            {{ form.content(class="form-control", rows="20") }}
+         <div class="form-group">
+            {{ form.content.label(class="col-md-2 control-label") }}
+            <div class="col-md-6">
+               {{ form.content(class="form-control", rows="20") }}
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <div class="col-md-3 col-md-offset-2 btn-group btn-group-sm">
-            <input type="submit" name="draft" value="保存草稿" class="btn btn-default" />
-            <input type="submit" name="publish" value="发布" class="btn btn-primary btn-default" />
+         <div class="form-group">
+            <div class="col-md-3 col-md-offset-2 btn-group btn-group-sm">
+               <input type="submit" name="draft" value="保存草稿" class="btn btn-default"/>
+               <input type="submit" name="publish" value="发布" class="btn btn-primary btn-default"/>
+            </div>
          </div>
-      </div>
 
-   </fieldset>
-</form>
+      </fieldset>
+   </form>
 
 {% endblock %}

@@ -1,92 +1,92 @@
 {% extends "layout.html" %}
 
-{% block page_id%}page-index{% endblock %}
+{% block page_id %}page-index{% endblock %}
 {% block page_title %}西窗烛 | 品味传统文学之美{% endblock %}
 {% block description %}本站精心收录了历代文学作品之精华，并提供作品点评、书法创作的分享空间。{% endblock %}
 
 {% block body %}
 
-<script type="text/javascript">
+   <script type="text/javascript">
 
-$(document).ready(function(){
-   $('#work-refresh').click(function(){
-      $.ajax({
-         url: "{{ url_for('index_works') }}",
-         type: 'POST',
-         success: function(data){
-            $('#index-works-wap').html(data);
+      $(document).ready(function () {
+         $('#work-refresh').click(function () {
+            $.ajax({
+               url: "{{ url_for('index_works') }}",
+               type: 'POST',
+               success: function (data) {
+                  $('#index-works-wap').html(data);
 
-            // s2t
-            var bodyIsFt = $.cookie("bodyIsFt");
-            if(bodyIsFt == "1"){
-               StranObj($('#4works-wap')[0], 1);
-            }
-         }
+                  // s2t
+                  var bodyIsFt = $.cookie("bodyIsFt");
+                  if (bodyIsFt == "1") {
+                     StranObj($('#4works-wap')[0], 1);
+                  }
+               }
+            });
+         });
       });
-   });
-});
 
-</script>
+   </script>
 
-<div class="row">
-   <div class="col-md-8">
-      <h2>
-         作品
+   <div class="row">
+      <div class="col-md-8">
+         <h2>
+            作品
          <span class='link-more'>
             <a id="work-refresh">换换</a>
             <a href="{{ url_for('works') }}">更多»</a>
          </span>
-      </h2>
+         </h2>
 
-      <div id="index-works-wap">
-         {% include "widget/index_works.widget" %}
-      </div>
+         <div id="index-works-wap">
+            {% include "widget/index_works.widget" %}
+         </div>
 
-      <h2>
-         点评
+         <h2>
+            点评
          <span class='link-more'>
             <a href="{{ url_for('all_work_reviews') }}">更多»</a>
          </span>
-      </h2>
+         </h2>
 
-      {% from "widget/work_reviews.widget" import render_work_reviews %}
-      {{ render_work_reviews(work_reviews)|safe }}
+         {% from "widget/work_reviews.widget" import render_work_reviews %}
+         {{ render_work_reviews(work_reviews)|safe }}
 
-      <h2>
-         图片
+         <h2>
+            图片
          <span class='link-more'>
             <a href="{{ url_for('all_work_images') }}">更多»</a>
          </span>
-      </h2>
+         </h2>
 
-      {% from "widget/work_images.widget" import render_work_images %}
-      {{ render_work_images(work_images)|safe }}
-      
-   </div>
+         {% from "widget/work_images.widget" import render_work_images %}
+         {{ render_work_images(work_images)|safe }}
 
-   <div class="col-md-4">
+      </div>
 
-      <h2>
-         文学家
+      <div class="col-md-4">
+
+         <h2>
+            文学家
          <span class='link-more'>
             <a href="{{ url_for('authors') }}">更多»</a>
          </span>
-      </h2>
+         </h2>
 
-      {% from 'widget/authors.widget' import render_authors %}
-      {{ render_authors(authors)|safe }}
+         {% from 'widget/authors.widget' import render_authors %}
+         {{ render_authors(authors)|safe }}
 
-      <h2>五千年</h2>
+         <h2>五千年</h2>
 
-      <ul id="dynasties-wap">
-         {% for dynasty in dynasties %}
-         <li class='dynasty-item'>
-            <a href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
-            <span>/</span>
-         </li>
-         {% endfor %}
-      </ul>
+         <ul id="dynasties-wap">
+            {% for dynasty in dynasties %}
+               <li class='dynasty-item'>
+                  <a href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
+                  <span>/</span>
+               </li>
+            {% endfor %}
+         </ul>
+      </div>
    </div>
-</div>
 
 {% endblock %}

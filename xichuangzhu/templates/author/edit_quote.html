@@ -1,34 +1,37 @@
 {% extends "layout.html" %}
 
 {% block page_title %}编辑引语{% endblock %}
-{% block page_id%}page-edit-quote{% endblock %}
+{% block page_id %}page-edit-quote{% endblock %}
 
 {% block body %}
 
-<form id="form-edit-quote" class="form-horizontal" method="post" action="{{ url_for('edit_quote', quote_id=quote.id) }}">
-   <fieldset>
-      <legend>编辑引语</legend>
+   <form id="form-edit-quote" class="form-horizontal" method="post"
+         action="{{ url_for('edit_quote', quote_id=quote.id) }}">
+      <fieldset>
+         <legend>编辑引语</legend>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">引语</label>
-         <div class="col-md-4">
-            <input type="text" class="form-control" name="quote" value="{{ quote.quote }}" />
-         </div>
-      </div>
+         <div class="form-group">
+            <label class="col-md-2 control-label">引语</label>
 
-      <div class="form-group">
-         <label class="col-md-2 control-label">出自</label>
-         <div class="col-md-4">
-            <input type="text" class="form-control" name="work_id" value="{{ quote.work_id }}" />
+            <div class="col-md-4">
+               <input type="text" class="form-control" name="quote" value="{{ quote.quote }}"/>
+            </div>
          </div>
-      </div>
 
-      <div class="form-group">
-         <div class="col-md-6 col-md-offset-2">
-            <input type="submit" value="提交" class="btn btn-primary" />
+         <div class="form-group">
+            <label class="col-md-2 control-label">出自</label>
+
+            <div class="col-md-4">
+               <input type="text" class="form-control" name="work_id" value="{{ quote.work_id }}"/>
+            </div>
          </div>
-      </div>
-   </fieldset>
-</form>
+
+         <div class="form-group">
+            <div class="col-md-6 col-md-offset-2">
+               <input type="submit" value="提交" class="btn btn-primary"/>
+            </div>
+         </div>
+      </fieldset>
+   </form>
 
 {% endblock %}

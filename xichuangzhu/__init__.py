@@ -25,7 +25,7 @@ if app.debug:
     toolbar = DebugToolbarExtension(app)
 
 # SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://%s:%s@%s/%s' % (config.DB_USER, config.DB_PASSWD, config.DB_HOST, config.DB_NAME)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://%s:%s@%s/%s' % (config.DB_USER, config.DB_PASSWD, config.DB_HOST, config.DB_NAME)
 db = SQLAlchemy(app)
 
 # inject vars into template context
@@ -53,11 +53,3 @@ def before_request():
 import log
 import controllers
 import models
-
-# # admin
-# from flask.ext.admin import Admin
-# from flask.ext.admin.contrib.sqlamodel import ModelView
-# from models.author_model import Author
-
-# admin = Admin(app, name='西窗烛Admin')
-# admin.add_view(ModelView(Author, db.session))

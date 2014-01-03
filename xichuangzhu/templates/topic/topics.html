@@ -1,35 +1,36 @@
 {% extends "layout.html" %}
 
 {% block page_title %}话题{% endblock %}
-{% block page_id%}page-topics{% endblock %}
+{% block page_id %}page-topics{% endblock %}
 
 {% block extra_info %}Inspired by <a href='https://www.v2ex.com' target='_blank'>V2EX</a>{% endblock %}
 
 {% block body %}
 
-<div class="row">
-   <div class="col-md-8">
-      <h2>话题</h2>
+   <div class="row">
+      <div class="col-md-8">
+         <h2>话题</h2>
 
-      {% if session.user_id %}
-      <a class="btn btn-sm btn-default btn-new-topic" href="{{ url_for('add_topic') }}"><span class='glyphicon glyphicon-align-left'></span> 新话题</a>
-      {% endif %}
+         {% if session.user_id %}
+            <a class="btn btn-sm btn-default btn-new-topic" href="{{ url_for('add_topic') }}"><span
+                  class='glyphicon glyphicon-align-left'></span> 新话题</a>
+         {% endif %}
 
-      {% from "widget/topics.widget" import render_topics %}
-      {{ render_topics(pagination.items)|safe }}
+         {% from "widget/topics.widget" import render_topics %}
+         {{ render_topics(pagination.items)|safe }}
 
-      {% from "widget/pagination.widget" import render_pagination %}
-      {{ render_pagination(pagination)|safe }}
+         {% from "widget/pagination.widget" import render_pagination %}
+         {{ render_pagination(pagination)|safe }}
+      </div>
+
+      <div class="col-md-4">
+         <ul class='topic-tips'>
+            <li>话题讨论</li>
+            <li>建议与反馈</li>
+            <li>推荐文学家/作品</li>
+            <li>作品勘误</li>
+         </ul>
+      </div>
    </div>
-
-   <div class="col-md-4">
-      <ul class='topic-tips'>
-         <li>话题讨论</li>
-         <li>建议与反馈</li>
-         <li>推荐文学家/作品</li>
-         <li>作品勘误</li>
-      </ul>
-   </div>
-</div>
 
 {% endblock %}

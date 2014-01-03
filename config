@@ -20,7 +20,7 @@ SESSION_COOKIE_NAME = 'xcz_session'
 
 # db config
 DB_HOST = "localhost"
-DB_USER = ""
+DB_USER = "root"
 DB_PASSWD = ""
 DB_NAME = "xcz"
 

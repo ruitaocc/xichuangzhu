@@ -1,30 +1,33 @@
 {% extends "layout.html" %}
 
 {% block page_title %}关于西窗烛{% endblock %}
-{% block page_id%}page-about{% endblock %}
+{% block page_id %}page-about{% endblock %}
 
 {% block body %}
 
-<div class="row">
-   <div class="col-md-8">
-      <h2>西窗烛</h2>
+   <div class="row">
+      <div class="col-md-8">
+         <h2>西窗烛</h2>
 
-      <p>何当共剪西窗烛，却话巴山夜雨时。&nbsp;&nbsp;——&nbsp;&nbsp;李商隐&nbsp;《<a target="_blank" href="{{ url_for('work', work_id=10024) }}">夜雨寄北</a>》</p>
+         <p>何当共剪西窗烛，却话巴山夜雨时。&nbsp;&nbsp;——&nbsp;&nbsp;李商隐&nbsp;《<a target="_blank"
+                                                                   href="{{ url_for('work', work_id=10024) }}">夜雨寄北</a>》
+         </p>
 
-      <p><b>关于西窗烛</b></p>
+         <p><b>关于西窗烛</b></p>
 
-      <p>不得不承认，中国传统文化的一部分，是对人性和自由的禁锢。五四运动所要摒弃的，是传统中的糟粕。但大江东去的豪放明快、低头弄青梅的婉媚曲折、西窗剪烛的情深意重，每次读到都会有所触动。文学之美，与时代无关。</p>
+         <p>不得不承认，中国传统文化的一部分，是对人性和自由的禁锢。五四运动所要摒弃的，是传统中的糟粕。但大江东去的豪放明快、低头弄青梅的婉媚曲折、西窗剪烛的情深意重，每次读到都会有所触动。文学之美，与时代无关。</p>
 
-      <p>“西窗烛”旨在为大家提供一个 <b>围绕传统文学作品的欣赏、点评的网络空间</b>。对于小站的任何意见，欢迎在话题页面发表。</p>
+         <p>“西窗烛”旨在为大家提供一个 <b>围绕传统文学作品的欣赏、点评的网络空间</b>。对于小站的任何意见，欢迎在话题页面发表。</p>
 
-      <p><b>关于作者</b></p>
+         <p><b>关于作者</b></p>
 
-      <p><a href="{{ url_for('user', user_abbr='hustlzp') }}" target="_blank">hustlzp</a>，目前在武汉市关山口男子职院-光电信息工程专业读研，业余大爱Web开发，毕业后决定放弃本专业7年所学，加入互联网大军。如孟子云：虽千万人，吾往矣。</p>
+         <p><a href="{{ url_for('user', user_abbr='hustlzp') }}" target="_blank">hustlzp</a>，目前在武汉市关山口男子职院-光电信息工程专业读研，业余大爱Web开发，毕业后决定放弃本专业7年所学，加入互联网大军。如孟子云：虽千万人，吾往矣。
+         </p>
 
-      <p>邮箱：admin@xichuangzhu.com</p>
+         <p>邮箱：admin@xichuangzhu.com</p>
+      </div>
+
+      <div class="col-md-4"></div>
    </div>
-
-   <div class="col-md-4"></div>
-</div>
 
 {% endblock %}

@@ -1,1 +1,1 @@
-import author_model, dynasty_model, work_model, user_model, collect_model, topic_model
+import author, dynasty, work, user, collect, topic

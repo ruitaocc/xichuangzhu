@@ -1,90 +1,91 @@
 <!doctype html>
 <html>
-   <head>
-      <title>{% block page_title %}{% endblock %}</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      <meta name='description' content="{% block description %}{% endblock %}" />
-      {% block meta %}{% endblock %}
-      <meta name="google-site-verification" content="zJepc6vImx49zVPi4ID-67OUzuetR1JQNKrHN26bU7E" />
-      <meta name="baidu-site-verification" content="fKxRmqSY9r" />
-      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-      <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
-      <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/xichuangzhu.ico') }}">
-      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0.min.css') }}">
-      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0-theme.css') }}">
-      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
-      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
-      <script src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap-3.0.0.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
-      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.s2t.js') }}"></script>
-   </head>
+<head>
+   <title>{% block page_title %}{% endblock %}</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   <meta name='description' content="{% block description %}{% endblock %}"/>
+   {% block meta %}{% endblock %}
+   <meta name="google-site-verification" content="zJepc6vImx49zVPi4ID-67OUzuetR1JQNKrHN26bU7E"/>
+   <meta name="baidu-site-verification" content="fKxRmqSY9r"/>
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+   <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
+   <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/xichuangzhu.ico') }}">
+   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0.min.css') }}">
+   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0-theme.css') }}">
+   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
+   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
+   <script src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/bootstrap-3.0.0.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.s2t.js') }}"></script>
+</head>
 
-   <body id="{% block page_id %}{% endblock %}">
-      <nav class="navbar navbar-default navbar-static-top" role="navigation">
-         <div class='container'>
-            <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-               </button>
-               <a class="navbar-brand" href="{{ url_for('index') }}">西窗烛</a>
-            </div>
+<body id="{% block page_id %}{% endblock %}">
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+   <div class='container'>
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="{{ url_for('index') }}">西窗烛</a>
+      </div>
 
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-               <ul class="nav navbar-nav">
-                  <li><a href="{{ url_for('index') }}">首页</a></li>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+         <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('index') }}">首页</a></li>
 
-                  <li><a href="{{ url_for('tags') }}">标签</a></li>
-                  
-                  {% if session.user_id %}
-                  <li><a href="{{ url_for('my_collects') }}">收藏</a></li>
-                  {% endif %}
+            <li><a href="{{ url_for('tags') }}">标签</a></li>
 
-                  <li><a href="{{ url_for('topics') }}">话题</a></li>
+            {% if session.user_id %}
+               <li><a href="{{ url_for('my_collects') }}">收藏</a></li>
+            {% endif %}
 
-                  {% if not session.user_id %}
-                  <li><a href="{{ url_for('about') }}">关于</a></li>
-                  {% endif %}
-               </ul>
+            <li><a href="{{ url_for('topics') }}">话题</a></li>
 
-               <form class="navbar-form navbar-left" role="search">
-                  <div class="form-group">
-                     <div class='input-group input-group-sm'>
-                        <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
+            {% if not session.user_id %}
+               <li><a href="{{ url_for('about') }}">关于</a></li>
+            {% endif %}
+         </ul>
+
+         <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+               <div class='input-group input-group-sm'>
+                  <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
                         <span class='input-group-btn'>
-                           <button type="submit" title='搜索' class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+                           <button type="submit" title='搜索' class="btn btn-default"><span
+                                 class='glyphicon glyphicon-search'></span></button>
                         </span>
-                     </div>
-                  </div>
-               </form>
+               </div>
+            </div>
+         </form>
 
-               <script type="text/javascript">
-                  $('.navbar-form').submit(function(){
-                     var query = $('.search-content').val();
-                     var url = "http://www.google.com.hk/search?q=site:www.xichuangzhu.com/work " + query;
-                     window.open(url, "_blank");
-                     return false;
-                  });
-               </script>
-               
-               {% if session.user_id %}
-               
-               <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {{ session.user_name }} <b class="caret"></b>
-                     </a>
-                     <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('user', user_abbr=session.user_abbr) }}">我的主页</a></li>
-                        <li><a href="{{ url_for('signout') }}">退出</a></li>
-                     </ul>
-                  </li>
-               </ul>
+         <script type="text/javascript">
+            $('.navbar-form').submit(function () {
+               var query = $('.search-content').val();
+               var url = "http://www.google.com.hk/search?q=site:www.xichuangzhu.com/work " + query;
+               window.open(url, "_blank");
+               return false;
+            });
+         </script>
 
-               {% if session.user_id == admin_id %}
+         {% if session.user_id %}
+
+            <ul class="nav navbar-nav navbar-right">
+               <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                     {{ session.user_name }} <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li><a href="{{ url_for('user', user_abbr=session.user_abbr) }}">我的主页</a></li>
+                     <li><a href="{{ url_for('signout') }}">退出</a></li>
+                  </ul>
+               </li>
+            </ul>
+
+            {% if session.user_id == admin_id %}
                <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -110,74 +111,75 @@
                         <li><a href="{{ url_for('admin_authors') }}">文学家</a></li>
                      </ul>
                   </li>
-               </ul>               
-               {% endif %}
+               </ul>
+            {% endif %}
 
-               {% else %}
+         {% else %}
 
-               <a class='navbar-right navbar-btn' id='douban-icon' href="{{ douban_login_url }}">
-                  <img title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png" />
-               </a>
+            <a class='navbar-right navbar-btn' id='douban-icon' href="{{ douban_login_url }}">
+               <img title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png"/>
+            </a>
 
-               {% endif %}
+         {% endif %}
 
-               <button id="btn-s2t" class="btn btn-sm btn-default navbar-btn navbar-right">简</button>
+         <button id="btn-s2t" class="btn btn-sm btn-default navbar-btn navbar-right">简</button>
 
-               <script type="text/javascript">
-                  var bodyIsFt = $.cookie("bodyIsFt");
+         <script type="text/javascript">
+            var bodyIsFt = $.cookie("bodyIsFt");
 
-                  $('#btn-s2t').click(function(){
-                     // to simplified
-                     if (bodyIsFt == "1") {
-                        $.cookie("bodyIsFt", 0, { expires: 365, path : '/'});
-                        bodyIsFt = "0";
-                        $('#btn-s2t').text('简');
-                        $(document.body).t2s();
-                     } else {
-                        // to traditional
-                        $.cookie("bodyIsFt", 1, { expires: 365, path : '/'});
-                        bodyIsFt = "1";
-                        $('#btn-s2t').text('繁');
-                        $(document.body).s2t();
-                     }               
-                  });
-               </script>
-            </div>
-         </div>
-      </nav>
+            $('#btn-s2t').click(function () {
+               // to simplified
+               if (bodyIsFt == "1") {
+                  $.cookie("bodyIsFt", 0, { expires: 365, path: '/'});
+                  bodyIsFt = "0";
+                  $('#btn-s2t').text('简');
+                  $(document.body).t2s();
+               } else {
+                  // to traditional
+                  $.cookie("bodyIsFt", 1, { expires: 365, path: '/'});
+                  bodyIsFt = "1";
+                  $('#btn-s2t').text('繁');
+                  $(document.body).s2t();
+               }
+            });
+         </script>
+      </div>
+   </div>
+</nav>
 
-      <div id="main-wap" class="container">
-      {% block body %}{% endblock %}
+<div id="main-wap" class="container">
+   {% block body %}{% endblock %}
+</div>
+
+<div id="footer">
+   <div class='container'>
+      <div id='copyright'>西窗烛 ©2013 by <a href="http://hustlzp.com" target="_blank">hustlzp</a></div>
+
+      <ul id='links'>
+         <li><a href="{{ url_for('about') }}">关于</a></li
+               >
+         <li><a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a></li>
+      </ul>
+
+      <div id='extra-info'>
+         {% block extra_info %}{% endblock %}
       </div>
 
-      <div id="footer">
-         <div class='container'>
-            <div id='copyright'>西窗烛 ©2013 by <a href="http://hustlzp.com" target="_blank">hustlzp</a></div>
-            
-            <ul id='links'>
-               <li><a href="{{ url_for('about') }}">关于</a></li
-               ><li><a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a></li>
-            </ul>
+      <!-- <script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script> -->
+   </div>
+</div>
 
-            <div id='extra-info'>
-            {% block extra_info %}{% endblock %}
-            </div>
-  
-            <!-- <script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script> -->
-         </div>
-      </div>
+<script type="text/javascript">
+   // convert simple to fanti if needed
+   var bodyIsFt = $.cookie("bodyIsFt");
 
-      <script type="text/javascript">
-         // convert simple to fanti if needed
-         var bodyIsFt = $.cookie("bodyIsFt");
-
-         if(bodyIsFt == "1"){
-            $(document.body).s2t();
-            $('#btn-s2t').text('繁');
-         }
-         else{
-            $('#btn-s2t').text('简');
-         }
-      </script>
-   </body>
+   if (bodyIsFt == "1") {
+      $(document.body).s2t();
+      $('#btn-s2t').text('繁');
+   }
+   else {
+      $('#btn-s2t').text('简');
+   }
+</script>
+</body>
 </html>
