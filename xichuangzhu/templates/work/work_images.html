@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macro/ui.html" import pagination, work_images %}
 
 {% block page_title %}{{ work.author.name }}《{{ work.title }}》相关图片{% endblock %}
 {% block page_id %}page-work-images{% endblock %}
@@ -9,12 +10,9 @@
       <div class="span8">
          <h2>《{{ work.title }}》相关图片 / {{ pagination.total }}</h2>
 
-         {% from "widget/work_images.widget" import render_work_images %}
-         {{ render_work_images(pagination.items)|safe }}
+         {{ work_images(pagination.items)|safe }}
 
-         {% from "widget/pagination.html" import render_pagination %}
-         {{ render_pagination(pagination)|safe }}
-
+         {{ pagination(pagination)|safe }}
       </div>
 
       <div class="span4"></div>

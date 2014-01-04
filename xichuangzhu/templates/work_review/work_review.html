@@ -1,4 +1,6 @@
 {% extends "layout.html" %}
+{% from 'macro/ui.html' import comments %}
+{% from "macro/form.html" import form_errors %}
 
 {% block page_title %}{{ review.title }} - 点评：{{ review.work.author.name }}《{{ review.work.title }}》{% endblock %}
 {% block page_id %}page-review{% endblock %}
@@ -7,7 +9,6 @@
 
    {% if session.user_id %}
       <script type="text/javascript">
-
          // move the blink to the end of the input/textarea
          function moveEnd(obj) {
             obj.focus();
@@ -18,13 +19,12 @@
                sel.moveStart('character', len);
                sel.collapse();
                sel.select();
-            }
-            else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+            } else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
                obj.selectionStart = obj.selectionEnd = len;
             }
          }
 
-         $(document).ready(function () {
+         $(function () {
             $('.comment-item').hover(
                   function () {
                      $(this).find('.btn-reply-somebody').show();
@@ -46,7 +46,6 @@
                return confirm('确认删除？') ? true : false;
             });
          });
-
       </script>
    {% endif %}
 
@@ -66,8 +65,8 @@
          <div class="review-extra-info">
             <a href="{{ url_for('user', user_abbr=review.user.abbr) }}">{{ review.user.name }}</a>
             <span style="color:#333;">评</span>
-            <a href="{{ url_for('work', work_id=review.work_id) }}">{{ review.work.title }}</a><span
-               style="color:#333;">〔{{ review.work.author.name }}〕</span>
+            <a href="{{ url_for('work', work_id=review.work_id) }}">{{ review.work.title }}</a>
+            <span style="color:#333;">〔{{ review.work.author.name }}〕</span>
             ·
             <span class="review-time">{{ review.friendly_create_time }}</span>
             ·
@@ -85,9 +84,7 @@
          {% if review.comments|length != 0 %}
             <h2>回复</h2>
 
-            {% from 'widget/comments.html' import render_comments %}
-            {{ render_comments(review.comments)|safe }}
-
+            {{ comments(review.comments)|safe }}
          {% endif %}
 
          {% if session.user_id %}
@@ -95,8 +92,7 @@
                   action="{{ url_for('comment_work_review', review_id=review.id) }}">
                {{ form.csrf_token }}
 
-               {% from "widget/form.html" import render_form_error %}
-               {{ render_form_error(form)|safe }}
+               {{ form_errors(form)|safe }}
 
                {{ form.content(class="form-control textarea-comment", rows="4", placeholder="添加回复")|safe }}
                <input type="submit" class="btn btn-sm btn-default" value="回复"/>

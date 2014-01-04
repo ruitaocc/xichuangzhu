@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
+{% from "macro/ui.html" import comments %}
+{% from "macro/form.html" import form_errors %}
 
 {% block page_title %}{{ topic.title }} - 话题{% endblock %}
 {% block page_id %}page-topic{% endblock %}
-
 {% block extra_info %}Inspired by <a href='https://www.v2ex.com' target='_blank'>V2EX</a>{% endblock %}
 
 {% block body %}
 
    {% if session.user_id %}
       <script type="text/javascript">
-
          // move the blink to the end of the input/textarea
          function moveEnd(obj) {
             obj.focus();
@@ -20,13 +20,12 @@
                sel.moveStart('character', len);
                sel.collapse();
                sel.select();
-            }
-            else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+            } else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
                obj.selectionStart = obj.selectionEnd = len;
             }
          }
 
-         $(document).ready(function () {
+         $(function () {
             $('.comment-item').hover(
                   function () {
                      $(this).find('.btn-reply-somebody').show();
@@ -37,13 +36,13 @@
             );
 
             $('.btn-reply-somebody').click(function () {
-               var target_username = $(this).attr('data-username'),
-                     comment = $(".textarea-comment").val();
+               var target_username = $(this).attr('data-username');
+               var comment = $(".textarea-comment").val();
+
                $(".textarea-comment").val("@" + target_username + " " + comment);
                moveEnd($(".textarea-comment")[0]);
             });
          });
-
       </script>
    {% endif %}
 
@@ -57,8 +56,9 @@
 
             <div class="topic-extra-info">
                By
-               <a class="topic-creator"
-                  href="{{ url_for('user', user_abbr=topic.user.abbr) }}">{{ topic.user.name }}</a>
+               <a class="topic-creator" href="{{ url_for('user', user_abbr=topic.user.abbr) }}">
+                  {{ topic.user.name }}
+               </a>
                ·
                <span class="topic-time">{{ topic.friendly_create_time }}</span>
                ·
@@ -73,18 +73,14 @@
          {% if topic.comments|length != 0 %}
             <h2>回复</h2>
 
-            {% from "widget/comments.html" import render_comments %}
-            {{ render_comments(topic.comments)|safe }}
-
+            {{ comments(topic.comments)|safe }}
          {% endif %}
 
-         <!-- add comment -->
          {% if session.user_id %}
             <form id="add-topic-comment" method="post" action="{{ url_for('comment_topic', topic_id=topic.id) }}">
                {{ form.csrf_token }}
 
-               {% from "widget/form.html" import render_form_error %}
-               {{ render_form_error(form)|safe }}
+               {{ form_errors(form)|safe }}
 
                {{ form.content(class="form-control textarea-comment", rows="4", placeholder="添加回复")|safe }}
 

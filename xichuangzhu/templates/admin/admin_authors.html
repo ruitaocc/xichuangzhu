@@ -11,37 +11,39 @@
 
          <table class='table table-striped table-hover'>
             <thead>
-            <th>文学家</th>
-            <th>朝代</th>
-            <th>作品</th>
-            <th>引语</th>
-            <th>操作</th>
+            <tr>
+               <th>文学家</th>
+               <th>朝代</th>
+               <th>作品</th>
+               <th>引语</th>
+               <th>操作</th>
+            </tr>
             </thead>
 
             <tbody>
             {% for a in authors %}
-
                {% if a.works|length <= 1 or a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}
-                  </tr>
-                  <td><a target="_blank" href="{{ url_for('author', author_abbr=a.abbr) }}">{{ a.name }}</a></td>
+                  <tr>
+                     <td><a target="_blank" href="{{ url_for('author', author_abbr=a.abbr) }}">{{ a.name }}</a></td>
 
-                  <td>{{ a.dynasty.name }}</td>
+                     <td>{{ a.dynasty.name }}</td>
 
-                  <td {% if a.works|length <= 1 %}class='danger'{% endif %}>
-                     {{ a.works|length }}
-                  </td>
+                     <td {% if a.works|length <= 1 %}class='danger'{% endif %}>
+                        {{ a.works|length }}
+                     </td>
 
-                  <td {% if a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}class='danger'{% endif %}>
-                     {{ a.quotes|length }}
-                  </td>
+                     <td {% if a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}class='danger'{% endif %}>
+                        {{ a.quotes|length }}
+                     </td>
 
-                  <td>
-                     <a class='btn btn-sm btn-default' target="_blank" title='为{{ a.name }}添加作品'
-                        href="{{ url_for('add_work', author_id=a.id) }}"><span class='glyphicon glyphicon-file'></span></a>
-                  </td>
+                     <td>
+                        <a class='btn btn-sm btn-default' target="_blank" title='为{{ a.name }}添加作品'
+                           href="{{ url_for('add_work', author_id=a.id) }}">
+                           <span class='glyphicon glyphicon-file'></span>
+                        </a>
+                     </td>
                   </tr>
                {% endif %}
-
             {% endfor %}
             </tbody>
          </table>

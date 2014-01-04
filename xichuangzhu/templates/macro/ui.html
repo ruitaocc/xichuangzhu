@@ -1,0 +1,222 @@
+{% macro authors(authors) %}
+   {% for author in authors %}
+      <div class='author-item'>
+         <div>
+            <a class='author' href="{{ url_for('author', author_abbr=author.abbr, q=author.random_quote.id) }}">
+               {{ author.name }}
+            </a>
+
+            <sup class='author-dynasty'>
+               〔<a href="{{ url_for('dynasty', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
+            </sup>
+         </div>
+         <div class='author-quote'>{{ author.random_quote.quote }}</div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro users(users) %}
+   {% for u in users %}
+      <div class="user-item clearfix">
+         <a class="user-avatar" href="{{ url_for('user', user_abbr=u.abbr) }}"><img src="{{ u.avatar }}"/></a>
+
+         <div class="user-info">
+            <div class="user-name"><a href="{{ url_for('user', user_abbr=u.abbr) }}">{{ u.name }}</a></div>
+            <div class="user-signature">{{ u.signature }}</div>
+         </div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro comments(comments) %}
+   {% for comment in comments %}
+      <div class="comment-item clearfix">
+         <a name="{{ comment.id }}"></a>
+         <a class="comment-user-avatar" href="{{ url_for('user', user_abbr=comment.user.abbr) }}">
+            <img src="{{ comment.user.avatar }}">
+         </a>
+
+         <div class="comment-wap">
+            <div class="comment-extra-info">
+               <a href="{{ url_for('user', user_abbr=comment.user.abbr) }}">{{ comment.user.name }}</a>
+               <span class="comment-time">{{ comment.friendly_create_time }}</span>
+               <!-- <a class="btn-reply-somebody" data-username="{{ comment.user.name }}">回应</a> -->
+            </div>
+
+            <div class="comment-body">{{ comment.content|safe }}</div>
+         </div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro pagination(pagination) %}
+   <ul class='pagination'>
+      {% if pagination.has_prev %}
+         <li><a href="{{ url_for_other_page(pagination.prev_num) }}">«</a></li>
+      {% endif %}
+
+      <li><a>{{ pagination.page }} / {{ pagination.pages }}</a></li>
+
+      {% if pagination.has_next %}
+         <li><a href="{{ url_for_other_page(pagination.next_num) }}">»</a></li>
+      {% endif %}
+   </ul>
+{% endmacro %}
+
+
+{% macro topics(topics) %}
+   {% for t in topics %}
+      <div class="topic-item">
+         <a class="topic-user-avatar" href="{{ url_for('user', user_abbr=t.user.abbr) }}">
+            <img src="{{ t.user.avatar }}">
+         </a>
+
+         <div class="topic-info">
+            <div class="topic-title"><a href="{{ url_for('topic', topic_id=t.id) }}">{{ t.title }}</a></div>
+            <div class="topic-extra-info">
+               <a class="topic-creator" href="{{ url_for('user', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
+               <span class="topic-time">{{ t.friendly_create_time }}</span>
+            </div>
+            {% if t.comments|length != 0 %}
+               <div class="topic-comment-num">{{ t.comments|length }}</div>
+            {% endif %}
+         </div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro works(works) %}
+   {% for work in works %}
+      <div class="work-item">
+         <div class="work-header">
+            <a class="work-title" href="{{ url_for('work', work_id = work.id) }}">{{ work.title }}</a>
+            <sup class="work-author">
+               〔<a href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>〕
+            </sup>
+         </div>
+
+         <div class="work-content">{{ work.clean_content|truncate(35, True) }}</div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro works_with_type(works) %}
+   {% for work in works %}
+      <div class="work-item work-item-with-type">
+         <div class="work-header">
+            <a class="work-type" href="{{ url_for('works') }}?type={{ work.type.en }}">{{ work.type.cn }}</a>
+            <a class="work-title" href="{{ url_for('work', work_id = work.id) }}">{{ work.title }}</a>
+            <sup class="work-author">
+               〔<a href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>〕
+            </sup>
+         </div>
+
+         <div class="work-content">{{ work.clean_content|truncate(35, True) }}</div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro work_reviews(work_reviews) %}
+   {% for r in work_reviews %}
+      <div class="review-item">
+         <a class="user-avatar" href="{{ url_for('user', user_abbr=r.user.abbr) }}">
+            <img src="{{ r.user.avatar }}"/>
+         </a>
+
+         <div class="review-wap">
+            <div class="review-title">
+               <a href="{{ url_for('work_review', review_id = r.id) }}">{{ r.title }}</a>
+               {% if not r.is_publish %}
+                  <sup>
+                     <span class="label label-primary">草稿</span>
+                  </sup>
+               {% endif %}
+            </div>
+
+            <div class="review-content">{{ r.content|truncate(30, True)|safe }}</div>
+
+            <div class="review-extra-info">
+               <a href="{{ url_for('user', user_abbr=r.user.abbr) }}">{{ r.user.name }}</a>
+               评
+               <a href="{{ url_for('work', work_id=r.work.id) }}">{{ r.work.title }}</a>〔{{ r.work.author.name }}〕
+               <span class="review-time">{{ r.friendly_create_time }}</span>
+            </div>
+         </div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
+
+{% macro work_images(work_images) %}
+   <div class='work-image-wap'>
+      {% for w in work_images %}
+         <a href="{{ url_for('work_image', work_image_id=w.id) }}">
+            <img class='work-image img-responsive' src="{{ w.url }}">
+         </a>
+      {% endfor %}
+   </div>
+
+   <script type="text/javascript" src="{{ url_for('static', filename='js/imagesloaded.min.js') }}"></script>
+   <script type="text/javascript">
+      // water fall layout
+      function waterfall() {
+         var width = 195,
+               h_gap = 15,
+               v_gap = 15;
+
+         var lefts = [0, width + h_gap, 2 * (width + h_gap)],
+               tops = [0, 0, 0];
+
+         $('.work-image').each(function (index) {
+            // init css style
+            $(this).css({
+               'width': width + 'px',
+               'display': 'none',
+               'position': 'absolute'
+            });
+
+            // only when a img loaded, it's height becomes known.
+            $(this).imagesLoaded(function () {
+               // get the min height column
+               var minHeight = tops[0];
+               var minHeightColumn = 0;
+               for (var i = 0; i < tops.length; i++) {
+                  if (tops[i] < minHeight) {
+                     minHeight = tops[i];
+                     minHeightColumn = i;
+                  }
+               }
+
+               $(this).css({
+                  'display': 'block',
+                  'left': lefts[minHeightColumn] + 'px',
+                  'top': tops[minHeightColumn] + 'px'
+               });
+
+               // overadd height
+               tops[minHeightColumn] += $(this).height() + v_gap;
+
+               // set mother wap's height
+               var maxHeight = 0;
+               for (var i = 0; i < tops.length; i++) {
+                  if (tops[i] > maxHeight) {
+                     maxHeight = tops[i];
+                  }
+               }
+               $('.work-image-wap').css('height', maxHeight + 'px');
+            });
+         });
+      }
+
+      // if window's width < 992px, do not start water fall
+      if ($(window).width() >= 992) {
+         waterfall();
+      }
+   </script>
+{% endmacro %}

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'widget/authors.html' import render_authors %}
+{% from 'macro/ui.html' import authors %}
 
 {% block page_title %}历代文学家{% endblock %}
 {% block page_id %}page-authors{% endblock %}
@@ -14,8 +14,9 @@
             <a name="{{ dynasty.abbr }}"></a>
 
             <div class="author-wap">
-               <a class='author-dynasty'
-                  href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
+               <a class='author-dynasty' href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">
+                  {{ dynasty.name }}
+               </a>
 
                <ul class="author-group clearfix">
                   {% for author in dynasty.authors %}
@@ -31,7 +32,7 @@
       <div class="col-md-4">
          <h2>近期热门</h2>
 
-         {{ render_authors(hot_authors)|safe }}
+         {{ authors(hot_authors)|safe }}
       </div>
    </div>
 

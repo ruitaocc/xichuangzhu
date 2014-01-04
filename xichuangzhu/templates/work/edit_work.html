@@ -6,8 +6,7 @@
 {% block body %}
 
    <script type="text/javascript">
-      $(document).ready(function () {
-
+      $(function () {
          $('#btn-search-author').click(function () {
             var author_name = $('#input-author-name').val();
             $.ajax({
@@ -27,7 +26,6 @@
                }
             });
          });
-
       });
    </script>
 

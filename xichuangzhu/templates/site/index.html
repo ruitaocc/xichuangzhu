@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from 'macro/ui.html' import authors, work_reviews, work_images %}
 
 {% block page_id %}page-index{% endblock %}
 {% block page_title %}西窗烛 | 品味传统文学之美{% endblock %}
@@ -7,7 +8,6 @@
 {% block body %}
 
    <script type="text/javascript">
-
       $(document).ready(function () {
          $('#work-refresh').click(function () {
             $.ajax({
@@ -25,56 +25,51 @@
             });
          });
       });
-
    </script>
 
    <div class="row">
       <div class="col-md-8">
          <h2>
             作品
-         <span class='link-more'>
-            <a id="work-refresh">换换</a>
-            <a href="{{ url_for('works') }}">更多»</a>
-         </span>
+            <span class='link-more'>
+               <a id="work-refresh">换换</a>
+               <a href="{{ url_for('works') }}">更多»</a>
+            </span>
          </h2>
 
          <div id="index-works-wap">
-            {% include "widget/index_works.html" %}
+            {% include "macro/index_works.html" %}
          </div>
 
          <h2>
             点评
-         <span class='link-more'>
-            <a href="{{ url_for('all_work_reviews') }}">更多»</a>
-         </span>
+            <span class='link-more'>
+               <a href="{{ url_for('all_work_reviews') }}">更多»</a>
+            </span>
          </h2>
 
-         {% from "widget/work_reviews.widget" import render_work_reviews %}
-         {{ render_work_reviews(work_reviews)|safe }}
+         {{ work_reviews(work_reviews)|safe }}
 
          <h2>
             图片
-         <span class='link-more'>
-            <a href="{{ url_for('all_work_images') }}">更多»</a>
-         </span>
+            <span class='link-more'>
+               <a href="{{ url_for('all_work_images') }}">更多»</a>
+            </span>
          </h2>
 
-         {% from "widget/work_images.widget" import render_work_images %}
-         {{ render_work_images(work_images)|safe }}
-
+         {{ work_images(work_images)|safe }}
       </div>
 
       <div class="col-md-4">
 
          <h2>
             文学家
-         <span class='link-more'>
-            <a href="{{ url_for('authors') }}">更多»</a>
-         </span>
+            <span class='link-more'>
+               <a href="{{ url_for('authors') }}">更多»</a>
+            </span>
          </h2>
 
-         {% from 'widget/authors.html' import render_authors %}
-         {{ render_authors(authors)|safe }}
+         {{ authors(authors)|safe }}
 
          <h2>五千年</h2>
 

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macro/form.html" import form_errors %}
 
 {% block page_title %}上传图片{% endblock %}
 {% block page_id %}page-add-work-image{% endblock %}
@@ -12,12 +13,10 @@
 
          {{ form.csrf_token }}
 
-         {% from "widget/form.html" import render_form_error %}
-         {{ render_form_error(form)|safe }}
+         {{ form_errors(form)|safe }}
 
          <div class="form-group">
             <label class="control-label col-md-2">图片</label>
-
             <div class="col-md-6">
                {{ form.image }}
                <p class="help-block">图片大小不超过5M</p>

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macro/ui.html" import pagination %}
 
 {% block page_title %}管理作品{% endblock %}
 {% block page_id %}page-admin-works{% endblock %}
@@ -20,7 +21,6 @@
 
       <tbody>
       {% for w in pagination.items %}
-
          {% if w.tags|length == 0 or '<' not in w.content or w.intro == '' %}
             <tr>
                <td>[{{ w.type.cn }}] <a target="_blank"
@@ -32,16 +32,13 @@
                <td {% if w.tags|length == 0 %}class='danger'{% endif %}>
                   <ul class="work-tags">
                      {% if w.tags|length == 0 %}
-
-                        <a title="为《{{ w.title }}》添加标签" target="_blank" class="btn btn-sm btn-default" href="#"><span
-                              class="glyphicon glyphicon-tags"></span></a>
-
+                        <a title="为《{{ w.title }}》添加标签" target="_blank" class="btn btn-sm btn-default" href="#">
+                           <span class="glyphicon glyphicon-tags"></span>
+                        </a>
                      {% else %}
-
                         {% for t in w.tags %}
                            <li><a href="{{ url_for('works_by_tag', tag=t.tag) }}">{{ t.tag }}</a></li>
                         {% endfor %}
-
                      {% endif %}
                   </ul>
                </td>
@@ -63,26 +60,24 @@
                </td>
 
                <!-- <td {% if w.reviews.count() == 0 %}class='danger'{% endif %}>
-            {% if w.reviews.count() == 0 %}
-            <a title="点评《{{ w.title }}》" target="_blank" class='btn btn-sm btn-default' href="
-                  {{ url_for('add_work_review', work_id=w.id) }}"><span class='glyphicon glyphicon-pencil'></span></a>
-            {% endif %}
-         </td>
+                  {% if w.reviews.count() == 0 %}
+                  <a title="点评《{{ w.title }}》" target="_blank" class='btn btn-sm btn-default' href="
+                        {{ url_for('add_work_review', work_id=w.id) }}"><span class='glyphicon glyphicon-pencil'></span></a>
+                  {% endif %}
+               </td>
 
-         <td {% if w.images.count() == 0 %}class='danger'{% endif %}>
-            {% if w.images.count() == 0 %}
-            <a title="为《{{ w.title }}》添加书法作品" target="_blank" class='btn btn-sm btn-default' href="
-                  {{ url_for('add_work_image', work_id=w.id) }}"><span class='glyphicon glyphicon-picture'></span></a>
-            {% endif %}
-         </td> -->
+               <td {% if w.images.count() == 0 %}class='danger'{% endif %}>
+                  {% if w.images.count() == 0 %}
+                  <a title="为《{{ w.title }}》添加书法作品" target="_blank" class='btn btn-sm btn-default' href="
+                        {{ url_for('add_work_image', work_id=w.id) }}"><span class='glyphicon glyphicon-picture'></span></a>
+                  {% endif %}
+               </td> -->
             </tr>
          {% endif %}
-
       {% endfor %}
       </tbody>
    </table>
 
-   {% from "widget/pagination.html" import render_pagination %}
-   {{ render_pagination(pagination)|safe }}
+   {{ pagination(pagination)|safe }}
 
 {% endblock %}

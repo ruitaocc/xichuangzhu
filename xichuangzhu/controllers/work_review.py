@@ -47,7 +47,7 @@ def all_work_reviews():
     stmt = db.session.query(WorkReview.user_id, db.func.count(WorkReview.user_id).label('reviews_num')).group_by(
         WorkReview.user_id).subquery()
     hot_reviewers = db.session.query(User).join(stmt, User.id == stmt.c.user_id).order_by(stmt.c.reviews_num)
-    return render_template('work_review/all_work_reviews.html', pagination=pagination, hot_reviewers=hot_reviewers)
+    return render_template('work_review/work_reviews.html', pagination=pagination, hot_reviewers=hot_reviewers)
 
 
 @app.route('/work/<int:work_id>/add_review', methods=['GET', 'POST'])

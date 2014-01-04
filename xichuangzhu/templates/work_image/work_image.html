@@ -38,13 +38,17 @@
                      href="{{ url_for('delete_work_image', work_image_id=work_image.id) }}"><span
                         class='glyphicon glyphicon-trash'></span> 删除</a>
                {% else %}
-                  <!--                {% if is_collected %}
-               <a class='btn btn-default' title='取消收藏' href="
-                     {{ url_for('discollect_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-bookmark'></span> 已收藏</a>
-               {% else %}
-               <a class='btn btn-default' title='点击收藏' href="
-                     {{ url_for('collect_work_image', work_image_id=work_image.id) }}"><span class='glyphicon glyphicon-bookmark'></span> 收藏</a>
-               {% endif %} -->
+                  {#                  {% if is_collected %}#}
+                  {#                     <a class='btn btn-default' title='取消收藏'#}
+                  {#                        href="{{ url_for('discollect_work_image', work_image_id=work_image.id) }}">#}
+                  {#                        <span class='glyphicon glyphicon-bookmark'></span> 已收藏#}
+                  {#                     </a>#}
+                  {#                  {% else %}#}
+                  {#                     <a class='btn btn-default' title='点击收藏'#}
+                  {#                        href="{{ url_for('collect_work_image', work_image_id=work_image.id) }}">#}
+                  {#                        <span class='glyphicon glyphicon-bookmark'></span> 收藏#}
+                  {#                     </a>#}
+                  {#                  {% endif %}#}
                {% endif %}
             {% endif %}
          </div>
