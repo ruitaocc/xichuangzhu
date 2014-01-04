@@ -19,7 +19,7 @@
          {% from "widget/topics.widget" import render_topics %}
          {{ render_topics(pagination.items)|safe }}
 
-         {% from "widget/pagination.widget" import render_pagination %}
+         {% from "widget/pagination.html" import render_pagination %}
          {{ render_pagination(pagination)|safe }}
       </div>
 

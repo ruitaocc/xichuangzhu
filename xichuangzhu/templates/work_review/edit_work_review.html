@@ -12,7 +12,7 @@
 
          {{ form.csrf_token }}
 
-         {% from "widget/form.widget" import render_form_error %}
+         {% from "widget/form.html" import render_form_error %}
          {{ render_form_error(form)|safe }}
 
          <div class="form-group">

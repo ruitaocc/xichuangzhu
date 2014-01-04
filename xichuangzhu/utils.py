@@ -1,5 +1,5 @@
-#-*- coding: UTF-8 -*-
-import datetime, time
+# coding: utf-8
+import datetime
 from functools import wraps
 from flask import session, abort, g
 import config

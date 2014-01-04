@@ -85,7 +85,7 @@
          {% if review.comments|length != 0 %}
             <h2>回复</h2>
 
-            {% from 'widget/comments.widget' import render_comments %}
+            {% from 'widget/comments.html' import render_comments %}
             {{ render_comments(review.comments)|safe }}
 
          {% endif %}
@@ -95,7 +95,7 @@
                   action="{{ url_for('comment_work_review', review_id=review.id) }}">
                {{ form.csrf_token }}
 
-               {% from "widget/form.widget" import render_form_error %}
+               {% from "widget/form.html" import render_form_error %}
                {{ render_form_error(form)|safe }}
 
                {{ form.content(class="form-control textarea-comment", rows="4", placeholder="添加回复")|safe }}

@@ -6,7 +6,7 @@
     {% endfor %}
 </div>
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.imagesloaded.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/imagesloaded.min.js') }}"></script>
 <script type="text/javascript">
     // water fall layout
     function waterfall(){

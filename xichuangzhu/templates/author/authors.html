@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from 'widget/authors.html' import render_authors %}
 
 {% block page_title %}历代文学家{% endblock %}
 {% block page_id %}page-authors{% endblock %}
@@ -30,7 +31,6 @@
       <div class="col-md-4">
          <h2>近期热门</h2>
 
-         {% from 'widget/authors.widget' import render_authors %}
          {{ render_authors(hot_authors)|safe }}
       </div>
    </div>

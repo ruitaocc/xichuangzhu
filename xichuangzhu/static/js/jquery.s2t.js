@@ -9,7 +9,7 @@
  * Released under the MIT license
  */
 
-(function($) {
+(function ($) {
 
     // 共收录2553条简繁对照
     // 尚未考证是否正确、重复、完整
@@ -55,8 +55,8 @@
 
         for (i = 0; i < str.length; i++) {
             letter = str.charAt(i);
-            code = str.charCodeAt(i); 
-            
+            code = str.charCodeAt(i);
+
             // 根据字符的Unicode判断是否为汉字，以提高性能
             // 参考:
             // [1] http://www.unicode.org
@@ -91,7 +91,7 @@
         var i, attrValue;
 
         if (attr instanceof Array) {
-            for(i = 0; i < attr.length; i++) {
+            for (i = 0; i < attr.length; i++) {
                 tranAttr(element, attr[i], toT);
             }
         } else {
@@ -127,7 +127,7 @@
                 if ("|BR|HR|TEXTAREA|SCRIPT|OBJECT|EMBED|".indexOf("|" + childNode.tagName + "|") !== -1) {
                     continue;
                 }
-                
+
                 tranAttr(childNode, ['title', 'data-original-title', 'alt', 'placeholder'], toT);
 
                 // input 标签
@@ -135,8 +135,7 @@
                 if (childNode.tagName === "INPUT"
                     && childNode.value !== ""
                     && childNode.type !== "text"
-                    && childNode.type !== "hidden")
-                {
+                    && childNode.type !== "hidden") {
                     childNode.value = tranStr(childNode.value, toT);
                 }
 
@@ -155,7 +154,7 @@
          * @param {String} str - 待转换的文本
          * @returns {String} 转换结果
          */
-        s2t: function(str) {
+        s2t: function (str) {
             return tranStr(str, true);
         },
 
@@ -164,7 +163,7 @@
          * @param {String} str - 待转换的文本
          * @returns {String} 转换结果
          */
-        t2s: function(str) {
+        t2s: function (str) {
             return tranStr(str, false);
         }
     });
@@ -175,8 +174,8 @@
          * jQuery Objects简转繁
          * @this {jQuery Objects} 待转换的jQuery Objects
          */
-        s2t: function() {
-            return this.each(function() {
+        s2t: function () {
+            return this.each(function () {
                 tranElement(this, true);
             });
         },
@@ -185,10 +184,10 @@
          * jQuery Objects繁转简
          * @this {jQuery Objects} 待转换的jQuery Objects
          */
-        t2s: function() {
-            return this.each(function() {
+        t2s: function () {
+            return this.each(function () {
                 tranElement(this, false);
             });
         }
     });
-}) (jQuery);
+})(jQuery);

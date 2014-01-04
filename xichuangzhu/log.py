@@ -1,4 +1,4 @@
-#-*- coding: UTF-8 -*-
+# coding: utf-8
 from xichuangzhu import app
 import config
 

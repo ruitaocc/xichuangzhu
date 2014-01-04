@@ -10,12 +10,12 @@
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
    <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
    <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/xichuangzhu.ico') }}">
-   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0.min.css') }}">
-   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap-3.0.0-theme.css') }}">
+   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.min.css') }}">
+   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.theme.css') }}">
    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
-   <script src="{{ url_for('static', filename='js/jquery-2.0.3.min.js') }}"></script>
-   <script src="{{ url_for('static', filename='js/bootstrap-3.0.0.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
    <script src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.s2t.js') }}"></script>
 </head>
@@ -54,10 +54,12 @@
             <div class="form-group">
                <div class='input-group input-group-sm'>
                   <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
-                        <span class='input-group-btn'>
-                           <button type="submit" title='搜索' class="btn btn-default"><span
-                                 class='glyphicon glyphicon-search'></span></button>
-                        </span>
+
+                  <span class='input-group-btn'>
+                     <button type="submit" title='搜索' class="btn btn-default">
+                        <span class='glyphicon glyphicon-search'></span>
+                     </button>
+                  </span>
                </div>
             </div>
          </form>
@@ -113,13 +115,10 @@
                   </li>
                </ul>
             {% endif %}
-
          {% else %}
-
             <a class='navbar-right navbar-btn' id='douban-icon' href="{{ douban_login_url }}">
                <img title="用豆瓣帐号登陆" src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png"/>
             </a>
-
          {% endif %}
 
          <button id="btn-s2t" class="btn btn-sm btn-default navbar-btn navbar-right">简</button>
@@ -176,8 +175,7 @@
    if (bodyIsFt == "1") {
       $(document.body).s2t();
       $('#btn-s2t').text('繁');
-   }
-   else {
+   } else {
       $('#btn-s2t').text('简');
    }
 </script>

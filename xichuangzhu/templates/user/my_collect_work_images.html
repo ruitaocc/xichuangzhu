@@ -15,7 +15,7 @@
          {% from "widget/work_images.widget" import render_work_images %}
          {{ render_work_images(pagination.items)|safe }}
 
-         {% from "widget/pagination.widget" import render_pagination %}
+         {% from "widget/pagination.html" import render_pagination %}
          {{ render_pagination(pagination)|safe }}
 
       </div>

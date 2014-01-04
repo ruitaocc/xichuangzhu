@@ -39,7 +39,7 @@
          </h2>
 
          <div id="index-works-wap">
-            {% include "widget/index_works.widget" %}
+            {% include "widget/index_works.html" %}
          </div>
 
          <h2>
@@ -73,7 +73,7 @@
          </span>
          </h2>
 
-         {% from 'widget/authors.widget' import render_authors %}
+         {% from 'widget/authors.html' import render_authors %}
          {{ render_authors(authors)|safe }}
 
          <h2>五千年</h2>

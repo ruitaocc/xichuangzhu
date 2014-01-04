@@ -23,7 +23,7 @@ def index():
 def index_works():
     """生成首页需要的作品json数据"""
     works = Work.query.order_by(db.func.rand()).limit(4)
-    return render_template('widget/index_works.widget', works=works)
+    return render_template('widget/index_works.html', works=works)
 
 
 @app.route('/about')

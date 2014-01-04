@@ -12,7 +12,7 @@
          {% from "widget/works.widget" import render_works %}
          {{ render_works(pagination.items)|safe }}
 
-         {% from "widget/pagination.widget" import render_pagination %}
+         {% from "widget/pagination.html" import render_pagination %}
          {{ render_pagination(pagination)|safe }}
       </div>
 

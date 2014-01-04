@@ -12,7 +12,7 @@
          {% from "widget/work_reviews.widget" import render_work_reviews %}
          {{ render_work_reviews(pagination.items)|safe }}
 
-         {% from "widget/pagination.widget" import render_pagination %}
+         {% from "widget/pagination.html" import render_pagination %}
          {{ render_pagination(pagination)|safe }}
       </div>
 
