@@ -3,8 +3,7 @@ from __future__ import division
 import cgi
 from flask import render_template, request, redirect, url_for, session, abort
 from xichuangzhu import app, db
-from xichuangzhu.models.work import Work, WorkReview, WorkReviewComment
-from xichuangzhu.models.user import User
+from ..models import Work, WorkReview, WorkReviewComment, User
 from ..forms import ReviewForm, CommentForm
 from ..utils import require_login
 

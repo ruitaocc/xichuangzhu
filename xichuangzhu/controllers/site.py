@@ -1,9 +1,7 @@
 # coding: utf-8
 from flask import render_template
 from xichuangzhu import app, db
-from xichuangzhu.models.work import Work, WorkImage, WorkReview
-from xichuangzhu.models.author import Author
-from xichuangzhu.models.dynasty import Dynasty
+from ..models import Work, WorkImage, WorkReview, Author, Dynasty
 
 
 @app.route('/')

@@ -4,10 +4,9 @@ import os
 import uuid
 from flask import render_template, request, redirect, url_for, json, session, abort
 from xichuangzhu import app, db, config
-from xichuangzhu.models.work import Work, WorkImage
-from xichuangzhu.models.collect import CollectWorkImage
+from ..models import Work, WorkImage, CollectWorkImage
 from ..forms import WorkImageForm
-from xichuangzhu.utils import require_login
+from ..utils import require_login
 
 
 @app.route('/work_image/<int:work_image_id>', methods=['GET'])

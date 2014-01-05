@@ -2,11 +2,8 @@
 from __future__ import division
 from flask import render_template, request, session
 from xichuangzhu import app
-from xichuangzhu.models.user import User
-from xichuangzhu.models.collect import CollectWork, CollectWorkImage
-from xichuangzhu.models.topic import Topic
-from xichuangzhu.models.work import Work, WorkImage, WorkReview
-from xichuangzhu.utils import require_login, check_is_me
+from ..models import User, CollectWork, CollectWorkImage, Topic, Work, WorkImage, WorkReview
+from ..utils import require_login, check_is_me
 
 
 @app.route('/u/<user_abbr>')

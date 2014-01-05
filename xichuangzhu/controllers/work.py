@@ -1,12 +1,8 @@
 # coding: utf-8
 from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app, db
-from xichuangzhu.models.work import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag
-from xichuangzhu.models.dynasty import Dynasty
-from xichuangzhu.models.author import Author
-from xichuangzhu.models.user import User
-from xichuangzhu.models.collect import CollectWork
-from xichuangzhu.utils import require_login, require_admin
+from ..models import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork
+from ..utils import require_login, require_admin
 
 
 @app.route('/work/<int:work_id>')

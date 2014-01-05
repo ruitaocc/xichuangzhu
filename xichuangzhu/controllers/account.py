@@ -5,8 +5,8 @@ from email.mime.text import MIMEText
 import hashlib
 from flask import render_template, request, redirect, url_for, session
 from xichuangzhu import app, db, config
-from xichuangzhu.models.user import User
-from xichuangzhu.utils import require_login
+from ..models import User
+from ..utils import require_login
 from ..forms import EmailForm
 
 # proc - login by douban's oauth2.0 (public)

@@ -1,11 +1,8 @@
 # coding: utf-8
 from flask import render_template, request, redirect, url_for
 from xichuangzhu import app, db
-from xichuangzhu.models.author import Author, AuthorQuote
-from xichuangzhu.models.work import Work, WorkType
-from xichuangzhu.models.collect import CollectWork
-from xichuangzhu.models.dynasty import Dynasty
-from xichuangzhu.utils import require_admin
+from ..models import Author, AuthorQuote, Work, WorkType, CollectWork, Dynasty
+from ..utils import require_admin
 
 
 @app.route('/author/<author_abbr>')

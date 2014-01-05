@@ -1,9 +1,8 @@
 # coding: utf-8
 from flask import render_template, request
 from xichuangzhu import app
-from xichuangzhu.models.author import Author
-from xichuangzhu.models.work import Work
-from xichuangzhu.utils import require_admin
+from ..models import Work, Author
+from ..utils import require_admin
 
 
 @app.route('/admin_authors', methods=['GET', 'POST'])

@@ -1,8 +1,8 @@
 # coding: utf-8
 from flask import render_template, request, redirect, url_for
 from xichuangzhu import app, db
-from xichuangzhu.models.dynasty import Dynasty
-from xichuangzhu.utils import require_admin
+from ..models import Dynasty
+from ..utils import require_admin
 
 
 @app.route('/dynasty/<dynasty_abbr>')
