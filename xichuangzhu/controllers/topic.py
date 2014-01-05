@@ -11,8 +11,8 @@ from xichuangzhu.utils import require_login
 def topics():
     """全部话题"""
     page = int(request.args.get('page', 1))
-    pagination = Topic.query.order_by(Topic.create_time).paginate(page, 10)
-    return render_template('topic/topics.html', pagination=pagination)
+    paginator = Topic.query.order_by(Topic.create_time).paginate(page, 10)
+    return render_template('topic/topics.html', paginator=paginator)
 
 
 @app.route('/topic/<int:topic_id>')

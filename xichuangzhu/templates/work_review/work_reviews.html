@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import users, pagination, work_reviews %}
+{% from 'macro/ui.html' import render_users, pagination, render_work_reviews %}
 
 {% block page_title %}最新点评{% endblock %}
 {% block page_id %}page-reviews{% endblock %}
@@ -10,15 +10,15 @@
       <div class="col-md-8">
          <h2>最新点评</h2>
 
-         {{ work_reviews(pagination.items)|safe }}
+         {{ render_work_reviews(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4">
          <h2>点评人</h2>
 
-         {{ users(hot_reviewers)|safe }}
+         {{ render_users(hot_reviewers) }}
       </div>
    </div>
 

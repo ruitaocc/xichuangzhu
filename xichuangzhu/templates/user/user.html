@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import work_reviews, work_images, topics %}
+{% from "macro/ui.html" import render_work_reviews, render_work_images, render_topics %}
 
 {% block page_title %}{{ user.friendly_name }}的个人主页{% endblock %}
 {% block page_id %}page-user{% endblock %}
@@ -26,7 +26,7 @@
             </span>
          </h2>
 
-         {{ work_reviews(work_reviews)|safe }}
+         {{ render_work_reviews(work_reviews) }}
 
          <h2>
             话题
@@ -35,7 +35,7 @@
             </span>
          </h2>
 
-         {{ topics(topics)|safe }}
+         {{ render_topics(topics) }}
 
          <h2>
             图片
@@ -44,7 +44,7 @@
             </span>
          </h2>
 
-         {{ work_images(work_images)|safe }}
+         {{ render_work_images(work_images) }}
       </div>
 
       <div class="col-md-4"></div>

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import authors, work_reviews, work_images %}
+{% from 'macro/ui.html' import render_authors, render_work_reviews, render_work_images %}
 
 {% block page_id %}page-index{% endblock %}
 {% block page_title %}西窗烛 | 品味传统文学之美{% endblock %}
@@ -8,7 +8,7 @@
 {% block body %}
 
    <script type="text/javascript">
-      $(document).ready(function () {
+      $(function () {
          $('#work-refresh').click(function () {
             $.ajax({
                url: "{{ url_for('index_works') }}",
@@ -48,7 +48,7 @@
             </span>
          </h2>
 
-         {{ work_reviews(work_reviews)|safe }}
+         {{ render_work_reviews(work_reviews) }}
 
          <h2>
             图片
@@ -57,7 +57,7 @@
             </span>
          </h2>
 
-         {{ work_images(work_images)|safe }}
+         {{ render_work_images(work_images) }}
       </div>
 
       <div class="col-md-4">
@@ -69,7 +69,7 @@
             </span>
          </h2>
 
-         {{ authors(authors)|safe }}
+         {{ render_authors(authors) }}
 
          <h2>五千年</h2>
 

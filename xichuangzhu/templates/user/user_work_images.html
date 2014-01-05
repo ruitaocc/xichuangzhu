@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, work_images %}
+{% from "macro/ui.html" import pagination, render_work_images %}
 
 {% block page_title %}{{ user.friendly_name }}上传的图片{% endblock %}
 {% block page_id %}page-user-work-images{% endblock %}
@@ -9,12 +9,12 @@
    <div class="row">
       <div class="col-md-8">
          <h2>
-            {{ user.friendly_name }}上传的图片 / {{ pagination.total }}
+            {{ user.friendly_name }}上传的图片 / {{ paginator.total }}
          </h2>
 
-         {{ work_images(pagination.items)|safe }}
+         {{ render_work_images(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4"></div>

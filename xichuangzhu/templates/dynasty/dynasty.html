@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import authors %}
+{% from 'macro/ui.html' import render_authors %}
 
 {% block page_title %}{{ dynasty.name }}{% endblock %}
 {% block page_id %}page-dynasty{% endblock %}
@@ -72,7 +72,7 @@
             </span>
          </h2>
 
-         {{ authors(authors)|safe }}
+         {{ render_authors(authors) }}
       </div>
    </div>
 

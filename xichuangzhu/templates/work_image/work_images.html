@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, work_images %}
+{% from "macro/ui.html" import pagination, render_work_images %}
 
 {% block page_title %}最新图片{% endblock %}
 {% block page_id %}page-all-work-images{% endblock %}
@@ -10,9 +10,9 @@
       <div class="col-md-8">
          <h2>最新图片</h2>
 
-         {{ work_images(pagination.items)|safe }}
+         {{ render_work_images(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4"></div>

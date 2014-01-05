@@ -38,12 +38,11 @@ def user_work_reviews(user_abbr):
     """用户的作品点评"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
     page = int(request.args.get('page', 1))
-    query = user.work_reviews.order_by(WorkReview.create_time.desc())
-    if check_is_me(user.id):
-        pagination = query.paginate(page, 10)
-    else:
-        pagination = query.filter(WorkReview.is_publish == True).paginate(page, 10)
-    return render_template('user/user_work_reviews.html', user=user, pagination=pagination)
+    work_reviews = user.work_reviews.order_by(WorkReview.create_time.desc())
+    if not check_is_me(user.id):
+        work_reviews = work_reviews.filter(WorkReview.is_publish == True)
+    paginator = work_reviews.paginate(page, 10)
+    return render_template('user/user_work_reviews.html', user=user, paginator=paginator)
 
 
 @app.route('/u/<user_abbr>/topics')
@@ -51,8 +50,8 @@ def user_topics(user_abbr):
     """用户发表的话题"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
     page = int(request.args.get('page', 1))
-    pagination = user.topics.order_by(Topic.create_time.desc()).paginate(page, 10)
-    return render_template('user/user_topics.html', user=user, pagination=pagination)
+    paginator = user.topics.order_by(Topic.create_time.desc()).paginate(page, 10)
+    return render_template('user/user_topics.html', user=user, paginator=paginator)
 
 
 @app.route('/u/<user_abbr>/work_images')
@@ -60,8 +59,8 @@ def user_work_images(user_abbr):
     """用户上传的作品图片"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
     page = int(request.args.get('page', 1))
-    pagination = user.work_images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
-    return render_template('user/user_work_images.html', user=user, pagination=pagination)
+    paginator = user.work_images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
+    return render_template('user/user_work_images.html', user=user, paginator=paginator)
 
 
 @app.route('/my_collects')
@@ -87,9 +86,9 @@ def my_collects():
 def my_collect_works():
     """用户收藏的文学作品"""
     page = int(request.args.get('page', 1))
-    pagination = Work.query.join(CollectWork).filter(CollectWork.user_id == session['user_id']).order_by(
+    paginator = Work.query.join(CollectWork).filter(CollectWork.user_id == session['user_id']).order_by(
         CollectWork.create_time.desc()).paginate(page, 10)
-    return render_template('user/my_collect_works.html', pagination=pagination)
+    return render_template('user/my_collect_works.html', paginator=paginator)
 
 
 @app.route('/collect_work_images')
@@ -97,6 +96,6 @@ def my_collect_works():
 def my_collect_work_images():
     """用户收藏的图片"""
     page = int(request.args.get('page', 1))
-    pagination = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id == session['user_id']).order_by(
+    paginator = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id == session['user_id']).order_by(
         CollectWorkImage.create_time.desc()).paginate(page, 12)
-    return render_template('user/my_collect_work_images.html', pagination=pagination)
+    return render_template('user/my_collect_work_images.html', paginator=paginator)

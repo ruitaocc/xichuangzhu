@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, work_images %}
+{% from "macro/ui.html" import pagination, render_work_images %}
 
 {% block page_title %}图片收藏{% endblock %}
 {% block page_id %}page-user-collect-work-images{% endblock %}
@@ -12,9 +12,9 @@
             图片收藏 / {{ pagination.total }}
          </h2>
 
-         {{ work_images(pagination.items)|safe }}
+         {{ render_work_images(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="span4">

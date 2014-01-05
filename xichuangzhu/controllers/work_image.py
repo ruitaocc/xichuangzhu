@@ -61,8 +61,8 @@ def discollect_work_image(work_image_id):
 def all_work_images():
     """作品的所有相关图片"""
     page = int(request.args.get('page', 1))
-    pagination = WorkImage.query.paginate(page, 12)
-    return render_template('work_image/work_images.html', pagination=pagination)
+    paginator = WorkImage.query.paginate(page, 12)
+    return render_template('work_image/work_images.html', paginator=paginator)
 
 
 @app.route('/work/<int:work_id>/add_image', methods=['GET', 'POST'])

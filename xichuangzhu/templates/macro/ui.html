@@ -1,12 +1,10 @@
-{% macro authors(authors) %}
+{% macro render_authors(authors) %}
    {% for author in authors %}
       <div class='author-item'>
          <div>
             <a class='author' href="{{ url_for('author', author_abbr=author.abbr, q=author.random_quote.id) }}">
                {{ author.name }}
-            </a>
-
-            <sup class='author-dynasty'>
+            </a><sup class='author-dynasty'>
                〔<a href="{{ url_for('dynasty', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
             </sup>
          </div>
@@ -16,7 +14,7 @@
 {% endmacro %}
 
 
-{% macro users(users) %}
+{% macro render_users(users) %}
    {% for u in users %}
       <div class="user-item clearfix">
          <a class="user-avatar" href="{{ url_for('user', user_abbr=u.abbr) }}"><img src="{{ u.avatar }}"/></a>
@@ -30,44 +28,44 @@
 {% endmacro %}
 
 
-{% macro comments(comments) %}
-   {% for comment in comments %}
+{% macro render_comments(comments) %}
+   {% for c in comments %}
       <div class="comment-item clearfix">
-         <a name="{{ comment.id }}"></a>
-         <a class="comment-user-avatar" href="{{ url_for('user', user_abbr=comment.user.abbr) }}">
-            <img src="{{ comment.user.avatar }}">
+         <a name="{{ c.id }}"></a>
+         <a class="comment-user-avatar" href="{{ url_for('user', user_abbr=c.user.abbr) }}">
+            <img src="{{ c.user.avatar }}">
          </a>
 
          <div class="comment-wap">
             <div class="comment-extra-info">
-               <a href="{{ url_for('user', user_abbr=comment.user.abbr) }}">{{ comment.user.name }}</a>
-               <span class="comment-time">{{ comment.friendly_create_time }}</span>
-               <!-- <a class="btn-reply-somebody" data-username="{{ comment.user.name }}">回应</a> -->
+               <a href="{{ url_for('user', user_abbr=c.user.abbr) }}">{{ c.user.name }}</a>
+               <span class="comment-time">{{ c.friendly_create_time }}</span>
+               <!-- <a class="btn-reply-somebody" data-username="{{ c.user.name }}">回应</a> -->
             </div>
 
-            <div class="comment-body">{{ comment.content|safe }}</div>
+            <div class="comment-body">{{ c.content|safe }}</div>
          </div>
       </div>
    {% endfor %}
 {% endmacro %}
 
 
-{% macro pagination(pagination) %}
+{% macro pagination(paginator) %}
    <ul class='pagination'>
-      {% if pagination.has_prev %}
-         <li><a href="{{ url_for_other_page(pagination.prev_num) }}">«</a></li>
+      {% if paginator.has_prev %}
+         <li><a href="{{ url_for_other_page(paginator.prev_num) }}">«</a></li>
       {% endif %}
 
-      <li><a>{{ pagination.page }} / {{ pagination.pages }}</a></li>
+      <li><a>{{ paginator.page }} / {{ paginator.pages }}</a></li>
 
-      {% if pagination.has_next %}
-         <li><a href="{{ url_for_other_page(pagination.next_num) }}">»</a></li>
+      {% if paginator.has_next %}
+         <li><a href="{{ url_for_other_page(paginator.next_num) }}">»</a></li>
       {% endif %}
    </ul>
 {% endmacro %}
 
 
-{% macro topics(topics) %}
+{% macro render_topics(topics) %}
    {% for t in topics %}
       <div class="topic-item">
          <a class="topic-user-avatar" href="{{ url_for('user', user_abbr=t.user.abbr) }}">
@@ -89,23 +87,23 @@
 {% endmacro %}
 
 
-{% macro works(works) %}
-   {% for work in works %}
+{% macro render_works(works) %}
+   {% for w in works %}
       <div class="work-item">
          <div class="work-header">
-            <a class="work-title" href="{{ url_for('work', work_id = work.id) }}">{{ work.title }}</a>
+            <a class="work-title" href="{{ url_for('work', work_id = w.id) }}">{{ w.title }}</a>
             <sup class="work-author">
-               〔<a href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>〕
+               〔<a href="{{ url_for('author', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
             </sup>
          </div>
 
-         <div class="work-content">{{ work.clean_content|truncate(35, True) }}</div>
+         <div class="work-content">{{ w.clean_content|truncate(35, True) }}</div>
       </div>
    {% endfor %}
 {% endmacro %}
 
 
-{% macro works_with_type(works) %}
+{% macro render_works_with_type(works) %}
    {% for work in works %}
       <div class="work-item work-item-with-type">
          <div class="work-header">
@@ -122,7 +120,7 @@
 {% endmacro %}
 
 
-{% macro work_reviews(work_reviews) %}
+{% macro render_work_reviews(work_reviews) %}
    {% for r in work_reviews %}
       <div class="review-item">
          <a class="user-avatar" href="{{ url_for('user', user_abbr=r.user.abbr) }}">
@@ -153,7 +151,7 @@
 {% endmacro %}
 
 
-{% macro work_images(work_images) %}
+{% macro render_work_images(work_images) %}
    <div class='work-image-wap'>
       {% for w in work_images %}
          <a href="{{ url_for('work_image', work_image_id=w.id) }}">
@@ -167,8 +165,8 @@
       // water fall layout
       function waterfall() {
          var width = 195,
-               h_gap = 15,
-               v_gap = 15;
+             h_gap = 15,
+             v_gap = 15;
 
          var lefts = [0, width + h_gap, 2 * (width + h_gap)],
                tops = [0, 0, 0];

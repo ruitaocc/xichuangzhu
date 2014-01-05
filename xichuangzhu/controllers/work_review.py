@@ -42,12 +42,12 @@ def comment_work_review(review_id):
 def all_work_reviews():
     """作品的所有点评"""
     page = int(request.args.get('page', 1))
-    pagination = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
+    paginator = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
         WorkReview.create_time.desc()).paginate(page, 10)
     stmt = db.session.query(WorkReview.user_id, db.func.count(WorkReview.user_id).label('reviews_num')).group_by(
         WorkReview.user_id).subquery()
     hot_reviewers = db.session.query(User).join(stmt, User.id == stmt.c.user_id).order_by(stmt.c.reviews_num)
-    return render_template('work_review/work_reviews.html', pagination=pagination, hot_reviewers=hot_reviewers)
+    return render_template('work_review/work_reviews.html', paginator=paginator, hot_reviewers=hot_reviewers)
 
 
 @app.route('/work/<int:work_id>/add_review', methods=['GET', 'POST'])

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, works %}
+{% from "macro/ui.html" import pagination, render_works_with_type %}
 
 {% block page_title %}标签 - {{ tag.title }}{% endblock %}
 {% block page_id %}page-tag{% endblock %}
@@ -19,14 +19,12 @@
             <button class='btn btn-primary btn-sm pull-right add-work-btn'>添加作品</button>
          </div>
 
-         {{ works_with_type(pagination.items)|safe }}
+         {{ render_works_with_type(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
-      <div class="col-md-4">
-
-      </div>
+      <div class="col-md-4"></div>
    </div>
 
 {% endblock %}

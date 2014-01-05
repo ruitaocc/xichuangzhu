@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, works %}
+{% from "macro/ui.html" import pagination, render_works %}
 
 {% block page_title %}全部作品{% endblock %}
 {% block page_id %}page-works{% endblock %}
@@ -9,11 +9,11 @@
 
    <div class="row">
       <div class="col-md-8">
-         <h2><span id="dynasty_type_tag"></span> / {{ pagination.total }}</h2>
+         <h2><span id="dynasty_type_tag"></span> / {{ paginator.total }}</h2>
 
-         {{ works(pagination.items)|safe }}
+         {{ render_works(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4">
@@ -45,8 +45,8 @@
       </div>
 
       <script type="text/javascript">
-         var dynasty = $("#dynasty-selector li[class='active']").text();
-         var work_type = $("#type-selector li[class='active']").text();
+         var dynasty = $.trim($("#dynasty-selector li.active").text());
+         var work_type = $.trim($("#type-selector li.active").text());
 
          if (dynasty == '全部' && work_type == '全部') {
             $('#dynasty_type_tag').text('作品');

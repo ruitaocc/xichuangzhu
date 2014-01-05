@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import works, work_images %}
+{% from "macro/ui.html" import render_works, render_work_images %}
 
 {% block page_title %}我的收藏{% endblock %}
 {% block page_id %}page-user-collects{% endblock %}
@@ -15,7 +15,7 @@
             </span>
          </h2>
 
-         {{ works(collect_works)|safe }}
+         {{ render_works(collect_works) }}
 
          <!--
          <h2>
@@ -25,7 +25,7 @@
             </span>
          </h2>
 
-         {{ work_images(collect_work_images)|safe }}
+         {{ render_work_images(collect_work_images) }}
          -->
       </div>
 

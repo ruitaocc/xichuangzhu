@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, topics %}
+{% from "macro/ui.html" import pagination, render_topics %}
 
 {% block page_title %}话题{% endblock %}
 {% block page_id %}page-topics{% endblock %}
@@ -17,9 +17,9 @@
             </a>
          {% endif %}
 
-         {{ topics(pagination.items)|safe }}
+         {{ render_topics(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4">

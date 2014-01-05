@@ -19,5 +19,5 @@ def admin_authors():
 def admin_works():
     """管理作品"""
     page = int(request.args.get('page', 1))
-    pagination = Work.query.paginate(page, 15)
-    return render_template('admin/admin_works.html', pagination=pagination)
+    paginator = Work.query.paginate(page, 15)
+    return render_template('admin/admin_works.html', paginator=paginator)

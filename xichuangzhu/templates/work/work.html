@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import users, work_reviews, work_images %}
+{% from 'macro/ui.html' import render_users, render_work_reviews, render_work_images %}
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
 {% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}》正文、注释、题解、点评、书法创作等。{% endblock %}
@@ -92,7 +92,7 @@
                {% endif %}
             </h2>
 
-            {{ work_reviews(reviews)|safe }}
+            {{ render_work_reviews(reviews) }}
          {% endif %}
 
          {% if images_num != 0 %}
@@ -105,7 +105,7 @@
                {% endif %}
             </h2>
 
-            {{ work_images(images)|safe }}
+            {{ render_work_images(images) }}
          {% endif %}
       </div>
 
@@ -140,7 +140,7 @@
          {% if collectors.count() > 0 %}
             <h2>谁收藏了它？</h2>
 
-            {{ users(collectors)|safe }}
+            {{ render_users(collectors) }}
          {% endif %}
       </div>
    </div>

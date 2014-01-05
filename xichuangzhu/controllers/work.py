@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import render_template, request, redirect, url_for, json, session, abort
+from flask import render_template, request, redirect, url_for, json, session
 from xichuangzhu import app, db
 from xichuangzhu.models.work import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag
 from xichuangzhu.models.dynasty import Dynasty
@@ -61,17 +61,15 @@ def works():
     work_type = request.args.get('type', 'all')
     dynasty_abbr = request.args.get('dynasty', 'all')
     page = int(float(request.args.get('page', 1)))
-
-    query = Work.query
+    works = Work.query
     if work_type != 'all':
-        query = query.filter(Work.type.has(WorkType.en == work_type))
+        works = works.filter(Work.type.has(WorkType.en == work_type))
     if dynasty_abbr != 'all':
-        query = query.filter(Work.author.has(Author.dynasty.has(Dynasty.abbr == dynasty_abbr)))
-    pagination = query.paginate(page, 10)
-
+        works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.abbr == dynasty_abbr)))
+    paginator = works.paginate(page, 10)
     work_types = WorkType.query
     dynasties = Dynasty.query.order_by(Dynasty.start_year)
-    return render_template('work/works.html', pagination=pagination, work_type=work_type, dynasty_abbr=dynasty_abbr,
+    return render_template('work/works.html', paginator=paginator, work_type=work_type, dynasty_abbr=dynasty_abbr,
                            work_types=work_types, dynasties=dynasties)
 
 
@@ -87,8 +85,8 @@ def tag(tag_id):
     """作品标签"""
     tag = Tag.query.get_or_404(tag_id)
     page = int(request.args.get('page', 1))
-    pagination = Work.query.filter(Work.tags.any(WorkTag.tag_id == tag_id)).paginate(page, 12)
-    return render_template('work/tag.html', tag=tag, pagination=pagination)
+    paginator = Work.query.filter(Work.tags.any(WorkTag.tag_id == tag_id)).paginate(page, 12)
+    return render_template('work/tag.html', tag=tag, paginator=paginator)
 
 
 @app.route('/work/add', methods=['GET', 'POST'])
@@ -135,9 +133,9 @@ def work_reviews(work_id):
     """文学作品的点评"""
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
-    pagination = work.reviews.filter(WorkReview.is_publish == True).order_by(WorkReview.create_time.desc()).paginate(
+    paginator = work.reviews.filter(WorkReview.is_publish == True).order_by(WorkReview.create_time.desc()).paginate(
         page, 10)
-    return render_template('work/work_reviews.html', work=work, pagination=pagination)
+    return render_template('work/work_reviews.html', work=work, paginator=paginator)
 
 
 @app.route('/work/<int:work_id>/images', methods=['GET'])
@@ -145,8 +143,8 @@ def work_images(work_id):
     """文学作品的相关图片"""
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
-    pagination = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
-    return render_template('work/work_images.html', work=work, pagination=pagination)
+    paginator = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
+    return render_template('work/work_images.html', work=work, paginator=paginator)
 
 
 @app.route('/work/search_authors', methods=['POST'])

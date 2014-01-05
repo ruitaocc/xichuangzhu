@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, work_reviews %}
+{% from "macro/ui.html" import pagination, render_work_reviews %}
 
 {% block page_title %}{{ work.author.name }}《{{ work.title }}》的点评{% endblock %}
 {% block page_id %}page-work-reviews{% endblock %}
@@ -8,11 +8,11 @@
 
    <div class="row">
       <div class="col-md-8">
-         <h2>《{{ work.title }}》的点评 / {{ pagination.total }}</h2>
+         <h2>《{{ work.title }}》的点评 / {{ paginator.total }}</h2>
 
-         {{ work_reviews(pagination.items)|safe }}
+         {{ render_work_reviews(paginator.items) }}
 
-         {{ pagination(pagination)|safe }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4">
