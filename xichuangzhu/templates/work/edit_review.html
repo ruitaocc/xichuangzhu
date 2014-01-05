@@ -7,7 +7,7 @@
 {% block body %}
 
    <form id="form-edit-review" class="form-horizontal" method="post"
-         action="{{ url_for('edit_work_review', review_id=review.id) }}">
+         action="{{ url_for('work.edit_review', review_id=review.id) }}">
       <fieldset>
          <legend>编辑点评</legend>
 

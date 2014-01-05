@@ -6,7 +6,7 @@
 {% block body %}
 
    <form id="form-edit-quote" class="form-horizontal" method="post"
-         action="{{ url_for('edit_quote', quote_id=quote.id) }}">
+         action="{{ url_for('author.edit_quote', quote_id=quote.id) }}">
       <fieldset>
          <legend>编辑引语</legend>
 

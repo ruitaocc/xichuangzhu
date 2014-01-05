@@ -31,10 +31,10 @@
             <td>{{ q.work.title }}</td>
             <td>
                <div class='btn-group btn-group-sm'>
-                  <a class="btn btn-default" title="编辑" href="{{ url_for('edit_quote', quote_id=q.id) }}"><span
+                  <a class="btn btn-default" title="编辑" href="{{ url_for('author.edit_quote', quote_id=q.id) }}"><span
                         class="glyphicon glyphicon-edit"></span></a>
                   <a class="btn btn-default btn-rm-quote" title='删除'
-                     href="{{ url_for('delete_quote', quote_id=q.id) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                     href="{{ url_for('author.delete_quote', quote_id=q.id) }}"><span class="glyphicon glyphicon-trash"></span></a>
                </div>
             </td>
          </tr>
@@ -43,7 +43,7 @@
    </table>
 
    <form id="form-add-quote" class="form-horizontal" method="post"
-         action="{{ url_for('add_quote', author_id=author.id) }}">
+         action="{{ url_for('author.add_quote', author_id=author.id) }}">
       <fieldset>
          <legend>添加引语</legend>
 

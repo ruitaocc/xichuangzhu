@@ -30,15 +30,3 @@ def works():
 def about():
     """关于页"""
     return render_template('site/about.html')
-
-
-@bp.errorhandler(404)
-def page_404(error):
-    """404错误页"""
-    return render_template('site/404.html'), 404
-
-
-@bp.errorhandler(500)
-def page_500(error):
-    """500错误页"""
-    return render_template('site/500.html'), 500

@@ -13,8 +13,8 @@
 
          <div class="work-author">
             〔<a
-               href="{{ url_for('dynasty', dynasty_abbr = work.author.dynasty.abbr) }}">{{ work.author.dynasty.name }}</a>〕<a
-               href="{{ url_for('author', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>
+               href="{{ url_for('dynasty.view', dynasty_abbr = work.author.dynasty.abbr) }}">{{ work.author.dynasty.name }}</a>〕<a
+               href="{{ url_for('author.view', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>
          </div>
 
          <!-- 32 is a experienced value -->
@@ -42,24 +42,24 @@
          {% if session.user_id %}
             <div class="btn-group btn-group-sm pull-right" id="work-cmds">
                {% if session.user_id == admin_id %}
-                  <a class="btn btn-default" href="{{ url_for('edit_work', work_id=work.id) }}"><span
+                  <a class="btn btn-default" href="{{ url_for('work.edit', work_id=work.id) }}"><span
                         class="glyphicon glyphicon-edit"></span> 编辑</a>
                {% endif %}
 
-               <a class="btn btn-default" target="_blank" href="{{ url_for('add_work_review', work_id=work.id) }}">
+               <a class="btn btn-default" target="_blank" href="{{ url_for('work.add_review', work_id=work.id) }}">
                   <span class="glyphicon glyphicon-pencil"></span> 点评
                </a>
 
-               <a class="btn btn-default" title='上传图片' href="{{ url_for('add_work_image', work_id=work.id) }}">
+               <a class="btn btn-default" title='上传图片' href="{{ url_for('work.add_image', work_id=work.id) }}">
                   <span class="glyphicon glyphicon-picture"></span> 传图
                </a>
 
                {% if is_collected %}
-                  <a class="btn btn-default" title="取消收藏" href="{{ url_for('discollect_work', work_id=work.id) }}">
+                  <a class="btn btn-default" title="取消收藏" href="{{ url_for('work.discollect', work_id=work.id) }}">
                      <span class="glyphicon glyphicon-bookmark"></span> 已收藏
                   </a>
                {% else %}
-                  <a class="btn btn-default" title="收藏作品" href="{{ url_for('collect_work', work_id=work.id) }}">
+                  <a class="btn btn-default" title="收藏作品" href="{{ url_for('work.collect', work_id=work.id) }}">
                      <span class="glyphicon glyphicon-bookmark"></span> 收藏
                   </a>
                {% endif %}
@@ -87,7 +87,7 @@
                点评
                {% if reviews_num > 4 %}
                   <span class='link-more'>
-                     <a href="{{ url_for('work_reviews', work_id=work.id) }}">更多 / {{ reviews_num }} »</a>
+                     <a href="{{ url_for('work.reviews', work_id=work.id) }}">更多 / {{ reviews_num }} »</a>
                   </span>
                {% endif %}
             </h2>
@@ -100,7 +100,7 @@
                图片
                {% if images_num > 9 %}
                   <span class='link-more'>
-                     <a href="{{ url_for('work_images', work_id=work.id) }}">更多 / {{ images_num }} »</a>
+                     <a href="{{ url_for('work.images', work_id=work.id) }}">更多 / {{ images_num }} »</a>
                   </span>
                {% endif %}
             </h2>
@@ -113,7 +113,7 @@
          <h2>标签</h2>
          <ul class="work-tags">
             {% for t in work.tags %}
-               <li><a href="{{ url_for('tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
+               <li><a href="{{ url_for('work.tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
             {% endfor %}
             <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span> 添加</a></li>
          </ul>
@@ -123,7 +123,7 @@
          <div>
             {{ work.author.intro|truncate(55, True) }}
             <span class='link-more'>
-               <a href="{{ url_for('author', author_abbr=work.author.abbr) }}">更多»</a>
+               <a href="{{ url_for('author.view', author_abbr=work.author.abbr) }}">更多»</a>
             </span>
          </div>
 
@@ -132,7 +132,7 @@
          {% for work in other_works %}
             <div class="other-work-item">
                <a class="other-work-title"
-                  href="{{ url_for('work', work_id = work.id) }}">{{ work.title|truncate(12, True, '') }}</a>
+                  href="{{ url_for('work.view', work_id = work.id) }}">{{ work.title|truncate(12, True, '') }}</a>
                <span class="other-work-content">{{ work.clean_content|truncate(8, True) }}</span>
             </div>
          {% endfor %}

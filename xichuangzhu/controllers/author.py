@@ -8,7 +8,7 @@ bp = Blueprint('author', __name__)
 
 
 @bp.route('/<author_abbr>')
-def index(author_abbr):
+def view(author_abbr):
     """文学家主页"""
     author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr == author_abbr).first_or_404()
     quote = AuthorQuote.query.get_or_404(int(float(request.args['q']))) if 'q' in request.args else author.random_quote
@@ -18,8 +18,8 @@ def index(author_abbr):
     return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
 
 
-@bp.route('/all')
-def all():
+@bp.route('/')
+def authors():
     """全部文学家"""
     dynasties = Dynasty.query.filter(Dynasty.authors.any()).order_by(Dynasty.start_year)
     # get the authors who's works are latest collected by user
@@ -35,14 +35,14 @@ def add():
     """添加文学家"""
     if request.method == 'GET':
         dynasties = Dynasty.query.order_by(Dynasty.start_year)
-        return render_template('author/add_author.html', dynasties=dynasties)
+        return render_template('author/add.html', dynasties=dynasties)
     else:
         author = Author(name=request.form['name'], abbr=request.form['abbr'], intro=request.form['intro'],
                         birth_year=request.form['birth_year'], death_year=request.form['death_year'],
                         dynasty_id=int(request.form['dynasty_id']))
         db.session.add(author)
         db.session.commit()
-        return redirect(url_for('author', author_abbr=author.abbr))
+        return redirect(url_for('.view', author_abbr=author.abbr))
 
 
 @bp.route('/<int:author_id>/edit', methods=['GET', 'POST'])
@@ -52,7 +52,7 @@ def edit(author_id):
     author = Author.query.get_or_404(author_id)
     if request.method == 'GET':
         dynasties = Dynasty.query.order_by(Dynasty.start_year)
-        return render_template('author/edit_author.html', dynasties=dynasties, author=author)
+        return render_template('author/edit.html', dynasties=dynasties, author=author)
     author.name = request.form['name']
     author.abbr = request.form['abbr']
     author.intro = request.form['intro']
@@ -61,7 +61,7 @@ def edit(author_id):
     author.dynasty_id = int(request.form['dynasty_id'])
     db.session.add(author)
     db.session.commit()
-    return redirect(url_for('author', author_abbr=author.abbr))
+    return redirect(url_for('.view', author_abbr=author.abbr))
 
 
 @bp.route('/<int:author_id>/admin_quote')
@@ -79,7 +79,7 @@ def add_quote(author_id):
     quote = AuthorQuote(quote=request.form['quote'], author_id=author_id, work_id=int(request.form['work_id']))
     db.session.add(quote)
     db.session.commit()
-    return redirect(url_for('admin_quotes', author_id=author_id))
+    return redirect(url_for('.admin_quotes', author_id=author_id))
 
 
 @bp.route('/quote/<int:quote_id>/delete')
@@ -89,7 +89,7 @@ def delete_quote(quote_id):
     quote = AuthorQuote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()
-    return redirect(url_for('admin_quotes', author_id=quote.author_id))
+    return redirect(url_for('.admin_quotes', author_id=quote.author_id))
 
 
 @bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
@@ -105,4 +105,4 @@ def edit_quote(quote_id):
         quote.work_id = int(request.form['work_id'])
         db.session.add(quote)
         db.session.commit()
-        return redirect(url_for('admin_quotes', author_id=quote.work.author_id))
+        return redirect(url_for('.admin_quotes', author_id=quote.work.author_id))

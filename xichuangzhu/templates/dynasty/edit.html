@@ -6,7 +6,7 @@
 {% block body %}
 
    <form id="form-edit-dynasty" class="form-horizontal" method="post"
-         action="{{ url_for('edit_dynasty', dynasty_id=dynasty.id) }}">
+         action="{{ url_for('dynasty.edit', dynasty_id=dynasty.id) }}">
       <fieldset>
          <legend>编辑朝代</legend>
 

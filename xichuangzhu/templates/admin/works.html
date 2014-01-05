@@ -20,11 +20,11 @@
       </thead>
 
       <tbody>
-      {% for w in pagination.items %}
+      {% for w in paginator.items %}
          {% if w.tags|length == 0 or '<' not in w.content or w.intro == '' %}
             <tr>
                <td>[{{ w.type.cn }}] <a target="_blank"
-                                        href="{{ url_for('work', work_id=w.id) }}">{{ w.title|truncate(12, True) }}</a>
+                                        href="{{ url_for('work.view', work_id=w.id) }}">{{ w.title|truncate(12, True) }}</a>
                </td>
 
                <td>{{ w.author.name }}</td>
@@ -37,7 +37,7 @@
                         </a>
                      {% else %}
                         {% for t in w.tags %}
-                           <li><a href="{{ url_for('works_by_tag', tag=t.tag) }}">{{ t.tag }}</a></li>
+                           <li><a href="{{ url_for('work.tag', tag=t.tag) }}">{{ t.tag }}</a></li>
                         {% endfor %}
                      {% endif %}
                   </ul>
@@ -46,7 +46,7 @@
                <td {% if '<' not in w.content %}class='danger'{% endif %}>
                   {% if '<' not in w.content %}
                      <a title="编辑《{{ w.title }}》" target="_blank" class="btn btn-sm btn-default"
-                        href="{{ url_for('edit_work', work_id=w.id) }}"><span
+                        href="{{ url_for('work.edit', work_id=w.id) }}"><span
                            class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
                </td>
@@ -54,7 +54,7 @@
                <td {% if w.intro == '' %}class='danger'{% endif %}>
                   {% if w.intro == '' %}
                      <a title="编辑《{{ w.title }}》" target="_blank" class="btn btn-sm btn-default"
-                        href="{{ url_for('edit_work', work_id=w.id) }}"><span
+                        href="{{ url_for('work.edit', work_id=w.id) }}"><span
                            class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
                </td>
@@ -62,14 +62,14 @@
                <!-- <td {% if w.reviews.count() == 0 %}class='danger'{% endif %}>
                   {% if w.reviews.count() == 0 %}
                   <a title="点评《{{ w.title }}》" target="_blank" class='btn btn-sm btn-default' href="
-                        {{ url_for('add_work_review', work_id=w.id) }}"><span class='glyphicon glyphicon-pencil'></span></a>
+                        {{ url_for('work.add_review', work_id=w.id) }}"><span class='glyphicon glyphicon-pencil'></span></a>
                   {% endif %}
                </td>
 
                <td {% if w.images.count() == 0 %}class='danger'{% endif %}>
                   {% if w.images.count() == 0 %}
                   <a title="为《{{ w.title }}》添加书法作品" target="_blank" class='btn btn-sm btn-default' href="
-                        {{ url_for('add_work_image', work_id=w.id) }}"><span class='glyphicon glyphicon-picture'></span></a>
+                        {{ url_for('work.add_image', work_id=w.id) }}"><span class='glyphicon glyphicon-picture'></span></a>
                   {% endif %}
                </td> -->
             </tr>

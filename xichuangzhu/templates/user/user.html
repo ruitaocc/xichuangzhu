@@ -9,7 +9,7 @@
    <div class="row">
       <div class="col-md-8">
          <div class="clearfix">
-            <a id="user-avatar" href="{{ url_for('user', user_abbr=user.abbr) }}">
+            <a id="user-avatar" href="{{ url_for('user.view', user_abbr=user.abbr) }}">
                <img src="{{ user.avatar }}"/>
             </a>
 
@@ -22,7 +22,7 @@
          <h2>
             点评
             <span class='link-more'>
-               <a href="{{ url_for('user_work_reviews', user_abbr=user.abbr) }}">全部 / {{ work_reviews_num }} »</a>
+               <a href="{{ url_for('user.work_reviews', user_abbr=user.abbr) }}">全部 / {{ work_reviews_num }} »</a>
             </span>
          </h2>
 
@@ -31,7 +31,7 @@
          <h2>
             话题
             <span class='link-more'>
-               <a href="{{ url_for('user_topics', user_abbr=user.abbr) }}">全部 / {{ topics_num }} »</a>
+               <a href="{{ url_for('user.topics', user_abbr=user.abbr) }}">全部 / {{ topics_num }} »</a>
             </span>
          </h2>
 
@@ -40,7 +40,7 @@
          <h2>
             图片
             <span class='link-more'>
-               <a href="{{ url_for('user_work_images', user_abbr=user.abbr) }}">全部 / {{ work_images_num }} »</a>
+               <a href="{{ url_for('user.work_images', user_abbr=user.abbr) }}">全部 / {{ work_images_num }} »</a>
             </span>
          </h2>
 

@@ -7,7 +7,7 @@
 {% block body %}
 
    <form id="form-verify-email" class="form-horizontal" method="post"
-         action="{{ url_for('send_active_email', user_id=user.id) }}">
+         action="{{ url_for('account.send_active_email', user_id=user.id) }}">
       <fieldset>
          <legend>欢迎{{ user.name }}，即将发送激活邮件，请填写你的常用邮箱：</legend>
 

@@ -12,7 +12,7 @@
          <h2>话题</h2>
 
          {% if session.user_id %}
-            <a class="btn btn-sm btn-default btn-new-topic" href="{{ url_for('add_topic') }}">
+            <a class="btn btn-sm btn-default btn-new-topic" href="{{ url_for('topic.add') }}">
                <span class='glyphicon glyphicon-align-left'></span> 新话题
             </a>
          {% endif %}

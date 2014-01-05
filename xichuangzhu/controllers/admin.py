@@ -11,7 +11,7 @@ bp = Blueprint('admin', __name__)
 def authors():
     """管理文学家"""
     authors = Author.query
-    return render_template('admin/admin_authors.html', authors=authors)
+    return render_template('admin/authors.html', authors=authors)
 
 
 @bp.route('/works', methods=['GET', 'POST'])
@@ -20,4 +20,4 @@ def works():
     """管理作品"""
     page = int(request.args.get('page', 1))
     paginator = Work.query.paginate(page, 15)
-    return render_template('admin/admin_works.html', paginator=paginator)
+    return render_template('admin/works.html', paginator=paginator)

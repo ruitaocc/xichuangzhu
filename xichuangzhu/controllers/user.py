@@ -8,10 +8,9 @@ bp = Blueprint('user', __name__)
 
 
 @bp.route('/<user_abbr>')
-def index(user_abbr):
+def view(user_abbr):
     """用户主页"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
-
     query = user.work_reviews.order_by(WorkReview.create_time.desc())
     if check_is_me(user.id):
         work_reviews = query.limit(3)
@@ -19,13 +18,10 @@ def index(user_abbr):
     else:
         work_reviews = query.filter(WorkReview.is_publish == True).limit(3)
         work_reviews_num = query.filter(WorkReview.is_publish == True).count()
-
     topics = user.topics.order_by(Topic.create_time.desc()).limit(3)
     topics_num = user.topics.count()
-
     work_images = user.work_images.order_by(WorkImage.create_time.desc()).limit(16)
     work_images_num = user.work_images.count()
-
     return render_template('user/user.html', user=user, work_reviews=work_reviews, work_reviews_num=work_reviews_num,
                            topics=topics, topics_num=topics_num, work_images=work_images,
                            work_images_num=work_images_num)
@@ -40,7 +36,7 @@ def work_reviews(user_abbr):
     if not check_is_me(user.id):
         work_reviews = work_reviews.filter(WorkReview.is_publish == True)
     paginator = work_reviews.paginate(page, 10)
-    return render_template('user/user_work_reviews.html', user=user, paginator=paginator)
+    return render_template('user/work_reviews.html', user=user, paginator=paginator)
 
 
 @bp.route('/<user_abbr>/topics')
@@ -49,7 +45,7 @@ def topics(user_abbr):
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
     page = int(request.args.get('page', 1))
     paginator = user.topics.order_by(Topic.create_time.desc()).paginate(page, 10)
-    return render_template('user/user_topics.html', user=user, paginator=paginator)
+    return render_template('user/topics.html', user=user, paginator=paginator)
 
 
 @bp.route('/<user_abbr>/work_images')
@@ -58,7 +54,7 @@ def work_images(user_abbr):
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
     page = int(request.args.get('page', 1))
     paginator = user.work_images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
-    return render_template('user/user_work_images.html', user=user, paginator=paginator)
+    return render_template('user/work_images.html', user=user, paginator=paginator)
 
 
 @bp.route('/collects')
@@ -72,7 +68,7 @@ def collects():
     collect_work_images = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id == user.id).order_by(
         CollectWorkImage.create_time.desc()).limit(9)
     collect_work_images_num = user.collect_work_images.count()
-    return render_template('user/my_collects.html', collect_works=collect_works, collect_works_num=collect_works_num,
+    return render_template('user/collects.html', collect_works=collect_works, collect_works_num=collect_works_num,
                            collect_work_images=collect_work_images, collect_work_images_num=collect_work_images_num)
 
 
@@ -83,7 +79,7 @@ def collect_works():
     page = int(request.args.get('page', 1))
     paginator = Work.query.join(CollectWork).filter(CollectWork.user_id == session['user_id']).order_by(
         CollectWork.create_time.desc()).paginate(page, 10)
-    return render_template('user/my_collect_works.html', paginator=paginator)
+    return render_template('user/collect_works.html', paginator=paginator)
 
 
 @bp.route('/collect_work_images')
@@ -93,4 +89,4 @@ def collect_work_images():
     page = int(request.args.get('page', 1))
     paginator = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id == session['user_id']).order_by(
         CollectWorkImage.create_time.desc()).paginate(page, 12)
-    return render_template('user/my_collect_work_images.html', paginator=paginator)
+    return render_template('user/collect_work_images.html', paginator=paginator)

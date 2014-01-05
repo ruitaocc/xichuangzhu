@@ -7,7 +7,7 @@
 {% block body %}
 
    <form id="form-add-work" class="form-horizontal" method="post"
-         action="{{ url_for('add_work_image', work_id=work.id) }}" enctype="multipart/form-data">
+         action="{{ url_for('work.add_image', work_id=work.id) }}" enctype="multipart/form-data">
       <fieldset>
          <legend>为《{{ work.title }}》上传图片</legend>
 

@@ -11,7 +11,7 @@
       $(function () {
          $('#work-refresh').click(function () {
             $.ajax({
-               url: "{{ url_for('index_works') }}",
+               url: "{{ url_for('site.works') }}",
                type: 'POST',
                success: function (data) {
                   $('#index-works-wap').html(data);
@@ -33,7 +33,7 @@
             作品
             <span class='link-more'>
                <a id="work-refresh">换换</a>
-               <a href="{{ url_for('works') }}">更多»</a>
+               <a href="{{ url_for('work.works') }}">更多»</a>
             </span>
          </h2>
 
@@ -44,7 +44,7 @@
          <h2>
             点评
             <span class='link-more'>
-               <a href="{{ url_for('all_work_reviews') }}">更多»</a>
+               <a href="{{ url_for('work.all_reviews') }}">更多»</a>
             </span>
          </h2>
 
@@ -53,7 +53,7 @@
          <h2>
             图片
             <span class='link-more'>
-               <a href="{{ url_for('all_work_images') }}">更多»</a>
+               <a href="{{ url_for('work.all_images') }}">更多»</a>
             </span>
          </h2>
 
@@ -65,7 +65,7 @@
          <h2>
             文学家
             <span class='link-more'>
-               <a href="{{ url_for('authors') }}">更多»</a>
+               <a href="{{ url_for('author.authors') }}">更多»</a>
             </span>
          </h2>
 
@@ -76,7 +76,7 @@
          <ul id="dynasties-wap">
             {% for dynasty in dynasties %}
                <li class='dynasty-item'>
-                  <a href="{{ url_for('dynasty', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
+                  <a href="{{ url_for('dynasty.view', dynasty_abbr=dynasty.abbr) }}">{{ dynasty.name }}</a>
                   <span>/</span>
                </li>
             {% endfor %}

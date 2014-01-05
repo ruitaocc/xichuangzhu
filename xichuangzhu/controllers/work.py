@@ -5,7 +5,8 @@ import uuid
 import cgi
 from flask import render_template, request, redirect, url_for, json, session, Blueprint, abort
 from xichuangzhu import db, config
-from ..models import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork, CollectWorkImage, WorkReviewComment
+from ..models import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork,\
+    CollectWorkImage, WorkReviewComment
 from ..utils import require_login, require_admin
 from ..forms import WorkImageForm, CommentForm, WorkReviewForm
 
@@ -13,7 +14,7 @@ bp = Blueprint('work', __name__)
 
 
 @bp.route('/<int:work_id>')
-def index(work_id):
+def view(work_id):
     """文学作品"""
     work = Work.query.get_or_404(work_id)
 
@@ -38,14 +39,14 @@ def index(work_id):
                            other_works=other_works)
 
 
-@bp.route('/work/<int:work_id>/collect', methods=['GET'])
+@bp.route('/<int:work_id>/collect', methods=['GET'])
 @require_login
 def collect(work_id):
     """收藏作品"""
     collect = CollectWork(user_id=session['user_id'], work_id=work_id)
     db.session.add(collect)
     db.session.commit()
-    return redirect(url_for('work', work_id=work_id))
+    return redirect(url_for('.view', work_id=work_id))
 
 
 @bp.route('/<int:work_id>/discollect')
@@ -55,11 +56,11 @@ def discollect(work_id):
     db.session.query(CollectWork).filter(CollectWork.user_id == session['user_id']).filter(
         CollectWork.work_id == work_id).delete()
     db.session.commit()
-    return redirect(url_for('work', work_id=work_id))
+    return redirect(url_for('.view', work_id=work_id))
 
 
-@bp.route('/all')
-def all():
+@bp.route('/')
+def works():
     """全部文学作品"""
     work_type = request.args.get('type', 'all')
     dynasty_abbr = request.args.get('dynasty', 'all')
@@ -79,7 +80,7 @@ def all():
 @bp.route('/tags')
 def tags():
     """作品标签页"""
-    tags = Tag.query.all()
+    tags = Tag.query
     return render_template('work/tags.html', tags=tags)
 
 
@@ -102,13 +103,13 @@ def add():
         else:
             author = None
         work_types = WorkType.query
-        return render_template('work/add_work.html', work_types=work_types, author=author)
+        return render_template('work/add.html', work_types=work_types, author=author)
     work = Work(title=request.form['title'], content=request.form['content'], foreword=request.form['foreword'],
                 intro=request.form['intro'], author_id=int(request.form['author_id']),
                 type_id=request.form['type_id'])
     db.session.add(work)
     db.session.commit()
-    return redirect(url_for('work', work_id=work.id))
+    return redirect(url_for('.view', work_id=work.id))
 
 
 @bp.route('/<int:work_id>/edit', methods=['GET', 'POST'])
@@ -118,7 +119,7 @@ def edit(work_id):
     work = Work.query.get_or_404(work_id)
     if request.method == 'GET':
         work_types = WorkType.query
-        return render_template('work/edit_work.html', work=work, work_types=work_types)
+        return render_template('work/edit.html', work=work, work_types=work_types)
     else:
         work.title = request.form['title']
         work.content = request.form['content']
@@ -128,17 +129,17 @@ def edit(work_id):
         work.type_id = request.form['type_id']
         db.session.add(work)
         db.session.commit()
-        return redirect(url_for('work', work_id=work_id))
+        return redirect(url_for('.view', work_id=work_id))
 
 
-@bp.route('/work/<int:work_id>/reviews')
+@bp.route('/<int:work_id>/reviews')
 def reviews(work_id):
     """作品点评"""
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
     paginator = work.reviews.filter(WorkReview.is_publish == True).order_by(WorkReview.create_time.desc()).paginate(
         page, 10)
-    return render_template('work/work_reviews.html', work=work, paginator=paginator)
+    return render_template('work/reviews.html', work=work, paginator=paginator)
 
 
 @bp.route('/<int:work_id>/images', methods=['GET'])
@@ -147,7 +148,7 @@ def images(work_id):
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
     paginator = work.images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
-    return render_template('work/work_images.html', work=work, paginator=paginator)
+    return render_template('work/images.html', work=work, paginator=paginator)
 
 
 @bp.route('/search_authors', methods=['POST'])
@@ -171,7 +172,7 @@ def image(work_image_id):
             CollectWorkImage.work_image_id == work_image_id).count() > 0
     else:
         is_collected = False
-    return render_template('work_image/work_image.html', work_image=work_image, is_collected=is_collected)
+    return render_template('work/image.html', work_image=work_image, is_collected=is_collected)
 
 
 @bp.route('/image/<int:work_image_id>/delete', methods=['GET'])
@@ -186,7 +187,7 @@ def delete_image(work_image_id):
         os.remove(config.IMAGE_PATH + work_image.filename)
     db.session.delete(work_image)
     db.session.commit()
-    return redirect(url_for('work', work_id=work_image.work_id))
+    return redirect(url_for('.view', work_id=work_image.work_id))
 
 
 @bp.route('/image/<int:work_image_id>/collect', methods=['GET'])
@@ -196,7 +197,7 @@ def collect_image(work_image_id):
     collect = CollectWorkImage(user_id=session['user_id'], work_image_id=work_image_id)
     db.session.add(collect)
     db.session.commit()
-    return redirect(url_for('work_image', work_image_id=work_image_id))
+    return redirect(url_for('.image', work_image_id=work_image_id))
 
 
 @bp.route('/image/<int:work_image_id>/discollect', methods=['GET'])
@@ -206,7 +207,7 @@ def discollect_image(work_image_id):
     db.session.query(CollectWorkImage).filter(CollectWorkImage.user_id == session['user_id']).filter(
         CollectWorkImage.work_image_id == work_image_id).delete()
     db.session.commit()
-    return redirect(url_for('work_image', work_image_id=work_image_id))
+    return redirect(url_for('.image', work_image_id=work_image_id))
 
 
 @bp.route('/all_images', methods=['GET'])
@@ -214,7 +215,7 @@ def all_images():
     """所有作品图片"""
     page = int(request.args.get('page', 1))
     paginator = WorkImage.query.paginate(page, 12)
-    return render_template('work_image/work_images.html', paginator=paginator)
+    return render_template('work/all_images.html', paginator=paginator)
 
 
 @bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
@@ -233,14 +234,14 @@ def add_image(work_id):
                                filename=image_filename)
         db.session.add(work_image)
         db.session.commit()
-        return redirect(url_for('work_image', work_image_id=work_image.id))
-    return render_template('work_image/add_work_image.html', work=work, form=form)
+        return redirect(url_for('.image', work_image_id=work_image.id))
+    return render_template('work/add_image.html', work=work, form=form)
 
 
 @bp.route('/image/<int:work_image_id>/edit', methods=['GET', 'POST'])
 @require_login
 def edit_image(work_image_id):
-    """编辑作品的相关图片"""
+    """编辑作品图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
     form = WorkImageForm()
     if form.validate_on_submit():
@@ -258,8 +259,8 @@ def edit_image(work_image_id):
         work_image.filename = image_filename
         db.session.add(work_image)
         db.session.commit()
-        return redirect(url_for('work_image', work_image_id=work_image_id))
-    return render_template('work_image/edit_work_image.html', work_image=work_image, form=form)
+        return redirect(url_for('.image', work_image_id=work_image_id))
+    return render_template('work/edit_image.html', work_image=work_image, form=form)
 
 
 @bp.route('/review/<int:review_id>', methods=['GET', 'POST'])
@@ -279,26 +280,26 @@ def review(review_id):
                                     user_id=session['user_id'])
         db.session.add(comment)
         db.session.commit()
-        return redirect(url_for('work_review', review_id=review_id) + "#" + str(comment.id))
-    return render_template('work_review/work_review.html', review=review, form=form)
+        return redirect(url_for('.review', review_id=review_id) + "#" + str(comment.id))
+    return render_template('work/review.html', review=review, form=form)
 
 
 @bp.route('/all_reviews')
 def all_reviews():
-    """所有作品点评"""
+    """最新作品点评"""
     page = int(request.args.get('page', 1))
     paginator = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
         WorkReview.create_time.desc()).paginate(page, 10)
     stmt = db.session.query(WorkReview.user_id, db.func.count(WorkReview.user_id).label('reviews_num')).group_by(
         WorkReview.user_id).subquery()
     hot_reviewers = db.session.query(User).join(stmt, User.id == stmt.c.user_id).order_by(stmt.c.reviews_num)
-    return render_template('work_review/work_reviews.html', paginator=paginator, hot_reviewers=hot_reviewers)
+    return render_template('work/all_reviews.html', paginator=paginator, hot_reviewers=hot_reviewers)
 
 
 @bp.route('/<int:work_id>/add_review', methods=['GET', 'POST'])
 @require_login
 def add_review(work_id):
-    """为作品添加点评"""
+    """添加作品点评"""
     work = Work.query.get_or_404(work_id)
     form = WorkReviewForm()
     if form.validate_on_submit():
@@ -307,8 +308,8 @@ def add_review(work_id):
                             user_id=session['user_id'], work_id=work_id, is_publish=is_publish)
         db.session.add(review)
         db.session.commit()
-        return redirect(url_for('work_review', review_id=review.id))
-    return render_template('work_review/add_work_review.html', work=work, form=form)
+        return redirect(url_for('.review', review_id=review.id))
+    return render_template('work/add_review.html', work=work, form=form)
 
 
 @bp.route('/review/<int:review_id>/edit', methods=['GET', 'POST'])
@@ -325,8 +326,8 @@ def edit_review(review_id):
         review.is_publish = True if 'publish' in request.form else False
         db.session.add(review)
         db.session.commit()
-        return redirect(url_for('work_review', review_id=review_id))
-    return render_template('work_review/edit_work_review.html', review=review, form=form)
+        return redirect(url_for('.review', review_id=review_id))
+    return render_template('work/edit_review.html', review=review, form=form)
 
 
 @bp.route('/review/<int:review_id>/delete')
@@ -338,4 +339,4 @@ def delete_review(review_id):
         abort(404)
     db.session.delete(review)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('.view', work_id=review.work_id))

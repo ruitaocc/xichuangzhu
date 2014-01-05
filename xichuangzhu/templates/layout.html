@@ -30,23 +30,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
          </button>
-         <a class="navbar-brand" href="{{ url_for('index') }}">西窗烛</a>
+         <a class="navbar-brand" href="{{ url_for('site.index') }}">西窗烛</a>
       </div>
 
       <div class="collapse navbar-collapse navbar-ex1-collapse">
          <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('index') }}">首页</a></li>
+            <li><a href="{{ url_for('site.index') }}">首页</a></li>
 
-            <li><a href="{{ url_for('tags') }}">标签</a></li>
+            <li><a href="{{ url_for('work.tags') }}">标签</a></li>
 
             {% if session.user_id %}
-               <li><a href="{{ url_for('my_collects') }}">收藏</a></li>
+               <li><a href="{{ url_for('user.collects') }}">收藏</a></li>
             {% endif %}
 
-            <li><a href="{{ url_for('topics') }}">话题</a></li>
+            <li><a href="{{ url_for('topic.topics') }}">话题</a></li>
 
             {% if not session.user_id %}
-               <li><a href="{{ url_for('about') }}">关于</a></li>
+               <li><a href="{{ url_for('site.about') }}">关于</a></li>
             {% endif %}
          </ul>
 
@@ -81,8 +81,8 @@
                      {{ session.user_name }} <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu">
-                     <li><a href="{{ url_for('user', user_abbr=session.user_abbr) }}">我的主页</a></li>
-                     <li><a href="{{ url_for('signout') }}">退出</a></li>
+                     <li><a href="{{ url_for('user.view', user_abbr=session.user_abbr) }}">我的主页</a></li>
+                     <li><a href="{{ url_for('account.signout') }}">退出</a></li>
                   </ul>
                </li>
             </ul>
@@ -95,9 +95,9 @@
                      </a>
 
                      <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('add_work') }}">作品</a></li>
-                        <li><a href="{{ url_for('add_author') }}">文学家</a></li>
-                        <li><a href="{{ url_for('add_dynasty') }}">朝代</a></li>
+                        <li><a href="{{ url_for('work.add') }}">作品</a></li>
+                        <li><a href="{{ url_for('author.add') }}">文学家</a></li>
+                        <li><a href="{{ url_for('dynasty.add') }}">朝代</a></li>
                      </ul>
                   </li>
                </ul>
@@ -109,8 +109,8 @@
                      </a>
 
                      <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('admin_works') }}">作品</a></li>
-                        <li><a href="{{ url_for('admin_authors') }}">文学家</a></li>
+                        <li><a href="{{ url_for('admin.works') }}">作品</a></li>
+                        <li><a href="{{ url_for('admin.authors') }}">文学家</a></li>
                      </ul>
                   </li>
                </ul>
@@ -155,7 +155,7 @@
       <div id='copyright'>西窗烛 ©2013 by <a href="http://hustlzp.com" target="_blank">hustlzp</a></div>
 
       <ul id='links'>
-         <li><a href="{{ url_for('about') }}">关于</a></li
+         <li><a href="{{ url_for('site.about') }}">关于</a></li
                >
          <li><a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a></li>
       </ul>

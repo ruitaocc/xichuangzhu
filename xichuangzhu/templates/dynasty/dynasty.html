@@ -10,7 +10,7 @@
    <ul id="dyn-selector" class="clearfix">
       {% for dyn in dynasties %}
          <li>
-            <a href="{{ url_for('dynasty', dynasty_abbr=dyn.abbr) }}" id="dyn-{{ dyn.id }}"
+            <a href="{{ url_for('dynasty.view', dynasty_abbr=dyn.abbr) }}" id="dyn-{{ dyn.id }}"
                data-dynasty-id="{{ dyn.id }}"
                style="{% if dyn.id == dynasty.id %}margin-top: 10px{% endif %}">{{ dyn.name }}</a>
          </li>
@@ -49,7 +49,7 @@
       <div class="col-md-8">
          <div id="dynasty-wap">
             {% if session.user_id == admin_id %}
-               <a class="btn btn-default pull-right" href="{{ url_for('edit_dynasty', dynasty_id=dynasty.id) }}">
+               <a class="btn btn-default pull-right" href="{{ url_for('dynasty.edit', dynasty_id=dynasty.id) }}">
                   <span class="glyphicon glyphicon-edit"></span> 编辑
                </a>
             {% endif %}
@@ -68,7 +68,7 @@
          <h2>
             文学家
             <span class='link-more'>
-               <a href="{{ url_for('authors') }}#{{ dynasty.abbr }}">更多 / {{ authors_num }} »</a>
+               <a href="{{ url_for('author.authors') }}#{{ dynasty.abbr }}">更多 / {{ authors_num }} »</a>
             </span>
          </h2>
 

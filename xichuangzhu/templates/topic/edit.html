@@ -7,7 +7,7 @@
 {% block body %}
 
    <form id="form-edit-topic" class="form-horizontal" method="post"
-         action="{{ url_for('edit_topic', topic_id=topic.id) }}">
+         action="{{ url_for('topic.edit', topic_id=topic.id) }}">
       <fieldset>
          <legend>发起新话题</legend>
 

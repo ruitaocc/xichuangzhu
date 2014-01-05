@@ -32,7 +32,7 @@ def signin():
     if User.query.get(user_id):
         # if user unactive
         if User.query.filter(User.is_active == False).filter(User.id == user_id).first():
-            return redirect(url_for('active_state', state='unactive', user_id=user_id))
+            return redirect(url_for('.active_state', state='unactive', user_id=user_id))
         else:
             # set session
             session.permanent = True
@@ -40,18 +40,17 @@ def signin():
             session['user_id'] = user_id
             session['user_name'] = user.name
             session['user_abbr'] = user.abbr
-            return redirect(url_for('index'))
+            return redirect(url_for('site.index'))
     # if not exist
     else:
         # get user info
         url = "https://api.douban.com/v2/user/" + str(user_id)
         user_info = requests.get(url).json()
-
         user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'], avatar=user_info['avatar'],
                     signature=user_info['signature'])
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('send_active_email', user_id=user_id))
+        return redirect(url_for('.send_active_email', user_id=user_id))
 
 
 @bp.route('/send_active_email/<int:user_id>', methods=['GET', 'POST'])
@@ -89,9 +88,9 @@ def send_active_email(user_id):
             try:
                 s.sendmail(config.SMTP_USER, to_addr, msg.as_string())
             except:
-                return redirect(url_for('active_state', state='send_failed'))
+                return redirect(url_for('.active_state', state='send_failed'))
             else:
-                return redirect(url_for('active_state', state='send_succ'))
+                return redirect(url_for('.active_state', state='send_succ'))
         else:
             return render_template('account/send_active_email.html', user=user, form=form)
 
@@ -110,8 +109,8 @@ def active(user_id, active_code):
         session['user_id'] = user_id
         session['user_name'] = user.name
         session['user_abbr'] = user.abbr
-        return redirect(url_for('active_state', state='active_succ'))
-    return redirect(url_for('active_state', state='active_failed'))
+        return redirect(url_for('.active_state', state='active_succ'))
+    return redirect(url_for('.active_state', state='active_failed'))
 
 
 @bp.route('/active_state')
@@ -129,4 +128,4 @@ def signout():
     session.pop('user_id', None)
     session.pop('user_name', None)
     session.pop('user_abbr', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('site.index'))
