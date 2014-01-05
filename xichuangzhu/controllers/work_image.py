@@ -6,7 +6,7 @@ from flask import render_template, request, redirect, url_for, json, session, ab
 from xichuangzhu import app, db, config
 from xichuangzhu.models.work import Work, WorkImage
 from xichuangzhu.models.collect import CollectWorkImage
-from xichuangzhu.form import WorkImageForm
+from ..forms import WorkImageForm
 from xichuangzhu.utils import require_login
 
 

@@ -20,11 +20,3 @@ class TopicForm(Form):
 class CommentForm(Form):
     """Form for add comment"""
     content = TextAreaField('回复', [DataRequired(message="回复不能为空")])
-
-
-
-
-
-class WorkImageForm(Form):
-    """Form for add and edit work image"""
-    image = FileField('作品', [FileRequired('作品图片不能为空')])

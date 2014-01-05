@@ -3,8 +3,8 @@ import cgi
 from flask import render_template, request, redirect, url_for, session, abort
 from xichuangzhu import app, db
 from xichuangzhu.models.topic import Topic, TopicComment
-from xichuangzhu.form import TopicForm, CommentForm
-from xichuangzhu.utils import require_login
+from ..forms import TopicForm, CommentForm
+from ..utils import require_login
 
 
 @app.route('/topics')

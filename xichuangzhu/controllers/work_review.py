@@ -5,8 +5,8 @@ from flask import render_template, request, redirect, url_for, session, abort
 from xichuangzhu import app, db
 from xichuangzhu.models.work import Work, WorkReview, WorkReviewComment
 from xichuangzhu.models.user import User
-from xichuangzhu.form import ReviewForm, CommentForm
-from xichuangzhu.utils import require_login
+from ..forms import ReviewForm, CommentForm
+from ..utils import require_login
 
 
 @app.route('/work_review/<int:review_id>')
