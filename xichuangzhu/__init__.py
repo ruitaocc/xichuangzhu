@@ -1,5 +1,6 @@
 #-*- coding: UTF-8 -*-
 import sys
+
 sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config
 from flask import Flask, request, url_for, session, g
@@ -12,29 +13,23 @@ sys.setdefaultencoding('utf8')
 
 # app
 app = Flask(__name__)
-app.config.update(
-    SECRET_KEY=config.SECRET_KEY,
-    SESSION_COOKIE_NAME=config.SESSION_COOKIE_NAME,
-    PERMANENT_SESSION_LIFETIME=config.PERMANENT_SESSION_LIFETIME,
-    DEBUG_TB_INTERCEPT_REDIRECTS=False,
-    DEBUG=config.DEBUG
-)
+app.config.from_object(config)
 
 # Debug toolbar
 if app.debug:
     toolbar = DebugToolbarExtension(app)
 
 # SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://%s:%s@%s/%s' % (config.DB_USER, config.DB_PASSWD, config.DB_HOST, config.DB_NAME)
 db = SQLAlchemy(app)
 
 # inject vars into template context
 @app.context_processor
 def inject_vars():
     return dict(
-        douban_login_url = config.DOUBAN_LOGIN_URL, # douban oauth url
-        admin_id = config.ADMIN_ID, # admin id
-    )    
+        douban_login_url=config.DOUBAN_LOGIN_URL,
+        admin_id=config.ADMIN_ID,
+    )
+
 
 # url generator for pagination
 def url_for_other_page(page):
@@ -43,12 +38,16 @@ def url_for_other_page(page):
     args['page'] = page
     view_args.update(args)
     return url_for(request.endpoint, **view_args)
+
+
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+
 
 # before every request
 @app.before_request
 def before_request():
-    g.user_id =  session['user_id'] if 'user_id' in session else None
+    g.user_id = session['user_id'] if 'user_id' in session else None
+
 
 import log
 import controllers
