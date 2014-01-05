@@ -1,18 +1,20 @@
 # coding: utf-8
 import requests
 import smtplib
-from email.mime.text import MIMEText
 import hashlib
-from flask import render_template, request, redirect, url_for, session
-from xichuangzhu import app, db, config
+from email.mime.text import MIMEText
+from flask import render_template, request, redirect, url_for, session, Blueprint
+from xichuangzhu import db, config
 from ..models import User
 from ..utils import require_login
 from ..forms import EmailForm
 
-# proc - login by douban's oauth2.0 (public)
-#--------------------------------------------------
-@app.route('/signin')
+bp = Blueprint('account', __name__)
+
+
+@bp.route('/signin')
 def signin():
+    """通过豆瓣OAuth登陆"""
     # get current authed userID
     code = request.args['code']
     url = "https://www.douban.com/service/auth2/token"
@@ -51,14 +53,14 @@ def signin():
         db.session.commit()
         return redirect(url_for('send_active_email', user_id=user_id))
 
-# page - send active email
-#--------------------------------------------------
-@app.route('/send_active_email/<int:user_id>', methods=['GET', 'POST'])
+
+@bp.route('/send_active_email/<int:user_id>', methods=['GET', 'POST'])
 def send_active_email(user_id):
+    """发送激活邮件"""
     user = User.query.get_or_404(user_id)
     if request.method == 'GET':
         form = EmailForm(user_id=user_id)
-        return render_template('sign/send_active_email.html', user=user, form=form)
+        return render_template('account/send_active_email.html', user=user, form=form)
     else:
         form = EmailForm(request.form)
 
@@ -91,12 +93,12 @@ def send_active_email(user_id):
             else:
                 return redirect(url_for('active_state', state='send_succ'))
         else:
-            return render_template('sign/send_active_email.html', user=user, form=form)
+            return render_template('account/send_active_email.html', user=user, form=form)
 
-# proc - active user
-#--------------------------------------------------
-@app.route('/active_user/<int:user_id>/<active_code>')
-def active_user(user_id, active_code):
+
+@bp.route('/active/<int:user_id>/<active_code>')
+def active(user_id, active_code):
+    """激活用户"""
     user = User.query.get_or_404(user_id)
     if active_code == hashlib.sha1(user.name).hexdigest():
         # active user
@@ -109,22 +111,21 @@ def active_user(user_id, active_code):
         session['user_name'] = user.name
         session['user_abbr'] = user.abbr
         return redirect(url_for('active_state', state='active_succ'))
-    else:
-        return redirect(url_for('active_state', state='active_failed'))
+    return redirect(url_for('active_state', state='active_failed'))
 
-# page - show the state of active
-#--------------------------------------------------
-@app.route('/active_state/')
+
+@bp.route('/active_state')
 def active_state():
+    """显示激活状态"""
     state = request.args['state']
     user_id = int(request.args.get('user_id', 0))
-    return render_template('sign/active_state.html', state=state, user_id=user_id)
+    return render_template('account/active_state.html', state=state, user_id=user_id)
 
-# proc - signout
-#--------------------------------------------------
-@app.route('/logout')
+
+@bp.route('/signout')
 @require_login
 def signout():
+    """登出"""
     session.pop('user_id', None)
     session.pop('user_name', None)
     session.pop('user_abbr', None)

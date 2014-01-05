@@ -1,10 +1,12 @@
 # coding: utf-8
-from flask import render_template
-from xichuangzhu import app, db
+from flask import render_template, Blueprint
+from xichuangzhu import db
 from ..models import Work, WorkImage, WorkReview, Author, Dynasty
 
+bp = Blueprint('site', __name__)
 
-@app.route('/')
+
+@bp.route('/')
 def index():
     """首页"""
     works = Work.query.order_by(db.func.rand()).limit(4)
@@ -17,26 +19,26 @@ def index():
                            authors=authors, dynasties=dynasties)
 
 
-@app.route('/index_works', methods=['POST'])
-def index_works():
+@bp.route('/works', methods=['POST'])
+def works():
     """生成首页需要的作品json数据"""
     works = Work.query.order_by(db.func.rand()).limit(4)
     return render_template('macro/index_works.html', works=works)
 
 
-@app.route('/about')
+@bp.route('/about')
 def about():
     """关于页"""
     return render_template('site/about.html')
 
 
-@app.errorhandler(404)
+@bp.errorhandler(404)
 def page_404(error):
     """404错误页"""
     return render_template('site/404.html'), 404
 
 
-@app.errorhandler(500)
+@bp.errorhandler(500)
 def page_500(error):
     """500错误页"""
     return render_template('site/500.html'), 500

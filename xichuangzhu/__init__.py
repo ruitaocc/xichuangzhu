@@ -50,5 +50,18 @@ def before_request():
 
 
 import log
-import controllers
 import models
+
+
+def register_routes(app):
+    from .controllers import account, admin, author, dynasty, forum, site, user, work
+    app.register_blueprint(site.bp, url_prefix='')
+    app.register_blueprint(account.bp, url_prefix='/account')
+    app.register_blueprint(admin.bp, url_prefix='/admin')
+    app.register_blueprint(forum.bp, url_prefix='/forum')
+    app.register_blueprint(dynasty.bp, url_prefix='/dynasty')
+    app.register_blueprint(author.bp, url_prefix='/author')
+    app.register_blueprint(work.bp, url_prefix='/work')
+    app.register_blueprint(user.bp, url_prefix='/user')
+
+register_routes(app)

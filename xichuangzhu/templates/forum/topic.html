@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% from "macro/ui.html" import render_comments %}
+{% from "macro/form.html" import render_form_errors %}
+
+{% block page_title %}{{ topic.title }} - 话题{% endblock %}
+{% block page_id %}page-topic{% endblock %}
+{% block extra_info %}Inspired by <a href='https://www.v2ex.com' target='_blank'>V2EX</a>{% endblock %}
+
+{% block body %}
+
+   {% if session.user_id %}
+      <script type="text/javascript">
+         // move the blink to the end of the input/textarea
+         function moveEnd(obj) {
+            obj.focus();
+            var len = obj.value.length;
+
+            if (document.selection) {
+               var sel = obj.createTextRange();
+               sel.moveStart('character', len);
+               sel.collapse();
+               sel.select();
+            } else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+               obj.selectionStart = obj.selectionEnd = len;
+            }
+         }
+
+         $(function () {
+            $('.comment-item').hover(
+                  function () {
+                     $(this).find('.btn-reply-somebody').show();
+                  },
+                  function () {
+                     $(this).find('.btn-reply-somebody').hide();
+                  }
+            );
+
+            $('.btn-reply-somebody').click(function () {
+               var target_username = $(this).attr('data-username');
+               var comment = $(".textarea-comment").val();
+
+               $(".textarea-comment").val("@" + target_username + " " + comment);
+               moveEnd($(".textarea-comment")[0]);
+            });
+         });
+      </script>
+   {% endif %}
+
+   <div class="row">
+      <div class="col-md-8">
+         <div class="topic-wap">
+            <a class="topic-user-avatar" href="{{ url_for('user', user_abbr=topic.user.abbr) }}"><img
+                  src="{{ topic.user.avatar }}"></a>
+
+            <h1 class="topic-title">{{ topic.title|safe }}</h1>
+
+            <div class="topic-extra-info">
+               By
+               <a class="topic-creator" href="{{ url_for('user', user_abbr=topic.user.abbr) }}">
+                  {{ topic.user.name }}
+               </a>
+               ·
+               <span class="topic-time">{{ topic.friendly_create_time }}</span>
+               ·
+               <span>{{ topic.click_num }} 点击</span>
+               {% if topic.user_id == session.user_id %}
+                  <a class="btn-edit-topic" href="{{ url_for('edit_topic', topic_id=topic.id) }}">编辑</a>
+               {% endif %}
+            </div>
+            <div class="topic-content">{{ topic.friendly_content|safe }}</div>
+         </div>
+
+         {% if topic.comments|length != 0 %}
+            <h2>回复</h2>
+
+            {{ render_comments(topic.comments) }}
+         {% endif %}
+
+         {% if session.user_id %}
+            <form id="add-topic-comment" method="post" action="{{ url_for('comment_topic', topic_id=topic.id) }}">
+               {{ form.csrf_token }}
+
+               {{ render_form_errors(form) }}
+
+               {{ form.content(class="form-control textarea-comment", rows="4", placeholder="添加回复") }}
+
+               <input type="submit" class="btn btn-sm btn-default" value="回复"/>
+            </form>
+         {% endif %}
+      </div>
+
+      <div class="col-md-4"></div>
+   </div>
+
+{% endblock %}

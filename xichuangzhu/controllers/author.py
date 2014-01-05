@@ -1,12 +1,14 @@
 # coding: utf-8
-from flask import render_template, request, redirect, url_for
-from xichuangzhu import app, db
+from flask import render_template, request, redirect, url_for, Blueprint
+from xichuangzhu import db
 from ..models import Author, AuthorQuote, Work, WorkType, CollectWork, Dynasty
 from ..utils import require_admin
 
+bp = Blueprint('author', __name__)
 
-@app.route('/author/<author_abbr>')
-def author(author_abbr):
+
+@bp.route('/<author_abbr>')
+def index(author_abbr):
     """文学家主页"""
     author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr == author_abbr).first_or_404()
     quote = AuthorQuote.query.get_or_404(int(float(request.args['q']))) if 'q' in request.args else author.random_quote
@@ -16,8 +18,8 @@ def author(author_abbr):
     return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
 
 
-@app.route('/authors')
-def authors():
+@bp.route('/all')
+def all():
     """全部文学家"""
     dynasties = Dynasty.query.filter(Dynasty.authors.any()).order_by(Dynasty.start_year)
     # get the authors who's works are latest collected by user
@@ -27,9 +29,9 @@ def authors():
     return render_template('author/authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
 
-@app.route('/author/add', methods=['GET', 'POST'])
+@bp.route('/add', methods=['GET', 'POST'])
 @require_admin
-def add_author():
+def add():
     """添加文学家"""
     if request.method == 'GET':
         dynasties = Dynasty.query.order_by(Dynasty.start_year)
@@ -42,29 +44,27 @@ def add_author():
         db.session.commit()
         return redirect(url_for('author', author_abbr=author.abbr))
 
-# page edit author
-#--------------------------------------------------
-@app.route('/author/<int:author_id>/edit', methods=['GET', 'POST'])
+
+@bp.route('/<int:author_id>/edit', methods=['GET', 'POST'])
 @require_admin
-def edit_author(author_id):
+def edit(author_id):
     """编辑文学家"""
     author = Author.query.get_or_404(author_id)
     if request.method == 'GET':
         dynasties = Dynasty.query.order_by(Dynasty.start_year)
         return render_template('author/edit_author.html', dynasties=dynasties, author=author)
-    else:
-        author.name = request.form['name']
-        author.abbr = request.form['abbr']
-        author.intro = request.form['intro']
-        author.birth_year = request.form['birth_year']
-        author.death_year = request.form['death_year']
-        author.dynasty_id = int(request.form['dynasty_id'])
-        db.session.add(author)
-        db.session.commit()
-        return redirect(url_for('author', author_abbr=author.abbr))
+    author.name = request.form['name']
+    author.abbr = request.form['abbr']
+    author.intro = request.form['intro']
+    author.birth_year = request.form['birth_year']
+    author.death_year = request.form['death_year']
+    author.dynasty_id = int(request.form['dynasty_id'])
+    db.session.add(author)
+    db.session.commit()
+    return redirect(url_for('author', author_abbr=author.abbr))
 
 
-@app.route('/author/<int:author_id>/admin_quote')
+@bp.route('/<int:author_id>/admin_quote')
 @require_admin
 def admin_quotes(author_id):
     """管理文学家的名言"""
@@ -72,7 +72,7 @@ def admin_quotes(author_id):
     return render_template('author/admin_quotes.html', author=author)
 
 
-@app.route('/author/<int:author_id>/add_quote', methods=['POST'])
+@bp.route('/<int:author_id>/add_quote', methods=['POST'])
 @require_admin
 def add_quote(author_id):
     """添加名言"""
@@ -82,7 +82,7 @@ def add_quote(author_id):
     return redirect(url_for('admin_quotes', author_id=author_id))
 
 
-@app.route('/quote/<int:quote_id>/delete')
+@bp.route('/quote/<int:quote_id>/delete')
 @require_admin
 def delete_quote(quote_id):
     """删除名言"""
@@ -92,7 +92,7 @@ def delete_quote(quote_id):
     return redirect(url_for('admin_quotes', author_id=quote.author_id))
 
 
-@app.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
+@bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
 @require_admin
 def edit_quote(quote_id):
     """编辑名言"""
