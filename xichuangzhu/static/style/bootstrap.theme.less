@@ -1,58 +1,58 @@
 @import "fonts.less";
 
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
   .container {
     max-width: 970px;
   }
 }
 
-h1{
-    font-size: 25px;
-    line-height: 35px;
-    margin: 15px 0 10px 0;
+h1 {
+  font-size: 25px;
+  line-height: 35px;
+  margin: 15px 0 10px 0;
 }
 
-h2{
-    font-size: 15px;
-    .font-hei;
-    line-height: 15px;
-    font-weight: normal;
-    margin: 20px 0 15px 0;
-    color: rgb(173,22,22);
-    clear: both;
+h2 {
+  font-size: 15px;
+  .font-hei;
+  line-height: 15px;
+  font-weight: normal;
+  margin: 20px 0 15px 0;
+  color: rgb(173, 22, 22);
+  clear: both;
 }
 
-ul{
+ul {
   padding-left: 30px;
   list-style: square;
 }
 
-legend{
+legend {
   line-height: 40px;
   padding-bottom: 5px;
 }
 
-label{
+label {
   font-weight: normal;
 }
 
-blockquote{
+blockquote {
   padding: 0 0 0 20px;
 
-  p{
+  p {
     font-size: 14px;
     line-height: 180%;
     margin-bottom: 5px;
-  }  
+  }
 }
 
-.label{
+.label {
   border-radius: 0;
   padding: .2em .5em;
   font-weight: normal;
 }
 
-.tooltip{
+.tooltip {
   .font-song;
   text-indent: 0;
   font-weight: normal;
@@ -60,49 +60,52 @@ blockquote{
   line-height: 160%;
 }
 
-.tooltip-inner{
+.tooltip-inner {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.alert-danger ul li{
+.alert-danger ul li {
   margin: 0 0 5px 0;
 
-  &:last-child{
+  &:last-child {
     margin: 0;
   }
 }
 
-.input-group-btn:last-child > .btn{
+.input-group-btn:last-child > .btn {
   border-left: 0;
 }
 
-.table thead>tr>th {
+.table thead > tr > th {
   border-bottom: 1px solid #ddd;
 }
 
-.table-bordered>thead>tr>th, .table-bordered>thead>tr>td {
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
   border-bottom-width: 1px;
 }
 
-.form-horizontal input[type='file']{
+.form-horizontal input[type='file'] {
   padding-top: 7px;
 }
 
-.pagination{
-  li:first-child > a{
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
-  }
+.pagination {
+  li {
+    &:first-child > a {
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
+    }
 
-  li:last-child > a{
-    border-bottom-right-radius: 0px;
-    border-top-right-radius: 0px;
-  }
-  
-  li a{
-    color: #555;
-    font-size: 13px;
-    background-color: #eee;
+    &:last-child > a {
+      border-bottom-right-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+
+    a {
+      color: #555;
+      font-size: 13px;
+      background-color: #eee;
+    }
   }
 }
