@@ -2,8 +2,8 @@
 import re
 import datetime
 import markdown2
-from xichuangzhu import db
-from xichuangzhu.utils import time_diff
+from ._base import db
+from ..utils import time_diff
 
 
 class Work(db.Model):

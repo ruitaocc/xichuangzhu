@@ -1,6 +1,6 @@
 # coding: utf-8
 import datetime
-from xichuangzhu import db
+from ._base import db
 
 
 class CollectWork(db.Model):

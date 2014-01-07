@@ -1,7 +1,7 @@
 #-*- coding: UTF-8 -*-
 import datetime
-from xichuangzhu import db
-from xichuangzhu.utils import check_is_me
+from ._base import db
+from ..utils import check_is_me
 
 
 class User(db.Model):

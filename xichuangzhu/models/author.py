@@ -1,5 +1,5 @@
 # coding: utf-8
-from xichuangzhu import db
+from ._base import db
 
 
 class Author(db.Model):

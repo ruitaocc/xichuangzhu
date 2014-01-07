@@ -60,7 +60,9 @@ def register_logger(app):
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
-import models
+def register_db(app):
+    from .models import db
+    db.init_app(app)
 
 
 def register_routes(app):
@@ -90,6 +92,7 @@ def register_error_handle(app):
         return render_template('site/500.html'), 500
 
 
+register_db(app)
 register_routes(app)
 register_error_handle(app)
 register_logger(app)
