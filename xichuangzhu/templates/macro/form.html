@@ -1,8 +1,8 @@
-{% macro field_errors(errors) %}
+{% macro field_errors(field) %}
    {% if errors %}
       <div class="list-form-errors text-danger list-unstyled">
          <ul>
-            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for field_name, field_errors in field.errors|dictsort if field.errors %}
                {% for error in field_errors %}
                   <li>{{ error }}</li>
                {% endfor %}

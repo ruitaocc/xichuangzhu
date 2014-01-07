@@ -1,7 +1,6 @@
 # coding: utf-8
 from flask import render_template, request, redirect, url_for, Blueprint
-from xichuangzhu import db
-from ..models import Dynasty
+from ..models import db, Dynasty
 from ..utils import require_admin
 
 bp = Blueprint('dynasty', __name__)

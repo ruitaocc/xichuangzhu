@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/form.html" import render_form_errors %}
+{% from "macro/form.html" import field_errors %}
 
 {% block page_title %}发起新话题{% endblock %}
 {% block page_id %}page-add-topic{% endblock %}
@@ -11,12 +11,11 @@
          <legend>新话题</legend>
          {{ form.csrf_token }}
 
-         {{ render_form_errors(form) }}
-
          <div class="form-group">
             {{ form.title.label(class="col-md-2 control-label") }}
             <div class="col-md-6">
                {{ form.title(class="form-control") }}
+               {{ field_errors(form.title) }}
             </div>
          </div>
 
@@ -24,6 +23,7 @@
             {{ form.content.label(class="col-md-2 control-label") }}
             <div class="col-md-6">
                {{ form.content(class="form-control", rows="15") }}
+               {{ field_errors(form.content) }}
             </div>
          </div>
 

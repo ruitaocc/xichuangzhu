@@ -1,7 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint
-from xichuangzhu import db
-from ..models import Work, WorkImage, WorkReview, Author, Dynasty
+from ..models import db, Work, WorkImage, WorkReview, Author, Dynasty
 
 bp = Blueprint('site', __name__)
 

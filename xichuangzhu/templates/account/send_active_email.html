@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/form.html" import render_form_errors %}
+{% from "macro/form.html" import field_errors %}
 
 {% block page_title %}发送激活邮件{% endblock %}
 {% block page_id %}page-send-active-email{% endblock %}
@@ -13,12 +13,11 @@
 
          {{ form.csrf_token }}
 
-         {{ render_form_errors(form) }}
-
          <div class='form-group'>
             {{ form.email.label(class="col-md-2 control-label") }}
             <div class="col-md-4">
                {{ form.email(class='form-control') }}
+               {{ field_errors(form.email) }}
             </div>
          </div>
 

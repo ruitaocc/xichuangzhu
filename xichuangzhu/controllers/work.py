@@ -4,8 +4,8 @@ import os
 import uuid
 import cgi
 from flask import render_template, request, redirect, url_for, json, session, Blueprint, abort
-from xichuangzhu import db, config
-from ..models import Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork,\
+from xichuangzhu import config
+from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork,\
     CollectWorkImage, WorkReviewComment
 from ..utils import require_login, require_admin
 from ..forms import WorkImageForm, CommentForm, WorkReviewForm

@@ -1,8 +1,7 @@
 # coding: utf-8
 import cgi
 from flask import render_template, request, redirect, url_for, session, abort, Blueprint
-from xichuangzhu import db
-from ..models import Topic, TopicComment
+from ..models import db, Topic, TopicComment
 from ..forms import TopicForm, CommentForm
 from ..utils import require_login
 

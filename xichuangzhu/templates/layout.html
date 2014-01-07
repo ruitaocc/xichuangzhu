@@ -43,7 +43,7 @@
                <li><a href="{{ url_for('user.collects') }}">收藏</a></li>
             {% endif %}
 
-            <li><a href="{{ url_for('topic.topics') }}">话题</a></li>
+            <li><a href="{{ url_for('topic.topics') }}">社区</a></li>
 
             {% if not session.user_id %}
                <li><a href="{{ url_for('site.about') }}">关于</a></li>

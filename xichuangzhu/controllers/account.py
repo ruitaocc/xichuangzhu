@@ -4,8 +4,8 @@ import smtplib
 import hashlib
 from email.mime.text import MIMEText
 from flask import render_template, request, redirect, url_for, session, Blueprint
-from xichuangzhu import db, config
-from ..models import User
+from xichuangzhu import config
+from ..models import db, User
 from ..utils import require_login
 from ..forms import EmailForm
 

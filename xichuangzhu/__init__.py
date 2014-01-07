@@ -4,49 +4,59 @@ import sys
 sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config
 from flask import Flask, request, url_for, session, g, render_template
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CsrfProtect
 from flask_debugtoolbar import DebugToolbarExtension
 
 # convert python's encoding to utf8
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-# app
-app = Flask(__name__)
-app.config.from_object(config)
 
-# Debug toolbar
-if app.debug:
-    toolbar = DebugToolbarExtension(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(config)
 
-# SQLAlchemy
-db = SQLAlchemy(app)
+    # CSRF protect
+    CsrfProtect(app)
 
-# inject vars into template context
-@app.context_processor
-def inject_vars():
-    return dict(
-        douban_login_url=config.DOUBAN_LOGIN_URL,
-        admin_id=config.ADMIN_ID,
-    )
+    if app.debug:
+        toolbar = DebugToolbarExtension(app)
 
+    register_db(app)
+    register_routes(app)
+    register_jinja(app)
+    register_error_handle(app)
+    register_logger(app)
 
-# url generator for pagination
-def url_for_other_page(page):
-    view_args = request.view_args.copy()
-    args = request.args.copy().to_dict()
-    args['page'] = page
-    view_args.update(args)
-    return url_for(request.endpoint, **view_args)
+    # before every request
+    @app.before_request
+    def before_request():
+        g.user_id = session['user_id'] if 'user_id' in session else None
+    return app
 
 
-app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+def register_jinja(app):
+    from . import filters
 
+    #app.jinja_env.filters['timesince'] = filters.timesince
 
-# before every request
-@app.before_request
-def before_request():
-    g.user_id = session['user_id'] if 'user_id' in session else None
+    # inject vars into template context
+    @app.context_processor
+    def inject_vars():
+        return dict(
+            douban_login_url=config.DOUBAN_LOGIN_URL,
+            admin_id=config.ADMIN_ID,
+        )
+
+    # url generator for pagination
+    def url_for_other_page(page):
+        view_args = request.view_args.copy()
+        args = request.args.copy().to_dict()
+        args['page'] = page
+        view_args.update(args)
+        return url_for(request.endpoint, **view_args)
+
+    app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 
 
 def register_logger(app):
@@ -59,6 +69,7 @@ def register_logger(app):
                                    credentials)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
+
 
 def register_db(app):
     from .models import db
@@ -92,8 +103,4 @@ def register_error_handle(app):
         return render_template('site/500.html'), 500
 
 
-register_db(app)
-register_routes(app)
-register_error_handle(app)
-register_logger(app)
-
+app = create_app()
