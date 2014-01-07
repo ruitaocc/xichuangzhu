@@ -4,6 +4,7 @@ import datetime
 import markdown2
 from ._base import db
 from ..utils import time_diff
+from ..uploadsets import workimages
 
 
 class Work(db.Model):
@@ -73,7 +74,6 @@ class WorkTag(db.Model):
 
 class WorkImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200))
     filename = db.Column(db.String(200))
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -82,6 +82,10 @@ class WorkImage(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('work_images', lazy='dynamic'))
+
+    @property
+    def url(self):
+        return workimages.url(self.filename)
 
     def __repr__(self):
         return '<WorkImage %s>' % self.filename

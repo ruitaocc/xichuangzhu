@@ -2,6 +2,7 @@ Flask
 Flask-WTF
 Flask-SQLAlchemy
 flask-debugtoolbar
+Flask-Uploads
 requests
 markdown2
 MySQL-python

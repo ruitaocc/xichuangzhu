@@ -1,14 +1,15 @@
 # coding: utf-8
 from __future__ import division
-import os
 import uuid
 import cgi
 from flask import render_template, request, redirect, url_for, json, session, Blueprint, abort
 from xichuangzhu import config
-from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork,\
+from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork, \
     CollectWorkImage, WorkReviewComment
 from ..utils import require_login, require_admin
 from ..forms import WorkImageForm, CommentForm, WorkReviewForm
+from ..helpers import random_filename
+from ..uploadsets import workimages
 
 bp = Blueprint('work', __name__)
 
@@ -182,9 +183,6 @@ def delete_image(work_image_id):
     work_image = WorkImage.query.get_or_404(work_image_id)
     if work_image.user_id != session['user_id']:
         abort(404)
-        # delete image file
-    if os.path.isfile(config.IMAGE_PATH + work_image.filename):
-        os.remove(config.IMAGE_PATH + work_image.filename)
     db.session.delete(work_image)
     db.session.commit()
     return redirect(url_for('.view', work_id=work_image.work_id))
@@ -221,17 +219,13 @@ def all_images():
 @bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
 @require_login
 def add_image(work_id):
-    """为作品添加相关图片"""
+    """添加作品图片"""
     work = Work.query.get_or_404(work_id)
     form = WorkImageForm()
     if form.validate_on_submit():
         # Save image
-        image = request.files['image']
-        image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
-        image.save(config.IMAGE_PATH + image_filename)
-
-        work_image = WorkImage(work_id=work_id, user_id=session['user_id'], url=config.IMAGE_URL + image_filename,
-                               filename=image_filename)
+        filename = workimages.save(request.files['image'], name=random_filename() + ".")
+        work_image = WorkImage(work_id=work_id, user_id=session['user_id'], filename=filename)
         db.session.add(work_image)
         db.session.commit()
         return redirect(url_for('.image', work_image_id=work_image.id))
@@ -245,18 +239,8 @@ def edit_image(work_image_id):
     work_image = WorkImage.query.get_or_404(work_image_id)
     form = WorkImageForm()
     if form.validate_on_submit():
-        # Delete old image
-        if os.path.isfile(config.IMAGE_PATH + work_image.filename):
-            os.remove(config.IMAGE_PATH + work_image.filename)
-
-        # Save new image
-        image = request.files['image']
-        image_filename = str(uuid.uuid1()) + '.' + image.filename.split('.')[-1]
-        image.save(config.IMAGE_PATH + image_filename)
-
-        # update image info
-        work_image.url = config.IMAGE_URL + image_filename
-        work_image.filename = image_filename
+        filename = workimages.save(request.files['image'], name=random_filename() + ".")
+        work_image.filename = filename
         db.session.add(work_image)
         db.session.commit()
         return redirect(url_for('.image', work_image_id=work_image_id))

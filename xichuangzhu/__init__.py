@@ -1,11 +1,12 @@
 #-*- coding: UTF-8 -*-
 import sys
+from flask import Flask, request, url_for, session, g, render_template
+from flask_wtf.csrf import CsrfProtect
+from flask.ext.uploads import configure_uploads
+from flask_debugtoolbar import DebugToolbarExtension
 
 sys.path.append('/var/www/flaskconfig/xichuangzhu')
 import config
-from flask import Flask, request, url_for, session, g, render_template
-from flask_wtf.csrf import CsrfProtect
-from flask_debugtoolbar import DebugToolbarExtension
 
 # convert python's encoding to utf8
 reload(sys)
@@ -27,6 +28,7 @@ def create_app():
     register_jinja(app)
     register_error_handle(app)
     register_logger(app)
+    register_uploadsets(app)
 
     # before every request
     @app.before_request
@@ -102,5 +104,9 @@ def register_error_handle(app):
     def page_500(error):
         return render_template('site/500.html'), 500
 
+
+def register_uploadsets(app):
+    from .uploadsets import workimages
+    configure_uploads(app, (workimages))
 
 app = create_app()
