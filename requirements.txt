@@ -6,3 +6,4 @@ Flask-Uploads
 requests
 markdown2
 MySQL-python
+gunicorn

@@ -3,3 +3,4 @@
 venv/
 .idea/
 xichuangzhu/config.py
+fabfile.py

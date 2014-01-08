@@ -5,33 +5,41 @@ DEBUG = True
 
 # site domain
 SITE_DOMAIN = "http://localhost:5000"
+IMAGE_SERVER_URL = "http://localhost"
 
 # your douban id
-ADMIN_ID = 0
+ADMIN_ID = 45197381
 
 # image upload path
-IMAGE_URL = '/static/xcz_uploads/work_imgs/'
-IMAGE_PATH = '/var/www/xichuangzhu/xichuangzhu' + IMAGE_URL
+UPLOADS_DEFAULT_DEST = "D:/xampp/htdocs/xcz_uploads"
+UPLOADS_DEFAULT_URL = "%s/xcz_uploads/" % IMAGE_SERVER_URL
 
 # app config
-SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT" # replace to your secret key
+SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT"
 PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7
 SESSION_COOKIE_NAME = 'xcz_session'
 
 # db config
-DB_HOST = "localhost"
-DB_USER = "root"
-DB_PASSWD = ""
-DB_NAME = "xcz"
+DB_HOST = ""
+DB_USER = ""
+DB_PASSWORD = ""
+DB_NAME = ""
+SQLALCHEMY_DATABASE_URI = "mysql://%s:%s@%s/%s" % (DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
 
 # smtp config
 SMTP_SERVER = ""
 SMTP_PORT = 25
 SMTP_USER = ""
 SMTP_PASSWORD = ""
+SMTP_FROM = ""
+SMTP_ADMIN = ""
+
+# Flask debug toolbar
+DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 # douban oauth2 config
 DOUBAN_CLIENT_ID = ''
 DOUBAN_SECRET = ''
-DOUBAN_REDIRECT_URI = '%s/signin' % SITE_DOMAIN
-DOUBAN_LOGIN_URL = "https://www.douban.com/service/auth2/auth?client_id=%s&redirect_uri=%s&response_type=code" % (DOUBAN_CLIENT_ID, DOUBAN_REDIRECT_URI)
+DOUBAN_REDIRECT_URI = '%s/account/signin' % SITE_DOMAIN
+DOUBAN_LOGIN_URL = "https://www.douban.com/service/auth2/auth?client_id=%s&redirect_uri=%s&response_type=code" % (
+    DOUBAN_CLIENT_ID, DOUBAN_REDIRECT_URI)
