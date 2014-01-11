@@ -4,9 +4,7 @@ from flask import Flask, request, url_for, session, g, render_template
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
-
-sys.path.append('/var/www/flaskconfig/xichuangzhu')
-import config
+from . import config
 
 # convert python's encoding to utf8
 reload(sys)
