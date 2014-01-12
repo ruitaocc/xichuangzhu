@@ -1,7 +1,7 @@
 西窗烛
 ===
 
-http://www.xichuangzhu.com
+http://www.xichuangzhu.com（域名备案中，请暂时访问：http://115.29.147.82/）
 
 何当共剪西窗烛，却话巴山夜雨时。
 
