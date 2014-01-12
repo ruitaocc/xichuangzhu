@@ -15,6 +15,7 @@
                'type': 'POST',
                'dataType': 'json',
                'data': {
+                  'csrf_token': '{{ csrf_token() }}',
                   'author_name': author_name
                },
                'success': function (authors) {

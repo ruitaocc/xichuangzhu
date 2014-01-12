@@ -13,6 +13,9 @@
             $.ajax({
                url: "{{ url_for('site.works') }}",
                type: 'POST',
+               data: {
+                  'csrf_token': '{{ csrf_token() }}'
+               },
                success: function (data) {
                   $('#index-works-wap').html(data);
 
