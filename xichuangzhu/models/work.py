@@ -106,10 +106,6 @@ class WorkReview(db.Model):
     user = db.relationship('User', backref=db.backref('work_reviews', lazy='dynamic'))
 
     @property
-    def friendly_create_time(self):
-        return time_diff(self.create_time)
-
-    @property
     def friendly_content(self):
         return self.content.replace('\n', "<div class='text-gap'></div>")
 
@@ -127,10 +123,6 @@ class WorkReviewComment(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     user = db.relationship('User', backref=db.backref('work_review_comments'))
-
-    @property
-    def friendly_create_time(self):
-        return time_diff(self.create_time)
 
     def __repr__(self):
         return '<WorkReviewComment %s>' % self.content

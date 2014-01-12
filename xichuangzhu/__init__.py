@@ -39,7 +39,7 @@ def create_app():
 def register_jinja(app):
     from . import filters
 
-    #app.jinja_env.filters['timesince'] = filters.timesince
+    app.jinja_env.filters['timesince'] = filters.timesince
 
     # inject vars into template context
     @app.context_processor

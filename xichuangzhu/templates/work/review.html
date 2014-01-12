@@ -68,7 +68,7 @@
             <a href="{{ url_for('work.view', work_id=review.work_id) }}">{{ review.work.title }}</a>
             <span style="color:#333;">〔{{ review.work.author.name }}〕</span>
             ·
-            <span class="review-time">{{ review.friendly_create_time }}</span>
+            <span class="review-time">{{ review.create_time|timesince }}</span>
             ·
             <span>{{ review.click_num }} 点击</span>
 

@@ -60,7 +60,7 @@
                   {{ topic.user.name }}
                </a>
                ·
-               <span class="topic-time">{{ topic.friendly_create_time }}</span>
+               <span class="topic-time">{{ topic.create_time|timesince }}</span>
                ·
                <span>{{ topic.click_num }} 点击</span>
                {% if topic.user_id == session.user_id %}

@@ -66,7 +66,7 @@
          <div class="comment-wap">
             <div class="comment-extra-info">
                <a href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">{{ c.user.name }}</a>
-               <span class="comment-time">{{ c.friendly_create_time }}</span>
+               <span class="comment-time">{{ c.create_time|timesince }}</span>
                <!-- <a class="btn-reply-somebody" data-username="{{ c.user.name }}">回应</a> -->
             </div>
 
@@ -103,7 +103,7 @@
             <div class="topic-title"><a href="{{ url_for('topic.view', topic_id=t.id) }}">{{ t.title }}</a></div>
             <div class="topic-extra-info">
                <a class="topic-creator" href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
-               <span class="topic-time">{{ t.friendly_create_time }}</span>
+               <span class="topic-time">{{ t.create_time|timesince }}</span>
             </div>
             {% if t.comments|length != 0 %}
                <div class="topic-comment-num">{{ t.comments|length }}</div>
@@ -170,7 +170,7 @@
                <a href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">{{ r.user.name }}</a>
                评
                <a href="{{ url_for('work.view', work_id=r.work.id) }}">{{ r.work.title }}</a>〔{{ r.work.author.name }}〕
-               <span class="review-time">{{ r.friendly_create_time }}</span>
+               <span class="review-time">{{ r.create_time|timesince }}</span>
             </div>
          </div>
       </div>
