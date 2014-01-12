@@ -58,7 +58,10 @@
 
             <h1 class='dynasty'>{{ dynasty.name }}</h1>
 
-            <div class="dynasty-period">{{ dynasty.friendly_start_year }} ~ {{ dynasty.friendly_end_year }}</div>
+            <div class="dynasty-period">
+               {{ dynasty.start_year|format_year }} ~
+               {% if dynasty.end_year %}{{ dynasty.end_year|format_year }}{% else %}至今{% endif %}
+            </div>
 
             <h2>简介</h2>
 
