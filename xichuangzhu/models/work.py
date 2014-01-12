@@ -1,9 +1,6 @@
-#-*- coding: UTF-8 -*-
-import re
+# coding: utf-8
 import datetime
-import markdown2
 from ._base import db
-from ..utils import time_diff
 from ..uploadsets import workimages
 
 
@@ -23,24 +20,6 @@ class Work(db.Model):
 
     def __repr__(self):
         return '<Work %s>' % self.title
-
-    @property
-    def clean_content(self):
-        c = re.sub(r'<([^<]+)>', '', self.content)
-        c = c.replace('%', '')
-        c = c.replace('（一）', "")
-        c = c.replace('(一)', "")
-        return c
-
-    @property
-    def friendly_content(self):
-        """
-        Add comment -> Split ci -> Generate paragraph
-        """
-        c = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", self.content)
-        c = c.replace('%', "&nbsp;&nbsp;")
-        c = markdown2.markdown(c)
-        return c
 
 
 class WorkType(db.Model):

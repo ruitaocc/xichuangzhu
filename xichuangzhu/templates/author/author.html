@@ -13,12 +13,12 @@
             $(this).addClass('active');
 
             // show works of certain type
-            type = $(this).attr('data-work-type');
+            var type = $(this).attr('data-work-type');
             if (type == 'all') {
                $('.work-item').show();
             } else {
                $('.work-item').each(function () {
-                  if ($(this).attr('data-work-type') == type) {
+                  if ($(this).attr('data-work-type') === type) {
                      $(this).show();
                   } else {
                      $(this).hide();
@@ -49,21 +49,23 @@
          <div class="author">
             <h1>{{ author.name }}</h1>
 
-            {% if author.quotes|length != 0 %}
+            {% if author.quotes %}
                <a href="{{ url_for('work.view', work_id=quote.work.id) }}" class="author-quote"
                   title="《{{ quote.work.title }}》">{{ quote.quote }}</a>
             {% endif %}
 
-            {% if session.user_id == 45197381 %}
+            {% if session.user_id == admin_id %}
                <a class="btn btn-default btn-xs" target="_blank"
-                  href="{{ url_for('author.admin_quotes', author_id=author.id) }}">Edit / {{ author.quotes|length }}</a>
+                  href="{{ url_for('author.admin_quotes', author_id=author.id) }}">
+                  Edit / {{ author.quotes|length }}
+               </a>
             {% endif %}
          </div>
 
          <div class='author-period'>
             〔<a href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
-            {% if author.death_year == "?" or author.death_year|int != 0 %}
-               {{ author.birth_year|replace('-', '前') }}年 ~ {{ author.death_year|replace('-', '前') }}年
+            {% if author.death_year %}
+               {{ author.birth_year|format_year }} ~ {{ author.death_year|format_year }}
             {% endif %}
          </div>
 
@@ -86,7 +88,7 @@
          {% for work in author.works %}
             <a href="{{ url_for('work.view', work_id=work.id) }}" data-work-type="{{ work.type.en }}" class="work-item">
                <div class='work-title'>{{ work.title }}</div>
-               <div class='work-content'>{{ work.clean_content|truncate(23, True) }}</div>
+               <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
             </a>
          {% endfor %}
       </div>

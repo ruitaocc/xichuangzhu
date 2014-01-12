@@ -25,15 +25,12 @@
          {% endif %}
 
          <div class="work-content work-type-{{ work.type.en }}"
-               {% if work.friendly_content|length < 32 %}
-              style="text-indent:0; text-align: center;"
-               {% endif %}
-               >{{ work.friendly_content|safe }}</div>
+              {% if work.content|length < 32 %}style="text-indent:0; text-align: center;"{% endif %}>
+            {{ work.content|markdown_work|safe }}
+         </div>
 
          <script type="text/javascript">
-            $('.work-content sup').tooltip();
-
-            $('.work-content sup').each(function (index) {
+            $('.work-content sup').tooltip().each(function (index) {
                $(this).text('〔' + (index + 1) + '〕');
                // $(this).text(' [' + (index + 1) + '] ');
             });
@@ -42,8 +39,9 @@
          {% if session.user_id %}
             <div class="btn-group btn-group-sm pull-right" id="work-cmds">
                {% if session.user_id == admin_id %}
-                  <a class="btn btn-default" href="{{ url_for('work.edit', work_id=work.id) }}"><span
-                        class="glyphicon glyphicon-edit"></span> 编辑</a>
+                  <a class="btn btn-default" href="{{ url_for('work.edit', work_id=work.id) }}">
+                     <span class="glyphicon glyphicon-edit"></span> 编辑
+                  </a>
                {% endif %}
 
                <a class="btn btn-default" target="_blank" href="{{ url_for('work.add_review', work_id=work.id) }}">
@@ -133,7 +131,7 @@
             <div class="other-work-item">
                <a class="other-work-title"
                   href="{{ url_for('work.view', work_id = work.id) }}">{{ work.title|truncate(12, True, '') }}</a>
-               <span class="other-work-content">{{ work.clean_content|truncate(8, True) }}</span>
+               <span class="other-work-content">{{ work.content|clean_work|truncate(8, True) }}</span>
             </div>
          {% endfor %}
 

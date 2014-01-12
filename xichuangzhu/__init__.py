@@ -40,6 +40,9 @@ def register_jinja(app):
     from . import filters
 
     app.jinja_env.filters['timesince'] = filters.timesince
+    app.jinja_env.filters['clean_work'] = filters.clean_work
+    app.jinja_env.filters['markdown_work'] = filters.markdown_work
+    app.jinja_env.filters['format_year'] = filters.format_year
 
     # inject vars into template context
     @app.context_processor

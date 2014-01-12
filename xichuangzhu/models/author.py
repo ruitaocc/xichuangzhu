@@ -8,7 +8,7 @@ class Author(db.Model):
     abbr = db.Column(db.String(50), unique=True)
     intro = db.Column(db.Text())
     birth_year = db.Column(db.String(20))
-    death_year = db.Column(db.String(20))
+    death_year = db.Column(db.String(20), default=None)
 
     dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))
     dynasty = db.relationship('Dynasty', backref=db.backref('authors', lazy='dynamic'))
@@ -18,7 +18,10 @@ class Author(db.Model):
 
     @property
     def random_quote(self):
-        """Get a random quote of the author"""
+        """Get a random quote of the author
+        为了防止每次访问此属性时都得到不同的结果，
+        在第一次查询后将结果缓存起来，以便后续使用
+        """
         if not hasattr(self, '_random_quote'):
             self._random_quote = AuthorQuote.query.filter(AuthorQuote.author_id == self.id).order_by(db.func.rand()).first()
         return self._random_quote

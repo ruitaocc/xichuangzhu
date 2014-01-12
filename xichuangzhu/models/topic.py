@@ -1,7 +1,6 @@
-#-*- coding: UTF-8 -*-
+# coding: utf-8
 import datetime
 from ._base import db
-from ..utils import time_diff
 
 
 class Topic(db.Model):

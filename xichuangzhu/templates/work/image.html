@@ -23,7 +23,7 @@
          </p>
 
          <blockquote>
-            <p>{{ work_image.work.clean_content|truncate(100, True) }}</p>
+            <p>{{ work_image.work.content|clean_work|truncate(100, True) }}</p>
             <small>〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
          </blockquote>
       </div>

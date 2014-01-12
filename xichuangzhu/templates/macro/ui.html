@@ -124,7 +124,7 @@
             </sup>
          </div>
 
-         <div class="work-content">{{ w.clean_content|truncate(35, True) }}</div>
+         <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
       </div>
    {% endfor %}
 {% endmacro %}
@@ -141,7 +141,7 @@
             </sup>
          </div>
 
-         <div class="work-content">{{ w.clean_content|truncate(35, True) }}</div>
+         <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
       </div>
    {% endfor %}
 {% endmacro %}
