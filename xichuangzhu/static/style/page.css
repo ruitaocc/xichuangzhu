@@ -337,6 +337,9 @@ html body #footer .container #extra-info a {
 #page-dynasty .row {
   margin-top: 15px;
 }
+#page-dynasty .row #dynasty-wap .dynasty {
+  font-family: "arial", "NSimSun", "SimSun", "STSong", "AR PL SungtiL GB", "TW\-Sung", "WenQuanYi Bitmap Song";
+}
 #page-dynasty .row #dynasty-wap .dynasty-period {
   font-size: 16px;
 }

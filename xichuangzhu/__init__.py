@@ -1,4 +1,4 @@
-#-*- coding: UTF-8 -*-
+# coding: utf-8
 import sys
 from flask import Flask, request, url_for, session, g, render_template
 from flask_wtf.csrf import CsrfProtect
