@@ -19,7 +19,7 @@ def create_app():
     CsrfProtect(app)
 
     if app.debug:
-        toolbar = DebugToolbarExtension(app)
+        DebugToolbarExtension(app)
 
     register_db(app)
     register_routes(app)
@@ -32,6 +32,7 @@ def create_app():
     @app.before_request
     def before_request():
         g.user_id = session['user_id'] if 'user_id' in session else None
+
     return app
 
 

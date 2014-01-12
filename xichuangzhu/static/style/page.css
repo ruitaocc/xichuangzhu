@@ -247,6 +247,7 @@ html body #footer .container #extra-info a {
 }
 #page-author .author h1 {
   display: inline-block;
+  font-family: "arial", "NSimSun", "SimSun", "STSong", "AR PL SungtiL GB", "TW\-Sung", "WenQuanYi Bitmap Song";
 }
 #page-author .author .author-quote {
   font-size: 12px;
