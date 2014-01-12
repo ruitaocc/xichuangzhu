@@ -79,7 +79,7 @@
             {% endif %}
          </div>
 
-         <div class="review-content">{{ review.friendly_content|safe }}</div>
+         <div class="review-content">{{ review.content|format_text|safe }}</div>
 
          {% if review.comments|length != 0 %}
             <h2>回复</h2>

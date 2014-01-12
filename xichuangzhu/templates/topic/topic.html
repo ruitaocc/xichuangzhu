@@ -67,7 +67,7 @@
                   <a class="btn-edit-topic" href="{{ url_for('topic.edit', topic_id=topic.id) }}">编辑</a>
                {% endif %}
             </div>
-            <div class="topic-content">{{ topic.friendly_content|safe }}</div>
+            <div class="topic-content">{{ topic.content|format_text|safe }}</div>
          </div>
 
          {% if topic.comments|length != 0 %}

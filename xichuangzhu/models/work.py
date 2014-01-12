@@ -84,10 +84,6 @@ class WorkReview(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('work_reviews', lazy='dynamic'))
 
-    @property
-    def friendly_content(self):
-        return self.content.replace('\n', "<div class='text-gap'></div>")
-
     def __repr__(self):
         return '<WorkReview %s>' % self.title
 

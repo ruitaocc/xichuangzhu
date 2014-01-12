@@ -43,3 +43,8 @@ def markdown_work(content):
 def format_year(year):
     """将数字表示的年转换成中文"""
     return str(year).replace('-', '前') + "年"
+
+
+def format_text(text):
+    """将文本中的换行符替换为div"""
+    return text.replace('\n', "<div class='text-gap'></div>")
