@@ -17,7 +17,3 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %s>' % self.name
-
-    @property
-    def friendly_name(self):
-        return '我' if check_is_me(self.id) else self.name
