@@ -1,24 +1,20 @@
 {% macro field_errors(field) %}
-   {% if errors %}
-      <div class="list-form-errors text-danger list-unstyled">
-         <ul>
-            {% for field_name, field_errors in field.errors|dictsort if field.errors %}
-               {% for error in field_errors %}
-                  <li>{{ error }}</li>
-               {% endfor %}
-            {% endfor %}
-         </ul>
-      </div>
+   {% if field.errors %}
+      <ul class="list-form-errors text-danger list-unstyled">
+         {% for error in field.errors %}
+            <li>{{ error }}</li>
+         {% endfor %}
+      </ul>
    {% endif %}
 {% endmacro %}
 
 
 {% macro horizontal_field(field, length=6) %}
    <div class="form-group">
-      {{ field.label(class="col-sm-2 control-label") }}
-      <div class="col-sm-{{ length }}">
+      {{ field.label(class="col-md-2 control-label") }}
+      <div class="col-md-{{ length }}">
          {{ field(class="form-control", placeholder=field.description, **kwargs) }}
-         {{ render_errors(field.errors) }}
+         {{ field_errors(field) }}
       </div>
    </div>
 {% endmacro %}
@@ -26,7 +22,7 @@
 
 {% macro checkbox_field(field) %}
    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+      <div class="col-md-offset-2 col-sm-10">
          <div class="checkbox">
             {{ field() }}
             {{ field.label() }}

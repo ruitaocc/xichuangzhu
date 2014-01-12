@@ -240,11 +240,6 @@
 .comment-item .comment-wap .comment-body {
   line-height: 20px;
 }
-.textarea-comment {
-  display: block;
-  width: 85%;
-  margin: 20px 0 12px 0;
-}
 .work-image-wap {
   position: relative;
 }
@@ -280,4 +275,8 @@
   font-size: 12px;
   line-height: 19px;
   color: gray;
+}
+.list-form-errors {
+  font-size: 12px;
+  margin-bottom: 0;
 }

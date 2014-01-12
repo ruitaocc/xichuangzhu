@@ -7,7 +7,7 @@ from xichuangzhu import config
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork, \
     CollectWorkImage, WorkReviewComment
 from ..utils import require_login, require_admin
-from ..forms import WorkImageForm, CommentForm, WorkReviewForm
+from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm
 from ..helpers import random_filename
 from ..uploadsets import workimages
 
@@ -250,7 +250,7 @@ def edit_image(work_image_id):
 @bp.route('/review/<int:review_id>', methods=['GET', 'POST'])
 def review(review_id):
     """作品点评"""
-    form = CommentForm()
+    form = WorkReviewCommentForm()
     review = WorkReview.query.get_or_404(review_id)
     # others cannot see draft
     is_me = True if "user_id" in session and session['user_id'] == review.user_id else False

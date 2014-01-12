@@ -2,7 +2,7 @@
 import cgi
 from flask import render_template, request, redirect, url_for, session, abort, Blueprint
 from ..models import db, Topic, TopicComment
-from ..forms import TopicForm, CommentForm
+from ..forms import TopicForm, TopicCommentForm
 from ..utils import require_login
 
 
@@ -12,7 +12,7 @@ bp = Blueprint('topic', __name__)
 @bp.route('/topic/<int:topic_id>', methods=['POST', 'GET'])
 def view(topic_id):
     """话题"""
-    form = CommentForm()
+    form = TopicCommentForm()
     topic = Topic.query.get_or_404(topic_id)
     topic.click_num += 1
     db.session.add(topic)
@@ -62,3 +62,13 @@ def edit(topic_id):
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic_id))
     return render_template('topic/edit.html', topic=topic, form=form)
+
+
+@bp.route('/topic/<int:topic_id>/delete')
+@require_login
+def delete(topic_id):
+    """删除话题"""
+    topic = Topic.query.get_or_404(topic_id)
+    db.session.delete(topic)
+    db.session.commit()
+    return redirect(url_for('.topics'))
