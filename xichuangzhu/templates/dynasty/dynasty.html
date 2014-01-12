@@ -28,21 +28,23 @@
          return 'rgb(' + r + ',' + g + ',' + b + ')';
       }
 
-      // set random color
-      $('#dyn-selector a').each(function () {
-         $(this).css({
-            'height': '22px',
-            'width': $(window).width() / 17 + 'px',
-            'background-color': random_color()
+      $(function () {
+         // set random color
+         $('#dyn-selector a').each(function () {
+            $(this).css({
+               'height': '22px',
+               'width': $(window).width() / 17 + 'px',
+               'background-color': random_color()
+            });
          });
-      });
 
-      // when change window size
-      $(window).resize(function () {
-         $('#dyn-selector a').css({
-            'width': $(window).width() / 17 + 'px'
+         // when change window size
+         $(window).resize(function () {
+            $('#dyn-selector a').css({
+               'width': $(window).width() / 17 + 'px'
+            });
          });
-      });
+      })
    </script>
 
    <div class="row">

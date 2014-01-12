@@ -255,6 +255,7 @@ html body #footer .container #extra-info a {
   color: gray;
   margin-left: 12px;
   text-decoration: none;
+  display: inline-block;
 }
 #page-author .author-period {
   font-size: 16px;
