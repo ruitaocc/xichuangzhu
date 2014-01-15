@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macro/form.html" import field_errors, horizontal_field %}
 
 {% block page_title %}编辑文学家{% endblock %}
 {% block page_id %}page-edit-author{% endblock %}
@@ -10,68 +11,35 @@
       <fieldset>
          <legend>编辑文学家</legend>
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">姓名</label>
+         {{ form.csrf_token }}
 
-            <div class="col-md-3">
-               <input type="text" class="form-control" name="name" value="{{ author.name }}"/>
-            </div>
-         </div>
+         {{ horizontal_field(form.name, length=3) }}
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">拼音缩写</label>
+         {{ horizontal_field(form.abbr, length=3) }}
 
-            <div class="col-md-3">
-               <input type="text" class="form-control" name="abbr" value="{{ author.abbr }}"/>
-            </div>
-         </div>
+         {{ horizontal_field(form.dynasty_id, length=3) }}
 
          <div class="form-group">
-            <label class="col-md-2 control-label">朝代</label>
-
-            <div class="col-md-3">
-               <select name='dynasty_id' class="form-control">
-                  {% for d in dynasties %}
-                     <option value="{{ d.id }}"
-                           {% if d.id == author.dynasty_id %}
-                             selected="selected"
-                           {% endif %}>
-                        {{ d.name }}
-                     </option>
-                  {% endfor %}
-               </select>
-            </div>
-         </div>
-
-         <div class="form-group">
-            <label class="col-md-2 control-label">生年</label>
-
+            {{ form.birth_year.label(class="col-md-2 control-label") }}
             <div class="col-md-3">
                <div class="input-group">
-                  <input type="text" class="form-control" name="birth_year" value="{{ author.birth_year }}"/>
+                  {{ form.birth_year(class="form-control") }}
                   <span class="input-group-addon">年</span>
                </div>
             </div>
          </div>
 
          <div class="form-group">
-            <label class="col-md-2 control-label">卒年</label>
-
+            {{ form.death_year.label(class="col-md-2 control-label") }}
             <div class="col-md-3">
                <div class="input-group">
-                  <input type="text" class="form-control" name="death_year" value="{{ author.death_year }}"/>
+                  {{ form.death_year(class="form-control") }}
                   <span class="input-group-addon">年</span>
                </div>
             </div>
          </div>
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">简介</label>
-
-            <div class="col-md-6">
-               <textarea rows="10" class="form-control" name="intro">{{ author.intro }}</textarea>
-            </div>
-         </div>
+         {{ horizontal_field(form.intro, rows=10) }}
 
          <div class="form-group">
             <div class="col-md-6 col-md-offset-2">

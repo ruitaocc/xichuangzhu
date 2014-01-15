@@ -2,6 +2,7 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 from ..models import db, Author, AuthorQuote, Work, WorkType, CollectWork, Dynasty
 from ..utils import require_admin
+from ..forms import AuthorForm
 
 bp = Blueprint('author', __name__)
 
@@ -32,16 +33,14 @@ def authors():
 @require_admin
 def add():
     """添加文学家"""
-    if request.method == 'GET':
-        dynasties = Dynasty.query.order_by(Dynasty.start_year)
-        return render_template('author/add.html', dynasties=dynasties)
-    else:
-        author = Author(name=request.form['name'], abbr=request.form['abbr'], intro=request.form['intro'],
-                        birth_year=request.form['birth_year'], death_year=request.form['death_year'],
-                        dynasty_id=int(request.form['dynasty_id']))
+    form = AuthorForm()
+    form.dynasty_id.choices = [(d.id, d.name) for d in Dynasty.query.order_by(Dynasty.start_year)]
+    if form.validate_on_submit():
+        author = Author(**form.data)
         db.session.add(author)
         db.session.commit()
         return redirect(url_for('.view', author_abbr=author.abbr))
+    return render_template('author/add.html', form=form)
 
 
 @bp.route('/<int:author_id>/edit', methods=['GET', 'POST'])
@@ -49,18 +48,14 @@ def add():
 def edit(author_id):
     """编辑文学家"""
     author = Author.query.get_or_404(author_id)
-    if request.method == 'GET':
-        dynasties = Dynasty.query.order_by(Dynasty.start_year)
-        return render_template('author/edit.html', dynasties=dynasties, author=author)
-    author.name = request.form['name']
-    author.abbr = request.form['abbr']
-    author.intro = request.form['intro']
-    author.birth_year = request.form['birth_year']
-    author.death_year = request.form['death_year']
-    author.dynasty_id = int(request.form['dynasty_id'])
-    db.session.add(author)
-    db.session.commit()
-    return redirect(url_for('.view', author_abbr=author.abbr))
+    form = AuthorForm(obj=author)
+    form.dynasty_id.choices = [(d.id, d.name) for d in Dynasty.query.order_by(Dynasty.start_year)]
+    if form.validate_on_submit():
+        form.populate_obj(author)
+        db.session.add(author)
+        db.session.commit()
+        return redirect(url_for('.view', author_abbr=author.abbr))
+    return render_template('author/edit.html', author=author, form=form)
 
 
 @bp.route('/<int:author_id>/admin_quote')

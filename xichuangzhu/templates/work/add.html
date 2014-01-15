@@ -13,6 +13,7 @@
          action="{{ url_for('work.add') }}">
       <fieldset>
          <legend>添加作品{% if author %} - {{ author.name }}{% endif %}</legend>
+
          {{ form.csrf_token }}
 
          {{ horizontal_field(form.type_id, length=3) }}
@@ -38,6 +39,7 @@
          <div class="form-group">
             <div class="col-md-3 col-md-offset-2">
                <select id="author_id" name="author_id" class='form-control'></select>
+               {{ field_errors(form.author_id) }}
             </div>
          </div>
 
