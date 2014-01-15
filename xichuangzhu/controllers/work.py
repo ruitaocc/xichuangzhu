@@ -1,13 +1,11 @@
 # coding: utf-8
 from __future__ import division
-import uuid
 import cgi
 from flask import render_template, request, redirect, url_for, json, session, Blueprint, abort
-from xichuangzhu import config
-from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, User, CollectWork, \
-    CollectWorkImage, WorkReviewComment
+from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
+    User, CollectWork, CollectWorkImage, WorkReviewComment
 from ..utils import require_login, require_admin
-from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm
+from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm
 from ..helpers import random_filename
 from ..uploadsets import workimages
 
@@ -25,19 +23,21 @@ def view(work_id):
     else:
         is_collected = False
 
-    reviews = work.reviews.order_by(WorkReview.create_time.desc()).filter(WorkReview.is_publish == True).limit(4)
+    reviews = work.reviews.order_by(WorkReview.create_time.desc()).filter(
+        WorkReview.is_publish == True).limit(4)
     reviews_num = work.reviews.filter(WorkReview.is_publish == True).count()
 
     images = work.images.order_by(WorkImage.create_time).limit(16)
     images_num = work.images.count()
 
-    other_works = Work.query.filter(Work.author_id == work.author_id).filter(Work.id != work_id).limit(5)
+    other_works = Work.query.filter(Work.author_id == work.author_id).filter(
+        Work.id != work_id).limit(5)
 
     collectors = User.query.join(CollectWork).join(Work).filter(Work.id == work_id).limit(4)
 
-    return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num, images=images,
-                           images_num=images_num, collectors=collectors, is_collected=is_collected,
-                           other_works=other_works)
+    return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num,
+                           images=images, images_num=images_num, collectors=collectors,
+                           is_collected=is_collected, other_works=other_works)
 
 
 @bp.route('/<int:work_id>/collect', methods=['GET'])
@@ -74,8 +74,8 @@ def works():
     paginator = works.paginate(page, 10)
     work_types = WorkType.query
     dynasties = Dynasty.query.order_by(Dynasty.start_year)
-    return render_template('work/works.html', paginator=paginator, work_type=work_type, dynasty_abbr=dynasty_abbr,
-                           work_types=work_types, dynasties=dynasties)
+    return render_template('work/works.html', paginator=paginator, work_type=work_type,
+                           dynasty_abbr=dynasty_abbr, work_types=work_types, dynasties=dynasties)
 
 
 @bp.route('/tags')
@@ -98,19 +98,15 @@ def tag(tag_id):
 @require_admin
 def add():
     """添加作品"""
-    if request.method == 'GET':
-        if 'author_id' in request.args:
-            author = Author.query.get_or_404(request.args['author_id'])
-        else:
-            author = None
-        work_types = WorkType.query
-        return render_template('work/add.html', work_types=work_types, author=author)
-    work = Work(title=request.form['title'], content=request.form['content'], foreword=request.form['foreword'],
-                intro=request.form['intro'], author_id=int(request.form['author_id']),
-                type_id=request.form['type_id'])
-    db.session.add(work)
-    db.session.commit()
-    return redirect(url_for('.view', work_id=work.id))
+    form = WorkForm(author_id=request.args.get('author_id', None))
+    form.author_id.choices = [(a.id, '〔%s〕%s' % (a.dynasty.name, a.name)) for a in Author.query]
+    form.type_id.choices = [(t.id, t.cn) for t in WorkType.query]
+    if form.validate_on_submit():
+        work = Work(**form.data)
+        db.session.add(work)
+        db.session.commit()
+        return redirect(url_for('.view', work_id=work.id))
+    return render_template('work/add.html', form=form)
 
 
 @bp.route('/<int:work_id>/edit', methods=['GET', 'POST'])
@@ -118,19 +114,15 @@ def add():
 def edit(work_id):
     """编辑作品"""
     work = Work.query.get_or_404(work_id)
-    if request.method == 'GET':
-        work_types = WorkType.query
-        return render_template('work/edit.html', work=work, work_types=work_types)
-    else:
-        work.title = request.form['title']
-        work.content = request.form['content']
-        work.foreword = request.form['foreword']
-        work.intro = request.form['intro']
-        work.author_id = int(request.form['author_id'])
-        work.type_id = request.form['type_id']
+    form = WorkForm(obj=work)
+    form.author_id.choices = [(a.id, '〔%s〕%s' % (a.dynasty.name, a.name)) for a in Author.query]
+    form.type_id.choices = [(t.id, t.cn) for t in WorkType.query]
+    if form.validate_on_submit():
+        form.populate_obj(work)
         db.session.add(work)
         db.session.commit()
         return redirect(url_for('.view', work_id=work_id))
+    return render_template('work/edit.html', work=work, form=form)
 
 
 @bp.route('/<int:work_id>/reviews')
@@ -138,7 +130,8 @@ def reviews(work_id):
     """作品点评"""
     work = Work.query.get_or_404(work_id)
     page = int(request.args.get('page', 1))
-    paginator = work.reviews.filter(WorkReview.is_publish == True).order_by(WorkReview.create_time.desc()).paginate(
+    paginator = work.reviews.filter(WorkReview.is_publish == True).order_by(
+        WorkReview.create_time.desc()).paginate(
         page, 10)
     return render_template('work/reviews.html', work=work, paginator=paginator)
 
@@ -169,7 +162,8 @@ def image(work_image_id):
     """作品的单个相关图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
     if 'user_id' in session:
-        is_collected = CollectWorkImage.query.filter(CollectWorkImage.user_id == session['user_id']).filter(
+        is_collected = CollectWorkImage.query.filter(
+            CollectWorkImage.user_id == session['user_id']).filter(
             CollectWorkImage.work_image_id == work_image_id).count() > 0
     else:
         is_collected = False
@@ -202,7 +196,8 @@ def collect_image(work_image_id):
 @require_login
 def discollect_image(work_image_id):
     """取消收藏作品图片"""
-    db.session.query(CollectWorkImage).filter(CollectWorkImage.user_id == session['user_id']).filter(
+    db.session.query(CollectWorkImage).filter(
+        CollectWorkImage.user_id == session['user_id']).filter(
         CollectWorkImage.work_image_id == work_image_id).delete()
     db.session.commit()
     return redirect(url_for('.image', work_image_id=work_image_id))
@@ -274,10 +269,13 @@ def all_reviews():
     page = int(request.args.get('page', 1))
     paginator = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
         WorkReview.create_time.desc()).paginate(page, 10)
-    stmt = db.session.query(WorkReview.user_id, db.func.count(WorkReview.user_id).label('reviews_num')).group_by(
+    stmt = db.session.query(WorkReview.user_id,
+                            db.func.count(WorkReview.user_id).label('reviews_num')).group_by(
         WorkReview.user_id).subquery()
-    hot_reviewers = db.session.query(User).join(stmt, User.id == stmt.c.user_id).order_by(stmt.c.reviews_num)
-    return render_template('work/all_reviews.html', paginator=paginator, hot_reviewers=hot_reviewers)
+    hot_reviewers = db.session.query(User).join(stmt, User.id == stmt.c.user_id).order_by(
+        stmt.c.reviews_num)
+    return render_template('work/all_reviews.html', paginator=paginator,
+                           hot_reviewers=hot_reviewers)
 
 
 @bp.route('/<int:work_id>/add_review', methods=['GET', 'POST'])
@@ -288,7 +286,8 @@ def add_review(work_id):
     form = WorkReviewForm()
     if form.validate_on_submit():
         is_publish = True if 'publish' in request.form else False
-        review = WorkReview(title=cgi.escape(form.title.data), content=cgi.escape(form.content.data),
+        review = WorkReview(title=cgi.escape(form.title.data),
+                            content=cgi.escape(form.content.data),
                             user_id=session['user_id'], work_id=work_id, is_publish=is_publish)
         db.session.add(review)
         db.session.commit()

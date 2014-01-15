@@ -9,10 +9,13 @@
 {% endmacro %}
 
 
-{% macro horizontal_field(field, length=6) %}
+{% macro horizontal_field(field, length=6, label=True) %}
    <div class="form-group">
-      {{ field.label(class="col-md-2 control-label") }}
-      <div class="col-md-{{ length }}">
+      {% if label %}
+         {{ field.label(class="col-md-2 control-label") }}
+      {% endif %}
+
+      <div class="col-md-{{ length }} {% if not label %}col-md-offset-2{% endif %}">
          {{ field(class="form-control", placeholder=field.description, **kwargs) }}
          {{ field_errors(field) }}
       </div>

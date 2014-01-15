@@ -1,0 +1,29 @@
+{% macro search_authors_script() %}
+   <script type="text/javascript">
+      $(function () {
+         $('#btn-search-author').click(function () {
+            var author_name = $('#input-author-name').val();
+            $.ajax({
+               'url': "{{ url_for('work.search_authors') }}",
+               'type': 'POST',
+               'dataType': 'json',
+               'data': {
+                  'csrf_token': '{{ csrf_token() }}',
+                  'author_name': author_name
+               },
+               'success': function (authors) {
+                  $('#author_id').empty();
+
+                  $.each(authors, function (index, author) {
+                     var option = "<option value=" + author['id'] + ">〔" + author['dynasty'] + '〕'
+                           + author['name'] + "</option>";
+                     $(option).appendTo('#author_id');
+                  });
+               }
+            });
+
+            return false;
+         });
+      });
+   </script>
+{% endmacro %}
