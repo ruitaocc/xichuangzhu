@@ -24,7 +24,11 @@
             {% for a in authors %}
                {% if a.works|length <= 1 or a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}
                   <tr>
-                     <td><a target="_blank" href="{{ url_for('author.view', author_abbr=a.abbr) }}">{{ a.name }}</a></td>
+                     <td>
+                        <a target="_blank" href="{{ url_for('author.view', author_abbr=a.abbr) }}">
+                           {{ a.name }}
+                        </a>
+                     </td>
 
                      <td>{{ a.dynasty.name }}</td>
 
@@ -37,7 +41,8 @@
                      </td>
 
                      <td>
-                        <a class='btn btn-sm btn-default' target="_blank" title='为{{ a.name }}添加作品'
+                        <a class='btn btn-sm btn-default' target="_blank"
+                           title='为{{ a.name }}添加作品'
                            href="{{ url_for('work.add', author_id=a.id) }}">
                            <span class='glyphicon glyphicon-file'></span>
                         </a>

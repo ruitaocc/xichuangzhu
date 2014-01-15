@@ -23,7 +23,8 @@ class Author(db.Model):
         在第一次查询后将结果缓存起来，以便后续使用
         """
         if not hasattr(self, '_random_quote'):
-            self._random_quote = AuthorQuote.query.filter(AuthorQuote.author_id == self.id).order_by(db.func.rand()).first()
+            self._random_quote = AuthorQuote.query.filter(
+                AuthorQuote.author_id == self.id).order_by(db.func.rand()).first()
         return self._random_quote
 
 

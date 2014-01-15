@@ -6,7 +6,8 @@
 
 {% block body %}
 
-   <form class="form-horizontal" method="post" action="{{ url_for('work.edit_image', work_image_id=work_image.id) }}"
+   <form class="form-horizontal" method="post"
+         action="{{ url_for('work.edit_image', work_image_id=work_image.id) }}"
          enctype="multipart/form-data">
       <fieldset>
          <legend>编辑图片</legend>
@@ -15,6 +16,7 @@
 
          <div class="form-group">
             <label class="control-label col-md-2">原图</label>
+
             <div class="col-md-6">
                <img src="{{ work_image.url }}" class='img-responsive'/>
             </div>
@@ -22,6 +24,7 @@
 
          <div class="form-group">
             <label class="control-label col-md-2">新图</label>
+
             <div class="col-md-6">
                {{ form.image }}
                <p class="help-block">图片大小不超过5M</p>

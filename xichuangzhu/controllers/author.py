@@ -10,11 +10,14 @@ bp = Blueprint('author', __name__)
 @bp.route('/<author_abbr>')
 def view(author_abbr):
     """文学家主页"""
-    author = Author.query.options(db.subqueryload(Author.works)).filter(Author.abbr == author_abbr).first_or_404()
-    quote = AuthorQuote.query.get_or_404(int(float(request.args['q']))) if 'q' in request.args else author.random_quote
+    author = Author.query.options(db.subqueryload(Author.works)).filter(
+        Author.abbr == author_abbr).first_or_404()
+    quote = AuthorQuote.query.get_or_404(
+        int(float(request.args['q']))) if 'q' in request.args else author.random_quote
     stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(
         Work.author_id == author.id).group_by(Work.type_id).subquery()
-    work_types = db.session.query(WorkType, stmt.c.type_num).join(stmt, WorkType.id == stmt.c.type_id)
+    work_types = db.session.query(WorkType, stmt.c.type_num) \
+        .join(stmt, WorkType.id == stmt.c.type_id)
     return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
 
 
@@ -23,9 +26,11 @@ def authors():
     """全部文学家"""
     dynasties = Dynasty.query.filter(Dynasty.authors.any()).order_by(Dynasty.start_year)
     # get the authors who's works are latest collected by user
-    stmt = db.session.query(Author.id, CollectWork.create_time).join(Work).join(CollectWork).group_by(Author.id).having(
+    stmt = db.session.query(Author.id, CollectWork.create_time).join(Work).join(
+        CollectWork).group_by(Author.id).having(
         db.func.max(CollectWork.create_time)).subquery()
-    hot_authors = Author.query.join(stmt, Author.id == stmt.c.id).order_by(stmt.c.create_time.desc()).limit(8)
+    hot_authors = Author.query.join(stmt, Author.id == stmt.c.id).order_by(
+        stmt.c.create_time.desc()).limit(8)
     return render_template('author/authors.html', dynasties=dynasties, hot_authors=hot_authors)
 
 
@@ -70,7 +75,8 @@ def admin_quotes(author_id):
 @require_admin
 def add_quote(author_id):
     """添加名言"""
-    quote = AuthorQuote(quote=request.form['quote'], author_id=author_id, work_id=int(request.form['work_id']))
+    quote = AuthorQuote(quote=request.form['quote'], author_id=author_id,
+                        work_id=int(request.form['work_id']))
     db.session.add(quote)
     db.session.commit()
     return redirect(url_for('.admin_quotes', author_id=author_id))

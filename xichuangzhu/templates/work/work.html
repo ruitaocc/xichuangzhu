@@ -2,7 +2,8 @@
 {% from 'macro/ui.html' import render_users, render_work_reviews, render_work_images %}
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
-{% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}》正文、注释、题解、点评、书法创作等。{% endblock %}
+{% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}
+   》正文、注释、题解、点评、书法创作等。{% endblock %}
 {% block page_id %}page-work{% endblock %}
 
 {% block body %}
@@ -19,7 +20,8 @@
 
          <!-- 32 is a experienced value -->
          {% if work.foreword|length > 32 %}
-            <div class="work-foreword" style="text-indent:2em; padding:0 2em;">{{ work.foreword }}</div>
+            <div class="work-foreword"
+                 style="text-indent:2em; padding:0 2em;">{{ work.foreword }}</div>
          {% else %}
             <div class="work-foreword" style="text-align:center;">{{ work.foreword }}</div>
          {% endif %}
@@ -44,20 +46,24 @@
                   </a>
                {% endif %}
 
-               <a class="btn btn-default" target="_blank" href="{{ url_for('work.add_review', work_id=work.id) }}">
+               <a class="btn btn-default" target="_blank"
+                  href="{{ url_for('work.add_review', work_id=work.id) }}">
                   <span class="glyphicon glyphicon-pencil"></span> 点评
                </a>
 
-               <a class="btn btn-default" title='上传图片' href="{{ url_for('work.add_image', work_id=work.id) }}">
+               <a class="btn btn-default" title='上传图片'
+                  href="{{ url_for('work.add_image', work_id=work.id) }}">
                   <span class="glyphicon glyphicon-picture"></span> 传图
                </a>
 
                {% if is_collected %}
-                  <a class="btn btn-default" title="取消收藏" href="{{ url_for('work.discollect', work_id=work.id) }}">
+                  <a class="btn btn-default" title="取消收藏"
+                     href="{{ url_for('work.discollect', work_id=work.id) }}">
                      <span class="glyphicon glyphicon-bookmark"></span> 已收藏
                   </a>
                {% else %}
-                  <a class="btn btn-default" title="收藏作品" href="{{ url_for('work.collect', work_id=work.id) }}">
+                  <a class="btn btn-default" title="收藏作品"
+                     href="{{ url_for('work.collect', work_id=work.id) }}">
                      <span class="glyphicon glyphicon-bookmark"></span> 收藏
                   </a>
                {% endif %}
@@ -85,7 +91,8 @@
                点评
                {% if reviews_num > 4 %}
                   <span class='link-more'>
-                     <a href="{{ url_for('work.reviews', work_id=work.id) }}">更多 / {{ reviews_num }} »</a>
+                     <a href="{{ url_for('work.reviews', work_id=work.id) }}">更多 / {{ reviews_num }}
+                        »</a>
                   </span>
                {% endif %}
             </h2>
@@ -98,7 +105,8 @@
                图片
                {% if images_num > 9 %}
                   <span class='link-more'>
-                     <a href="{{ url_for('work.images', work_id=work.id) }}">更多 / {{ images_num }} »</a>
+                     <a href="{{ url_for('work.images', work_id=work.id) }}">更多 / {{ images_num }}
+                        »</a>
                   </span>
                {% endif %}
             </h2>
@@ -113,7 +121,8 @@
             {% for t in work.tags %}
                <li><a href="{{ url_for('work.tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
             {% endfor %}
-            <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span> 添加</a></li>
+            <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span>
+               添加</a></li>
          </ul>
 
          <h2>作者简介</h2>

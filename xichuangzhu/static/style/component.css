@@ -46,7 +46,6 @@
 .work-item .work-header .work-author {
   font-size: 12px;
   font-weight: normal;
-  margin-left: 3px;
 }
 .work-item .work-header .work-author a {
   color: #333;
@@ -114,7 +113,6 @@
 .author-item .author-dynasty {
   font-size: 12px;
   font-weight: normal;
-  margin-left: 3px;
 }
 .author-item .author-dynasty a {
   color: #333;

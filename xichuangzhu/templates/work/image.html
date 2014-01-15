@@ -18,13 +18,15 @@
    <div class='row'>
       <div class='col-md-8'>
          <p class='image-info'>
-            <a href="{{ url_for('user.view', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a> 上传于《<a
+            <a href="{{ url_for('user.view', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a>
+            上传于《<a
                href="{{ url_for('work.view', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>》：
          </p>
 
          <blockquote>
             <p>{{ work_image.work.content|clean_work|truncate(100, True) }}</p>
-            <small>〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
+            <small>
+               〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
          </blockquote>
       </div>
 
@@ -32,7 +34,8 @@
          <div class='btn-group btn-group-sm'>
             {% if session.user_id %}
                {% if work_image.user_id == session.user_id %}
-                  <a class='btn btn-default' href="{{ url_for('work.edit_image', work_image_id=work_image.id) }}"><span
+                  <a class='btn btn-default'
+                     href="{{ url_for('work.edit_image', work_image_id=work_image.id) }}"><span
                         class='glyphicon glyphicon-edit'></span> 编辑</a>
                   <a class='btn btn-default btn-remove'
                      href="{{ url_for('work.delete_image', work_image_id=work_image.id) }}"><span
@@ -57,7 +60,8 @@
 
    <div class='row'>
       <div class='col-md-10'>
-         <img src="{{ work_image.url }}" class='work-image img-responsive' alt="《{{ work_image.work.title }}》书法作品"/>
+         <img src="{{ work_image.url }}" class='work-image img-responsive'
+              alt="《{{ work_image.work.title }}》书法作品"/>
       </div>
    </div>
 

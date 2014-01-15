@@ -22,9 +22,9 @@ def view(user_abbr):
     topics_num = user.topics.count()
     work_images = user.work_images.order_by(WorkImage.create_time.desc()).limit(16)
     work_images_num = user.work_images.count()
-    return render_template('user/user.html', user=user, work_reviews=work_reviews, work_reviews_num=work_reviews_num,
-                           topics=topics, topics_num=topics_num, work_images=work_images,
-                           work_images_num=work_images_num)
+    return render_template('user/user.html', user=user, work_reviews=work_reviews,
+                           work_reviews_num=work_reviews_num, topics=topics, topics_num=topics_num,
+                           work_images=work_images, work_images_num=work_images_num)
 
 
 @bp.route('/<user_abbr>/work_reviews')
@@ -65,11 +65,14 @@ def collects():
     collect_works = Work.query.join(CollectWork).filter(CollectWork.user_id == user.id).order_by(
         CollectWork.create_time.desc()).limit(12)
     collect_works_num = user.collect_works.count()
-    collect_work_images = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id == user.id).order_by(
+    collect_work_images = WorkImage.query.join(CollectWorkImage).filter(
+        CollectWorkImage.user_id == user.id).order_by(
         CollectWorkImage.create_time.desc()).limit(9)
     collect_work_images_num = user.collect_work_images.count()
-    return render_template('user/collects.html', collect_works=collect_works, collect_works_num=collect_works_num,
-                           collect_work_images=collect_work_images, collect_work_images_num=collect_work_images_num)
+    return render_template('user/collects.html', collect_works=collect_works,
+                           collect_works_num=collect_works_num,
+                           collect_work_images=collect_work_images,
+                           collect_work_images_num=collect_work_images_num)
 
 
 @bp.route('/collect_works')
@@ -77,7 +80,8 @@ def collects():
 def collect_works():
     """用户收藏的文学作品"""
     page = int(request.args.get('page', 1))
-    paginator = Work.query.join(CollectWork).filter(CollectWork.user_id == session['user_id']).order_by(
+    paginator = Work.query.join(CollectWork).filter(
+        CollectWork.user_id == session['user_id']).order_by(
         CollectWork.create_time.desc()).paginate(page, 10)
     return render_template('user/collect_works.html', paginator=paginator)
 
@@ -87,6 +91,7 @@ def collect_works():
 def collect_work_images():
     """用户收藏的图片"""
     page = int(request.args.get('page', 1))
-    paginator = WorkImage.query.join(CollectWorkImage).filter(CollectWorkImage.user_id == session['user_id']).order_by(
+    paginator = WorkImage.query.join(CollectWorkImage).filter(
+        CollectWorkImage.user_id == session['user_id']).order_by(
         CollectWorkImage.create_time.desc()).paginate(page, 12)
     return render_template('user/collect_work_images.html', paginator=paginator)

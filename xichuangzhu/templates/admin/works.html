@@ -35,12 +35,17 @@
                <td {% if w.tags|length == 0 %}class='danger'{% endif %}>
                   <ul class="work-tags">
                      {% if w.tags|length == 0 %}
-                        <a title="为《{{ w.title }}》添加标签" target="_blank" class="btn btn-sm btn-default" href="#">
+                        <a title="为《{{ w.title }}》添加标签" target="_blank"
+                           class="btn btn-sm btn-default" href="#">
                            <span class="glyphicon glyphicon-tags"></span>
                         </a>
                      {% else %}
                         {% for t in w.tags %}
-                           <li><a href="{{ url_for('work.tag', tag_id=t.tag.id) }}">{{ t.tag.title }}</a></li>
+                           <li>
+                              <a href="{{ url_for('work.tag', tag_id=t.tag.id) }}">
+                                 {{ t.tag.title }}
+                              </a>
+                           </li>
                         {% endfor %}
                      {% endif %}
                   </ul>

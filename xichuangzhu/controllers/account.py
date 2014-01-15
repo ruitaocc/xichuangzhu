@@ -46,8 +46,8 @@ def signin():
         # get user info
         url = "https://api.douban.com/v2/user/" + str(user_id)
         user_info = requests.get(url).json()
-        user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'], avatar=user_info['avatar'],
-                    signature=user_info['signature'])
+        user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'],
+                    avatar=user_info['avatar'], signature=user_info['signature'])
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('.send_active_email', user_id=user_id))

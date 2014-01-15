@@ -10,12 +10,12 @@ def index():
     """首页"""
     works = Work.query.order_by(db.func.rand()).limit(4)
     work_images = WorkImage.query.order_by(WorkImage.create_time.desc()).limit(18)
-    work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(WorkReview.create_time.desc()).limit(
-        4)
+    work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
+        WorkReview.create_time.desc()).limit(4)
     authors = Author.query.order_by(db.func.rand()).limit(5)
     dynasties = Dynasty.query.order_by(Dynasty.start_year)
-    return render_template('site/index.html', works=works, work_images=work_images, work_reviews=work_reviews,
-                           authors=authors, dynasties=dynasties)
+    return render_template('site/index.html', works=works, work_images=work_images,
+                           work_reviews=work_reviews, authors=authors, dynasties=dynasties)
 
 
 @bp.route('/works', methods=['POST'])

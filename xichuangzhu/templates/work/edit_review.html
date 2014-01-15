@@ -20,10 +20,12 @@
          <div class="form-group">
             <div class="col-md-6 col-md-offset-2 btn-group">
                {% if review.is_publish %}
-                  <input type="submit" name="publish" value="更新" class="btn btn-default btn-primary"/>
+                  <input type="submit" name="publish" value="更新"
+                         class="btn btn-default btn-primary"/>
                {% else %}
                   <input type="submit" name="draft" value="保存草稿" class="btn btn-default"/>
-                  <input type="submit" name="publish" value="发布" class="btn btn-default btn-primary"/>
+                  <input type="submit" name="publish" value="发布"
+                         class="btn btn-default btn-primary"/>
                {% endif %}
             </div>
          </div>

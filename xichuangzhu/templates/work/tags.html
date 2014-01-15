@@ -14,7 +14,8 @@
 
          {% for t in tags %}
             <div class='tag-item'>
-               <a href="{{ url_for('work.tag', tag_id=t.id) }}"><img src="{{ t.icon }}" class='icon'/></a>
+               <a href="{{ url_for('work.tag', tag_id=t.id) }}"><img src="{{ t.icon }}"
+                                                                     class='icon'/></a>
 
                <div class='content'>
                   <a class='title' href="{{ url_for('work.tag', tag_id=t.id) }}">{{ t.title }}</a>

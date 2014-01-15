@@ -31,10 +31,14 @@
             <td>{{ q.work.title }}</td>
             <td>
                <div class='btn-group btn-group-sm'>
-                  <a class="btn btn-default" title="编辑" href="{{ url_for('author.edit_quote', quote_id=q.id) }}"><span
-                        class="glyphicon glyphicon-edit"></span></a>
+                  <a class="btn btn-default" title="编辑"
+                     href="{{ url_for('author.edit_quote', quote_id=q.id) }}">
+                     <span class="glyphicon glyphicon-edit"></span>
+                  </a>
                   <a class="btn btn-default btn-rm-quote" title='删除'
-                     href="{{ url_for('author.delete_quote', quote_id=q.id) }}"><span class="glyphicon glyphicon-trash"></span></a>
+                     href="{{ url_for('author.delete_quote', quote_id=q.id) }}">
+                     <span class="glyphicon glyphicon-trash"></span>
+                  </a>
                </div>
             </td>
          </tr>
@@ -49,6 +53,7 @@
 
          <div class="form-group">
             <label class="col-md-2 control-label">引语</label>
+
             <div class="col-md-4">
                <input type="text" class="form-control" name="quote"/>
             </div>
@@ -56,6 +61,7 @@
 
          <div class="form-group">
             <label class="col-md-2 control-label">出自</label>
+
             <div class="col-md-4">
                <input type="text" class="form-control" name="work_id"/>
             </div>

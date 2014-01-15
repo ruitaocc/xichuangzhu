@@ -4,7 +4,8 @@
 
 {% block page_title %}{{ topic.title }} - 话题{% endblock %}
 {% block page_id %}page-topic{% endblock %}
-{% block extra_info %}Inspired by <a href='https://www.v2ex.com' target='_blank'>V2EX</a>{% endblock %}
+{% block extra_info %}Inspired by
+   <a href='https://www.v2ex.com' target='_blank'>V2EX</a>{% endblock %}
 
 {% block body %}
 
@@ -53,7 +54,8 @@
    <div class="row">
       <div class="col-md-8">
          <div class="topic-wap">
-            <a class="topic-user-avatar" href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
+            <a class="topic-user-avatar"
+               href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
                <img src="{{ topic.user.avatar }}">
             </a>
 
@@ -61,7 +63,8 @@
 
             <div class="topic-extra-info">
                By
-               <a class="topic-creator" href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
+               <a class="topic-creator"
+                  href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
                   {{ topic.user.name }}
                </a>
                ·
@@ -69,9 +72,11 @@
                ·
                <span>{{ topic.click_num }} 点击</span>
                {% if topic.user_id == session.user_id %}
-                  <a class="btn-edit-topic" href="{{ url_for('topic.edit', topic_id=topic.id) }}">编辑</a>
+                  <a class="btn-edit-topic"
+                     href="{{ url_for('topic.edit', topic_id=topic.id) }}">编辑</a>
                   /
-                  <a class="btn-delete-topic" href="{{ url_for('topic.delete', topic_id=topic.id) }}">删除</a>
+                  <a class="btn-delete-topic"
+                     href="{{ url_for('topic.delete', topic_id=topic.id) }}">删除</a>
                {% endif %}
             </div>
             <div class="topic-content">{{ topic.content|format_text|safe }}</div>
@@ -84,7 +89,8 @@
          {% endif %}
 
          {% if session.user_id %}
-            <form id="add-topic-comment" method="post" action="{{ url_for('topic.view', topic_id=topic.id) }}">
+            <form id="add-topic-comment" method="post"
+                  action="{{ url_for('topic.view', topic_id=topic.id) }}">
                {{ form.csrf_token }}
 
                <div class="form-group row">

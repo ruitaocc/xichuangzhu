@@ -2,7 +2,8 @@
 {% from 'macro/ui.html' import render_comments %}
 {% from "macro/form.html" import field_errors %}
 
-{% block page_title %}{{ review.title }} - 点评：{{ review.work.author.name }}《{{ review.work.title }}》{% endblock %}
+{% block page_title %}{{ review.title }} - 点评：{{ review.work.author.name }}《{{ review.work.title }}
+   》{% endblock %}
 {% block page_id %}page-review{% endblock %}
 
 {% block body %}
@@ -73,9 +74,11 @@
             <span>{{ review.click_num }} 点击</span>
 
             {% if session.user_id == review.user_id %}
-               <a id="btn-edit-review" href="{{ url_for('work.edit_review', review_id=review.id) }}">编辑</a>
+               <a id="btn-edit-review"
+                  href="{{ url_for('work.edit_review', review_id=review.id) }}">编辑</a>
                /
-               <a id="btn-delete-review" href="{{ url_for('work.delete_review', review_id=review.id) }}">删除</a>
+               <a id="btn-delete-review"
+                  href="{{ url_for('work.delete_review', review_id=review.id) }}">删除</a>
             {% endif %}
          </div>
 

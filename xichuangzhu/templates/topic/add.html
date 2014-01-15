@@ -6,7 +6,8 @@
 
 {% block body %}
 
-   <form id="form-add-topic" class="form-horizontal" method="post" action="{{ url_for('topic.add') }}">
+   <form id="form-add-topic" class="form-horizontal" method="post"
+         action="{{ url_for('topic.add') }}">
       <fieldset>
          <legend>新话题</legend>
          {{ form.csrf_token }}

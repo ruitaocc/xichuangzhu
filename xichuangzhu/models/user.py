@@ -1,7 +1,6 @@
 # coding: utf-8
 import datetime
 from ._base import db
-from ..utils import check_is_me
 
 
 class User(db.Model):

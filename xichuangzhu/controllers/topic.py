@@ -18,7 +18,8 @@ def view(topic_id):
     db.session.add(topic)
     db.session.commit()
     if form.validate_on_submit():
-        comment = TopicComment(content=cgi.escape(form.content.data), topic_id=topic_id, user_id=session['user_id'])
+        comment = TopicComment(content=cgi.escape(form.content.data), topic_id=topic_id,
+                               user_id=session['user_id'])
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic_id) + "#" + str(comment.id))

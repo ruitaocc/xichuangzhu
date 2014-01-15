@@ -86,7 +86,8 @@
          </h2>
 
          {% for work in author.works %}
-            <a href="{{ url_for('work.view', work_id=work.id) }}" data-work-type="{{ work.type.en }}" class="work-item">
+            <a href="{{ url_for('work.view', work_id=work.id) }}"
+               data-work-type="{{ work.type.en }}" class="work-item">
                <div class='work-title'>{{ work.title }}</div>
                <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
             </a>
