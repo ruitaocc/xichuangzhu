@@ -2,7 +2,7 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 from ..models import db, Author, AuthorQuote, Work, WorkType, CollectWork, Dynasty
 from ..utils import require_admin
-from ..forms import AuthorForm
+from ..forms import AuthorForm, AuthorQuoteForm
 
 bp = Blueprint('author', __name__)
 
@@ -63,23 +63,18 @@ def edit(author_id):
     return render_template('author/edit.html', author=author, form=form)
 
 
-@bp.route('/<int:author_id>/admin_quote')
+@bp.route('/<int:author_id>/admin_quotes', methods=['GET', 'POST'])
 @require_admin
 def admin_quotes(author_id):
     """管理文学家的名言"""
-    author = Author.query.options(db.subqueryload(Author.quotes)).get_or_404(author_id)
-    return render_template('author/admin_quotes.html', author=author)
-
-
-@bp.route('/<int:author_id>/add_quote', methods=['POST'])
-@require_admin
-def add_quote(author_id):
-    """添加名言"""
-    quote = AuthorQuote(quote=request.form['quote'], author_id=author_id,
-                        work_id=int(request.form['work_id']))
-    db.session.add(quote)
-    db.session.commit()
-    return redirect(url_for('.admin_quotes', author_id=author_id))
+    author = Author.query.get_or_404(author_id)
+    form = AuthorQuoteForm(author_id=author_id)
+    if form.validate_on_submit():
+        quote = AuthorQuote(**form.data)
+        db.session.add(quote)
+        db.session.commit()
+        return redirect(url_for('.admin_quotes', author_id=author_id))
+    return render_template('author/admin_quotes.html', author=author, form=form)
 
 
 @bp.route('/quote/<int:quote_id>/delete')
@@ -96,13 +91,11 @@ def delete_quote(quote_id):
 @require_admin
 def edit_quote(quote_id):
     """编辑名言"""
-    if request.method == 'GET':
-        quote = AuthorQuote.query.get_or_404(quote_id)
-        return render_template('author/edit_quote.html', quote=quote)
-    else:
-        quote = AuthorQuote.query.get_or_404(quote_id)
-        quote.quote = request.form['quote']
-        quote.work_id = int(request.form['work_id'])
+    quote = AuthorQuote.query.get_or_404(quote_id)
+    form = AuthorQuoteForm(obj=quote)
+    if form.validate_on_submit():
+        form.populate_obj(quote)
         db.session.add(quote)
         db.session.commit()
-        return redirect(url_for('.admin_quotes', author_id=quote.work.author_id))
+        return redirect(url_for('.admin_quotes', author_id=quote.author_id))
+    return render_template('author/edit_quote.html', quote=quote, form=form)

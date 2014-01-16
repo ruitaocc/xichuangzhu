@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macro/form.html" import horizontal_field %}
 
 {% block page_title %}编辑引语{% endblock %}
 {% block page_id %}page-edit-quote{% endblock %}
@@ -10,21 +11,13 @@
       <fieldset>
          <legend>编辑引语</legend>
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">引语</label>
+         {{ form.csrf_token }}
 
-            <div class="col-md-4">
-               <input type="text" class="form-control" name="quote" value="{{ quote.quote }}"/>
-            </div>
-         </div>
+         {{ horizontal_field(form.quote) }}
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">出自</label>
+         {{ horizontal_field(form.work_id) }}
 
-            <div class="col-md-4">
-               <input type="text" class="form-control" name="work_id" value="{{ quote.work_id }}"/>
-            </div>
-         </div>
+         {{ form.author_id() }}
 
          <div class="form-group">
             <div class="col-md-6 col-md-offset-2">

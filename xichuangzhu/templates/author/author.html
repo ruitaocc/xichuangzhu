@@ -57,7 +57,7 @@
             {% if session.user_id == admin_id %}
                <a class="btn btn-default btn-xs" target="_blank"
                   href="{{ url_for('author.admin_quotes', author_id=author.id) }}">
-                  Edit / {{ author.quotes|length }}
+                  Edit / {{ author.quotes.count() }}
                </a>
             {% endif %}
          </div>

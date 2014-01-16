@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, SelectField, IntegerField
+from wtforms import TextField, TextAreaField, SelectField, IntegerField, HiddenField
 from wtforms.validators import DataRequired
 
 
@@ -22,6 +22,12 @@ class AuthorForm(Form):
     birth_year = TextField('生年', [DataRequired('生年不能为空')])
     death_year = TextField('卒年')
     intro = TextAreaField('简介', [DataRequired('简介不能为空')])
+
+
+class AuthorQuoteForm(Form):
+    quote = TextField('引语', [DataRequired('引语不能为空')])
+    work_id = IntegerField('出处', [DataRequired('出处不能为空')])
+    author_id = HiddenField('作者', [DataRequired('作者不能为空')])
 
 
 class DynastyForm(Form):

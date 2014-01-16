@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
+{% from "macro/form.html" import horizontal_field %}
 
-{% block page_title %}引语管理{% endblock %}
+{% block page_title %}引语管理 - {{ author.dynasty.name }}{% endblock %}
 {% block page_id %}page-admin-quotes{% endblock %}
 
 {% block body %}
@@ -47,25 +48,17 @@
    </table>
 
    <form id="form-add-quote" class="form-horizontal" method="post"
-         action="{{ url_for('author.add_quote', author_id=author.id) }}">
+         action="{{ url_for('author.admin_quotes', author_id=author.id) }}">
       <fieldset>
          <legend>添加引语</legend>
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">引语</label>
+         {{ form.csrf_token }}
 
-            <div class="col-md-4">
-               <input type="text" class="form-control" name="quote"/>
-            </div>
-         </div>
+         {{ horizontal_field(form.quote) }}
 
-         <div class="form-group">
-            <label class="col-md-2 control-label">出自</label>
+         {{ horizontal_field(form.work_id) }}
 
-            <div class="col-md-4">
-               <input type="text" class="form-control" name="work_id"/>
-            </div>
-         </div>
+         {{ form.author_id() }}
 
          <div class="form-group">
             <div class="col-md-6 col-md-offset-2">

@@ -28,13 +28,13 @@
                window.location = "{{ url_for('site.index') }}";
             } else {
                $('#second-count').text(count);
-               t = setTimeout("countDown()", 1000);
+               setTimeout("countDown()", 1000);
             }
             count--;
          }
 
          $('#second-count').text(count);
-         t = setTimeout("countDown()", 1000);
+         setTimeout("countDown()", 1000);
       </script>
    {% elif state == 'active_failed' %}
       <p>帐号激活失败！</p>

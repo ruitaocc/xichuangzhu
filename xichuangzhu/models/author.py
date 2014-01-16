@@ -33,10 +33,10 @@ class AuthorQuote(db.Model):
     quote = db.Column(db.Text())
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    author = db.relationship('Author', backref=db.backref('quotes'))
+    author = db.relationship('Author', backref=db.backref('quotes', lazy='dynamic'))
 
     work_id = db.Column(db.Integer, db.ForeignKey('work.id'))
-    work = db.relationship('Work', backref=db.backref('quotes'))
+    work = db.relationship('Work', backref=db.backref('quotes', lazy='dynamic'))
 
     def __repr__(self):
         return '<AuthorQuote %s>' % self.quote
