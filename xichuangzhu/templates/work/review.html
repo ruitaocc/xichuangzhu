@@ -84,7 +84,7 @@
 
          <div class="review-content">{{ review.content|format_text|safe }}</div>
 
-         {% if review.comments|length != 0 %}
+         {% if review.comments %}
             <h2>回复</h2>
 
             {{ render_comments(review.comments) }}

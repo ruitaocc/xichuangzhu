@@ -10,8 +10,7 @@ bp = Blueprint('author', __name__)
 @bp.route('/<author_abbr>')
 def view(author_abbr):
     """文学家主页"""
-    author = Author.query.options(db.subqueryload(Author.works)).filter(
-        Author.abbr == author_abbr).first_or_404()
+    author = Author.query.filter(Author.abbr == author_abbr).first_or_404()
     quote = AuthorQuote.query.get_or_404(
         int(float(request.args['q']))) if 'q' in request.args else author.random_quote
     stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(

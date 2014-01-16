@@ -96,7 +96,7 @@
                <span class="topic-time">{{ t.create_time|timesince }}</span>
             </div>
             {% if t.comments %}
-               <div class="topic-comment-num">{{ t.comments|length }}</div>
+               <div class="topic-comment-num">{{ t.comments.count() }}</div>
             {% endif %}
          </div>
       </div>

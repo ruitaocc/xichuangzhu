@@ -21,7 +21,7 @@
 
       <tbody>
       {% for w in paginator.items %}
-         {% if w.tags|length == 0 or '<' not in w.content or w.intro == '' %}
+         {% if not w.tags or '<' not in w.content or w.intro == '' %}
             <tr>
                <td>
                   [{{ w.type.cn }}]
@@ -32,9 +32,9 @@
 
                <td>{{ w.author.name }}</td>
 
-               <td {% if w.tags|length == 0 %}class='danger'{% endif %}>
+               <td {% if not w.tags %}class='danger'{% endif %}>
                   <ul class="work-tags">
-                     {% if w.tags|length == 0 %}
+                     {% if not w.tags %}
                         <a title="为《{{ w.title }}》添加标签" target="_blank"
                            class="btn btn-sm btn-default" href="#">
                            <span class="glyphicon glyphicon-tags"></span>

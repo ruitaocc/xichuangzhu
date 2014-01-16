@@ -23,10 +23,10 @@ class TopicComment(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), primary_key=True)
-    topic = db.relationship('Topic', backref=db.backref('comments'))
+    topic = db.relationship('Topic', backref=db.backref('comments', lazy='dynamic'))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    user = db.relationship('User', backref=db.backref('topic_comments'))
+    user = db.relationship('User', backref=db.backref('topic_comments', lazy='dynamic'))
 
     def __repr__(self):
         return '<TopicComment %s>' % self.content

@@ -13,10 +13,10 @@ class Work(db.Model):
     create_time = db.Column(db.DateTime)
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    author = db.relationship('Author', backref=db.backref('works'))
+    author = db.relationship('Author', backref=db.backref('works', lazy='dynamic'))
 
     type_id = db.Column(db.Integer, db.ForeignKey('work_type.id'))
-    type = db.relationship('WorkType', backref=db.backref('works'))
+    type = db.relationship('WorkType', backref=db.backref('works', lazy='dynamic'))
 
     def __repr__(self):
         return '<Work %s>' % self.title
@@ -94,10 +94,10 @@ class WorkReviewComment(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
     review_id = db.Column(db.Integer, db.ForeignKey('work_review.id'), primary_key=True)
-    review = db.relationship('WorkReview', backref=db.backref('comments'))
+    review = db.relationship('WorkReview', backref=db.backref('comments', lazy='dynamic'))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    user = db.relationship('User', backref=db.backref('work_review_comments'))
+    user = db.relationship('User', backref=db.backref('work_review_comments', lazy='dynamic'))
 
     def __repr__(self):
         return '<WorkReviewComment %s>' % self.content

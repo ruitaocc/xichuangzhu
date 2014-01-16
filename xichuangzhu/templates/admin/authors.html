@@ -22,7 +22,9 @@
 
             <tbody>
             {% for a in authors %}
-               {% if a.works|length <= 1 or a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}
+               {% set works_count = a.works.count() %}
+               {% set quotes_count = a.quotes.count() %}
+               {% if works_count <= 1 or quotes_count <= 1 or works_count > 2 * quotes_count %}
                   <tr>
                      <td>
                         <a target="_blank" href="{{ url_for('author.view', author_abbr=a.abbr) }}">
@@ -32,12 +34,12 @@
 
                      <td>{{ a.dynasty.name }}</td>
 
-                     <td {% if a.works|length <= 1 %}class='danger'{% endif %}>
-                        {{ a.works|length }}
+                     <td {% if works_count <= 1 %}class='danger'{% endif %}>
+                        {{ works_count }}
                      </td>
 
-                     <td {% if a.quotes|length <= 1 or a.works|length > 2*a.quotes|length %}class='danger'{% endif %}>
-                        {{ a.quotes|length }}
+                     <td {% if quotes_count <= 1 or works_count > 2 * quotes_count %}class='danger'{% endif %}>
+                        {{ quotes_count }}
                      </td>
 
                      <td>
