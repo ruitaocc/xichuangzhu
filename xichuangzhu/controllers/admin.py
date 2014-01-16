@@ -14,10 +14,10 @@ def authors():
     return render_template('admin/authors.html', authors=authors)
 
 
-@bp.route('/works', methods=['GET', 'POST'])
+@bp.route('/works', defaults={'page': 1})
+@bp.route('/works/<int:page>', methods=['GET', 'POST'])
 @require_admin
-def works():
+def works(page):
     """管理作品"""
-    page = int(request.args.get('page', 1))
     paginator = Work.query.paginate(page, 15)
     return render_template('admin/works.html', paginator=paginator)

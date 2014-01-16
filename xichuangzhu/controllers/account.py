@@ -57,42 +57,36 @@ def signin():
 def send_active_email(user_id):
     """发送激活邮件"""
     user = User.query.get_or_404(user_id)
-    if request.method == 'GET':
-        form = EmailForm(user_id=user_id)
-        return render_template('account/send_active_email.html', user=user, form=form)
-    else:
-        form = EmailForm(request.form)
+    form = EmailForm(user_id=user_id)
+    if form.validate_on_submit():
+        to_addr = form.email.data
 
-        if form.validate():
-            to_addr = form.email.data
+        # update user email
+        user.email = to_addr
+        db.session.add(user)
+        db.session.commit()
 
-            # update user email
-            user.email = to_addr
-            db.session.add(user)
-            db.session.commit()
+        # gene active url
+        active_code = hashlib.sha1(user.name).hexdigest()
+        active_url = config.SITE_DOMAIN + "active_user/" + str(user_id) + "/" + active_code
 
-            # gene active url
-            active_code = hashlib.sha1(user.name).hexdigest()
-            active_url = config.SITE_DOMAIN + "active_user/" + str(user_id) + "/" + active_code
+        # prepare email content
+        msg = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
+        msg = MIMEText(msg, 'html', 'utf-8')
+        msg['From'] = "西窗烛 <" + config.SMTP_USER + ">"
+        msg['To'] = user.name + "<" + to_addr + ">"
+        msg['Subject'] = "欢迎来到西窗烛！"
 
-            # prepare email content
-            msgText = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
-            msg = MIMEText(msgText, 'html', 'utf-8')
-            msg['From'] = "西窗烛 <" + config.SMTP_USER + ">"
-            msg['To'] = user.name + "<" + to_addr + ">"
-            msg['Subject'] = "欢迎来到西窗烛！"
-
-            # send email
-            s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
-            s.login(config.SMTP_USER, config.SMTP_PASSWORD)
-            try:
-                s.sendmail(config.SMTP_USER, to_addr, msg.as_string())
-            except:
-                return redirect(url_for('.active_state', state='send_failed'))
-            else:
-                return redirect(url_for('.active_state', state='send_succ'))
+        # send email
+        s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
+        s.login(config.SMTP_USER, config.SMTP_PASSWORD)
+        try:
+            s.sendmail(config.SMTP_USER, to_addr, msg.as_string())
+        except:
+            return redirect(url_for('.active_state', state='send_failed'))
         else:
-            return render_template('account/send_active_email.html', user=user, form=form)
+            return redirect(url_for('.active_state', state='send_succ'))
+    return render_template('account/send_active_email.html', user=user, form=form)
 
 
 @bp.route('/active/<int:user_id>/<active_code>')

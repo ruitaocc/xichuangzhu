@@ -27,11 +27,11 @@ def view(user_abbr):
                            work_images=work_images, work_images_num=work_images_num)
 
 
-@bp.route('/<user_abbr>/work_reviews')
-def work_reviews(user_abbr):
+@bp.route('/<user_abbr>/work_reviews', defaults={'page': 1})
+@bp.route('/<user_abbr>/work_reviews/<int:page>')
+def work_reviews(user_abbr, page):
     """用户的作品点评"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
-    page = int(request.args.get('page', 1))
     work_reviews = user.work_reviews.order_by(WorkReview.create_time.desc())
     if not check_is_me(user.id):
         work_reviews = work_reviews.filter(WorkReview.is_publish == True)
@@ -39,20 +39,20 @@ def work_reviews(user_abbr):
     return render_template('user/work_reviews.html', user=user, paginator=paginator)
 
 
-@bp.route('/<user_abbr>/topics')
-def topics(user_abbr):
+@bp.route('/<user_abbr>/topics', defaults={'page': 1})
+@bp.route('/<user_abbr>/topics/<int:page>')
+def topics(user_abbr, page):
     """用户发表的话题"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
-    page = int(request.args.get('page', 1))
     paginator = user.topics.order_by(Topic.create_time.desc()).paginate(page, 10)
     return render_template('user/topics.html', user=user, paginator=paginator)
 
 
-@bp.route('/<user_abbr>/work_images')
-def work_images(user_abbr):
+@bp.route('/<user_abbr>/work_images', defaults={'page': 1})
+@bp.route('/<user_abbr>/work_images/<int:page>')
+def work_images(user_abbr, page):
     """用户上传的作品图片"""
     user = User.query.filter(User.abbr == user_abbr).first_or_404()
-    page = int(request.args.get('page', 1))
     paginator = user.work_images.order_by(WorkImage.create_time.desc()).paginate(page, 16)
     return render_template('user/work_images.html', user=user, paginator=paginator)
 
@@ -75,22 +75,22 @@ def collects():
                            collect_work_images_num=collect_work_images_num)
 
 
-@bp.route('/collect_works')
+@bp.route('/collect_works', defaults={'page': 1})
+@bp.route('/collect_works/<int:page>')
 @require_login
-def collect_works():
+def collect_works(page):
     """用户收藏的文学作品"""
-    page = int(request.args.get('page', 1))
     paginator = Work.query.join(CollectWork).filter(
         CollectWork.user_id == session['user_id']).order_by(
         CollectWork.create_time.desc()).paginate(page, 10)
     return render_template('user/collect_works.html', paginator=paginator)
 
 
-@bp.route('/collect_work_images')
+@bp.route('/collect_work_images', defaults={'page': 1})
+@bp.route('/collect_work_images/<int:page>')
 @require_login
-def collect_work_images():
+def collect_work_images(page):
     """用户收藏的图片"""
-    page = int(request.args.get('page', 1))
     paginator = WorkImage.query.join(CollectWorkImage).filter(
         CollectWorkImage.user_id == session['user_id']).order_by(
         CollectWorkImage.create_time.desc()).paginate(page, 12)

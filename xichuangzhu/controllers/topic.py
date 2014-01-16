@@ -1,6 +1,5 @@
 # coding: utf-8
-import cgi
-from flask import render_template, request, redirect, url_for, session, abort, Blueprint
+from flask import render_template, redirect, url_for, session, abort, Blueprint
 from ..models import db, Topic, TopicComment
 from ..forms import TopicForm, TopicCommentForm
 from ..utils import require_login
@@ -18,18 +17,16 @@ def view(topic_id):
     db.session.add(topic)
     db.session.commit()
     if form.validate_on_submit():
-        comment = TopicComment(content=cgi.escape(form.content.data), topic_id=topic_id,
-                               user_id=session['user_id'])
+        comment = TopicComment(user_id=session['user_id'], **form.data)
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic_id) + "#" + str(comment.id))
     return render_template('topic/topic.html', topic=topic, form=form)
 
-
-@bp.route('/topics')
-def topics():
+@bp.route('/topics', defaults={'page': 1})
+@bp.route('/topics/<int:page>')
+def topics(page):
     """全部话题"""
-    page = int(request.args.get('page', 1))
     paginator = Topic.query.order_by(Topic.create_time).paginate(page, 10)
     return render_template('topic/topics.html', paginator=paginator)
 
@@ -40,8 +37,7 @@ def add():
     """添加话题"""
     form = TopicForm()
     if form.validate_on_submit():
-        topic = Topic(title=cgi.escape(form.title.data), content=cgi.escape(form.content.data),
-                      user_id=session['user_id'])
+        topic = Topic(user_id=session['user_id'], **form.data)
         db.session.add(topic)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic.id))
@@ -57,8 +53,7 @@ def edit(topic_id):
         abort(404)
     form = TopicForm(obj=topic)
     if form.validate_on_submit():
-        topic.title = cgi.escape(form.title.data)
-        topic.content = cgi.escape(form.content.data)
+        form.populate_obj(topic)
         db.session.add(topic)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic_id))
@@ -70,6 +65,8 @@ def edit(topic_id):
 def delete(topic_id):
     """删除话题"""
     topic = Topic.query.get_or_404(topic_id)
+    if topic.user_id != session['user_id']:
+        abort(404)
     db.session.delete(topic)
     db.session.commit()
     return redirect(url_for('.topics'))
