@@ -138,6 +138,14 @@ html {
     font-size: 17px;
     .font-kai;
     margin-bottom: 8px;
+    text-indent: 2em;
+    padding: 0 2em;
+
+    &.single-line {
+      padding: 0;
+      text-indent: 0;
+      text-align: center;
+    }
   }
 
   .work-content {
@@ -151,6 +159,11 @@ html {
       padding: 5px 0px;
       cursor: pointer;
       color: #666;
+    }
+
+    &.single-line {
+      text-indent: 0;
+      text-align: center;
     }
   }
   .work-type-shi {

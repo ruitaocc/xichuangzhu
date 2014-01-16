@@ -125,6 +125,13 @@ html body #footer .container #extra-info a {
   font-size: 17px;
   font-family: "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW", "AR PL UKai TW MBE", "AR PL KaitiM GB", "TW\-Kai", "KaiTi", "KaiTi_GB2312", "STKaiti";
   margin-bottom: 8px;
+  text-indent: 2em;
+  padding: 0 2em;
+}
+#page-work .work-foreword.single-line {
+  padding: 0;
+  text-indent: 0;
+  text-align: center;
 }
 #page-work .work-content {
   font-size: 16px;
@@ -137,6 +144,10 @@ html body #footer .container #extra-info a {
   padding: 5px 0px;
   cursor: pointer;
   color: #666;
+}
+#page-work .work-content.single-line {
+  text-indent: 0;
+  text-align: center;
 }
 #page-work .work-type-shi {
   text-align: center;

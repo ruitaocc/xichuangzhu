@@ -19,15 +19,13 @@
          </div>
 
          <!-- 32 is a experienced value -->
-         {% if work.foreword|length > 32 %}
-            <div class="work-foreword"
-                 style="text-indent:2em; padding:0 2em;">{{ work.foreword }}</div>
-         {% else %}
-            <div class="work-foreword" style="text-align:center;">{{ work.foreword }}</div>
+         {% if work.foreword %}
+            <div class="work-foreword {% if work.foreword|length < 32 %}single-line{% endif %}">
+               {{ work.foreword }}
+            </div>
          {% endif %}
 
-         <div class="work-content work-type-{{ work.type.en }}"
-              {% if work.content|length < 32 %}style="text-indent:0; text-align: center;"{% endif %}>
+         <div class="work-content work-type-{{ work.type.en }} {% if work.content|length < 32 %}single-line{% endif %}">
             {{ work.content|markdown_work|safe }}
          </div>
 
