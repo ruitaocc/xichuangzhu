@@ -8,7 +8,7 @@ from ..utils import require_login
 bp = Blueprint('topic', __name__)
 
 
-@bp.route('/topic/<int:topic_id>', methods=['POST', 'GET'])
+@bp.route('/<int:topic_id>', methods=['POST', 'GET'])
 def view(topic_id):
     """话题"""
     form = TopicCommentForm()
@@ -17,17 +17,17 @@ def view(topic_id):
     db.session.add(topic)
     db.session.commit()
     if form.validate_on_submit():
-        comment = TopicComment(user_id=session['user_id'], **form.data)
+        comment = TopicComment(user_id=session['user_id'], topic_id=topic_id, **form.data)
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic_id) + "#" + str(comment.id))
     return render_template('topic/topic.html', topic=topic, form=form)
 
 @bp.route('/topics', defaults={'page': 1})
-@bp.route('/topics/<int:page>')
+@bp.route('/topics/page/<int:page>')
 def topics(page):
     """全部话题"""
-    paginator = Topic.query.order_by(Topic.create_time).paginate(page, 10)
+    paginator = Topic.query.order_by(Topic.create_time.desc()).paginate(page, 10)
     return render_template('topic/topics.html', paginator=paginator)
 
 
@@ -44,7 +44,7 @@ def add():
     return render_template('topic/add.html', form=form)
 
 
-@bp.route('/topic/<int:topic_id>/edit', methods=['POST', 'GET'])
+@bp.route('/<int:topic_id>/edit', methods=['POST', 'GET'])
 @require_login
 def edit(topic_id):
     """编辑话题"""
@@ -60,7 +60,7 @@ def edit(topic_id):
     return render_template('topic/edit.html', topic=topic, form=form)
 
 
-@bp.route('/topic/<int:topic_id>/delete')
+@bp.route('/<int:topic_id>/delete')
 @require_login
 def delete(topic_id):
     """删除话题"""

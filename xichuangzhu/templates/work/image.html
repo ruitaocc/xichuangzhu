@@ -8,9 +8,7 @@
    <script type="text/javascript">
       $(function () {
          $('.btn-remove').click(function () {
-            if (!confirm('确定删除此图片？')) {
-               return false;
-            }
+            return confirm('确定删除此图片？');
          });
       });
    </script>
@@ -19,14 +17,14 @@
       <div class='col-md-8'>
          <p class='image-info'>
             <a href="{{ url_for('user.view', user_abbr=work_image.user.abbr) }}">{{ work_image.user.name }}</a>
-            上传于《<a
-               href="{{ url_for('work.view', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>》：
+            上传于《<a href="{{ url_for('work.view', work_id=work_image.work.id) }}">{{ work_image.work.title }}</a>》：
          </p>
 
          <blockquote>
             <p>{{ work_image.work.content|clean_work|truncate(100, True) }}</p>
             <small>
-               〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}</small>
+               〔{{ work_image.work.author.dynasty.name }}〕{{ work_image.work.author.name }}
+            </small>
          </blockquote>
       </div>
 
@@ -41,17 +39,17 @@
                      href="{{ url_for('work.delete_image', work_image_id=work_image.id) }}"><span
                         class='glyphicon glyphicon-trash'></span> 删除</a>
                {% else %}
-                  {#                  {% if is_collected %}#}
-                  {#                     <a class='btn btn-default' title='取消收藏'#}
-                  {#                        href="{{ url_for('work.discollect_image', work_image_id=work_image.id) }}">#}
-                  {#                        <span class='glyphicon glyphicon-bookmark'></span> 已收藏#}
-                  {#                     </a>#}
-                  {#                  {% else %}#}
-                  {#                     <a class='btn btn-default' title='点击收藏'#}
-                  {#                        href="{{ url_for('work.collect_image', work_image_id=work_image.id) }}">#}
-                  {#                        <span class='glyphicon glyphicon-bookmark'></span> 收藏#}
-                  {#                     </a>#}
-                  {#                  {% endif %}#}
+                  {% if collected %}
+                     <a class='btn btn-default' title='取消收藏'
+                        href="{{ url_for('work.discollect_image', work_image_id=work_image.id) }}">
+                        <span class='glyphicon glyphicon-bookmark'></span> 已收藏
+                     </a>
+                  {% else %}
+                     <a class='btn btn-default' title='点击收藏'
+                        href="{{ url_for('work.collect_image', work_image_id=work_image.id) }}">
+                        <span class='glyphicon glyphicon-bookmark'></span> 收藏
+                     </a>
+                  {% endif %}
                {% endif %}
             {% endif %}
          </div>

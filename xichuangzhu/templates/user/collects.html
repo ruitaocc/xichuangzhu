@@ -9,24 +9,26 @@
    <div class="row">
       <div class="col-md-8">
          <h2>
-            我的收藏
+            作品收藏
             <span class='link-more'>
-               <a href="{{ url_for('user.collect_works') }}">全部 / {{ collect_works_num }} »</a>
+               <a href="{{ url_for('user.collect_works') }}">
+                  全部 / {{ user.collect_works.count() }} »
+               </a>
             </span>
          </h2>
 
          {{ render_works(collect_works) }}
 
-         <!--
          <h2>
             图片收藏
             <span class='link-more'>
-               <a href="{{ url_for('user.collect_work_images') }}">全部 / {{ collect_work_images_num }} »</a>
+               <a href="{{ url_for('user.collect_work_images') }}">
+                  全部 / {{ user.collect_work_images.count() }} »
+               </a>
             </span>
          </h2>
 
          {{ render_work_images(collect_work_images) }}
-         -->
       </div>
 
       <div class="col-md-4"></div>

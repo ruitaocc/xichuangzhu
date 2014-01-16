@@ -60,7 +60,8 @@ class WorkImage(db.Model):
     work = db.relationship('Work', backref=db.backref('images', lazy='dynamic'))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('work_images', lazy='dynamic'))
+    user = db.relationship('User', backref=db.backref('work_images', lazy='dynamic',
+                                                      order_by="desc(WorkImage.create_time)"))
 
     @property
     def url(self):
@@ -79,10 +80,12 @@ class WorkReview(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
 
     work_id = db.Column(db.Integer, db.ForeignKey('work.id'))
-    work = db.relationship('Work', backref=db.backref('reviews', lazy='dynamic'))
+    work = db.relationship('Work', backref=db.backref('reviews', lazy='dynamic',
+                                                      order_by="desc(WorkReview.create_time)"))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('work_reviews', lazy='dynamic'))
+    user = db.relationship('User', backref=db.backref('work_reviews', lazy='dynamic',
+                                                      order_by="desc(WorkReview.create_time)"))
 
     def __repr__(self):
         return '<WorkReview %s>' % self.title
@@ -92,12 +95,16 @@ class WorkReviewComment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
-    
+
     review_id = db.Column(db.Integer, db.ForeignKey('work_review.id'), primary_key=True)
-    review = db.relationship('WorkReview', backref=db.backref('comments', lazy='dynamic'))
+    review = db.relationship('WorkReview',
+                             backref=db.backref('comments', lazy='dynamic',
+                                                order_by="desc(WorkReviewComment.create_time)"))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    user = db.relationship('User', backref=db.backref('work_review_comments', lazy='dynamic'))
+    user = db.relationship('User',
+                           backref=db.backref('work_review_comments', lazy='dynamic',
+                                              order_by="desc(WorkReviewComment.create_time)"))
 
     def __repr__(self):
         return '<WorkReviewComment %s>' % self.content

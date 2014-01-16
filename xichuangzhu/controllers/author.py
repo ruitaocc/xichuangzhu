@@ -11,8 +11,8 @@ bp = Blueprint('author', __name__)
 def view(author_abbr):
     """文学家主页"""
     author = Author.query.filter(Author.abbr == author_abbr).first_or_404()
-    quote = AuthorQuote.query.get_or_404(
-        int(float(request.args['q']))) if 'q' in request.args else author.random_quote
+    quote_id = request.args.get('q')
+    quote = AuthorQuote.query.get(quote_id) if quote_id else author.random_quote
     stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(
         Work.author_id == author.id).group_by(Work.type_id).subquery()
     work_types = db.session.query(WorkType, stmt.c.type_num) \
@@ -23,7 +23,8 @@ def view(author_abbr):
 @bp.route('/')
 def authors():
     """全部文学家"""
-    dynasties = Dynasty.query.filter(Dynasty.authors.any()).order_by(Dynasty.start_year)
+    # 仅获取包含至少1个文学家的朝代
+    dynasties = Dynasty.query.filter(Dynasty.authors.any()).order_by(Dynasty.start_year.asc())
     # get the authors who's works are latest collected by user
     stmt = db.session.query(Author.id, CollectWork.create_time).join(Work).join(
         CollectWork).group_by(Author.id).having(

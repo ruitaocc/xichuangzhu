@@ -8,10 +8,11 @@ class Author(db.Model):
     abbr = db.Column(db.String(50), unique=True)
     intro = db.Column(db.Text())
     birth_year = db.Column(db.String(20))
-    death_year = db.Column(db.String(20), default=None)
+    death_year = db.Column(db.String(20))
 
     dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))
-    dynasty = db.relationship('Dynasty', backref=db.backref('authors', lazy='dynamic'))
+    dynasty = db.relationship('Dynasty', backref=db.backref('authors', lazy='dynamic',
+                                                            order_by="asc(Author.birth_year)"))
 
     def __repr__(self):
         return '<Author %s>' % self.name

@@ -32,8 +32,9 @@
          <h2>
             话题
             <span class='link-more'>
-               <a href="{{ url_for('user.topics', user_abbr=user.abbr) }}">全部 / {{ topics_num }}
-                  »</a>
+               <a href="{{ url_for('user.topics', user_abbr=user.abbr) }}">
+                  全部 / {{ user.topics.count() }} »
+               </a>
             </span>
          </h2>
 
@@ -42,8 +43,9 @@
          <h2>
             图片
             <span class='link-more'>
-               <a href="{{ url_for('user.work_images', user_abbr=user.abbr) }}">全部
-                  / {{ work_images_num }} »</a>
+               <a href="{{ url_for('user.work_images', user_abbr=user.abbr) }}">
+                  全部 / {{ user.work_images.count() }} »
+               </a>
             </span>
          </h2>
 

@@ -10,12 +10,11 @@ bp = Blueprint('dynasty', __name__)
 @bp.route('/<dynasty_abbr>')
 def view(dynasty_abbr):
     """朝代"""
-    dynasties = Dynasty.query.order_by(Dynasty.start_year)
+    dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
     dynasty = Dynasty.query.filter(Dynasty.abbr == dynasty_abbr).first_or_404()
     authors = dynasty.authors.order_by(db.func.rand()).limit(5)
-    authors_num = dynasty.authors.count()
     return render_template('dynasty/dynasty.html', dynasty=dynasty, authors=authors,
-                           authors_num=authors_num, dynasties=dynasties)
+                           dynasties=dynasties)
 
 
 @bp.route('/add', methods=['GET', 'POST'])

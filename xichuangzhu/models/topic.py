@@ -11,7 +11,8 @@ class Topic(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('topics', lazy='dynamic'))
+    user = db.relationship('User', backref=db.backref('topics', lazy='dynamic',
+                                                      order_by="desc(Topic.create_time)"))
 
     def __repr__(self):
         return '<Topic %s>' % self.title
@@ -23,10 +24,12 @@ class TopicComment(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), primary_key=True)
-    topic = db.relationship('Topic', backref=db.backref('comments', lazy='dynamic'))
+    topic = db.relationship('Topic', backref=db.backref('comments', lazy='dynamic',
+                                                        order_by="asc(TopicComment.create_time)"))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    user = db.relationship('User', backref=db.backref('topic_comments', lazy='dynamic'))
+    user = db.relationship('User', backref=db.backref('topic_comments', lazy='dynamic',
+                                                      order_by="desc(TopicComment.create_time)"))
 
     def __repr__(self):
         return '<TopicComment %s>' % self.content

@@ -13,7 +13,7 @@ def index():
     work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
         WorkReview.create_time.desc()).limit(4)
     authors = Author.query.order_by(db.func.rand()).limit(5)
-    dynasties = Dynasty.query.order_by(Dynasty.start_year)
+    dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
     return render_template('site/index.html', works=works, work_images=work_images,
                            work_reviews=work_reviews, authors=authors, dynasties=dynasties)
 

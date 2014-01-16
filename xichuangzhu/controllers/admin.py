@@ -15,7 +15,7 @@ def authors():
 
 
 @bp.route('/works', defaults={'page': 1})
-@bp.route('/works/<int:page>', methods=['GET', 'POST'])
+@bp.route('/works/page/<int:page>', methods=['GET', 'POST'])
 @require_admin
 def works(page):
     """管理作品"""

@@ -75,7 +75,7 @@
             文学家
             <span class='link-more'>
                <a href="{{ url_for('author.authors') }}#{{ dynasty.abbr }}">
-                  更多 / {{ authors_num }} »
+                  更多 / {{ dynasty.authors.count() }} »
                </a>
             </span>
          </h2>

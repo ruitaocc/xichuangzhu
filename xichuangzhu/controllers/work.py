@@ -1,10 +1,9 @@
 # coding: utf-8
 from __future__ import division
-import cgi
 from flask import render_template, request, redirect, url_for, json, session, Blueprint, abort
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment
-from ..utils import require_login, require_admin
+from ..utils import require_login, require_admin, check_is_me
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm
 from ..helpers import random_filename
 from ..uploadsets import workimages
@@ -12,32 +11,37 @@ from ..uploadsets import workimages
 bp = Blueprint('work', __name__)
 
 
+def is_collect_work(work_id):
+    """判断当前用户是否收藏此作品，如果未登录，则返回False"""
+    if 'user_id' not in session:
+        return False
+    return CollectWork.query.filter(CollectWork.work_id == work_id).filter(
+        CollectWork.user_id == session['user_id']).count() > 0
+
+
+def is_collect_work_image(work_image_id):
+    """判断当前用户是否收藏此作品图片，如果未登录，则返回False"""
+    if 'user_id' not in session:
+        return False
+    return CollectWorkImage.query.filter(CollectWorkImage.user_id == session['user_id']).filter(
+        CollectWorkImage.work_image_id == work_image_id).count() > 0
+
+
 @bp.route('/<int:work_id>')
 def view(work_id):
     """文学作品"""
     work = Work.query.get_or_404(work_id)
-
-    if 'user_id' in session:
-        is_collected = CollectWork.query.filter(CollectWork.work_id == work_id).filter(
-            CollectWork.user_id == session['user_id']).count() > 0
-    else:
-        is_collected = False
-
-    reviews = work.reviews.order_by(WorkReview.create_time.desc()).filter(
-        WorkReview.is_publish == True).limit(4)
-    reviews_num = work.reviews.filter(WorkReview.is_publish == True).count()
-
-    images = work.images.order_by(WorkImage.create_time).limit(16)
-    images_num = work.images.count()
-
+    is_collected = is_collect_work(work_id)
+    query = work.reviews.filter(WorkReview.is_publish == True)
+    reviews = query.limit(4)
+    reviews_num = query.count()
+    images = work.images.limit(16)
     other_works = Work.query.filter(Work.author_id == work.author_id).filter(
         Work.id != work_id).limit(5)
-
     collectors = User.query.join(CollectWork).join(Work).filter(Work.id == work_id).limit(4)
-
     return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num,
-                           images=images, images_num=images_num, collectors=collectors,
-                           is_collected=is_collected, other_works=other_works)
+                           images=images, collectors=collectors, is_collected=is_collected,
+                           other_works=other_works)
 
 
 @bp.route('/<int:work_id>/collect', methods=['GET'])
@@ -61,7 +65,7 @@ def discollect(work_id):
 
 
 @bp.route('/', defaults={'page': 1})
-@bp.route('/<int:page>')
+@bp.route('/page/<int:page>')
 def works(page):
     """全部文学作品"""
     work_type = request.args.get('type', 'all')
@@ -73,7 +77,7 @@ def works(page):
         works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.abbr == dynasty_abbr)))
     paginator = works.paginate(page, 10)
     work_types = WorkType.query
-    dynasties = Dynasty.query.order_by(Dynasty.start_year)
+    dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
     return render_template('work/works.html', paginator=paginator, work_type=work_type,
                            dynasty_abbr=dynasty_abbr, work_types=work_types, dynasties=dynasties)
 
@@ -160,13 +164,8 @@ def search_authors():
 def image(work_image_id):
     """作品的单个相关图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
-    if 'user_id' in session:
-        is_collected = CollectWorkImage.query.filter(
-            CollectWorkImage.user_id == session['user_id']).filter(
-            CollectWorkImage.work_image_id == work_image_id).count() > 0
-    else:
-        is_collected = False
-    return render_template('work/image.html', work_image=work_image, is_collected=is_collected)
+    collected = is_collect_work_image(work_image_id)
+    return render_template('work/image.html', work_image=work_image, collected=collected)
 
 
 @bp.route('/image/<int:work_image_id>/delete', methods=['GET'])
@@ -247,8 +246,7 @@ def review(review_id):
     form = WorkReviewCommentForm()
     review = WorkReview.query.get_or_404(review_id)
     # others cannot see draft
-    is_me = True if "user_id" in session and session['user_id'] == review.user_id else False
-    if not is_me and not review.is_publish:
+    if not check_is_me(review.user_id) and not review.is_publish:
         abort(404)
     review.click_num += 1
     db.session.add(review)

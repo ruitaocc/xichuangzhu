@@ -72,8 +72,8 @@
             var work_annotate = $('.work-annotate');
             $('.work-content sup').each(function (index, element) {
                var annotate = $(element).data('original-title');
-               $('.work-annotate').append("<div>[<span class='annotate-index'>" + (index + 1) + '</span>]&nbsp;&nbsp' + annotate + '</div>');
-               // $('.work-annotate').append("<div><span class='annotate-index'>〔" + (index+1) + '〕</span>' + annotate + '</div>');
+               $('.work-annotate').append("<div>[<span class='annotate-index'>" + (index + 1)
+                     + '</span>]&nbsp;&nbsp' + annotate + '</div>');
             });
          </script>
 
@@ -81,29 +81,28 @@
 
          <div class="work-introduction">{{ work.intro }}</div>
 
-         {% if reviews_num != 0 %}
+         {% if reviews_num %}
             <h2>
                点评
-               {% if reviews_num > 4 %}
-                  <span class='link-more'>
-                     <a href="{{ url_for('work.reviews', work_id=work.id) }}">更多 / {{ reviews_num }}
-                        »</a>
-                  </span>
-               {% endif %}
+               <span class='link-more'>
+                  <a href="{{ url_for('work.reviews', work_id=work.id) }}">
+                     全部 / {{ reviews_num }} »
+                  </a>
+               </span>
             </h2>
 
             {{ render_work_reviews(reviews) }}
          {% endif %}
 
-         {% if images_num != 0 %}
+         {% set images_count = work.images.count() %}
+         {% if images_count %}
             <h2>
                图片
-               {% if images_num > 9 %}
-                  <span class='link-more'>
-                     <a href="{{ url_for('work.images', work_id=work.id) }}">更多 / {{ images_num }}
-                        »</a>
-                  </span>
-               {% endif %}
+               <span class='link-more'>
+                  <a href="{{ url_for('work.images', work_id=work.id) }}">
+                     全部 / {{ images_count }} »
+                  </a>
+               </span>
             </h2>
 
             {{ render_work_images(images) }}
@@ -116,8 +115,11 @@
             {% for t in work.tags %}
                <li><a href="{{ url_for('work.tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
             {% endfor %}
-            <li><a href="#" class='add-tag-btn'><span class='glyphicon glyphicon-plus'></span>
-               添加</a></li>
+            <li>
+               <a href="#" class='add-tag-btn'>
+                  <span class='glyphicon glyphicon-plus'></span> 添加
+               </a>
+            </li>
          </ul>
 
          <h2>作者简介</h2>
@@ -133,9 +135,12 @@
 
          {% for work in other_works %}
             <div class="other-work-item">
-               <a class="other-work-title"
-                  href="{{ url_for('work.view', work_id = work.id) }}">{{ work.title|truncate(12, True, '') }}</a>
-               <span class="other-work-content">{{ work.content|clean_work|truncate(8, True) }}</span>
+               <a class="other-work-title" href="{{ url_for('work.view', work_id = work.id) }}">
+                  {{ work.title|truncate(12, True, '') }}
+               </a>
+               <span class="other-work-content">
+                  {{ work.content|clean_work|truncate(8, True) }}
+               </span>
             </div>
          {% endfor %}
 
