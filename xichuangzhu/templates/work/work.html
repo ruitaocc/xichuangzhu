@@ -51,7 +51,7 @@
                   <span class="glyphicon glyphicon-picture"></span> 图片
                </a>
 
-               {% if is_collected %}
+               {% if work|is_work_collected %}
                   <a class="btn btn-default" title="取消收藏"
                      href="{{ url_for('work.discollect', work_id=work.id) }}">
                      <span class="glyphicon glyphicon-bookmark"></span> 已收藏
@@ -135,9 +135,8 @@
 
          {% for work in other_works %}
             <div class="other-work-item">
-               <a class="other-work-title" href="{{ url_for('work.view', work_id = work.id) }}">
-                  {{ work.title|truncate(12, True, '') }}
-               </a>
+               <a class="other-work-title" href="{{ url_for('work.view', work_id=work.id) }}">
+                  {{ work.title|truncate(12, True, '') }}</a>
                <span class="other-work-content">
                   {{ work.content|clean_work|truncate(8, True) }}
                </span>

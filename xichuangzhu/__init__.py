@@ -44,6 +44,8 @@ def register_jinja(app):
     app.jinja_env.filters['markdown_work'] = filters.markdown_work
     app.jinja_env.filters['format_year'] = filters.format_year
     app.jinja_env.filters['format_text'] = filters.format_text
+    app.jinja_env.filters['is_work_collected'] = filters.is_work_collected
+    app.jinja_env.filters['is_work_image_collected'] = filters.is_work_image_collected
 
     # inject vars into template context
     @app.context_processor

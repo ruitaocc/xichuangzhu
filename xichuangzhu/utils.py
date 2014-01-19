@@ -1,5 +1,6 @@
 # coding: utf-8
 import datetime
+import uuid
 from functools import wraps
 from flask import session, abort, g
 import config
@@ -45,3 +46,8 @@ def require_login(func):
             return abort(404)
         return func(*args, **kwargs)
     return decorated_function
+
+
+def random_filename():
+    """生成伪随机文件名"""
+    return str(uuid.uuid4())

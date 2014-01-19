@@ -5,33 +5,16 @@ from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dy
     User, CollectWork, CollectWorkImage, WorkReviewComment
 from ..utils import require_login, require_admin, check_is_me
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm
-from ..helpers import random_filename
+from ..utils import random_filename
 from ..uploadsets import workimages
 
 bp = Blueprint('work', __name__)
-
-
-def is_collect_work(work_id):
-    """判断当前用户是否收藏此作品，如果未登录，则返回False"""
-    if 'user_id' not in session:
-        return False
-    return CollectWork.query.filter(CollectWork.work_id == work_id).filter(
-        CollectWork.user_id == session['user_id']).count() > 0
-
-
-def is_collect_work_image(work_image_id):
-    """判断当前用户是否收藏此作品图片，如果未登录，则返回False"""
-    if 'user_id' not in session:
-        return False
-    return CollectWorkImage.query.filter(CollectWorkImage.user_id == session['user_id']).filter(
-        CollectWorkImage.work_image_id == work_image_id).count() > 0
 
 
 @bp.route('/<int:work_id>')
 def view(work_id):
     """文学作品"""
     work = Work.query.get_or_404(work_id)
-    is_collected = is_collect_work(work_id)
     query = work.reviews.filter(WorkReview.is_publish == True)
     reviews = query.limit(4)
     reviews_num = query.count()
@@ -40,8 +23,7 @@ def view(work_id):
         Work.id != work_id).limit(5)
     collectors = User.query.join(CollectWork).join(Work).filter(Work.id == work_id).limit(4)
     return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num,
-                           images=images, collectors=collectors, is_collected=is_collected,
-                           other_works=other_works)
+                           images=images, collectors=collectors, other_works=other_works)
 
 
 @bp.route('/<int:work_id>/collect', methods=['GET'])
@@ -164,8 +146,7 @@ def search_authors():
 def image(work_image_id):
     """作品的单个相关图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
-    collected = is_collect_work_image(work_image_id)
-    return render_template('work/image.html', work_image=work_image, collected=collected)
+    return render_template('work/image.html', work_image=work_image)
 
 
 @bp.route('/image/<int:work_image_id>/delete', methods=['GET'])
