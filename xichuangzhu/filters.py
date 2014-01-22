@@ -2,6 +2,7 @@
 import datetime
 import re
 import markdown2
+from werkzeug.utils import escape
 from flask import session
 from models import CollectWork, CollectWorkImage
 
@@ -37,7 +38,7 @@ def markdown_work(content):
     Add comment -> Split ci -> Generate paragraph
     """
     c = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", content)
-    c = c.replace('%', "&nbsp;&nbsp;")
+    c = c.replace('%', "&nbsp;&nbsp;&nbsp;&nbsp;")
     c = markdown2.markdown(c)
     return c
 
@@ -48,8 +49,8 @@ def format_year(year):
 
 
 def format_text(text):
-    """将文本中的换行符替换为div"""
-    return text.replace('\n', "<div class='text-gap'></div>")
+    """将文本进行HTML转义，然后将换行符替换为div"""
+    return escape(text).replace('\n', "<div class='text-gap'></div>")
 
 
 def is_work_collected(work):
