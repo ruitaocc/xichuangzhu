@@ -32,7 +32,8 @@
             <a class='author'
                href="{{ url_for('author.view', author_abbr=author.abbr, q=author.random_quote.id) }}">{{ author.name }}</a>
             <sup class='author-dynasty'>
-               〔<a href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
+               〔<a
+                  href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
             </sup>
          </div>
          <div class='author-quote'>{{ author.random_quote.quote }}</div>
@@ -104,32 +105,19 @@
 {% endmacro %}
 
 
-{% macro render_works(works) %}
+{% macro render_works(works, with_type=False) %}
    {% for w in works %}
       <div class="work-item">
          <div class="work-header">
+            {% if with_type %}
+               <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
+                  {{ w.type.cn }}</a>
+            {% endif %}
+
             <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">{{ w.title }}</a>
             <sup class="work-author">
-               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
-            </sup>
-         </div>
-
-         <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
-      </div>
-   {% endfor %}
-{% endmacro %}
-
-
-{% macro render_works_with_type(works) %}
-   {% for w in works %}
-      <div class="work-item work-item-with-type">
-         <div class="work-header">
-            <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
-               {{ w.type.cn }}
-            </a>
-            <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">{{ w.title }}</a>
-            <sup class="work-author">
-               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               〔<a
+                  href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
             </sup>
          </div>
 

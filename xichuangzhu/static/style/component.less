@@ -20,7 +20,23 @@
 
   .work-header {
     .work-type {
-      display: none;
+      display: inline-block;
+      background-color: lighten(darkred, 5%);
+      padding: 2px;
+      border: 1px solid lighten(darkred, 5%);
+      font-size: 12px;
+      line-height: 12px;
+      font-weight: normal;
+      border-radius: 2px;
+      margin-right: 5px;
+      vertical-align: 2px;
+      text-decoration: none;
+      color: #FBFBFB;
+
+      &:hover {
+        background-color: white;
+        color: lighten(darkred, 5%);
+      }
     }
 
     .work-title {
@@ -43,28 +59,6 @@
   .work-content {
     font-size: 14px;
     line-height: 22px;
-  }
-}
-
-.work-item.work-item-with-type {
-  .work-type {
-    display: inline-block;
-    background-color: lighten(darkred, 5%);
-    padding: 2px 2px 2px 3px;
-    border: 1px solid lighten(darkred, 5%);
-    font-size: 12px;
-    line-height: 12px;
-    font-weight: normal;
-    border-radius: 2px;
-    margin-right: 5px;
-    vertical-align: 2px;
-    text-decoration: none;
-    color: #FBFBFB;
-
-    &:hover {
-      background-color: white;
-      color: lighten(darkred, 5%);
-    }
   }
 }
 
