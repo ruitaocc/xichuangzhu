@@ -35,12 +35,23 @@ html body .navbar {
 html body .navbar .navbar-form {
   margin-top: 10px;
 }
-html body .navbar .navbar-form .input-group {
+html body .navbar .navbar-form .input-group-sm {
+  position: relative;
   width: 250px;
+}
+html body .navbar .navbar-form .input-group-sm #btn-search {
+  background-color: #ffffff;
+  outline: 0;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.075);
+  border: 0;
+  position: absolute;
+  top: 1px;
+  right: 1px;
 }
 html body .navbar #btn-s2t {
   margin-top: 10px;
   margin-right: 10px;
+  outline: none;
 }
 html body .navbar #douban-icon {
   margin-top: 10px;
