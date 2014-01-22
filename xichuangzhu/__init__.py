@@ -5,6 +5,7 @@ from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
 from . import config
+from .utils import get_current_user, get_current_role
 
 # convert python's encoding to utf8
 reload(sys)
@@ -32,6 +33,8 @@ def create_app():
     @app.before_request
     def before_request():
         g.user_id = session['user_id'] if 'user_id' in session else None
+        g.current_user = get_current_user()
+        g.current_role = get_current_role()
 
     return app
 

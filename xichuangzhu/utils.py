@@ -3,7 +3,8 @@ import datetime
 import uuid
 from functools import wraps
 from flask import session, abort, g
-import config
+from . import config, roles
+from .models import User
 
 
 # count the time diff by timedelta, return a user-friendly format
@@ -41,12 +42,42 @@ def require_admin(func):
 # Check if login
 def require_login(func):
     @wraps(func)
-    def decorated_function(*args, **kwargs):
+    def decorator(*args, **kwargs):
         if not g.user_id:
             return abort(404)
         return func(*args, **kwargs)
+    return decorator
 
-    return decorated_function
+
+def signin_user(user, permenent):
+    """Sign in user"""
+    session.permanent = permenent
+    session['user_id'] = user.id
+
+
+def signout_user():
+    """Sign out user"""
+    session.pop('user_id', None)
+
+
+def get_current_user():
+    """获取当前user，同时进行session有效性的检测"""
+    if not 'user_id' in session:
+        signout_user()
+        return None
+    user = User.query.filter(User.id == session['user_id']).first()
+    if not user:
+        signout_user()
+        return None
+    return user
+
+
+def get_current_role():
+    """获取当前用户的角色，若无有效用户，则返回VisitorRole"""
+    user = g.current_user
+    if not user:
+        return roles.VisitorRole
+    return user.role
 
 
 def random_filename():
