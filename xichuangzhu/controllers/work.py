@@ -1,9 +1,11 @@
 # coding: utf-8
 from __future__ import division
-from flask import render_template, request, redirect, url_for, json, session, Blueprint, abort
+from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment
-from ..utils import require_login, require_admin, check_is_me
+from ..utils import check_is_me
+from ..permissions import user_permission, admin_permission, WorkImageOwnerPermission, \
+    WorkReviewOwnerPermission
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm
 from ..utils import random_filename
 from ..uploadsets import workimages
@@ -27,20 +29,20 @@ def view(work_id):
 
 
 @bp.route('/<int:work_id>/collect', methods=['GET'])
-@require_login
+@user_permission
 def collect(work_id):
     """收藏作品"""
-    collect = CollectWork(user_id=session['user_id'], work_id=work_id)
+    collect = CollectWork(user_id=g.user.id, work_id=work_id)
     db.session.add(collect)
     db.session.commit()
     return redirect(url_for('.view', work_id=work_id))
 
 
 @bp.route('/<int:work_id>/discollect')
-@require_login
+@user_permission
 def discollect(work_id):
     """取消收藏文学作品"""
-    db.session.query(CollectWork).filter(CollectWork.user_id == session['user_id']).filter(
+    db.session.query(CollectWork).filter(CollectWork.user_id == g.user.id).filter(
         CollectWork.work_id == work_id).delete()
     db.session.commit()
     return redirect(url_for('.view', work_id=work_id))
@@ -81,7 +83,7 @@ def tag(tag_id, page):
 
 
 @bp.route('/add', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def add():
     """添加作品"""
     form = WorkForm(author_id=request.args.get('author_id', None))
@@ -96,7 +98,7 @@ def add():
 
 
 @bp.route('/<int:work_id>/edit', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def edit(work_id):
     """编辑作品"""
     work = Work.query.get_or_404(work_id)
@@ -131,7 +133,7 @@ def images(work_id, page):
 
 
 @bp.route('/search_authors', methods=['POST'])
-@require_admin
+@admin_permission
 def search_authors():
     """根据关键字返回json格式的作者信息"""
     author_name = request.form.get('author_name', '')
@@ -149,34 +151,68 @@ def image(work_image_id):
     return render_template('work/image.html', work_image=work_image)
 
 
-@bp.route('/image/<int:work_image_id>/delete', methods=['GET'])
-@require_login
-def delete_image(work_image_id):
-    """删除作品的相关图片"""
+@bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
+@user_permission
+def add_image(work_id):
+    """添加作品图片"""
+    work = Work.query.get_or_404(work_id)
+    form = WorkImageForm()
+    if form.validate_on_submit():
+        # Save image
+        filename = workimages.save(request.files['image'], name=random_filename() + ".")
+        work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=filename)
+        db.session.add(work_image)
+        db.session.commit()
+        return redirect(url_for('.image', work_image_id=work_image.id))
+    return render_template('work/add_image.html', work=work, form=form)
+
+
+@bp.route('/image/<int:work_image_id>/edit', methods=['GET', 'POST'])
+@user_permission
+def edit_image(work_image_id):
+    """编辑作品图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
-    if work_image.user_id != session['user_id']:
-        abort(404)
+    permission = WorkImageOwnerPermission(work_image_id)
+    if not permission.check():
+        return permission.deny()
+    form = WorkImageForm()
+    if form.validate_on_submit():
+        filename = workimages.save(request.files['image'], name=random_filename() + ".")
+        work_image.filename = filename
+        db.session.add(work_image)
+        db.session.commit()
+        return redirect(url_for('.image', work_image_id=work_image_id))
+    return render_template('work/edit_image.html', work_image=work_image, form=form)
+
+
+@bp.route('/image/<int:work_image_id>/delete', methods=['GET'])
+@user_permission
+def delete_image(work_image_id):
+    """删除作品图片"""
+    work_image = WorkImage.query.get_or_404(work_image_id)
+    permission = WorkImageOwnerPermission(work_image_id)
+    if not permission.check():
+        return permission.deny()
     db.session.delete(work_image)
     db.session.commit()
     return redirect(url_for('.view', work_id=work_image.work_id))
 
 
 @bp.route('/image/<int:work_image_id>/collect', methods=['GET'])
-@require_login
+@user_permission
 def collect_image(work_image_id):
     """收藏作品图片"""
-    collect = CollectWorkImage(user_id=session['user_id'], work_image_id=work_image_id)
+    collect = CollectWorkImage(user_id=g.user.id, work_image_id=work_image_id)
     db.session.add(collect)
     db.session.commit()
     return redirect(url_for('.image', work_image_id=work_image_id))
 
 
 @bp.route('/image/<int:work_image_id>/discollect')
-@require_login
+@user_permission
 def discollect_image(work_image_id):
     """取消收藏作品图片"""
-    db.session.query(CollectWorkImage).filter(
-        CollectWorkImage.user_id == session['user_id']).filter(
+    db.session.query(CollectWorkImage).filter(CollectWorkImage.user_id == g.user.id).filter(
         CollectWorkImage.work_image_id == work_image_id).delete()
     db.session.commit()
     return redirect(url_for('.image', work_image_id=work_image_id))
@@ -190,50 +226,19 @@ def all_images(page):
     return render_template('work/all_images.html', paginator=paginator)
 
 
-@bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
-@require_login
-def add_image(work_id):
-    """添加作品图片"""
-    work = Work.query.get_or_404(work_id)
-    form = WorkImageForm()
-    if form.validate_on_submit():
-        # Save image
-        filename = workimages.save(request.files['image'], name=random_filename() + ".")
-        work_image = WorkImage(work_id=work_id, user_id=session['user_id'], filename=filename)
-        db.session.add(work_image)
-        db.session.commit()
-        return redirect(url_for('.image', work_image_id=work_image.id))
-    return render_template('work/add_image.html', work=work, form=form)
-
-
-@bp.route('/image/<int:work_image_id>/edit', methods=['GET', 'POST'])
-@require_login
-def edit_image(work_image_id):
-    """编辑作品图片"""
-    work_image = WorkImage.query.get_or_404(work_image_id)
-    form = WorkImageForm()
-    if form.validate_on_submit():
-        filename = workimages.save(request.files['image'], name=random_filename() + ".")
-        work_image.filename = filename
-        db.session.add(work_image)
-        db.session.commit()
-        return redirect(url_for('.image', work_image_id=work_image_id))
-    return render_template('work/edit_image.html', work_image=work_image, form=form)
-
-
 @bp.route('/review/<int:review_id>', methods=['GET', 'POST'])
 def review(review_id):
     """作品点评"""
     form = WorkReviewCommentForm()
     review = WorkReview.query.get_or_404(review_id)
     # others cannot see draft
-    if not check_is_me(review.user_id) and not review.is_publish:
+    if not review.is_publish and not check_is_me(review.user_id):
         abort(404)
     review.click_num += 1
     db.session.add(review)
     db.session.commit()
     if form.validate_on_submit():
-        comment = WorkReviewComment(review_id=review_id, user_id=session['user_id'], **form.data)
+        comment = WorkReviewComment(review_id=review_id, user_id=g.user.id, **form.data)
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for('.review', review_id=review_id) + "#" + str(comment.id))
@@ -255,14 +260,14 @@ def all_reviews(page):
 
 
 @bp.route('/<int:work_id>/add_review', methods=['GET', 'POST'])
-@require_login
+@user_permission
 def add_review(work_id):
     """添加作品点评"""
     work = Work.query.get_or_404(work_id)
     form = WorkReviewForm()
     if form.validate_on_submit():
         is_publish = True if 'publish' in request.form else False
-        review = WorkReview(user_id=session['user_id'], work_id=work_id, is_publish=is_publish,
+        review = WorkReview(user_id=g.user.id, work_id=work_id, is_publish=is_publish,
                             **form.data)
         db.session.add(review)
         db.session.commit()
@@ -271,12 +276,13 @@ def add_review(work_id):
 
 
 @bp.route('/review/<int:review_id>/edit', methods=['GET', 'POST'])
-@require_login
+@user_permission
 def edit_review(review_id):
     """编辑作品点评"""
     review = WorkReview.query.get_or_404(review_id)
-    if review.user_id != session['user_id']:
-        abort(404)
+    permission = WorkReviewOwnerPermission(review_id)
+    if not permission.check():
+        return permission.deny()
     form = WorkReviewForm(obj=review)
     if form.validate_on_submit():
         form.populate_obj(review)
@@ -288,12 +294,13 @@ def edit_review(review_id):
 
 
 @bp.route('/review/<int:review_id>/delete')
-@require_login
+@user_permission
 def delete_review(review_id):
     """删除作品点评"""
     review = WorkReview.query.get_or_404(review_id)
-    if review.user_id != session['user_id']:
-        abort(404)
+    permission = WorkReviewOwnerPermission(review_id)
+    if not permission.check():
+        return permission.deny()
     db.session.delete(review)
     db.session.commit()
     return redirect(url_for('.view', work_id=review.work_id))

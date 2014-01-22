@@ -1,8 +1,8 @@
 # coding: utf-8
-from flask import render_template, redirect, url_for, session, abort, Blueprint
+from flask import render_template, redirect, url_for, session, abort, Blueprint, g
 from ..models import db, Topic, TopicComment
 from ..forms import TopicForm, TopicCommentForm
-from ..utils import require_login
+from ..permissions import user_permission, TopicOwnerPermission
 
 
 bp = Blueprint('topic', __name__)
@@ -17,11 +17,14 @@ def view(topic_id):
     db.session.add(topic)
     db.session.commit()
     if form.validate_on_submit():
-        comment = TopicComment(user_id=session['user_id'], topic_id=topic_id, **form.data)
+        if not user_permission.check():
+            return user_permission.deny()
+        comment = TopicComment(user_id=g.user.id, topic_id=topic_id, **form.data)
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic_id) + "#" + str(comment.id))
     return render_template('topic/topic.html', topic=topic, form=form)
+
 
 @bp.route('/topics', defaults={'page': 1})
 @bp.route('/topics/page/<int:page>')
@@ -32,12 +35,12 @@ def topics(page):
 
 
 @bp.route('/add', methods=['POST', 'GET'])
-@require_login
+@user_permission
 def add():
     """添加话题"""
     form = TopicForm()
     if form.validate_on_submit():
-        topic = Topic(user_id=session['user_id'], **form.data)
+        topic = Topic(user_id=g.user.id, **form.data)
         db.session.add(topic)
         db.session.commit()
         return redirect(url_for('.view', topic_id=topic.id))
@@ -45,12 +48,13 @@ def add():
 
 
 @bp.route('/<int:topic_id>/edit', methods=['POST', 'GET'])
-@require_login
+@user_permission
 def edit(topic_id):
     """编辑话题"""
     topic = Topic.query.get_or_404(topic_id)
-    if topic.user_id != session['user_id']:
-        abort(404)
+    permission = TopicOwnerPermission(topic_id)
+    if not permission.check():
+        return permission.deny()
     form = TopicForm(obj=topic)
     if form.validate_on_submit():
         form.populate_obj(topic)
@@ -61,12 +65,13 @@ def edit(topic_id):
 
 
 @bp.route('/<int:topic_id>/delete')
-@require_login
+@user_permission
 def delete(topic_id):
     """删除话题"""
     topic = Topic.query.get_or_404(topic_id)
-    if topic.user_id != session['user_id']:
-        abort(404)
+    permission = TopicOwnerPermission(topic_id)
+    if not permission.check():
+        return permission.deny()
     db.session.delete(topic)
     db.session.commit()
     return redirect(url_for('.topics'))

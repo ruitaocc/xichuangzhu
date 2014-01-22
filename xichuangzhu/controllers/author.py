@@ -1,7 +1,7 @@
 # coding: utf-8
 from flask import render_template, request, redirect, url_for, Blueprint
 from ..models import db, Author, AuthorQuote, Work, WorkType, CollectWork, Dynasty
-from ..utils import require_admin
+from ..permissions import admin_permission
 from ..forms import AuthorForm, AuthorQuoteForm
 
 bp = Blueprint('author', __name__)
@@ -35,7 +35,7 @@ def authors():
 
 
 @bp.route('/add', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def add():
     """添加文学家"""
     form = AuthorForm()
@@ -49,7 +49,7 @@ def add():
 
 
 @bp.route('/<int:author_id>/edit', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def edit(author_id):
     """编辑文学家"""
     author = Author.query.get_or_404(author_id)
@@ -64,7 +64,7 @@ def edit(author_id):
 
 
 @bp.route('/<int:author_id>/admin_quotes', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def admin_quotes(author_id):
     """管理文学家的名言"""
     author = Author.query.get_or_404(author_id)
@@ -78,7 +78,7 @@ def admin_quotes(author_id):
 
 
 @bp.route('/quote/<int:quote_id>/delete')
-@require_admin
+@admin_permission
 def delete_quote(quote_id):
     """删除名言"""
     quote = AuthorQuote.query.get_or_404(quote_id)
@@ -88,7 +88,7 @@ def delete_quote(quote_id):
 
 
 @bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def edit_quote(quote_id):
     """编辑名言"""
     quote = AuthorQuote.query.get_or_404(quote_id)

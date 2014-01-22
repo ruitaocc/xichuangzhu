@@ -48,13 +48,13 @@
 
             <li><a href="{{ url_for('work.tags') }}">标签</a></li>
 
-            {% if session.user_id %}
+            {% if g.user %}
                <li><a href="{{ url_for('user.collects') }}">收藏</a></li>
             {% endif %}
 
             <li><a href="{{ url_for('topic.topics') }}">社区</a></li>
 
-            {% if not session.user_id %}
+            {% if not g.user %}
                <li><a href="{{ url_for('site.about') }}">关于</a></li>
             {% endif %}
          </ul>
@@ -82,22 +82,21 @@
             });
          </script>
 
-         {% if session.user_id %}
-
+         {% if g.user %}
             <ul class="nav navbar-nav navbar-right">
                <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                     {{ session.user_name }} <b class="caret"></b>
+                     {{ g.user.name }} <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu">
-                     <li><a href="{{ url_for('user.view', user_abbr=session.user_abbr) }}">我的主页</a>
+                     <li><a href="{{ url_for('user.view', user_abbr=g.user.abbr) }}">我的主页</a>
                      </li>
                      <li><a href="{{ url_for('account.signout') }}">退出</a></li>
                   </ul>
                </li>
             </ul>
 
-            {% if session.user_id == admin_id %}
+            {% if permissions.admin_permission.check() %}
                <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown">
                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">

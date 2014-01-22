@@ -3,7 +3,7 @@ import datetime
 import re
 import markdown2
 from werkzeug.utils import escape
-from flask import session
+from flask import g
 from models import CollectWork, CollectWorkImage
 
 
@@ -54,16 +54,12 @@ def format_text(text):
 
 
 def is_work_collected(work):
-    """判断当前用户是否收藏此作品，如果未登录，则返回False"""
-    if 'user_id' not in session:
-        return False
-    return CollectWork.query.filter(CollectWork.work_id == work.id).filter(
-        CollectWork.user_id == session['user_id']).count() > 0
+    """判断当前用户是否收藏此作品"""
+    return g.user and CollectWork.query.filter(CollectWork.work_id == work.id).filter(
+        CollectWork.user_id == g.user.id).count() > 0
 
 
 def is_work_image_collected(work_image):
-    """判断当前用户是否收藏此作品图片，如果未登录，则返回False"""
-    if 'user_id' not in session:
-        return False
-    return CollectWorkImage.query.filter(CollectWorkImage.user_id == session['user_id']).filter(
+    """判断当前用户是否收藏此作品图片"""
+    return g.user and CollectWorkImage.query.filter(CollectWorkImage.user_id == g.user.id).filter(
         CollectWorkImage.work_image_id == work_image.id).count() > 0

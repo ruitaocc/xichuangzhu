@@ -3,16 +3,19 @@ import requests
 import smtplib
 import hashlib
 from email.mime.text import MIMEText
-from flask import render_template, request, redirect, url_for, session, Blueprint
+from flask import render_template, request, redirect, url_for, Blueprint, flash
 from .. import config
 from ..models import db, User
-from ..utils import require_login
+from ..utils import signin_user, signout_user
 from ..forms import EmailForm
+from ..roles import NewUserRole, BanUserRole, UserRole
+from ..permissions import require_visitor
 
 bp = Blueprint('account', __name__)
 
 
 @bp.route('/signin')
+@require_visitor
 def signin():
     """通过豆瓣OAuth登陆"""
     # get current authed userID
@@ -28,29 +31,24 @@ def signin():
     r = requests.post(url, data=data).json()
     user_id = int(r['douban_user_id'])
 
-    # if user exist
-    if User.query.get(user_id):
-        # if user unactive
-        if User.query.filter(User.is_active == False).filter(User.id == user_id).first():
-            return redirect(url_for('.active_state', state='unactive', user_id=user_id))
-        else:
-            # set session
-            session.permanent = True
-            user = User.query.get_or_404(user_id)
-            session['user_id'] = user_id
-            session['user_name'] = user.name
-            session['user_abbr'] = user.abbr
+    user = User.query.get(user_id)
+    if user:
+        if user.role == BanUserRole:
+            flash('账户已被禁用')
             return redirect(url_for('site.index'))
-    # if not exist
-    else:
-        # get user info
-        url = "https://api.douban.com/v2/user/" + str(user_id)
-        user_info = requests.get(url).json()
-        user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'],
-                    avatar=user_info['avatar'], signature=user_info['signature'])
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('.send_active_email', user_id=user_id))
+        if user.role == NewUserRole:
+            flash('账户尚未激活，请进入邮箱激活账户')
+        signin_user(user, True)
+        return redirect(url_for('site.index'))
+
+    # get user info
+    url = "https://api.douban.com/v2/user/%d" % user_id
+    user_info = requests.get(url).json()
+    user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'],
+                avatar=user_info['avatar'], signature=user_info['signature'])
+    db.session.add(user)
+    db.session.commit()
+    return redirect(url_for('.send_active_email', user_id=user_id))
 
 
 @bp.route('/send_active_email/<int:user_id>', methods=['GET', 'POST'])
@@ -68,13 +66,13 @@ def send_active_email(user_id):
 
         # gene active url
         active_code = hashlib.sha1(user.name).hexdigest()
-        active_url = config.SITE_DOMAIN + "active_user/" + str(user_id) + "/" + active_code
+        active_url = "%s/active_user/%d/%s" % (config.SITE_DOMAIN, user_id, active_code)
 
         # prepare email content
         msg = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
         msg = MIMEText(msg, 'html', 'utf-8')
-        msg['From'] = "西窗烛 <" + config.SMTP_USER + ">"
-        msg['To'] = user.name + "<" + to_addr + ">"
+        msg['From'] = "西窗烛 <%s>" % config.SMTP_USER
+        msg['To'] = "%s <%s>" % (user.name, to_addr)
         msg['Subject'] = "欢迎来到西窗烛！"
 
         # send email
@@ -94,15 +92,10 @@ def active(user_id, active_code):
     """激活用户"""
     user = User.query.get_or_404(user_id)
     if active_code == hashlib.sha1(user.name).hexdigest():
-        # active user
-        user.is_active = True
+        user.role = UserRole
         db.session.add(user)
         db.session.commit()
-
-        session.permanent = True
-        session['user_id'] = user_id
-        session['user_name'] = user.name
-        session['user_abbr'] = user.abbr
+        signin_user(user, True)
         return redirect(url_for('.active_state', state='active_succ'))
     return redirect(url_for('.active_state', state='active_failed'))
 
@@ -116,10 +109,7 @@ def active_state():
 
 
 @bp.route('/signout')
-@require_login
 def signout():
     """登出"""
-    session.pop('user_id', None)
-    session.pop('user_name', None)
-    session.pop('user_abbr', None)
+    signout_user()
     return redirect(url_for('site.index'))

@@ -1,8 +1,8 @@
 # coding: utf-8
 from flask import render_template, redirect, url_for, Blueprint
 from ..models import db, Dynasty
-from ..utils import require_admin
 from ..forms import DynastyForm
+from ..permissions import admin_permission
 
 bp = Blueprint('dynasty', __name__)
 
@@ -18,7 +18,7 @@ def view(dynasty_abbr):
 
 
 @bp.route('/add', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def add():
     """添加朝代"""
     form = DynastyForm()
@@ -31,7 +31,7 @@ def add():
 
 
 @bp.route('/<int:dynasty_id>/edit', methods=['GET', 'POST'])
-@require_admin
+@admin_permission
 def edit(dynasty_id):
     """编辑朝代"""
     dynasty = Dynasty.query.get_or_404(dynasty_id)

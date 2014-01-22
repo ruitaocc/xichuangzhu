@@ -1,8 +1,9 @@
 # coding: utf-8
 from __future__ import division
-from flask import render_template, request, session, Blueprint
-from ..models import User, CollectWork, CollectWorkImage, Topic, Work, WorkImage, WorkReview
-from ..utils import require_login, check_is_me
+from flask import render_template, Blueprint, g
+from ..models import User, CollectWork, CollectWorkImage, Work, WorkImage, WorkReview
+from ..utils import check_is_me
+from ..permissions import user_permission
 
 bp = Blueprint('user', __name__)
 
@@ -54,35 +55,35 @@ def work_images(user_abbr, page):
 
 
 @bp.route('/collects')
-@require_login
+@user_permission
 def collects():
     """用户收藏页"""
-    user = User.query.get_or_404(session['user_id'])
-    collect_works = Work.query.join(CollectWork).filter(CollectWork.user_id == user.id).order_by(
+    collect_works = Work.query.join(CollectWork).filter(CollectWork.user_id == g.user.id).order_by(
         CollectWork.create_time.desc()).limit(6)
     collect_work_images = WorkImage.query.join(CollectWorkImage).filter(
-        CollectWorkImage.user_id == user.id).order_by(CollectWorkImage.create_time.desc()).limit(9)
-    return render_template('user/collects.html', user=user, collect_works=collect_works,
+        CollectWorkImage.user_id == g.user.id).order_by(
+        CollectWorkImage.create_time.desc()).limit(9)
+    return render_template('user/collects.html', user=g.user, collect_works=collect_works,
                            collect_work_images=collect_work_images)
 
 
 @bp.route('/collect_works', defaults={'page': 1})
 @bp.route('/collect_works/page/<int:page>')
-@require_login
+@user_permission
 def collect_works(page):
     """用户收藏的文学作品"""
     paginator = Work.query.join(CollectWork).filter(
-        CollectWork.user_id == session['user_id']).order_by(
+        CollectWork.user_id == g.user.id).order_by(
         CollectWork.create_time.desc()).paginate(page, 10)
     return render_template('user/collect_works.html', paginator=paginator)
 
 
 @bp.route('/collect_work_images', defaults={'page': 1})
 @bp.route('/collect_work_images/page/<int:page>')
-@require_login
+@user_permission
 def collect_work_images(page):
     """用户收藏的图片"""
     paginator = WorkImage.query.join(CollectWorkImage).filter(
-        CollectWorkImage.user_id == session['user_id']).order_by(
+        CollectWorkImage.user_id == g.user.id).order_by(
         CollectWorkImage.create_time.desc()).paginate(page, 12)
     return render_template('user/collect_work_images.html', paginator=paginator)

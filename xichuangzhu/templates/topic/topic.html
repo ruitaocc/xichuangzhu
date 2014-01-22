@@ -7,7 +7,7 @@
 
 {% block body %}
 
-   {% if session.user_id %}
+   {% if g.user %}
       <script type="text/javascript">
          // move the blink to the end of the input/textarea
          function moveEnd(obj) {
@@ -69,7 +69,7 @@
                <span class="topic-time">{{ topic.create_time|timesince }}</span>
                ·
                <span>{{ topic.click_num }} 点击</span>
-               {% if topic.user_id == session.user_id %}
+               {% if permissions.TopicOwnerPermission(topic.id).check() %}
                   <a class="btn-edit-topic"
                      href="{{ url_for('topic.edit', topic_id=topic.id) }}">编辑</a>
                   /
@@ -86,7 +86,7 @@
             {{ render_comments(topic.comments) }}
          {% endif %}
 
-         {% if session.user_id %}
+         {% if g.user %}
             <form id="add-topic-comment" method="post"
                   action="{{ url_for('topic.view', topic_id=topic.id) }}">
                {{ form.csrf_token }}

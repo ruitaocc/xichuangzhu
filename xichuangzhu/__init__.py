@@ -1,11 +1,11 @@
 # coding: utf-8
 import sys
-from flask import Flask, request, url_for, session, g, render_template
+from flask import Flask, request, url_for, g, render_template
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
+from .utils import get_current_user, get_current_user_role
 from . import config
-from .utils import get_current_user, get_current_role
 
 # convert python's encoding to utf8
 reload(sys)
@@ -32,9 +32,8 @@ def create_app():
     # before every request
     @app.before_request
     def before_request():
-        g.user_id = session['user_id'] if 'user_id' in session else None
-        g.current_user = get_current_user()
-        g.current_role = get_current_role()
+        g.user = get_current_user()
+        g.user_role = get_current_user_role()
 
     return app
 
@@ -50,12 +49,15 @@ def register_jinja(app):
     app.jinja_env.filters['is_work_collected'] = filters.is_work_collected
     app.jinja_env.filters['is_work_image_collected'] = filters.is_work_image_collected
 
+    from . import roles, permissions
+
     # inject vars into template context
     @app.context_processor
     def inject_vars():
         return dict(
             douban_login_url=config.DOUBAN_LOGIN_URL,
-            admin_id=config.ADMIN_ID,
+            roles=roles,
+            permissions=permissions
         )
 
     # url generator for pagination
@@ -75,8 +77,8 @@ def register_logger(app):
         import logging
         from logging.handlers import SMTPHandler
         credentials = (config.SMTP_USER, config.SMTP_PASSWORD)
-        mail_handler = SMTPHandler((config.SMTP_SERVER, config.SMTP_PORT), config.SMTP_FROM, config.SMTP_ADMIN, 'xcz-log',
-                                   credentials)
+        mail_handler = SMTPHandler((config.SMTP_SERVER, config.SMTP_PORT), config.SMTP_FROM,
+                                   config.SMTP_ADMIN, 'xcz-log', credentials)
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 

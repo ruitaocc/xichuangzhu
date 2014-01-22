@@ -35,12 +35,15 @@
 
    <div class="row">
       <div class="col-md-8">
-         {% if session.user_id == admin_id %}
+         {% set permission = permissions.admin_permission.check() %}
+         {% if permission %}
             <div class='btn-group pull-right'>
-               <a class="btn btn-default btn-sm" href="{{ url_for('author.edit', author_id=author.id) }}">
+               <a class="btn btn-default btn-sm"
+                  href="{{ url_for('author.edit', author_id=author.id) }}">
                   <span class="glyphicon glyphicon-edit"></span> 编辑
                </a>
-               <a class="btn btn-default btn-sm" href="{{ url_for('work.add', author_id=author.id) }}">
+               <a class="btn btn-default btn-sm"
+                  href="{{ url_for('work.add', author_id=author.id) }}">
                   <span class="glyphicon glyphicon-file"></span> 添加作品
                </a>
             </div>
@@ -54,7 +57,7 @@
                   title="《{{ quote.work.title }}》">{{ quote.quote }}</a>
             {% endif %}
 
-            {% if session.user_id == admin_id %}
+            {% if permission %}
                <a class="btn btn-default btn-xs" target="_blank"
                   href="{{ url_for('author.admin_quotes', author_id=author.id) }}">
                   Admin / {{ author.quotes.count() }}

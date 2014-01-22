@@ -8,7 +8,7 @@
 
 {% block body %}
 
-   {% if session.user_id %}
+   {% if g.user %}
       <script type="text/javascript">
          // move the blink to the end of the input/textarea
          function moveEnd(obj) {
@@ -73,7 +73,7 @@
             ·
             <span>{{ review.click_num }} 点击</span>
 
-            {% if session.user_id == review.user_id %}
+            {% if permissions.WorkReviewOwnerPermission(review.id).check() %}
                <a id="btn-edit-review"
                   href="{{ url_for('work.edit_review', review_id=review.id) }}">编辑</a>
                /
@@ -90,7 +90,7 @@
             {{ render_comments(review.comments) }}
          {% endif %}
 
-         {% if session.user_id %}
+         {% if g.user %}
             <form id="add-review-comment" method="post"
                   action="{{ url_for('work.review', review_id=review.id) }}">
                {{ form.csrf_token }}

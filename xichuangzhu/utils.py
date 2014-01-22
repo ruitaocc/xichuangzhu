@@ -26,27 +26,8 @@ def time_diff(time):
 
 
 def check_is_me(user_id):
-    return True if "user_id" in session and session['user_id'] == user_id else False
-
-
-# Check if is Administrator
-def require_admin(func):
-    @wraps(func)
-    def decorator(*args, **kwargs):
-        if not (g.user_id and g.user_id == config.ADMIN_ID):
-            return abort(404)
-        return func(*args, **kwargs)
-    return decorator
-
-
-# Check if login
-def require_login(func):
-    @wraps(func)
-    def decorator(*args, **kwargs):
-        if not g.user_id:
-            return abort(404)
-        return func(*args, **kwargs)
-    return decorator
+    """判断此user是否为当前在线的user"""
+    return g.user and g.user.id == user_id
 
 
 def signin_user(user, permenent):
@@ -63,7 +44,6 @@ def signout_user():
 def get_current_user():
     """获取当前user，同时进行session有效性的检测"""
     if not 'user_id' in session:
-        signout_user()
         return None
     user = User.query.filter(User.id == session['user_id']).first()
     if not user:
@@ -72,12 +52,11 @@ def get_current_user():
     return user
 
 
-def get_current_role():
+def get_current_user_role():
     """获取当前用户的角色，若无有效用户，则返回VisitorRole"""
-    user = g.current_user
-    if not user:
+    if not g.user:
         return roles.VisitorRole
-    return user.role
+    return g.user.role
 
 
 def random_filename():
