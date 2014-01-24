@@ -8,7 +8,7 @@
    <form id="form-verify-email" class="form-horizontal" method="post"
          action="{{ url_for('account.signup', user_id=user_info.id) }}">
       <fieldset>
-         <legend><i class="fa fa-leaf"></i> 欢迎来到西窗烛</legend>
+         <legend>{{ user_info.uid }}，欢迎来到西窗烛</legend>
 
          {{ form.csrf_token }}
 
