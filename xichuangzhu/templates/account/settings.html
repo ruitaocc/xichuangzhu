@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% from 'macro/form.html' import horizontal_field %}
+
+{% block page_title %}个人设置 - 西窗烛{% endblock %}
+{% block page_id %}page-account-settings{% endblock %}
+
+{% block body %}
+
+   <div class="row">
+      <div class="col-sm-8">
+         <h2 class="legend">个人设置</h2>
+
+         <form class="form-horizontal" action="{{ url_for('account.settings') }}" method="post"
+               role="form">
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+               <label class="col-sm-2 control-label">邮箱</label>
+               <div class="col-sm-10">
+                  <p class="form-control-static settings-email">{{ g.user.email }}</p>
+                  {% if g.user_role == roles.NewUserRole %}
+                     <div class="btn-group btn-group-xs no-border-radius">
+                        <a class="btn btn-danger">未激活</a>
+                        <a href="{{ url_for('account.resend_activate_mail') }}"
+                           class="btn btn-default">
+                           <i class="fa fa-envelope-o"></i> 发送激活邮件
+                        </a>
+                     </div>
+                  {% endif %}
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label class="col-sm-2 control-label">名号</label>
+               <div class="col-sm-10">
+                  <p class="form-control-static settings-username">{{ g.user.name }}</p>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label class="col-sm-2 control-label">头像</label>
+               <div class="col-sm-10">
+                  <img src="{{ g.user.avatar }}" class="avatar-xl" alt=""/>
+               </div>
+            </div>
+
+            {{ horizontal_field(form.signature, rows='2') }}
+
+            <div class="form-group">
+               <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-sm btn-default">保存</button>
+               </div>
+            </div>
+         </form>
+      </div>
+
+      <div class="col-sm-4 col-top-gap">
+      </div>
+   </div>
+
+{% endblock %}

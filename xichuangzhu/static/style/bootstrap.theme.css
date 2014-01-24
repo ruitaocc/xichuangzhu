@@ -40,6 +40,10 @@ h2 {
   color: #ad1616;
   clear: both;
 }
+h2.legend {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+}
 ul {
   padding-left: 30px;
   list-style: square;
@@ -96,4 +100,7 @@ input[type='file'] {
 }
 .form-horizontal input[type='file'] {
   padding-top: 7px;
+}
+.btn-group.no-border-radius .btn {
+  border-radius: 0;
 }

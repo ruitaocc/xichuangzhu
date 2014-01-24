@@ -20,6 +20,11 @@ h2 {
   margin: 20px 0 15px 0;
   color: rgb(173, 22, 22);
   clear: both;
+
+  &.legend {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+  }
 }
 
 ul {
@@ -46,7 +51,7 @@ blockquote {
   }
 }
 
-input[type='file']{
+input[type='file'] {
   line-height: 1;
 }
 
@@ -92,4 +97,10 @@ input[type='file']{
 
 .form-horizontal input[type='file'] {
   padding-top: 7px;
+}
+
+.btn-group.no-border-radius {
+  .btn {
+    border-radius: 0;
+  }
 }

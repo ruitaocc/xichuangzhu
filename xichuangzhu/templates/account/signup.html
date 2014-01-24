@@ -8,7 +8,7 @@
    <form id="form-verify-email" class="form-horizontal" method="post"
          action="{{ url_for('account.signup', user_id=user_info.id) }}">
       <fieldset>
-         <legend>{{ user_info.uid }}，欢迎来到西窗烛</legend>
+         <legend>Hi {{ user_info.uid }}，欢迎来到西窗烛</legend>
 
          {{ form.csrf_token }}
 
@@ -32,7 +32,7 @@
             <label for="" class="col-md-2 control-label">头像</label>
 
             <div class="col-md-4">
-               <p><img class="avatar-lg" src="{{ user_info.large_avatar }}" alt=""/></p>
+               <p><img class="avatar-xl" src="{{ user_info.large_avatar }}" alt=""/></p>
             </div>
          </div>
 

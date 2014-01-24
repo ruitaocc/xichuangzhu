@@ -283,6 +283,10 @@
   height: 36px;
 }
 .avatar-lg {
+  width: 72px;
+  height: 72px;
+}
+.avatar-xl {
   width: 160px;
   height: 160px;
 }

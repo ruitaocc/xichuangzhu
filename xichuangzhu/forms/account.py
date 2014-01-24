@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask_wtf import Form
-from wtforms import TextField
+from wtforms import TextField, TextAreaField
 from wtforms.validators import DataRequired, Email
 from ..models import User
 
@@ -13,3 +13,8 @@ class SignupForm(Form):
     def validate_email(self, field):
         if User.query.filter(User.email == field.data).count() > 0:
             raise ValueError('邮箱已被使用')
+
+
+class SettingsForm(Form):
+    """Form for personal settings"""
+    signature = TextAreaField('签名', [])

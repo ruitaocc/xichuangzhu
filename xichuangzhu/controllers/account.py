@@ -3,13 +3,13 @@ import requests
 import smtplib
 import hashlib
 from email.mime.text import MIMEText
-from flask import render_template, request, redirect, url_for, Blueprint, flash, abort
+from flask import render_template, request, redirect, url_for, Blueprint, flash, abort, g
 from .. import config
 from ..models import db, User
 from ..utils import signin_user, signout_user
-from ..forms import SignupForm
+from ..forms import SignupForm, SettingsForm
 from ..roles import NewUserRole, BanUserRole, UserRole
-from ..permissions import require_visitor
+from ..permissions import require_visitor, new_user_permission
 
 bp = Blueprint('account', __name__)
 
@@ -63,11 +63,10 @@ def signup(user_id):
         signin_user(user, True)
 
         # send active email
-        active_code = hashlib.sha1(user.name).hexdigest()
-        active_url = config.SITE_DOMAIN + url_for('.active', user_id=user_id,
-                                                  active_code=active_code)
+        token = hashlib.sha1(user.name).hexdigest()
+        url = config.SITE_DOMAIN + url_for('.activate', user_id=user_id, token=token)
 
-        msg = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
+        msg = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % url
         msg = MIMEText(msg, 'html', 'utf-8')
         msg['From'] = "西窗烛 <%s>" % config.SMTP_USER
         msg['To'] = "%s <%s>" % (user.name, to_addr)
@@ -85,11 +84,11 @@ def signup(user_id):
     return render_template('account/signup.html', user_info=user_info, form=form)
 
 
-@bp.route('/active/<int:user_id>/<active_code>')
-def active(user_id, active_code):
+@bp.route('/activate/<int:user_id>/<token>')
+def activate(user_id, token):
     """激活用户"""
     user = User.query.get_or_404(user_id)
-    if active_code == hashlib.sha1(user.name).hexdigest():
+    if token == hashlib.sha1(user.name).hexdigest():
         user.role = UserRole
         db.session.add(user)
         db.session.commit()
@@ -105,3 +104,24 @@ def signout():
     """登出"""
     signout_user()
     return redirect(url_for('site.index'))
+
+
+@bp.route('/settings', methods=['GET', 'POST'])
+@new_user_permission
+def settings():
+    """个人设置"""
+    form = SettingsForm(signature=g.user.signature)
+    if form.validate_on_submit():
+        g.user.signature = form.signature.data
+        db.session.add(g.user)
+        db.session.commit()
+        flash('设置已保存')
+        return redirect(url_for('.settings'))
+    return render_template('account/settings.html', form=form)
+
+
+@bp.route('/resend_activate_mail')
+@new_user_permission
+def resend_activate_mail():
+    if g.user_role != NewUserRole:
+        abort(403)
