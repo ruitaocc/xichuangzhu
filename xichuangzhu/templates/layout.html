@@ -106,13 +106,12 @@
                      {{ g.user.name }} <i class="fa fa-angle-down"></i>
                   </a>
                   <ul class="dropdown-menu">
-                     <li><a href="{{ url_for('user.view', user_abbr=g.user.abbr) }}">我的主页</a>
-                     </li>
                      <li>
-
-                        <a href="{{ url_for('account.settings') }}">个人设置</a>
-                     </li>
-                     <li><a href="{{ url_for('account.signout') }}">退出</a></li>
+                        <a href="{{ url_for('user.view', user_abbr=g.user.abbr) }}">我的主页</a></li>
+                     <li>
+                        <a href="{{ url_for('account.settings') }}">个人设置</a></li>
+                     <li>
+                        <a href="{{ url_for('account.signout') }}">退出</a></li>
                   </ul>
                </li>
             </ul>

@@ -434,24 +434,6 @@ html body #footer .container #extra-info a {
   font-size: 12px;
   line-height: 24px;
 }
-#page-user #user-avatar {
-  float: left;
-  margin-top: 15px;
-}
-#page-user .user-info {
-  margin-left: 60px;
-}
-#page-user .user-info .user-name {
-  font-size: 22px;
-  line-height: 26px;
-  margin-bottom: 2px;
-  margin-top: 15px;
-  font-family: "Hiragino Sans GB", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Micro Hei Mono", "WenQuanYi Zen Hei", "WenQuanYi Zen Hei", "Apple LiGothic Medium", "SimHei", "ST Heiti", "WenQuanYi Zen Hei Sharp";
-}
-#page-user .user-info .user-signature {
-  font-size: 12px;
-  color: #666;
-}
 #page-topic .topic-user-avatar {
   float: right;
 }

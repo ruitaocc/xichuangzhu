@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import render_work_reviews, render_work_images, render_topics %}
+{% from "macro/ui.html" import render_work_reviews, render_work_images, render_topics,
+   user_profile %}
 
 {% block page_title %}{{ user.name }}的个人主页{% endblock %}
 {% block page_id %}page-user{% endblock %}
@@ -8,18 +9,7 @@
 
    <div class="row">
       <div class="col-md-8">
-         <div class="clearfix">
-            <a id="user-avatar" href="{{ url_for('user.view', user_abbr=user.abbr) }}">
-               <img class="avatar" src="{{ user.avatar }}"/>
-            </a>
-
-            <div class="user-info">
-               <div class="user-name">{{ user.name }}</div>
-               {% if user.signature %}
-                  <div class="user-signature">{{ user.signature }}</div>
-               {% endif %}
-            </div>
-         </div>
+         {{ user_profile(user) }}
 
          <h2>
             点评

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, render_work_images %}
+{% from "macro/ui.html" import pagination, render_work_images, user_profile %}
 
 {% block page_title %}{{ user.name }}上传的图片{% endblock %}
 {% block page_id %}page-user-work-images{% endblock %}
@@ -8,9 +8,9 @@
 
    <div class="row">
       <div class="col-md-8">
-         <h2>
-            {{ user.name }}上传的图片 / {{ paginator.total }}
-         </h2>
+         {{ user_profile(user) }}
+
+         <h2>图片 / {{ paginator.total }}</h2>
 
          {{ render_work_images(paginator.items) }}
 

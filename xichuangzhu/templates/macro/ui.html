@@ -118,7 +118,8 @@
 
             <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">{{ w.title }}</a>
             <sup class="work-author">
-               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               〔<a
+                  href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
             </sup>
          </div>
 
@@ -233,4 +234,22 @@
          waterfall();
       }
    </script>
+{% endmacro %}
+
+
+{% macro user_profile(user, suffix) %}
+   <div class="media user-profile">
+      <a class="pull-left" id="user-avatar"
+         href="{{ url_for('user.view', user_abbr=user.abbr) }}">
+         <img class="avatar" src="{{ user.avatar }}"/>
+      </a>
+
+      <div class="media-body user-info">
+         <div class="user-name">{{ user.name }}</div>
+
+         {% if user.signature %}
+            <div class="user-signature">{{ user.signature }}</div>
+         {% endif %}
+      </div>
+   </div>
 {% endmacro %}
