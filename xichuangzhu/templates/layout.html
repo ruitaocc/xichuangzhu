@@ -26,6 +26,28 @@
 </head>
 
 <body id="{% block page_id %}{% endblock %}">
+
+{% with message = get_flashed_messages()[0] %}
+   {% if message %}
+      <div class="alert alert-success flash-message">{{ message }}</div>
+   {% endif %}
+{% endwith %}
+
+{# Fade out flash message #}
+<script>
+   function flashMessageFade() {
+      $('.flash-message').fadeOut('slow');
+   }
+
+   $(function () {
+      var flashMessage = $('.flash-message');
+      var flashWidth = ($(window).width() - flashMessage.width()) / 2;
+      flashMessage.css({'left': flashWidth + 'px'});
+      flashMessage.fadeIn(200);
+      setTimeout(flashMessageFade, 2000);
+   });
+</script>
+
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
    <div class='container'>
       <div class="navbar-header">

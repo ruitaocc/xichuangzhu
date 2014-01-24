@@ -5,13 +5,6 @@
 {% block page_id %}page-send-active-email{% endblock %}
 
 {% block body %}
-   <script>
-      $(function () {
-         {#         $('#email').focus();#}
-      });
-   </script>
-
-
    <form id="form-verify-email" class="form-horizontal" method="post"
          action="{{ url_for('account.signup', user_id=user_info.id) }}">
       <fieldset>

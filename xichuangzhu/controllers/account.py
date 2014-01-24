@@ -64,7 +64,8 @@ def signup(user_id):
 
         # send active email
         active_code = hashlib.sha1(user.name).hexdigest()
-        active_url = "%s/active_user/%d/%s" % (config.SITE_DOMAIN, user_id, active_code)
+        active_url = config.SITE_DOMAIN + url_for('.active', user_id=user_id,
+                                                  active_code=active_code)
 
         msg = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % active_url
         msg = MIMEText(msg, 'html', 'utf-8')
@@ -96,7 +97,7 @@ def active(user_id, active_code):
         flash('账号激活成功！')
         return redirect(url_for('site.index'))
     flash('无效的激活链接')
-    return redirect(url_for('site.index', state='active_failed'))
+    return redirect(url_for('site.index'))
 
 
 @bp.route('/signout')
