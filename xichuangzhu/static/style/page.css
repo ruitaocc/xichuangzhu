@@ -511,3 +511,16 @@ html body #footer .container #extra-info a {
   top: 15px;
   right: 15px;
 }
+#page-account-settings .not-active {
+  background-color: #ad1616;
+  border-color: #ad1616;
+  z-index: 1;
+}
+#page-account-settings .not-active:hover {
+  background-color: #ad1616;
+  border-color: #ad1616;
+}
+#page-account-settings .btn-resend {
+  border-left: none;
+  z-index: 2;
+}
