@@ -3,12 +3,15 @@
 # set False in production
 DEBUG = True
 
+# Such as "root@12.34.56.78"
+HOST_STRING = ""
+
 # site domain
 SITE_DOMAIN = "http://localhost:5000"
 IMAGE_SERVER_URL = "http://localhost"
 
 # image upload path
-UPLOADS_DEFAULT_DEST = "/Library/WebServer/Documents/xcz_uploads"
+UPLOADS_DEFAULT_DEST = "/var/www/xcz_uploads"
 UPLOADS_DEFAULT_URL = "%s/xcz_uploads/" % IMAGE_SERVER_URL
 
 # app config

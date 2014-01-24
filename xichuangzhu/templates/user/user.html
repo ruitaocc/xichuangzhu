@@ -15,7 +15,9 @@
 
             <div class="user-info">
                <div class="user-name">{{ user.name }}</div>
-               <div class="user-signature">{{ user.signature }}</div>
+               {% if user.signature %}
+                  <div class="user-signature">{{ user.signature }}</div>
+               {% endif %}
             </div>
          </div>
 
