@@ -428,10 +428,10 @@ html body #footer .container #extra-info a {
   margin-left: 60px;
 }
 #page-user .user-info .user-name {
-  font-size: 25px;
-  line-height: 30px;
+  font-size: 22px;
+  line-height: 26px;
+  margin-bottom: 2px;
   margin-top: 15px;
-  font-weight: bold;
   font-family: "Hiragino Sans GB", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Micro Hei Mono", "WenQuanYi Zen Hei", "WenQuanYi Zen Hei", "Apple LiGothic Medium", "SimHei", "ST Heiti", "WenQuanYi Zen Hei Sharp";
 }
 #page-user .user-info .user-signature {

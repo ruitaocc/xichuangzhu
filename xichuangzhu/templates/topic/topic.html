@@ -54,7 +54,7 @@
          <div class="topic-wap">
             <a class="topic-user-avatar"
                href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
-               <img src="{{ topic.user.avatar }}">
+               <img class="avatar" src="{{ topic.user.avatar }}">
             </a>
 
             <h1 class="topic-title">{{ topic.title|safe }}</h1>

@@ -3,11 +3,11 @@ import requests
 import smtplib
 import hashlib
 from email.mime.text import MIMEText
-from flask import render_template, request, redirect, url_for, Blueprint, flash
+from flask import render_template, request, redirect, url_for, Blueprint, flash, abort
 from .. import config
 from ..models import db, User
 from ..utils import signin_user, signout_user
-from ..forms import EmailForm
+from ..forms import SignupForm
 from ..roles import NewUserRole, BanUserRole, UserRole
 from ..permissions import require_visitor
 
@@ -18,8 +18,10 @@ bp = Blueprint('account', __name__)
 @require_visitor
 def signin():
     """通过豆瓣OAuth登陆"""
-    # get current authed userID
-    code = request.args['code']
+    # get current authed user id
+    code = request.args.get('code')
+    if not code:
+        abort(500)
     url = "https://www.douban.com/service/auth2/token"
     data = {
         'client_id': config.DOUBAN_CLIENT_ID,
@@ -45,7 +47,7 @@ def signin():
     url = "https://api.douban.com/v2/user/%d" % user_id
     user_info = requests.get(url).json()
     user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'],
-                avatar=user_info['avatar'], signature=user_info['signature'])
+                avatar=user_info['large_avatar'], signature=user_info['signature'])
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('.send_active_email', user_id=user_id))
@@ -55,7 +57,7 @@ def signin():
 def send_active_email(user_id):
     """发送激活邮件"""
     user = User.query.get_or_404(user_id)
-    form = EmailForm(user_id=user_id)
+    form = SignupForm(user_id=user_id, name=user.name, abbr=user.abbr)
     if form.validate_on_submit():
         to_addr = form.email.data
 

@@ -45,12 +45,14 @@
 {% macro render_users(users) %}
    {% for u in users %}
       <div class="user-item clearfix">
-         <a class="user-avatar" href="{{ url_for('user.view', user_abbr=u.abbr) }}"><img
-               src="{{ u.avatar }}"/></a>
+         <a class="user-avatar" href="{{ url_for('user.view', user_abbr=u.abbr) }}">
+            <img class="avatar" src="{{ u.avatar }}"/>
+         </a>
 
          <div class="user-info">
-            <div class="user-name"><a
-                  href="{{ url_for('user.view', user_abbr=u.abbr) }}">{{ u.name }}</a></div>
+            <div class="user-name">
+               <a href="{{ url_for('user.view', user_abbr=u.abbr) }}">{{ u.name }}</a>
+            </div>
             <div class="user-signature">{{ u.signature }}</div>
          </div>
       </div>
@@ -63,7 +65,7 @@
       <div class="comment-item clearfix">
          <a name="{{ c.id }}"></a>
          <a class="comment-user-avatar" href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">
-            <img src="{{ c.user.avatar }}">
+            <img class="avatar-sm" src="{{ c.user.avatar }}">
          </a>
 
          <div class="comment-wap">
@@ -84,7 +86,7 @@
    {% for t in topics %}
       <div class="topic-item">
          <a class="topic-user-avatar" href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">
-            <img src="{{ t.user.avatar }}">
+            <img class="avatar" src="{{ t.user.avatar }}">
          </a>
 
          <div class="topic-info">
@@ -116,8 +118,7 @@
 
             <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">{{ w.title }}</a>
             <sup class="work-author">
-               〔<a
-                  href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
             </sup>
          </div>
 
@@ -131,7 +132,7 @@
    {% for r in work_reviews %}
       <div class="review-item">
          <a class="user-avatar" href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">
-            <img src="{{ r.user.avatar }}"/>
+            <img class="avatar" src="{{ r.user.avatar }}"/>
          </a>
 
          <div class="review-wap">
