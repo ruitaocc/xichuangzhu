@@ -5,32 +5,36 @@
 {% block page_id %}page-edit-review{% endblock %}
 
 {% block body %}
+   <div class="row">
+      <div class="col-sm-10">
+         <h2 class="legend legend-lg">编辑点评</h2>
+      </div>
 
-   <form id="form-edit-review" class="form-horizontal" method="post"
-         action="{{ url_for('work.edit_review', review_id=review.id) }}">
-      <fieldset>
-         <legend>编辑点评</legend>
+      <div class="col-sm-8">
+         <form id="form-edit-review" class="form-horizontal" method="post"
+               action="{{ url_for('work.edit_review', review_id=review.id) }}">
+            <fieldset>
+               {{ form.csrf_token }}
 
-         {{ form.csrf_token }}
+               {{ horizontal_field(form.title, length=10) }}
 
-         {{ horizontal_field(form.title) }}
+               {{ horizontal_field(form.content, rows='15', length=10) }}
 
-         {{ horizontal_field(form.content, rows='20') }}
-
-         <div class="form-group">
-            <div class="col-md-6 col-md-offset-2 btn-group btn-group-sm">
-               {% if review.is_publish %}
-                  <input type="submit" name="publish" value="更新"
-                         class="btn btn-default btn-primary"/>
-               {% else %}
-                  <input type="submit" name="draft" value="保存草稿" class="btn btn-default"/>
-                  <input type="submit" name="publish" value="发布"
-                         class="btn btn-default btn-primary"/>
-               {% endif %}
-            </div>
-         </div>
-
-      </fieldset>
-   </form>
+               <div class="form-group">
+                  <div class="col-md-6 col-md-offset-2 btn-group btn-group-sm">
+                     {% if review.is_publish %}
+                        <input type="submit" name="publish" value="保存"
+                               class="btn btn-default btn-primary"/>
+                     {% else %}
+                        <input type="submit" name="draft" value="保存草稿" class="btn btn-default"/>
+                        <input type="submit" name="publish" value="发布"
+                               class="btn btn-default btn-primary"/>
+                     {% endif %}
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+      </div>
+   </div>
 
 {% endblock %}

@@ -46,7 +46,7 @@
    {% for u in users %}
       <div class="user-item clearfix">
          <a class="user-avatar" href="{{ url_for('user.view', user_abbr=u.abbr) }}">
-            <img class="avatar" src="{{ u.avatar }}"/>
+            <img class="avatar-sm" src="{{ u.avatar }}"/>
          </a>
 
          <div class="user-info">
@@ -107,19 +107,16 @@
 {% endmacro %}
 
 
-{% macro render_works(works, with_type=False) %}
+{% macro render_works(works) %}
    {% for w in works %}
       <div class="work-item">
          <div class="work-header">
-            {% if with_type %}
-               <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
-                  {{ w.type.cn }}</a>
-            {% endif %}
-
-            <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">{{ w.title }}</a>
+            <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
+               {{ w.type.cn }}</a>
+            <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">
+               {{ w.title }}</a>
             <sup class="work-author">
-               〔<a
-                  href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
             </sup>
          </div>
 
@@ -245,7 +242,9 @@
       </a>
 
       <div class="media-body user-info">
-         <div class="user-name">{{ user.name }}</div>
+         <div class="user-name">
+            <a href="{{ url_for('user.view', user_abbr=user.abbr) }}">{{ user.name }}</a>
+         </div>
 
          {% if user.signature %}
             <div class="user-signature">{{ user.signature }}</div>

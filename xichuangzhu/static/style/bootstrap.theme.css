@@ -41,8 +41,11 @@ h2 {
   clear: both;
 }
 h2.legend {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 15px;
+  border-bottom: 1px solid #d0d0d0;
+  padding-bottom: 12px;
+}
+h2.legend-lg {
+  margin-bottom: 25px;
 }
 ul {
   padding-left: 30px;
@@ -103,4 +106,7 @@ input[type='file'] {
 }
 .btn-group.no-border-radius .btn {
   border-radius: 0;
+}
+.media > .pull-left {
+  margin-right: 12px;
 }
