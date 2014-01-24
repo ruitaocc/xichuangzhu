@@ -7,29 +7,39 @@
 {% block body %}
    <script>
       $(function () {
-{#         $('#email').focus();#}
+         {#         $('#email').focus();#}
       });
    </script>
 
 
    <form id="form-verify-email" class="form-horizontal" method="post"
-         action="{{ url_for('account.send_active_email', user_id=user.id) }}">
+         action="{{ url_for('account.signup', user_id=user_info.id) }}">
       <fieldset>
-         <legend>欢迎来到西窗烛</legend>
+         <legend><i class="fa fa-leaf"></i> 欢迎来到西窗烛</legend>
 
          {{ form.csrf_token }}
 
          <div class="form-group">
             <label for="" class="col-md-2 control-label">名号</label>
+
             <div class="col-md-4">
-               <p class="form-control-static">{{ user.name }}</p>
+               <p class="form-control-static">{{ user_info.uid }}</p>
+            </div>
+         </div>
+
+         <div class="form-group">
+            <label for="" class="col-md-2 control-label">签名</label>
+
+            <div class="col-md-4">
+               <p class="form-control-static">{{ user_info.signature }}</p>
             </div>
          </div>
 
          <div class="form-group">
             <label for="" class="col-md-2 control-label">头像</label>
+
             <div class="col-md-4">
-               <p><img src="{{ user.avatar }}" alt=""/></p>
+               <p><img class="avatar-lg" src="{{ user_info.large_avatar }}" alt=""/></p>
             </div>
          </div>
 
@@ -42,9 +52,6 @@
                </button>
             </div>
          </div>
-
-         {{ form.user_id() }}
-
       </fieldset>
    </form>
 

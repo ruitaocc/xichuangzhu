@@ -45,7 +45,7 @@ class Permission(object):
             return redirect(url_for('site.index', next=next_url or request.url))
         elif g.user_role == roles.NewUserRole:
             flash('请登录邮箱激活账户')
-            return redirect(url_for('account.send_active_email', user_id=g.user.id))
+            return redirect(url_for('site.index', user_id=g.user.id))
         abort(403)
 
 
