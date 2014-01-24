@@ -62,13 +62,14 @@
 
 {% macro render_comments(comments) %}
    {% for c in comments %}
-      <div class="comment-item clearfix">
+      <div class="comment-item clearfix media">
          <a name="{{ c.id }}"></a>
-         <a class="comment-user-avatar" href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">
+         <a class="comment-user-avatar pull-left"
+            href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">
             <img class="avatar-sm" src="{{ c.user.avatar }}">
          </a>
 
-         <div class="comment-wap">
+         <div class="comment-wap media-body">
             <div class="comment-extra-info">
                <a href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">{{ c.user.name }}</a>
                <span class="comment-time">{{ c.create_time|timesince }}</span>
@@ -84,12 +85,12 @@
 
 {% macro render_topics(topics) %}
    {% for t in topics %}
-      <div class="topic-item">
-         <a class="topic-user-avatar" href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">
+      <div class="topic-item media">
+         <a class="pull-left" href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">
             <img class="avatar" src="{{ t.user.avatar }}">
          </a>
 
-         <div class="topic-info">
+         <div class="topic-info media-body">
             <div class="topic-title">
                <a href="{{ url_for('topic.view', topic_id=t.id) }}">{{ t.title }}</a>
             </div>
@@ -128,12 +129,12 @@
 
 {% macro render_work_reviews(work_reviews) %}
    {% for r in work_reviews %}
-      <div class="review-item">
-         <a class="user-avatar" href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">
+      <div class="work-review-item media">
+         <a class="user-avatar pull-left" href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">
             <img class="avatar" src="{{ r.user.avatar }}"/>
          </a>
 
-         <div class="review-wap">
+         <div class="review-wap media-body">
             <div class="review-title">
                <a href="{{ url_for('work.review', review_id = r.id) }}">{{ r.title }}</a>
                {% if not r.is_publish %}

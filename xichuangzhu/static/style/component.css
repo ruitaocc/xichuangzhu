@@ -118,34 +118,30 @@
   font-size: 12px;
   line-height: 22px;
 }
-.review-item {
+.work-review-item {
   margin-bottom: 10px;
   padding-bottom: 8px;
   border-bottom: 1px dashed #DDD;
 }
-.review-item .user-avatar {
-  float: left;
+.work-review-item .user-avatar {
   margin-top: 2px;
 }
-.review-item .review-wap {
-  margin-left: 60px;
-}
-.review-item .review-wap .review-title a {
+.work-review-item .review-wap .review-title a {
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;
   display: inline-block;
   margin-right: 2px;
 }
-.review-item .review-wap .review-content {
+.work-review-item .review-wap .review-content {
   font-size: 12px;
   line-height: 22px;
 }
-.review-item .review-wap .review-extra-info {
+.work-review-item .review-wap .review-extra-info {
   font-size: 12px;
   line-height: 22px;
 }
-.review-item .review-wap .review-extra-info .review-time {
+.work-review-item .review-wap .review-extra-info .review-time {
   color: gray;
 }
 .user-item {
@@ -170,15 +166,8 @@
 .topic-item {
   border-bottom: 1px dashed #DDD;
   margin-top: 10px;
-  padding-bottom: 18px;
+  padding-bottom: 15px;
   position: relative;
-  clear: both;
-}
-.topic-item .topic-user-avatar {
-  float: left;
-}
-.topic-item .topic-info {
-  margin-left: 60px;
 }
 .topic-item .topic-info .topic-title {
   font-size: 16px;
@@ -209,23 +198,16 @@
 }
 .comment-item {
   margin-bottom: 15px;
-  clear: both;
-  width: 530px;
 }
 .comment-item .comment-user-avatar {
-  float: left;
-  margin-top: 5px;
-}
-.comment-item .comment-user-avatar img {
-  width: 36px;
+  margin-top: 4px;
 }
 .comment-item .comment-wap {
-  margin-left: 46px;
   font-size: 12px;
 }
 .comment-item .comment-wap .comment-extra-info {
   line-height: 22px;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 .comment-item .comment-wap .comment-extra-info .comment-time {
   color: #999;
