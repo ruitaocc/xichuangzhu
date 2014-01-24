@@ -21,14 +21,15 @@
                {{ horizontal_field(form.content, rows='15', length=10) }}
 
                <div class="form-group">
-                  <div class="col-md-6 col-md-offset-2 btn-group btn-group-sm">
+                  <div class="col-md-6 col-md-offset-2">
                      {% if review.is_publish %}
                         <input type="submit" name="publish" value="保存"
-                               class="btn btn-default btn-primary"/>
+                               class="btn btn-primary btn-sm"/>
                      {% else %}
-                        <input type="submit" name="draft" value="保存草稿" class="btn btn-default"/>
+                        <input type="submit" name="draft" value="保存草稿"
+                               class="btn btn-default btn-sm"/>
                         <input type="submit" name="publish" value="发布"
-                               class="btn btn-default btn-primary"/>
+                               class="btn btn-default btn-sm"/>
                      {% endif %}
                   </div>
                </div>
