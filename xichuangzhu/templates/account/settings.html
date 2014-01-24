@@ -20,7 +20,7 @@
                   <p class="form-control-static settings-email">{{ g.user.email }}</p>
                   {% if g.user_role == roles.NewUserRole %}
                      <div class="btn-group btn-group-xs no-border-radius">
-                        <a class="btn btn-danger not-active">未激活</a>
+                        <a class="btn btn-danger not-active" title="该邮箱未激活">未激活</a>
                         <a href="{{ url_for('account.resend_activate_mail') }}"
                            class="btn btn-default btn-resend">
                            <i class="fa fa-envelope-o"></i> 发送激活邮件

@@ -515,6 +515,7 @@ html body #footer .container #extra-info a {
   background-color: #ad1616;
   border-color: #ad1616;
   z-index: 1;
+  cursor: default;
 }
 #page-account-settings .not-active:hover {
   background-color: #ad1616;

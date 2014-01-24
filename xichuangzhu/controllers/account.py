@@ -10,6 +10,7 @@ from ..utils import signin_user, signout_user
 from ..forms import SignupForm, SettingsForm
 from ..roles import NewUserRole, BanUserRole, UserRole
 from ..permissions import require_visitor, new_user_permission
+from ..mails import signup_mail
 
 bp = Blueprint('account', __name__)
 
@@ -62,20 +63,9 @@ def signup(user_id):
         db.session.commit()
         signin_user(user, True)
 
-        # send active email
-        token = hashlib.sha1(user.name).hexdigest()
-        url = config.SITE_DOMAIN + url_for('.activate', user_id=user_id, token=token)
-
-        msg = '''<h3>点 <a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>''' % url
-        msg = MIMEText(msg, 'html', 'utf-8')
-        msg['From'] = "西窗烛 <%s>" % config.SMTP_USER
-        msg['To'] = "%s <%s>" % (user.name, to_addr)
-        msg['Subject'] = "欢迎来到西窗烛！"
-
-        s = smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT)
-        s.login(config.SMTP_USER, config.SMTP_PASSWORD)
+        # send activate email
         try:
-            s.sendmail(config.SMTP_USER, to_addr, msg.as_string())
+            signup_mail(user)
         except:
             flash('邮件发送失败，请稍后尝试')
         else:
@@ -125,3 +115,10 @@ def settings():
 def resend_activate_mail():
     if g.user_role != NewUserRole:
         abort(403)
+    try:
+        signup_mail(g.user)
+    except:
+        flash('邮件发送失败，请稍后尝试')
+    else:
+        flash('激活邮件已发送到你的邮箱，请查收')
+    return redirect(url_for('site.index'))
