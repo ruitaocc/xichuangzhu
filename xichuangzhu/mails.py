@@ -12,5 +12,5 @@ def signup_mail(user):
     token = hashlib.sha1(user.name).hexdigest()
     url = config.SITE_DOMAIN + url_for('.activate', user_id=user.id, token=token)
     msg = Message("欢迎来到西窗烛", recipients=[user.email])
-    msg.html = "<h3>点击<a href='%s'>这里</a>，激活你在西窗烛的帐号。</h3>" % url
+    msg.html = render_template('email/signup.html', url=url)
     mail.send(msg)
