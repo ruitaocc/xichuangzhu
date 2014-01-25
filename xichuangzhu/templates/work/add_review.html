@@ -15,7 +15,6 @@
          <form id="form-add-review" class="form-horizontal" method="post"
                action="{{ url_for('work.add_review', work_id=work.id) }}">
             <fieldset>
-               {#               <legend>点评《{{ work.title }}》</legend>#}
 
                {{ form.csrf_token }}
 
