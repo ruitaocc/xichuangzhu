@@ -14,22 +14,22 @@
          <legend>编辑作品</legend>
          {{ form.csrf_token }}
 
+         {{ horizontal_field(form.title, length=3) }}
+
          {{ horizontal_field(form.type_id, length=3) }}
 
-         {{ horizontal_field(form.title, length=3) }}
+         {{ horizontal_field(form.layout, length=3) }}
 
          <div class="form-group">
             {{ form.author_id.label(class="col-md-2 control-label") }}
 
             <div class="col-md-3">
-               <div class="input-group">
+               <div class="position-relative">
                   <input id="input-author-name" type="text" class='form-control'
                          placeholder="搜索作者"/>
-                  <span class='input-group-btn'>
-                     <button id="btn-search-author" class="btn btn-default">
-                        <span class='glyphicon glyphicon-search'></span>
-                     </button>
-                  </span>
+                  <button id="btn-search-author" class="btn btn-default embed-btn">
+                     <span class='glyphicon glyphicon-search'></span>
+                  </button>
                </div>
             </div>
          </div>

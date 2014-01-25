@@ -10,6 +10,7 @@ class Work(db.Model):
     foreword = db.Column(db.Text())
     content = db.Column(db.Text())
     intro = db.Column(db.Text())
+    layout = db.Column(db.String(10))
     create_time = db.Column(db.DateTime)
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))

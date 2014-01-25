@@ -1,6 +1,7 @@
 {% macro search_authors_script() %}
    <script type="text/javascript">
       $(function () {
+         // 搜索作者
          $('#btn-search-author').click(function () {
             var author_name = $('#input-author-name').val();
             $.ajax({
@@ -23,6 +24,19 @@
             });
 
             return false;
+         });
+
+         // type-layout联动
+         $('#type_id').change(function () {
+            var type_id = parseInt($(this).val());
+
+            if (type_id === 1) {
+               $('#layout').val('shi');
+            } else if (type_id === 2 || type_id === 4) {
+               $('#layout').val('ci');
+            } else {
+               $('#layout').val('wen');
+            }
          });
       });
    </script>

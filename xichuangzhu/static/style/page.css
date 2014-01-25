@@ -50,17 +50,7 @@ html body .navbar .navbar-form {
   margin-top: 10px;
 }
 html body .navbar .navbar-form .input-group-sm {
-  position: relative;
   width: 250px;
-}
-html body .navbar .navbar-form .input-group-sm #btn-search {
-  background-color: #ffffff;
-  outline: 0;
-  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.075);
-  border: 0;
-  position: absolute;
-  top: 1px;
-  right: 1px;
 }
 html body .navbar #btn-s2t {
   margin-top: 10px;
@@ -145,7 +135,7 @@ html body #footer .container #extra-info a {
 }
 #page-work .work-author {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   padding-right: 10px;
   font-size: 16px;
 }
@@ -173,34 +163,20 @@ html body #footer .container #extra-info a {
   cursor: pointer;
   color: #666;
 }
-#page-work .work-content.single-line {
-  text-indent: 0;
+#page-work .work-layout-shi {
   text-align: center;
 }
-#page-work .work-type-shi {
-  text-align: center;
-}
-#page-work .work-type-shi p {
-  margin-bottom: 10px;
-}
-#page-work .work-type-ci {
+#page-work .work-layout-ci {
   text-indent: 2em;
   line-height: 30px;
   padding: 0 2em;
 }
-#page-work .work-type-qu {
-  text-indent: 2em;
-  line-height: 30px;
-  padding: 0 2em;
-}
-#page-work .work-type-wen,
-#page-work .work-type-fu {
+#page-work .work-layout-wen {
   text-indent: 2em;
   line-height: 30px;
   padding: 0 0.5em;
 }
-#page-work .work-type-wen p,
-#page-work .work-type-fu p {
+#page-work .work-layout-wen p {
   margin-bottom: 18px;
 }
 #page-work #work-cmds {

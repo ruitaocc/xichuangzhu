@@ -292,3 +292,25 @@
   width: 160px;
   height: 160px;
 }
+.embed-btn {
+  background-color: #ffffff;
+  outline: 0;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.075);
+  border: 0;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  outline: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.embed-btn:hover,
+.embed-btn:active,
+.embed-btn:focus {
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.075);
+  outline: none;
+}
+.position-relative {
+  position: relative;
+}

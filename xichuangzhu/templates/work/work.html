@@ -23,11 +23,12 @@
             </div>
          {% endif %}
 
-         <div class="work-content work-type-{{ work.type.en }} {% if work.content|length < 32 %}single-line{% endif %}">
+         <div class="work-content work-layout-{{ work.layout }}">
             {{ work.content|markdown_work|safe }}
          </div>
 
          <script type="text/javascript">
+            // 生成注释tooltip
             $('.work-content sup').tooltip().each(function (index) {
                $(this).text('〔' + (index + 1) + '〕');
             });
@@ -69,6 +70,7 @@
 
          <div class='work-annotate'></div>
          <script type="text/javascript">
+            // 生成注释
             var work_annotate = $('.work-annotate');
             $('.work-content sup').each(function (index, element) {
                var annotate = $(element).data('original-title');
