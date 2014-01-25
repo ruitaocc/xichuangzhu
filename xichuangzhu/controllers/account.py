@@ -121,4 +121,4 @@ def resend_activate_mail():
         flash('邮件发送失败，请稍后尝试')
     else:
         flash('激活邮件已发送到你的邮箱，请查收')
-    return redirect(url_for('site.index'))
+    return redirect(url_for('.settings'))

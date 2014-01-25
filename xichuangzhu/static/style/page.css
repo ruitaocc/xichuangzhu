@@ -525,3 +525,7 @@ html body #footer .container #extra-info a {
   border-left: none;
   z-index: 2;
 }
+#page-account-settings #signature {
+  font-size: 12px;
+  resize: none;
+}

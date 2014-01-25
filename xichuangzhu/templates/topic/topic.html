@@ -60,11 +60,9 @@
             <h1 class="topic-title">{{ topic.title|safe }}</h1>
 
             <div class="topic-extra-info">
-               By
-               <a class="topic-creator"
+               By <a class="topic-creator"
                   href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
-                  {{ topic.user.name }}
-               </a>
+                  {{ topic.user.name }}</a>
                ·
                <span class="topic-time">{{ topic.create_time|timesince }}</span>
                ·

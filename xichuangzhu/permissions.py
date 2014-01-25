@@ -42,8 +42,7 @@ class Permission(object):
         """针对不同的role进行不同的处理"""
         if g.user_role == roles.VisitorRole:
             flash('此操作需要登录账户')
-            return redirect(request.referrer or url_for('site.index'))
-            # return redirect(url_for('site.index', next=next_url or request.url))
+            return redirect(url_for('site.index'))
         elif g.user_role == roles.NewUserRole:
             flash('请登录邮箱激活账户')
             return redirect(request.referrer or url_for('site.index'))
