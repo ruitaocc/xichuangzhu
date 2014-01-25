@@ -1,8 +1,6 @@
 # coding: utf-8
 import requests
-import smtplib
 import hashlib
-from email.mime.text import MIMEText
 from flask import render_template, request, redirect, url_for, Blueprint, flash, abort, g
 from .. import config
 from ..models import db, User
@@ -57,7 +55,7 @@ def signup(user_id):
     if form.validate_on_submit():
         to_addr = form.email.data
         user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'],
-                    avatar=user_info['large_avatar'], signature=user_info['signature'],
+                    avatar=user_info['avatar'], signature=user_info['signature'],
                     email=to_addr)
         db.session.add(user)
         db.session.commit()
