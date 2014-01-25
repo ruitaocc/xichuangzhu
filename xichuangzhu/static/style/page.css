@@ -341,6 +341,10 @@ html body #footer .container #extra-info a {
 #page-author .work-item:hover .work-content {
   color: #333;
 }
+#page-author .work-item .content-wap {
+  height: 120px;
+  overflow: hidden;
+}
 #page-author .work-item .work-title {
   font-size: 14px;
   padding-bottom: 5px;
