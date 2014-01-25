@@ -79,7 +79,7 @@ def register_logger(app):
     if not app.debug:
         import logging
         from logging.handlers import SMTPHandler
-        credentials = (config.SMTP_USER, config.SMTP_PASSWORD)
+        credentials = (config.MAIL_USERNAME, config.MAIL_PASSWORD)
         mail_handler = SMTPHandler((config.MAIL_USERNAME, config.MAIL_PORT),
                                    config.MAIL_DEFAULT_SENDER, config.MAIL_ADMIN_ADDR, 'xcz-log',
                                    credentials)
