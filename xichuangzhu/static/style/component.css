@@ -137,12 +137,16 @@
   font-size: 12px;
   line-height: 22px;
 }
-.work-review-item .review-wap .review-extra-info {
+.work-review-item .review-wap .review-meta-info {
   font-size: 12px;
   line-height: 22px;
 }
-.work-review-item .review-wap .review-extra-info .review-time {
+.work-review-item .review-wap .review-meta-info .review-time {
   color: gray;
+}
+.work-review-item .review-wap .review-meta-info .comments-count {
+  color: gray;
+  margin-left: 10px;
 }
 .user-item {
   margin-bottom: 10px;
