@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import field_errors, horizontal_field %}
 
-{% block page_title %}发送激活邮件{% endblock %}
-{% block page_id %}page-send-active-email{% endblock %}
+{% block page_title %}注册{% endblock %}
+{% block page_id %}page-account-signup{% endblock %}
 
 {% block body %}
 
@@ -36,7 +36,7 @@
                   <label for="" class="col-md-2 control-label">头像</label>
 
                   <div class="col-md-4">
-                     <p><img class="avatar" src="{{ user_info.large_avatar }}" alt=""/></p>
+                     <p><img src="{{ user_info.large_avatar }}" alt=""/></p>
                   </div>
                </div>
 

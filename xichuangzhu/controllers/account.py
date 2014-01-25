@@ -55,8 +55,12 @@ def signup(user_id):
     if form.validate_on_submit():
         to_addr = form.email.data
         user = User(id=user_id, name=user_info['name'], abbr=user_info['uid'],
-                    avatar=user_info['avatar'], signature=user_info['signature'],
-                    email=to_addr)
+                    signature=user_info['signature'], email=to_addr)
+        # 如果存在大图，则使用大图
+        if user_info['large_avatar'] != "http://img3.douban.com/icon/user_large.jpg":
+            user.avatar = user_info['large_avatar']
+        else:
+            user.avatar = user_info['avatar']
         db.session.add(user)
         db.session.commit()
         signin_user(user, True)
