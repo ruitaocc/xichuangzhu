@@ -4,6 +4,7 @@ Flask-SQLAlchemy
 flask-debugtoolbar
 Flask-Uploads
 Flask-Mail
+Flask-Script
 requests
 markdown2
 MySQL-python
