@@ -14,7 +14,7 @@
                role="form">
             {{ form.csrf_token }}
 
-            <div class="form-group">
+            <div class="form-group form-group-sm">
                <label class="col-sm-2 control-label">邮箱</label>
                <div class="col-sm-10">
                   <p class="form-control-static settings-email">{{ g.user.email }}</p>
@@ -40,7 +40,7 @@
             <div class="form-group">
                <label class="col-sm-2 control-label">头像</label>
                <div class="col-sm-10">
-                  <img src="{{ g.user.avatar }}" class="avatar-xl" alt=""/>
+                  <img src="{{ g.user.avatar }}" class="avatar-lg" alt=""/>
                </div>
             </div>
 
