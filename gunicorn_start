@@ -2,5 +2,4 @@
 
 cd /var/www/xichuangzhu
 source venv/bin/activate
-exec venv/bin/pip install -r requirements.txt
 exec venv/bin/gunicorn -c gunicorn.conf xichuangzhu:app
