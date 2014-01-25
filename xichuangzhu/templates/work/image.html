@@ -43,12 +43,12 @@
                   {% if work_image|is_work_image_collected %}
                      <a class='btn btn-default' title='取消收藏'
                         href="{{ url_for('work.discollect_image', work_image_id=work_image.id) }}">
-                        <span class='glyphicon glyphicon-bookmark'></span> 已收藏
+                        <span class='fa fa-bookmark'></span> 已收藏
                      </a>
                   {% else %}
                      <a class='btn btn-default' title='点击收藏'
                         href="{{ url_for('work.collect_image', work_image_id=work_image.id) }}">
-                        <span class='glyphicon glyphicon-bookmark'></span> 收藏
+                        <span class='fa fa-bookmark-o'></span> 收藏
                      </a>
                   {% endif %}
                {% endif %}

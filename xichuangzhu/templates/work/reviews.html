@@ -8,7 +8,7 @@
 
    <div class="row">
       <div class="col-md-8">
-         <h2>《{{ work.title }}》的点评 / {{ paginator.total }}</h2>
+         <h2>{{ work.author.name }}《{{ work.title }}》的点评 / {{ paginator.total }}</h2>
 
          {{ render_work_reviews(paginator.items) }}
 
