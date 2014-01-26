@@ -181,21 +181,26 @@ html {
       color: #666;
     }
   }
-  .work-layout-shi {
+  // 作品正文布局类型只有2种
+  // 居中型、段落缩进型
+  .work-layout-center {
     text-align: center;
   }
-  .work-layout-ci {
+  .work-layout-indent {
     text-indent: 2em;
-    line-height: 30px;
-    padding: 0 2em;
-  }
-  .work-layout-wen {
-    text-indent: 2em;
-    line-height: 30px;
+    line-height: 28px;
     padding: 0 0.5em;
 
     p {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
+    }
+  }
+  // 对于词来说，缩进需更大，段落间距为正常
+  .work-type-ci.work-layout-indent {
+    padding: 0 2em;
+
+    p {
+      margin-bottom: 10px;
     }
   }
 
@@ -207,12 +212,8 @@ html {
   .work-annotate {
     div {
       margin-bottom: 3px;
-      // margin-left: -5px;
 
       .annotate-index {
-        // .font-hei;
-        // padding-right: 2px;
-
         padding: 0 1px;
       }
     }
@@ -289,7 +290,7 @@ html {
       width: 100px;
       float: left;
       display: inline-block;
-      padding-top: 2px;
+      padding-top: 4px;
     }
 
     .author-group {

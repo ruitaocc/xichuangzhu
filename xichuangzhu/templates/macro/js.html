@@ -31,11 +31,9 @@
             var type_id = parseInt($(this).val());
 
             if (type_id === 1) {
-               $('#layout').val('shi');
-            } else if (type_id === 2 || type_id === 4) {
-               $('#layout').val('ci');
+               $('#layout').val('center');
             } else {
-               $('#layout').val('wen');
+               $('#layout').val('indent');
             }
          });
       });

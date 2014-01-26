@@ -9,7 +9,7 @@ class WorkForm(Form):
     title = TextField('标题', [DataRequired('标题不能为空')])
     type_id = SelectField('类别', [DataRequired("类别不能为空")], coerce=int)
     layout = SelectField('布局', [DataRequired('布局不能为空')],
-                         choices=[('shi', '诗布局（居中）'), ('ci', '词布局（缩进）'), ('wen', '文布局（缩进）')])
+                         choices=[('center', '居中'), ('indent', '段落缩进')])
     author_id = SelectField('作者', [DataRequired('作者不能为空')], coerce=int)
     foreword = TextAreaField('序')
     intro = TextAreaField('题解')

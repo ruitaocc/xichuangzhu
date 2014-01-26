@@ -163,21 +163,22 @@ html body #footer .container #extra-info a {
   cursor: pointer;
   color: #666;
 }
-#page-work .work-layout-shi {
+#page-work .work-layout-center {
   text-align: center;
 }
-#page-work .work-layout-ci {
+#page-work .work-layout-indent {
   text-indent: 2em;
-  line-height: 30px;
-  padding: 0 2em;
-}
-#page-work .work-layout-wen {
-  text-indent: 2em;
-  line-height: 30px;
+  line-height: 28px;
   padding: 0 0.5em;
 }
-#page-work .work-layout-wen p {
-  margin-bottom: 18px;
+#page-work .work-layout-indent p {
+  margin-bottom: 16px;
+}
+#page-work .work-type-ci.work-layout-indent {
+  padding: 0 2em;
+}
+#page-work .work-type-ci.work-layout-indent p {
+  margin-bottom: 10px;
 }
 #page-work #work-cmds {
   margin-right: 15px;
@@ -245,7 +246,7 @@ html body #footer .container #extra-info a {
   width: 100px;
   float: left;
   display: inline-block;
-  padding-top: 2px;
+  padding-top: 4px;
 }
 #page-authors .author-wap .author-group {
   list-style: none;
