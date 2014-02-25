@@ -99,7 +99,10 @@ html body #footer .container #links li {
   display: inline-block;
   margin-right: 15px;
 }
-html body #footer .container #links li.beian a {
+html body #footer .container #links #beian {
+  display: inline-block !important;
+}
+html body #footer .container #links #beian a {
   color: gray;
 }
 html body #footer .container #extra-info {
