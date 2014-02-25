@@ -52,6 +52,9 @@ html body .navbar .navbar-form {
 html body .navbar .navbar-form .input-group-sm {
   width: 250px;
 }
+html body .navbar .navbar-form .input-group-sm .search-content {
+  width: 100%;
+}
 html body .navbar #btn-s2t {
   margin-top: 10px;
   margin-right: 10px;
