@@ -1,5 +1,6 @@
 *.pyc
 venv/
 .idea/
+xichuangzhu/static/bower_components/
 */config.py
 */config_remote.py
