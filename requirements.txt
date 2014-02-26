@@ -10,3 +10,4 @@ markdown2==2.2.0
 MySQL-python==1.2.5
 gunicorn==18.0
 fabric==1.8.1
+alioss==0.22.4
