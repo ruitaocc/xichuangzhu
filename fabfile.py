@@ -10,3 +10,8 @@ def deploy():
         with prefix('source venv/bin/activate'):
             run('pip install -r requirements.txt')
         run('supervisorctl restart xcz')
+
+
+def restart():
+    env.host_string = config.HOST_STRING
+    run('supervisorctl restart xcz')
