@@ -47,3 +47,9 @@ DOUBAN_SECRET = '4c87a8ef33e6c6be'
 DOUBAN_REDIRECT_URI = '%s/account/signin' % SITE_DOMAIN
 DOUBAN_LOGIN_URL = "https://www.douban.com/service/auth2/auth?client_id=%s&redirect_uri=%s&response_type=code" % (
     DOUBAN_CLIENT_ID, DOUBAN_REDIRECT_URI)
+
+# aliyun oss config
+OSS_HOST = 'oss.aliyuncs.com'
+OSS_KEY = ''
+OSS_SECRET = ''
+OSS_URL = ''

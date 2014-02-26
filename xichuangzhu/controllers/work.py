@@ -1,13 +1,13 @@
 # coding: utf-8
 from __future__ import division
-from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g
+from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, flash
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment
 from ..utils import check_is_me
 from ..permissions import user_permission, admin_permission, WorkImageOwnerPermission, \
     WorkReviewOwnerPermission
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm
-from ..utils import random_filename
+from ..utils import random_filename, save_to_oss
 from ..uploadsets import workimages
 
 bp = Blueprint('work', __name__)
@@ -158,12 +158,18 @@ def add_image(work_id):
     work = Work.query.get_or_404(work_id)
     form = WorkImageForm()
     if form.validate_on_submit():
-        # Save image
+        # Save image to local and oss
         filename = workimages.save(request.files['image'], name=random_filename() + ".")
-        work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=filename)
-        db.session.add(work_image)
-        db.session.commit()
-        return redirect(url_for('.image', work_image_id=work_image.id))
+        try:
+            save_to_oss(filename, workimages)
+        except IOError:
+            flash('图片上传失败，请稍后尝试')
+            return redirect(url_for('.add_image', work_id=work_id))
+        else:
+            work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=filename)
+            db.session.add(work_image)
+            db.session.commit()
+            return redirect(url_for('.image', work_image_id=work_image.id))
     return render_template('work/add_image.html', work=work, form=form)
 
 
@@ -178,10 +184,16 @@ def edit_image(work_image_id):
     form = WorkImageForm()
     if form.validate_on_submit():
         filename = workimages.save(request.files['image'], name=random_filename() + ".")
-        work_image.filename = filename
-        db.session.add(work_image)
-        db.session.commit()
-        return redirect(url_for('.image', work_image_id=work_image_id))
+        try:
+            save_to_oss(filename, workimages)
+        except IOError:
+            flash('图片上传失败，请稍后尝试')
+            return redirect(url_for('.edit_image', work_image_id=work_image_id))
+        else:
+            work_image.filename = filename
+            db.session.add(work_image)
+            db.session.commit()
+            return redirect(url_for('.image', work_image_id=work_image_id))
     return render_template('work/edit_image.html', work_image=work_image, form=form)
 
 

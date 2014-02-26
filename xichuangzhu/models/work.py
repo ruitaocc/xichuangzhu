@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
+from flask import current_app
 from ._base import db
-from ..uploadsets import workimages
 
 
 class Work(db.Model):
@@ -66,7 +66,7 @@ class WorkImage(db.Model):
 
     @property
     def url(self):
-        return workimages.url(self.filename)
+        return current_app.config['OSS_URL'] + self.filename
 
     def __repr__(self):
         return '<WorkImage %s>' % self.filename

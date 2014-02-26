@@ -1,8 +1,8 @@
 # coding: utf-8
 import datetime
 import uuid
-from functools import wraps
-from flask import session, abort, g
+from oss.oss_api import OssAPI
+from flask import session, g
 from . import config, roles
 from .models import User
 
@@ -62,3 +62,12 @@ def get_current_user_role():
 def random_filename():
     """生成伪随机文件名"""
     return str(uuid.uuid4())
+
+
+def save_to_oss(filename, uploadset):
+    """将文件保存到OSS上，若保存失败，则抛出IO异常"""
+    oss = OssAPI(config.OSS_HOST, config.OSS_KEY, config.OSS_SECRET)
+    res = oss.put_object_from_file("xichuangzhu", filename, uploadset.config.destination + '/' + filename)
+    status = res.status
+    if status != 200:
+        raise IOError
