@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% from "macro/ui.html" import pagination, render_works %}
+
+{% block page_title %}加精作品{% endblock %}
+{% block page_id %}page-admin-highlight-works{% endblock %}
+{% block meta %}
+   <meta name="robots" content="noindex"/>{% endblock %}
+{% block body %}
+
+   <div class="row">
+      <div class="col-md-8">
+         <h2>加精作品 / {{ paginator.total }}</h2>
+
+         {{ render_works(paginator.items) }}
+
+         {{ pagination(paginator) }}
+      </div>
+
+      <div class="col-md-4">
+      </div>
+   </div>
+
+{% endblock %}
