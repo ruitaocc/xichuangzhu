@@ -11,6 +11,7 @@ class Work(db.Model):
     content = db.Column(db.Text())
     intro = db.Column(db.Text())
     layout = db.Column(db.String(10))
+    highlight = db.Column(db.Boolean, default=False)
     create_time = db.Column(db.DateTime)
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))

@@ -113,6 +113,28 @@ def edit(work_id):
     return render_template('work/edit.html', work=work, form=form)
 
 
+@bp.route('/<int:work_id>/highlight')
+@admin_permission
+def highlight(work_id):
+    """加精作品"""
+    work = Work.query.get_or_404(work_id)
+    work.highlight = True
+    db.session.add(work)
+    db.session.commit()
+    return redirect(url_for('.view', work_id=work_id))
+
+
+@bp.route('/<int:work_id>/shade')
+@admin_permission
+def shade(work_id):
+    """取消加精"""
+    work = Work.query.get_or_404(work_id)
+    work.highlight = False
+    db.session.add(work)
+    db.session.commit()
+    return redirect(url_for('.view', work_id=work_id))
+
+
 @bp.route('/<int:work_id>/reviews', defaults={'page': 1})
 @bp.route('/<int:work_id>/reviews/page/<int:page>')
 def reviews(work_id, page):
