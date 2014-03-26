@@ -9,7 +9,7 @@
 
    <div class="row">
       <div class="col-md-8">
-         <h2>加精作品 / {{ paginator.total }}</h2>
+         <h2>加精 - <span id="dynasty_type_tag"></span> / {{ paginator.total }}</h2>
 
          {{ render_works(paginator.items) }}
 
@@ -17,7 +17,51 @@
       </div>
 
       <div class="col-md-4">
+         <h2>年代</h2>
+         <ul id="dynasty-selector">
+            <li {% if dynasty_abbr == 'all' %}class="active"{% endif %}>
+               <a href="{{ url_for('admin.highlight_works') }}?type={{ work_type }}&dynasty=all">
+                  全部</a>
+            </li>
+
+            {% for d in dynasties %}
+               <li {% if dynasty_abbr == d.abbr %}class="active"{% endif %}>
+                  <a href="{{ url_for('admin.highlight_works') }}?type={{ work_type }}&dynasty={{ d.abbr }}">
+                     {{ d.name }}</a>
+               </li>
+            {% endfor %}
+         </ul>
+
+         <h2>体裁</h2>
+         <ul id="type-selector">
+            <li {% if work_type == 'all' %}class="active"{% endif %}>
+               <a href="{{ url_for('admin.highlight_works') }}?type=all&dynasty={{ dynasty_abbr }}">
+                  全部</a>
+            </li>
+
+            {% for t in work_types %}
+               <li {% if work_type == t.en %}class="active"{% endif %}>
+                  <a href="{{ url_for('admin.highlight_works') }}?type={{ t.en }}&dynasty={{ dynasty_abbr }}">
+                     {{ t.cn }}</a>
+               </li>
+            {% endfor %}
+         </ul>
       </div>
+
+      <script type="text/javascript">
+         var dynasty = $.trim($("#dynasty-selector li.active").text());
+         var work_type = $.trim($("#type-selector li.active").text());
+
+         if (dynasty === '全部' && work_type === '全部') {
+            $('#dynasty_type_tag').text('作品');
+         } else if (dynasty === '全部') {
+            $('#dynasty_type_tag').text(work_type);
+         } else if (work_type === '全部') {
+            $('#dynasty_type_tag').text(dynasty);
+         } else {
+            $('#dynasty_type_tag').text(dynasty + ' / ' + work_type);
+         }
+      </script>
    </div>
 
 {% endblock %}
