@@ -249,7 +249,7 @@ html {
 // page works
 //-----------------------------------------------------
 #page-works,
-#page-admin-highlight-works{
+#page-admin-highlight-works {
   #type-selector,
   #dynasty-selector {
     list-style: none;
@@ -363,15 +363,6 @@ html {
     }
   }
 
-  .collection-item {
-    margin-bottom: 10px;
-
-    .collection {
-      font-weight: bold;
-      font-size: 16px;
-    }
-  }
-
   .work-item {
     float: left;
     display: block;
@@ -382,6 +373,10 @@ html {
     padding: 8px 5px 5px 12px;
     overflow: hidden;
     text-decoration: none;
+
+    &.highlight {
+      border-color: #ad1616;
+    }
 
     &:hover {
       background-color: #FBFBFB;

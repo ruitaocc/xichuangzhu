@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import pagination, render_works %}
+{% from "macro/ui.html" import pagination, render_works with context %}
 
 {% block page_title %}标签 - {{ tag.title }}{% endblock %}
 {% block page_id %}page-tag{% endblock %}

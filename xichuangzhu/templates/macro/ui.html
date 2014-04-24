@@ -110,6 +110,7 @@
 
 {% macro render_works(works) %}
    {% for w in works %}
+      {% set show = permissions.admin_permission.check() and w.highlight %}
       <div class="work-item">
          <div class="work-header">
             <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
@@ -117,8 +118,10 @@
             <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">
                {{ w.title }}</a>
             <sup class="work-author">
-               〔<a
-                  href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               {% if show %}
+                  <span class="glyphicon glyphicon-ok"></span>
+               {% endif %}
             </sup>
          </div>
 
