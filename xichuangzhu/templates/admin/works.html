@@ -16,7 +16,7 @@
       <th>注释</th>
       <th>题解</th>
       <!-- <th>点评</th>
-      <th>书法</th> -->
+      <th>图片</th> -->
       </thead>
 
       <tbody>
@@ -28,6 +28,9 @@
                   <a target="_blank" href="{{ url_for('work.view', work_id=w.id) }}">
                      {{ w.title|truncate(12, True) }}
                   </a>
+                  {% if w.highlight %}
+                     <span class="glyphicon glyphicon-ok"></span>
+                  {% endif %}
                </td>
 
                <td>{{ w.author.name }}</td>
