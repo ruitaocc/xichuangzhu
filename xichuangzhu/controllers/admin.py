@@ -6,12 +6,13 @@ from ..permissions import admin_permission
 bp = Blueprint('admin', __name__)
 
 
-@bp.route('/authors', methods=['GET', 'POST'])
+@bp.route('/authors', defaults={'page': 1})
+@bp.route('/authors/<int:page>', methods=['GET', 'POST'])
 @admin_permission
-def authors():
+def authors(page):
     """管理文学家"""
-    authors = Author.query
-    return render_template('admin/authors.html', authors=authors)
+    paginator = Author.query.paginate(page, 30)
+    return render_template('admin/authors.html', paginator=paginator)
 
 
 @bp.route('/works', defaults={'page': 1})

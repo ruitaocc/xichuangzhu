@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "macro/ui.html" import pagination %}
 
 {% block page_title %}管理文学家{% endblock %}
 {% block page_id %}page-admin-authors{% endblock %}
@@ -21,7 +22,7 @@
             </thead>
 
             <tbody>
-            {% for a in authors %}
+            {% for a in paginator.items %}
                {% set works_count = a.works.count() %}
                {% set quotes_count = a.quotes.count() %}
                {% if works_count <= 1 or quotes_count <= 1 or works_count > 2 * quotes_count %}
@@ -54,6 +55,8 @@
             {% endfor %}
             </tbody>
          </table>
+
+         {{ pagination(paginator) }}
       </div>
    </div>
 
