@@ -158,7 +158,9 @@
    <script type="text/javascript">
       // 生成注释及tooltip
       $('.work-content sup').tooltip().each(function (index, element) {
-         $(this).text('〔' + (index + 1) + '〕');
+         // $(this).text('〔' + (index + 1) + '〕');
+         // $(this).text('[' + (index + 1) + ']');
+         $(this).text(index + 1);
 
          var annotate = $(element).data('original-title');
          $('.work-annotate').append("<div>[<span class='annotate-index'>" + (index + 1)
