@@ -1,10 +1,14 @@
 # coding: utf-8
 from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from xichuangzhu import app
 from xichuangzhu.models import db
 
 manager = Manager(app)
+
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
 
 @manager.command
