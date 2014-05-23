@@ -9,9 +9,9 @@ def deploy():
         run('bower install --allow-root')
         with prefix('source venv/bin/activate'):
             run('pip install -r requirements.txt')
-        run('supervisorctl restart xcz')
+        run('sudo supervisorctl restart xcz')
 
 
 def restart():
     env.host_string = config.HOST_STRING
-    run('supervisorctl restart xcz')
+    run('sudo supervisorctl restart xcz')
