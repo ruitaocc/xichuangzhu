@@ -1,6 +1,5 @@
 # coding: utf-8
 import os
-import sqlite3
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
@@ -38,8 +37,10 @@ def gene_sqlite():
     from sqlalchemy import create_engine
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
+    from sqlalchemy import Column, Integer, String, Enum, Text
 
     db_filename = "xcz.db"
+
     if os.path.isfile(db_filename):
         os.remove(db_filename)
 
@@ -56,14 +57,14 @@ def gene_sqlite():
     class _Work(Base):
         __tablename__ = 'works'
 
-        id = db.Column(db.Integer, primary_key=True)
-        title = db.Column(db.String(50))
-        author = db.Column(db.String(50))
-        kind = db.Column(db.Enum('shi', 'ci', 'qu', 'fu', 'wen'))
-        foreword = db.Column(db.Text())
-        content = db.Column(db.Text())
-        intro = db.Column(db.Text())
-        layout = db.Column(db.String(10))
+        id = Column(Integer, primary_key=True)
+        title = Column(String(50))
+        author = Column(String(50))
+        kind = Column(Enum('shi', 'ci', 'qu', 'fu', 'wen'))
+        foreword = Column(Text)
+        content = Column(Text)
+        intro = Column(Text)
+        layout = Column(String(10))
 
         def __repr__(self):
             return '<Work %s>' % self.title
