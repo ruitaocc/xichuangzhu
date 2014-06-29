@@ -3,7 +3,7 @@ import os
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
-from xichuangzhu import app
+from xichuangzhu import app, config
 from xichuangzhu.models import db, Work
 
 manager = Manager(app)
@@ -39,12 +39,12 @@ def gene_sqlite():
     from sqlalchemy.orm import sessionmaker
     from sqlalchemy import Column, Integer, String, Enum, Text
 
-    db_filename = "xcz.db"
+    db_file_path = "/tmp/xcz.db"
 
-    if os.path.isfile(db_filename):
-        os.remove(db_filename)
+    if os.path.isfile(db_file_path):
+        os.remove(db_file_path)
 
-    engine = create_engine('sqlite:///xcz.db')
+    engine = create_engine('sqlite:///%s' % db_file_path)
     Base = declarative_base()
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -77,6 +77,15 @@ def gene_sqlite():
                       layout=work.layout)
         session.add(_work)
     session.commit()
+
+    # 将数据库文件以邮件的形式发送
+    from flask_mail import Message
+    from xichuangzhu.mails import mail
+
+    msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
+    with open(db_file_path, 'rb') as f:
+        msg.attach("xcz.db", "application/octet-stream", f.read())
+    mail.send()
 
 
 @manager.command
