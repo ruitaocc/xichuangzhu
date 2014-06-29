@@ -71,7 +71,7 @@ def gene_sqlite():
 
     Base.metadata.create_all(engine)
 
-    for work in Work.query:
+    for work in Work.query.filter(Work.highlight == True):
         _work = _Work(title=work.title, author=work.author.name, kind=work.type.en,
                       foreword=work.foreword, content=work.content, intro=work.intro,
                       layout=work.layout)
