@@ -51,7 +51,8 @@ def gene_sqlite():
     # 如果没有这一行，会报：
     # AttributeError: 'Session' object has no attribute '_model_changes'
     # 具体见：
-    # http://stackoverflow.com/questions/20201809/sqlalchemy-flask-attributeerror-session-object-has-no-attribute-model-chan
+    # http://stackoverflow.com/questions/20201809/sqlalchemy-flask-attributeerror-session-object
+    # -has-no-attribute-model-chan
     session._model_changes = {}
 
     class _Work(Base):
@@ -60,6 +61,7 @@ def gene_sqlite():
         id = Column(Integer, primary_key=True)
         title = Column(String(50))
         author = Column(String(50))
+        dynasty = Column(String(10))
         kind = Column(Enum('shi', 'ci', 'qu', 'fu', 'wen'))
         foreword = Column(Text)
         content = Column(Text)
@@ -72,8 +74,8 @@ def gene_sqlite():
     Base.metadata.create_all(engine)
 
     for work in Work.query.filter(Work.highlight == True):
-        _work = _Work(title=work.title, author=work.author.name, kind=work.type.en,
-                      foreword=work.foreword, content=work.content, intro=work.intro,
+        _work = _Work(title=work.title, author=work.author.name, dynasty=work.author.dynasty.name,
+                      kind=work.type.en, foreword=work.foreword, content=work.content, intro=work.intro,
                       layout=work.layout)
         session.add(_work)
     session.commit()
