@@ -85,7 +85,7 @@ def gene_sqlite():
     msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
     with open(db_file_path, 'rb') as f:
         msg.attach("xcz.db", "application/octet-stream", f.read())
-    mail.send()
+    mail.send(msg)
 
 
 @manager.command
