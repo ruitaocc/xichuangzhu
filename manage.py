@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import re
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
@@ -74,8 +75,9 @@ def gene_sqlite():
     Base.metadata.create_all(engine)
 
     for work in Work.query.filter(Work.highlight == True):
+        work_content = re.sub(r'<([^<]+)>', '', work.content)
         _work = _Work(title=work.title, author=work.author.name, dynasty=work.author.dynasty.name,
-                      kind=work.type.en, foreword=work.foreword, content=work.content, intro=work.intro,
+                      kind=work.type.en, foreword=work.foreword, content=work_content, intro=work.intro,
                       layout=work.layout)
         session.add(_work)
     session.commit()
