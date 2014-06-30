@@ -75,7 +75,9 @@ def gene_sqlite():
     Base.metadata.create_all(engine)
 
     for work in Work.query.filter(Work.highlight == True):
+        # 去掉注释，将%转换为空格
         work_content = re.sub(r'<([^<]+)>', '', work.content)
+        work_content = work_content.replace('%', "    ")
         _work = _Work(title=work.title, author=work.author.name, dynasty=work.author.dynasty.name,
                       kind=work.type.en, foreword=work.foreword, content=work_content, intro=work.intro,
                       layout=work.layout)
