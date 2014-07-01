@@ -13,6 +13,12 @@ def deploy():
         run('sudo supervisorctl restart xcz')
 
 
+def pull():
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/xichuangzhu'):
+        run('git pull')
+
+
 def restart():
     env.host_string = config.HOST_STRING
     run('sudo supervisorctl restart xcz')
