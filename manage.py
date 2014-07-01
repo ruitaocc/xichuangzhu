@@ -78,10 +78,10 @@ def gene_sqlite():
         # 去掉注释，将%转换为空格
         work_content = re.sub(r'<([^<]+)>', '', work.content)
         work_content = work_content.replace('%', "  ")
-        work_content = work_content.replace('\n\n', '\n')
+        work_content = work_content.replace('\r\n\r\n', '\n')
         _work = _Work(title=work.title, author=work.author.name, dynasty=work.author.dynasty.name,
-                      kind=work.type.en, foreword=work.foreword, content=work_content, intro=work.intro,
-                      layout=work.layout)
+                      kind=work.type.en, foreword=work.foreword, content=work_content,
+                      intro=work.intro, layout=work.layout)
         session.add(_work)
     session.commit()
 
