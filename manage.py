@@ -117,7 +117,7 @@ def gene_sqlite():
     for dynasty in Dynasty.query.filter(
             Dynasty.authors.any(Author.works.any(Work.highlight == True))):
         _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
-                            start_yart=dynasty.start_year, end_year=dynasty.end_year)
+                            start_year=dynasty.start_year, end_year=dynasty.end_year)
         session.add(_dynasty)
 
     session.commit()
