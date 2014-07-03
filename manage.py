@@ -115,7 +115,8 @@ def gene_sqlite():
 
     # 转存朝代
     for dynasty in Dynasty.query.filter(
-            Dynasty.authors.any(Author.works.any(Work.highlight == True))):
+            Dynasty.authors.any(Author.works.any(Work.highlight == True))).order_by(
+            Dynasty.start_year.asc()):
         _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
                             start_year=dynasty.start_year, end_year=dynasty.end_year)
         session.add(_dynasty)
