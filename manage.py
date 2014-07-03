@@ -5,7 +5,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from xichuangzhu import app, config
-from xichuangzhu.models import db, Work
+from xichuangzhu.models import db, Work, Author
 
 manager = Manager(app)
 
@@ -62,6 +62,7 @@ def gene_sqlite():
         id = Column(Integer, primary_key=True)
         title = Column(String(50))
         author = Column(String(50))
+        author_id = Column(Integer)
         dynasty = Column(String(10))
         kind = Column(Enum('shi', 'ci', 'qu', 'fu', 'wen'))
         foreword = Column(Text)
@@ -72,17 +73,37 @@ def gene_sqlite():
         def __repr__(self):
             return '<Work %s>' % self.title
 
+    class _Author(Base):
+        __tablename__ = 'authors'
+
+        id = Column(Integer, primary_key=True)
+        name = Column(String(50))
+        intro = Column(Text)
+        dynasty = Column(String(10))
+        birth_year = Column(String(20))
+        death_year = Column(String(20))
+
     Base.metadata.create_all(engine)
 
+    # 转存作品
     for work in Work.query.filter(Work.highlight == True):
         # 去掉注释，将%转换为空格
         work_content = re.sub(r'<([^<]+)>', '', work.content)
         work_content = work_content.replace('%', "    ")
         work_content = work_content.replace('\r\n\r\n', '\n')
-        _work = _Work(title=work.title, author=work.author.name, dynasty=work.author.dynasty.name,
+        _work = _Work(id=work.id, title=work.title, author=work.author.name,
+                      dynasty=work.author.dynasty.name,
                       kind=work.type.en, foreword=work.foreword, content=work_content,
                       intro=work.intro, layout=work.layout)
         session.add(_work)
+
+    # 转存文学家
+    for author in Author.query.filter(Author.works.any(Work.highlight == True)):
+        _author = _Author(id=author.id, name=author.name, intro=author.intro,
+                          dynasty=author.dynasty.name, birth_year=author.birth_year,
+                          death_year=author.death_year)
+        db.session.add(_author)
+
     session.commit()
 
     # 将数据库文件以邮件的形式发送
