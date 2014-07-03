@@ -123,13 +123,13 @@ def gene_sqlite():
     session.commit()
 
     # 将数据库文件以邮件的形式发送
-    # from flask_mail import Message
-    # from xichuangzhu.mails import mail
-    #
-    # msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
-    # with open(db_file_path, 'rb') as f:
-    # msg.attach("xcz.db", "application/octet-stream", f.read())
-    # mail.send(msg)
+    from flask_mail import Message
+    from xichuangzhu.mails import mail
+
+    msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
+    with open(db_file_path, 'rb') as f:
+        msg.attach("xcz.db", "application/octet-stream", f.read())
+    mail.send(msg)
 
 
 @manager.command
