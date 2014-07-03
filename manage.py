@@ -5,7 +5,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from xichuangzhu import app, config
-from xichuangzhu.models import db, Work, Author
+from xichuangzhu.models import db, Work, Author, Dynasty
 
 manager = Manager(app)
 
@@ -83,6 +83,15 @@ def gene_sqlite():
         birth_year = Column(String(20))
         death_year = Column(String(20))
 
+    class _Dynasty(Base):
+        __tablename__ = 'dynasties'
+
+        id = Column(Integer, primary_key=True)
+        name = Column(String(10))
+        intro = Column(db.Text)
+        start_year = Column(Integer)
+        end_year = Column(Integer)
+
     Base.metadata.create_all(engine)
 
     # 转存作品
@@ -102,19 +111,25 @@ def gene_sqlite():
         _author = _Author(id=author.id, name=author.name, intro=author.intro,
                           dynasty=author.dynasty.name, birth_year=author.birth_year,
                           death_year=author.death_year)
-        print(_author)
         session.add(_author)
+
+    # 转存朝代
+    for dynasty in Dynasty.query.filter(
+            Dynasty.authors.any(Author.works.any(Work.highlight == True))):
+        _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
+                            start_yart=dynasty.start_year, end_year=dynasty.end_year)
+        session.add(_dynasty)
 
     session.commit()
 
     # 将数据库文件以邮件的形式发送
-    from flask_mail import Message
-    from xichuangzhu.mails import mail
-
-    msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
-    with open(db_file_path, 'rb') as f:
-        msg.attach("xcz.db", "application/octet-stream", f.read())
-    mail.send(msg)
+    # from flask_mail import Message
+    # from xichuangzhu.mails import mail
+    #
+    # msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
+    # with open(db_file_path, 'rb') as f:
+    # msg.attach("xcz.db", "application/octet-stream", f.read())
+    # mail.send(msg)
 
 
 @manager.command
