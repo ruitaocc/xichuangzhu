@@ -102,7 +102,8 @@ def gene_sqlite():
         _author = _Author(id=author.id, name=author.name, intro=author.intro,
                           dynasty=author.dynasty.name, birth_year=author.birth_year,
                           death_year=author.death_year)
-        db.session.add(_author)
+        print(_author)
+        session.add(_author)
 
     session.commit()
 
