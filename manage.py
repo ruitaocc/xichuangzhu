@@ -115,7 +115,7 @@ def gene_sqlite():
         if '-' in birth_year:
             birth_year = birth_year.replace('-', '前')
         # 处理death_year
-        death_year = author.birth_year
+        death_year = author.death_year
         if death_year and '?' not in death_year:
             death_year += "年"
         if '-' in death_year:
