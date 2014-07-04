@@ -108,9 +108,21 @@ def gene_sqlite():
 
     # 转存文学家
     for author in Author.query.filter(Author.works.any(Work.highlight == True)):
+        # 处理birth_year
+        birth_year = author.birth_year
+        if birth_year and '?' not in birth_year:
+            birth_year += "年"
+        if '-' in birth_year:
+            birth_year = birth_year.replace('-', '前')
+        # 处理death_year
+        death_year = author.birth_year
+        if death_year and '?' not in death_year:
+            death_year += "年"
+        if '-' in death_year:
+            death_year = death_year.replace('-', '前')
         _author = _Author(id=author.id, name=author.name, intro=author.intro,
-                          dynasty=author.dynasty.name, birth_year=author.birth_year,
-                          death_year=author.death_year)
+                          dynasty=author.dynasty.name, birth_year=birth_year,
+                          death_year=death_year)
         session.add(_author)
 
     # 转存朝代
