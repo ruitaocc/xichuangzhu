@@ -5,7 +5,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from xichuangzhu import app, config
-from xichuangzhu.models import db, Work, Author, Dynasty
+from xichuangzhu.models import db, Work, Author, Dynasty, AuthorQuote
 
 manager = Manager(app)
 
@@ -92,6 +92,16 @@ def gene_sqlite():
         start_year = Column(Integer)
         end_year = Column(Integer)
 
+    class _Quote(Base):
+        __tablename__ = 'quotes'
+
+        id = Column(Integer, primary_key=True)
+        quote = Column(db.Text)
+        author_id = Column(Integer)
+        author = Column(String(10))
+        work_id = Column(Integer)
+        work = Column(String(50))
+
     Base.metadata.create_all(engine)
 
     # 转存作品
@@ -114,12 +124,14 @@ def gene_sqlite():
             birth_year += "年"
         if '-' in birth_year:
             birth_year = birth_year.replace('-', '前')
+
         # 处理death_year
         death_year = author.death_year
         if death_year and '?' not in death_year:
             death_year += "年"
         if '-' in death_year:
             death_year = death_year.replace('-', '前')
+
         _author = _Author(id=author.id, name=author.name, intro=author.intro,
                           dynasty=author.dynasty.name, birth_year=birth_year,
                           death_year=death_year)
@@ -131,6 +143,12 @@ def gene_sqlite():
         _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
                             start_year=dynasty.start_year, end_year=dynasty.end_year)
         session.add(_dynasty)
+
+    # 转存名言
+    for q in AuthorQuote.query.filter(AuthorQuote.work.has(Work.highlight == True)):
+        _quote = _Quote(id=q.id, quote=q.quote, author_id=q.author_id, author=q.author.name,
+                        work_id=q.work_id, work=q.work.title)
+        session.add(_quote)
 
     session.commit()
 
