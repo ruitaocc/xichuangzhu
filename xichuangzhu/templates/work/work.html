@@ -23,7 +23,7 @@
                href="{{ url_for('author.view', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>
          </div>
 
-         <!-- 32 is a experienced value -->
+         <!-- TODO: 32 is a experienced value -->
          {% if work.foreword %}
             <div class="work-foreword {% if work.foreword|length < 32 %}single-line{% endif %}">
                {{ work.foreword }}
@@ -75,6 +75,19 @@
                   </a>
                {% endif %}
             </div>
+         {% endif %}
+
+         {% if permissions.admin_permission.check() %}
+            {% set quotes_count = work.quotes.count() %}
+            <h2>名言 / {{ quotes_count }}</h2>
+
+            {% if quotes_count %}
+               <ul class="quotes">
+                  {% for q in work.quotes %}
+                     <li>{{ q.quote }}</li>
+                  {% endfor %}
+               </ul>
+            {% endif %}
          {% endif %}
 
          <h2>注释</h2>
