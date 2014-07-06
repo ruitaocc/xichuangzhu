@@ -1,26 +1,35 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import horizontal_field %}
 
-{% block page_title %}编辑引语{% endblock %}
-{% block page_id %}page-edit-quote{% endblock %}
+{% block page_title %}编辑引语 - {{ quote.work.title }}{% endblock %}
+{% block page_id %}page-work-edit-quote{% endblock %}
 
 {% block body %}
-   <form id="form-edit-quote" class="form-horizontal" method="post"
-         action="{{ url_for('author.edit_quote', quote_id=quote.id) }}">
-      <fieldset>
-         <legend>编辑引语</legend>
+   <div class="row">
+      <div class="col-sm-8">
+         <form id="form-edit-quote" class="form-horizontal" method="post"
+               action="{{ url_for('work.edit_quote', quote_id=quote.id) }}">
+            <fieldset>
+               <legend>编辑引语</legend>
+               {{ form.csrf_token }}
 
-         {{ form.csrf_token }}
+               <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">作品</label>
 
-         {{ horizontal_field(form.quote) }}
-         {{ horizontal_field(form.work_id) }}
-         {{ form.author_id() }}
+                  <div class="col-sm-6 form-control-static">
+                     <p>{{ quote.author.name }} - {{ quote.work.title }}</p>
+                  </div>
+               </div>
 
-         <div class="form-group">
-            <div class="col-md-6 col-md-offset-2">
-               <input type="submit" value="提交" class="btn btn-primary"/>
-            </div>
-         </div>
-      </fieldset>
-   </form>
+               {{ horizontal_field(form.quote) }}
+
+               <div class="form-group">
+                  <div class="col-md-6 col-md-offset-2">
+                     <input type="submit" value="提交" class="btn btn-primary"/>
+                  </div>
+               </div>
+            </fieldset>
+         </form>
+      </div>
+   </div>
 {% endblock %}

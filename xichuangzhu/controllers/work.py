@@ -127,6 +127,30 @@ def add_quote(work_id):
     return render_template('work/add_quote.html', work=work, form=form)
 
 
+@bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
+@admin_permission
+def edit_quote(quote_id):
+    """编辑名言"""
+    quote = AuthorQuote.query.get_or_404(quote_id)
+    form = WorkQuoteForm(quote=quote.quote)
+    if form.validate_on_submit():
+        quote.quote = form.quote.data
+        db.session.add(quote)
+        db.session.commit()
+        return redirect(url_for('work.view', work_id=quote.work_id))
+    return render_template('work/edit_quote.html', quote=quote, form=form)
+
+
+@bp.route('/quote/<int:quote_id>/delete', methods=['GET', 'POST'])
+@admin_permission
+def delete_quote(quote_id):
+    """删除名言"""
+    quote = AuthorQuote.query.get_or_404(quote_id)
+    db.session.delete(quote)
+    db.session.commit()
+    return redirect(url_for('work.view', work_id=quote.work_id))
+
+
 @bp.route('/<int:work_id>/highlight')
 @admin_permission
 def highlight(work_id):

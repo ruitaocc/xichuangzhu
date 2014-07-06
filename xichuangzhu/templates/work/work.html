@@ -7,7 +7,6 @@
 {% block page_id %}page-work{% endblock %}
 
 {% block body %}
-
    <div class="row">
       <div class="col-md-8">
          <div class="work-title">
@@ -87,11 +86,27 @@
             <h2>名言 / {{ quotes_count }}</h2>
 
             {% if quotes_count %}
-               <ul class="quotes">
-                  {% for q in work.quotes %}
-                     <li>{{ q.quote }}</li>
-                  {% endfor %}
-               </ul>
+               <table class="table table-striped table-hover">
+               <tbody>
+               {% for q in work.quotes %}
+                  <tr>
+                     <td>{{ q.quote }}</td>
+                     <td>
+                        <div class='btn-group btn-group-sm'>
+                           <a class="btn btn-default" title="编辑"
+                              href="{{ url_for('work.edit_quote', quote_id=q.id) }}">
+                              <span class="glyphicon glyphicon-edit"></span>
+                           </a>
+                           <a class="btn btn-default btn-rm-quote" title='删除'
+                              href="{{ url_for('work.delete_quote', quote_id=q.id) }}">
+                              <span class="glyphicon glyphicon-trash"></span>
+                           </a>
+                        </div>
+                     </td>
+                  </tr>
+               {% endfor %}
+               </tbody>
+               </table>
             {% endif %}
          {% endif %}
 
@@ -217,9 +232,15 @@
       }
 
       layout();
+
       $(window).resize(function () {
          layout();
       });
-   </script>
 
+   $('.btn-rm-quote').click(function(){
+      if(!confirm('确认删除此名言？')){
+         return false;
+      }
+   });
+   </script>
 {% endblock %}
