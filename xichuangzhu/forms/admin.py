@@ -30,7 +30,6 @@ class AuthorQuoteForm(Form):
     """Form for add & edit author quote"""
     quote = TextField('引语', [DataRequired('引语不能为空')])
     work_id = IntegerField('出处', [DataRequired('出处不能为空')])
-    author_id = HiddenField('作者', [DataRequired('作者不能为空')])
 
 
 class WorkQuoteForm(Form):

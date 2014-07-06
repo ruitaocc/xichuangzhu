@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import horizontal_field %}
 
-{% block page_title %}编辑引语 - {{ quote.author.name }}{% endblock %}
-{% block page_id %}page-author-edit-quote{% endblock %}
+{% block page_title %}添加名言 - {{ quote.author.name }}{% endblock %}
+{% block page_id %}page-author-add-quote{% endblock %}
 
 {% block body %}
 
    <form id="form-edit-quote" class="form-horizontal" method="post"
-         action="{{ url_for('author.edit_quote', quote_id=quote.id) }}">
+         action="{{ url_for('author.add_quote', author_id=author.id) }}">
       <fieldset>
-         <legend>编辑引语</legend>
+         <legend>添加名言</legend>
 
          {{ form.csrf_token }}
 
@@ -17,17 +17,16 @@
             <label class="col-sm-2 control-label">文学家</label>
 
             <div class="col-sm-6 form-control-static">
-               <p>{{ quote.author.name }}</p>
+               <p>{{ author.name }}</p>
             </div>
          </div>
 
          {{ horizontal_field(form.quote) }}
-
          {{ horizontal_field(form.work_id) }}
 
          <div class="form-group">
             <div class="col-md-6 col-md-offset-2">
-               <input type="submit" value="提交" class="btn btn-primary"/>
+               <input type="submit" value="添加" class="btn btn-primary"/>
             </div>
          </div>
       </fieldset>
