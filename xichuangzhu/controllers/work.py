@@ -2,11 +2,11 @@
 from __future__ import division
 from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, flash
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
-    User, CollectWork, CollectWorkImage, WorkReviewComment
+    User, CollectWork, CollectWorkImage, WorkReviewComment, AuthorQuote
 from ..utils import check_is_me
 from ..permissions import user_permission, admin_permission, WorkImageOwnerPermission, \
     WorkReviewOwnerPermission
-from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm
+from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm, WorkQuoteForm
 from ..utils import random_filename, save_to_oss
 from ..uploadsets import workimages
 
@@ -111,6 +111,20 @@ def edit(work_id):
         db.session.commit()
         return redirect(url_for('.view', work_id=work_id))
     return render_template('work/edit.html', work=work, form=form)
+
+
+@bp.route('/<int:work_id>/add_quote', methods=['GET', 'POST'])
+@admin_permission
+def add_quote(work_id):
+    """为此作品添加名言"""
+    work = Work.query.get_or_404(work_id)
+    form = WorkQuoteForm()
+    if form.validate_on_submit():
+        quote = AuthorQuote(author_id=work.author_id, work_id=work_id, quote=form.quote.data)
+        db.session.add(quote)
+        db.session.commit()
+        return redirect(url_for('work.view', work_id=work_id))
+    return render_template('work/add_quote.html', work=work, form=form)
 
 
 @bp.route('/<int:work_id>/highlight')

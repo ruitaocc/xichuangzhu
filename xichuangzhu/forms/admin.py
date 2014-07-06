@@ -33,6 +33,11 @@ class AuthorQuoteForm(Form):
     author_id = HiddenField('作者', [DataRequired('作者不能为空')])
 
 
+class WorkQuoteForm(Form):
+    """Form for add & edit quote for work"""
+    quote = TextField('引语', [DataRequired('引语不能为空')])
+
+
 class DynastyForm(Form):
     """Form for add & edit dynasty"""
     name = TextField('朝代', [DataRequired('朝代不能为空')])
