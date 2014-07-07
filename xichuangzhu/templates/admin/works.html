@@ -10,13 +10,16 @@
 
    <table class='table table-striped'>
       <thead>
-      <th>作品</th>
-      <th>作者</th>
-      <th>标签</th>
-      <th>注释</th>
-      <th>题解</th>
-      <!-- <th>点评</th>
-      <th>图片</th> -->
+      <tr>
+         <th>作品</th>
+         <th>作者</th>
+         <th>标签</th>
+         <th>名言</th>
+         <th>注释</th>
+         <th>题解</th>
+         <!-- <th>点评</th>
+         <th>图片</th> -->
+      </tr>
       </thead>
 
       <tbody>
@@ -52,6 +55,11 @@
                         {% endfor %}
                      {% endif %}
                   </ul>
+               </td>
+
+               {% set quotes_num = w.quotes.count() %}
+               <td {% if not quotes_num %}class='danger'{% endif %}>
+                  {{ quotes_num }}
                </td>
 
                <td {% if '<' not in w.content %}class='danger'{% endif %}>
