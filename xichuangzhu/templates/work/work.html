@@ -47,13 +47,13 @@
                   {% else %}
                      <a class="btn btn-default"
                         href="{{ url_for('work.highlight', work_id=work.id) }}">
-                        <span class="glyphicon glyphicon-ok"></span> 加精
+                        <span class="fa fa-check"></span> 加精
                      </a>
                   {% endif %}
 
                   <a class="btn btn-default" target="_blank" title="点评作品"
                      href="{{ url_for('work.add_quote', work_id=work.id) }}">
-                     <span class="glyphicon glyphicon-pencil"></span> 添加名言
+                     <span class="fa fa-plus"></span> 添加名言
                   </a>
                {% endif %}
 
