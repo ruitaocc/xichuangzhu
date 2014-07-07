@@ -4,8 +4,8 @@ from ._base import db
 
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-    abbr = db.Column(db.String(50), unique=True)
+    name = db.Column(db.String(50))
+    abbr = db.Column(db.String(50), index=True)
     intro = db.Column(db.Text())
     birth_year = db.Column(db.String(20))
     death_year = db.Column(db.String(20))
@@ -24,12 +24,12 @@ class Author(db.Model):
         在第一次查询后将结果缓存起来，以便后续使用
         """
         if not hasattr(self, '_random_quote'):
-            self._random_quote = AuthorQuote.query.filter(
-                AuthorQuote.author_id == self.id).order_by(db.func.rand()).first()
+            self._random_quote = Quote.query.filter(
+                Quote.author_id == self.id).order_by(db.func.rand()).first()
         return self._random_quote
 
 
-class AuthorQuote(db.Model):
+class Quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quote = db.Column(db.Text())
 
@@ -40,4 +40,4 @@ class AuthorQuote(db.Model):
     work = db.relationship('Work', backref=db.backref('quotes', lazy='dynamic'))
 
     def __repr__(self):
-        return '<AuthorQuote %s>' % self.quote
+        return '<Quote %s>' % self.quote

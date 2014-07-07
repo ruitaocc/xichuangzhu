@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, request, redirect, url_for, Blueprint
-from ..models import db, Author, AuthorQuote, Work, WorkType, CollectWork, Dynasty
+from ..models import db, Author, Quote, Work, WorkType, CollectWork, Dynasty
 from ..permissions import admin_permission
 from ..forms import AuthorForm, AuthorQuoteForm
 
@@ -12,7 +12,7 @@ def view(author_abbr):
     """文学家主页"""
     author = Author.query.filter(Author.abbr == author_abbr).first_or_404()
     quote_id = request.args.get('q')
-    quote = AuthorQuote.query.get(quote_id) if quote_id else author.random_quote
+    quote = Quote.query.get(quote_id) if quote_id else author.random_quote
     stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(
         Work.author_id == author.id).group_by(Work.type_id).subquery()
     work_types = db.session.query(WorkType, stmt.c.type_num) \
@@ -70,7 +70,7 @@ def add_quote(author_id):
     author = Author.query.get_or_404(author_id)
     form = AuthorQuoteForm()
     if form.validate_on_submit():
-        quote = AuthorQuote(quote=form.quote.data, work_id=form.work_id.data, author_id=author_id)
+        quote = Quote(quote=form.quote.data, work_id=form.work_id.data, author_id=author_id)
         db.session.add(quote)
         db.session.commit()
         return redirect(url_for('.view', author_abbr=author.abbr))
@@ -81,7 +81,7 @@ def add_quote(author_id):
 @admin_permission
 def edit_quote(quote_id):
     """编辑名言"""
-    quote = AuthorQuote.query.get_or_404(quote_id)
+    quote = Quote.query.get_or_404(quote_id)
     form = AuthorQuoteForm(obj=quote)
     if form.validate_on_submit():
         form.populate_obj(quote)
@@ -95,7 +95,7 @@ def edit_quote(quote_id):
 @admin_permission
 def delete_quote(quote_id):
     """删除名言"""
-    quote = AuthorQuote.query.get_or_404(quote_id)
+    quote = Quote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()
     return redirect(url_for('.view', author_abbr=quote.author.abbr))

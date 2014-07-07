@@ -5,7 +5,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from xichuangzhu import app, config
-from xichuangzhu.models import db, Work, Author, Dynasty, AuthorQuote
+from xichuangzhu.models import db, Work, Author, Dynasty, Quote
 
 manager = Manager(app)
 
@@ -145,7 +145,7 @@ def gene_sqlite():
         session.add(_dynasty)
 
     # 转存名言
-    for q in AuthorQuote.query.filter(AuthorQuote.work.has(Work.highlight == True)):
+    for q in Quote.query.filter(Quote.work.has(Work.highlight == True)):
         _quote = _Quote(id=q.id, quote=q.quote, author_id=q.author_id, author=q.author.name,
                         work_id=q.work_id, work=q.work.title)
         session.add(_quote)

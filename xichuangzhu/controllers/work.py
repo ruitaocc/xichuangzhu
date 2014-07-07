@@ -2,7 +2,7 @@
 from __future__ import division
 from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, flash
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
-    User, CollectWork, CollectWorkImage, WorkReviewComment, AuthorQuote
+    User, CollectWork, CollectWorkImage, WorkReviewComment, Quote
 from ..utils import check_is_me
 from ..permissions import user_permission, admin_permission, WorkImageOwnerPermission, \
     WorkReviewOwnerPermission
@@ -120,7 +120,7 @@ def add_quote(work_id):
     work = Work.query.get_or_404(work_id)
     form = WorkQuoteForm()
     if form.validate_on_submit():
-        quote = AuthorQuote(author_id=work.author_id, work_id=work_id, quote=form.quote.data)
+        quote = Quote(author_id=work.author_id, work_id=work_id, quote=form.quote.data)
         db.session.add(quote)
         db.session.commit()
         return redirect(url_for('work.view', work_id=work_id))
@@ -131,7 +131,7 @@ def add_quote(work_id):
 @admin_permission
 def edit_quote(quote_id):
     """编辑名言"""
-    quote = AuthorQuote.query.get_or_404(quote_id)
+    quote = Quote.query.get_or_404(quote_id)
     form = WorkQuoteForm(quote=quote.quote)
     if form.validate_on_submit():
         quote.quote = form.quote.data
@@ -145,7 +145,7 @@ def edit_quote(quote_id):
 @admin_permission
 def delete_quote(quote_id):
     """删除名言"""
-    quote = AuthorQuote.query.get_or_404(quote_id)
+    quote = Quote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()
     return redirect(url_for('work.view', work_id=quote.work_id))
