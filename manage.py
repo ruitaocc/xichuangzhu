@@ -112,7 +112,7 @@ def gene_sqlite():
         work_content = work_content.replace('\r\n\r\n', '\n')
         _work = _Work(id=work.id, title=work.title, author_id=work.author_id,
                       author=work.author.name, dynasty=work.author.dynasty.name,
-                      kind=work.type.en, foreword=work.foreword, content=work_content,
+                      kind=work.type.cn, foreword=work.foreword, content=work_content,
                       intro=work.intro, layout=work.layout)
         session.add(_work)
 
