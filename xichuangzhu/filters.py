@@ -37,7 +37,7 @@ def markdown_work(content):
     """将作品内容格式化为HTML标签
     Add comment -> Split ci -> Generate paragraph
     """
-    c = re.sub(r'<([^<^b]+)>', r"<sup title='\1'></sup>", content)
+    c = re.sub(r'<([^<]+)>', r"<sup title='\1'></sup>", content)
     c = c.replace('%', "&nbsp;&nbsp;&nbsp;&nbsp;")
     c = markdown2.markdown(c)
     return c
