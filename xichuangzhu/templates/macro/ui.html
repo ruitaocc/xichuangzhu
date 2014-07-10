@@ -27,16 +27,17 @@
 
 {% macro render_authors(authors) %}
    {% for author in authors %}
+      {% set quote = author.random_quote %}
+      {% set quote_id = quote.id if quote else "" %}
+      {% set quote_content = quote.quote if quote else "" %}
       <div class='author-item'>
          <div>
-            <a class='author'
-               href="{{ url_for('author.view', author_abbr=author.abbr, q=author.random_quote.id) }}">{{ author.name }}</a>
+            <a class='author' href="{{ url_for('author.view', author_abbr=author.abbr, q=quote_id) }}">{{ author.name }}</a>
             <sup class='author-dynasty'>
-               〔<a
-                  href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
+               〔<a href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
             </sup>
          </div>
-         <div class='author-quote'>{{ author.random_quote.quote }}</div>
+         <div class='author-quote'>{{ quote_content }}</div>
       </div>
    {% endfor %}
 {% endmacro %}
