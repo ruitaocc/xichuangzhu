@@ -8,7 +8,6 @@ bp = Blueprint('site', __name__)
 @bp.route('/')
 def index():
     """首页"""
-    raise Exception
     works = Work.query.order_by(db.func.rand()).limit(4)
     work_images = WorkImage.query.order_by(WorkImage.create_time.desc()).limit(18)
     work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
