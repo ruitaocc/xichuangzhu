@@ -41,6 +41,9 @@ MAIL_ADMIN_ADDR = ''
 # Flask debug toolbar
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
+# Sentry
+SENTRY_DSN = ''
+
 # douban oauth2 config
 DOUBAN_CLIENT_ID = '0cf909cba46ce67526eb1d62ed46b35f'
 DOUBAN_SECRET = '4c87a8ef33e6c6be'
