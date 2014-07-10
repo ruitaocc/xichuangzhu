@@ -21,6 +21,9 @@ def create_app():
 
     if app.debug:
         DebugToolbarExtension(app)
+    else:
+        from .sentry import sentry
+        sentry.init_app(app)
 
     from .mails import mail
     mail.init_app(app)
@@ -76,15 +79,7 @@ def register_jinja(app):
 
 def register_logger(app):
     """Send error log to admin by smtp"""
-    if not app.debug:
-        import logging
-        from logging.handlers import SMTPHandler
-        credentials = (config.MAIL_USERNAME, config.MAIL_PASSWORD)
-        mail_handler = SMTPHandler((config.MAIL_USERNAME, config.MAIL_PORT),
-                                   config.MAIL_DEFAULT_SENDER, config.MAIL_ADMIN_ADDR, 'xcz-log',
-                                   credentials)
-        mail_handler.setLevel(logging.ERROR)
-        app.logger.addHandler(mail_handler)
+    pass
 
 
 def register_db(app):
