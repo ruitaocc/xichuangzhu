@@ -20,7 +20,7 @@ def signin():
     # get current authed user id
     code = request.args.get('code')
     if not code:
-        abort(500)
+        return redirect(url_for('site.index'))
     url = "https://www.douban.com/service/auth2/token"
     data = {
         'client_id': config.DOUBAN_CLIENT_ID,
@@ -30,6 +30,8 @@ def signin():
         'code': code
     }
     res = requests.post(url, data=data).json()
+    if 'douban_user_id' not in res:
+        return redirect(url_for('site.index'))
     user_id = int(res['douban_user_id'])
 
     user = User.query.get(user_id)
