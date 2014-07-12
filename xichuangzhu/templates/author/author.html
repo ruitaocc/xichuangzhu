@@ -30,6 +30,8 @@
             placement: 'right'
          });
 
+         $('.quote').tooltip();
+
          $('.btn-rm-quote').click(function () {
             if (!confirm('确认删除此名言？')) {
                return false;
@@ -69,7 +71,8 @@
          </div>
 
          <div class='author-period'>
-            〔<a href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
+            〔<a
+               href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
             {% if author.death_year %}
                {{ author.birth_year|format_year }} ~ {{ author.death_year|format_year }}
             {% endif %}
@@ -78,39 +81,6 @@
          <h2>简介</h2>
 
          <div class='author-introduction'>{{ author.intro }}</div>
-
-         {% if admin_permission %}
-            {% set quotes_count = author.quotes.count() %}
-            <h2>名言 / {{ quotes_count }}</h2>
-
-            {% if quotes_count %}
-               <table class="table table-striped table-hover">
-                  <tbody>
-                  {% for q in author.quotes %}
-                     <tr>
-                        <td>{{ q.quote }}</td>
-                        <td>
-                           出自《<a href="{{ url_for('work.view', work_id=q.work_id) }}"
-                                 target="_blank">{{ q.work.title }}</a>》
-                        </td>
-                        <td>
-                           <div class='btn-group btn-group-sm'>
-                              <a class="btn btn-default" title="编辑"
-                                 href="{{ url_for('author.edit_quote', quote_id=q.id) }}">
-                                 <span class="glyphicon glyphicon-edit"></span>
-                              </a>
-                              <a class="btn btn-default btn-rm-quote" title='删除'
-                                 href="{{ url_for('author.delete_quote', quote_id=q.id) }}">
-                                 <span class="glyphicon glyphicon-trash"></span>
-                              </a>
-                           </div>
-                        </td>
-                     </tr>
-                  {% endfor %}
-                  </tbody>
-               </table>
-            {% endif %}
-         {% endif %}
 
          <h2>
             作品
@@ -137,7 +107,40 @@
          {% endfor %}
       </div>
 
-      <div class="col-md-4"></div>
+      <div class="col-md-4">
+         {% set quotes_count = author.quotes.count() %}
+         <h2>名言 / {{ quotes_count }}</h2>
+
+         {% if quotes_count %}
+            <table class="table table-striped table-quotes">
+               <tbody>
+               {% for q in author.quotes %}
+                  <tr>
+                     <td>
+                        <a class="quote" target="_blank" title="《{{ q.work.title }}》"
+                           href="{{ url_for('work.view', work_id=q.work_id) }}">
+                           {{ q.quote|truncate(19, true) }}
+                        </a>
+
+                        {% if admin_permission %}
+                           <div class='btn-group btn-group-xs cmds'>
+                              <a class="btn btn-default" title="编辑"
+                                 href="{{ url_for('author.edit_quote', quote_id=q.id) }}">
+                                 <span class="glyphicon glyphicon-edit"></span>
+                              </a>
+                              <a class="btn btn-default btn-rm-quote" title='删除'
+                                 href="{{ url_for('author.delete_quote', quote_id=q.id) }}">
+                                 <span class="glyphicon glyphicon-trash"></span>
+                              </a>
+                           </div>
+                        {% endif %}
+                     </td>
+                  </tr>
+               {% endfor %}
+               </tbody>
+            </table>
+         {% endif %}
+      </div>
    </div>
 
 {% endblock %}
