@@ -87,25 +87,25 @@
 
             {% if quotes_count %}
                <table class="table table-striped table-hover">
-               <tbody>
-               {% for q in work.quotes %}
-                  <tr>
-                     <td>{{ q.quote }}</td>
-                     <td>
-                        <div class='btn-group btn-group-sm'>
-                           <a class="btn btn-default" title="编辑"
-                              href="{{ url_for('work.edit_quote', quote_id=q.id) }}">
-                              <span class="glyphicon glyphicon-edit"></span>
-                           </a>
-                           <a class="btn btn-default btn-rm-quote" title='删除'
-                              href="{{ url_for('work.delete_quote', quote_id=q.id) }}">
-                              <span class="glyphicon glyphicon-trash"></span>
-                           </a>
-                        </div>
-                     </td>
-                  </tr>
-               {% endfor %}
-               </tbody>
+                  <tbody>
+                  {% for q in work.quotes %}
+                     <tr>
+                        <td>{{ q.quote }}</td>
+                        <td>
+                           <div class='btn-group btn-group-sm'>
+                              <a class="btn btn-default" title="编辑"
+                                 href="{{ url_for('work.edit_quote', quote_id=q.id) }}">
+                                 <span class="glyphicon glyphicon-edit"></span>
+                              </a>
+                              <a class="btn btn-default btn-rm-quote" title='删除'
+                                 href="{{ url_for('work.delete_quote', quote_id=q.id) }}">
+                                 <span class="glyphicon glyphicon-trash"></span>
+                              </a>
+                           </div>
+                        </td>
+                     </tr>
+                  {% endfor %}
+                  </tbody>
                </table>
             {% endif %}
          {% endif %}
@@ -147,17 +147,17 @@
       </div>
 
       <div class="col-md-4">
-         <h2>标签</h2>
-         <ul class="work-tags">
-            {% for t in work.tags %}
-               <li><a href="{{ url_for('work.tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>
-            {% endfor %}
-            <li>
-               <a href="#" class='add-tag-btn'>
-                  <span class='glyphicon glyphicon-plus'></span> 添加
-               </a>
-            </li>
-         </ul>
+         {#         <h2>标签</h2>#}
+         {#         <ul class="work-tags">#}
+         {#            {% for t in work.tags %}#}
+         {#               <li><a href="{{ url_for('work.tag', tag_id=t.tag_id) }}">{{ t.tag.title }}</a></li>#}
+         {#            {% endfor %}#}
+         {#            <li>#}
+         {#               <a href="#" class='add-tag-btn'>#}
+         {#                  <span class='glyphicon glyphicon-plus'></span> 添加#}
+         {#               </a>#}
+         {#            </li>#}
+         {#         </ul>#}
 
          <h2>作者简介</h2>
 
@@ -237,10 +237,10 @@
          layout();
       });
 
-   $('.btn-rm-quote').click(function(){
-      if(!confirm('确认删除此名言？')){
-         return false;
-      }
-   });
+      $('.btn-rm-quote').click(function () {
+         if (!confirm('确认删除此名言？')) {
+            return false;
+         }
+      });
    </script>
 {% endblock %}

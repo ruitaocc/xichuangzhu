@@ -13,16 +13,23 @@
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
    <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
    <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/xichuangzhu.ico') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+   <link rel="stylesheet"
+         href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
    <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.theme.css') }}">
    <link rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
    <link rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
-   <script src="{{ url_for('static', filename='bower_components/respond/dest/respond.min.js') }}"></script>
-   <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
-   <script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-   <script src="{{ url_for('static', filename='bower_components/jquery-cookie/jquery.cookie.js') }}"></script>
-   <script src="{{ url_for('static', filename='bower_components/jquery-s2t/jquery.s2t.js') }}"></script>
+   <link rel="stylesheet"
+         href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
+   <script
+         src="{{ url_for('static', filename='bower_components/respond/dest/respond.min.js') }}"></script>
+   <script
+         src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+   <script
+         src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+   <script
+         src="{{ url_for('static', filename='bower_components/jquery-cookie/jquery.cookie.js') }}"></script>
+   <script
+         src="{{ url_for('static', filename='bower_components/jquery-s2t/jquery.s2t.js') }}"></script>
 </head>
 
 <body id="{% block page_id %}{% endblock %}">
@@ -65,7 +72,7 @@
          <ul class="nav navbar-nav">
             <li><a href="{{ url_for('site.index') }}">首页</a></li>
 
-            <li><a href="{{ url_for('work.tags') }}">标签</a></li>
+            {# <li><a href="{{ url_for('work.tags') }}">标签</a></li>#}
 
             {% if g.user %}
                <li><a href="{{ url_for('user.collects') }}">收藏</a></li>
