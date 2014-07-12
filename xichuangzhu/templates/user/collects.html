@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "macro/ui.html" import render_works, render_work_images with context %}
+{% from "macro/ui.html" import pagination, render_works, render_work_images with context %}
 
 {% block page_title %}我的收藏{% endblock %}
 {% block page_id %}page-user-collects{% endblock %}
@@ -10,25 +10,27 @@
       <div class="col-md-8">
          <h2>
             作品收藏
-            <span class='link-more'>
-               <a href="{{ url_for('user.collect_works') }}">
-                  全部 / {{ user.collect_works.count() }} »
-               </a>
-            </span>
+            {#            <span class='link-more'>#}
+            {#               <a href="{{ url_for('user.collect_works') }}">#}
+            {#                  全部 / {{ user.collect_works.count() }} »#}
+            {#               </a>#}
+            {#            </span>#}
          </h2>
 
-         {{ render_works(collect_works) }}
+         {{ render_works(paginator.items) }}
 
-         <h2>
-            图片收藏
-            <span class='link-more'>
-               <a href="{{ url_for('user.collect_work_images') }}">
-                  全部 / {{ user.collect_work_images.count() }} »
-               </a>
-            </span>
-         </h2>
+         {#         <h2>#}
+         {#            图片收藏#}
+         {#            <span class='link-more'>#}
+         {#               <a href="{{ url_for('user.collect_work_images') }}">#}
+         {#                  全部 / {{ user.collect_work_images.count() }} »#}
+         {#               </a>#}
+         {#            </span>#}
+         {#         </h2>#}
+         {##}
+         {#         {{ render_work_images(collect_work_images) }}#}
 
-         {{ render_work_images(collect_work_images) }}
+         {{ pagination(paginator) }}
       </div>
 
       <div class="col-md-4"></div>

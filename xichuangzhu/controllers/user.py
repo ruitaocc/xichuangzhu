@@ -54,16 +54,17 @@ def work_images(user_abbr, page):
     return render_template('user/work_images.html', user=user, paginator=paginator)
 
 
-@bp.route('/collects')
+@bp.route('/collects', defaults={'page': 1})
+@bp.route('/collects/<int:page>')
 @user_permission
-def collects():
+def collects(page):
     """用户收藏页"""
-    collect_works = Work.query.join(CollectWork).filter(CollectWork.user_id == g.user.id).order_by(
-        CollectWork.create_time.desc()).limit(6)
+    paginator = Work.query.join(CollectWork).filter(CollectWork.user_id == g.user.id).order_by(
+        CollectWork.create_time.desc()).paginate(page, 8)
     collect_work_images = WorkImage.query.join(CollectWorkImage).filter(
         CollectWorkImage.user_id == g.user.id).order_by(
         CollectWorkImage.create_time.desc()).limit(9)
-    return render_template('user/collects.html', user=g.user, collect_works=collect_works,
+    return render_template('user/collects.html', user=g.user, paginator=paginator,
                            collect_work_images=collect_work_images)
 
 
