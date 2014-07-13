@@ -2,8 +2,6 @@
 from flask_wtf import Form
 from wtforms import TextField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from ..uploadsets import workimages
 
 
 class WorkReviewForm(Form):
@@ -19,4 +17,6 @@ class WorkReviewCommentForm(Form):
 
 class WorkImageForm(Form):
     """Form for add and edit work image"""
-    image = HiddenField(validators=[DataRequired('请上传图片后提交')])
+    image = HiddenField('图片', validators=[DataRequired('请上传图片后提交')])
+    is_original = TextField('类别', validators=[DataRequired()])
+    from_url = TextField('来源', description='图片的来源网址，选填')
