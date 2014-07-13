@@ -168,20 +168,20 @@
 
 
 {% macro render_work_images(work_images) %}
-   <div class='work-image-wap'>
+   <div class='work-images-wap'>
       {% for image in work_images %}
-         <a href="{{ url_for('work.image', work_image_id=image.id) }}">
-            <img class='work-image img-responsive' src="{{ image.url }}">
+         <a href="{{ url_for('work.image', work_image_id=image.id) }}" class="work-image">
+            <img class='img-responsive' src="{{ image.url }}">
+            {% if image.is_original %}
+               <span title="原创作品" class="is-original-tag">原</span>
+            {% endif %}
          </a>
       {% endfor %}
    </div>
 
-   <script type="text/javascript"
-           src="{{ url_for('static', filename='bower_components/eventEmitter/EventEmitter.min.js') }}"></script>
-   <script type="text/javascript"
-           src="{{ url_for('static', filename='bower_components/eventie/eventie.js') }}"></script>
-   <script type="text/javascript"
-           src="{{ url_for('static', filename='bower_components/imagesloaded/imagesloaded.js') }}"></script>
+   {{ js('bower_components/eventEmitter/EventEmitter.min.js') }}
+   {{ js('bower_components/eventie/eventie.js') }}
+   {{ js('bower_components/imagesloaded/imagesloaded.js') }}
    <script type="text/javascript">
       // water fall layout
       function waterfall() {
@@ -194,15 +194,11 @@
 
          // init css style
          $('.work-image').each(function (index) {
-
-            $(this).css({
-               'width': width + 'px',
-               'display': 'none',
-               'position': 'absolute'
-            });
+            $(this).width(width);
+            $(this).find('img').width(width);
          });
 
-         $('.work-image-wap').imagesLoaded().progress(function (instance, image) {
+         $('.work-images-wap').imagesLoaded().progress(function (instance, image) {
             // get the min height column
             var img = image.img;
             var minHeight = tops[0];
@@ -215,10 +211,11 @@
                }
             }
 
-            $(img).css({
+            $(img).parent().css({
                'display': 'block',
                'left': lefts[minHeightColumn] + 'px',
-               'top': tops[minHeightColumn] + 'px'
+               'top': tops[minHeightColumn] + 'px',
+               'height': $(img).height()
             });
 
             // Overadd height
@@ -231,7 +228,7 @@
                   maxHeight = tops[i];
                }
             }
-            $('.work-image-wap').css('height', maxHeight + 'px');
+            $('.work-images-wap').css('height', maxHeight + 'px');
          });
       }
 
