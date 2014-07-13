@@ -253,7 +253,7 @@ def edit_image(work_image_id):
     permission = WorkImageOwnerPermission(work_image_id)
     if not permission.check():
         return permission.deny()
-    form = WorkImageForm()
+    form = WorkImageForm(image=work_image.filename)
     if form.validate_on_submit():
         is_original = True if form.is_original.data == 'yes' else False
         work_image.is_original = is_original

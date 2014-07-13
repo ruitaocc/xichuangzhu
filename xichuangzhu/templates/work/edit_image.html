@@ -16,22 +16,13 @@
                action="{{ url_for('work.edit_image', work_image_id=work_image.id) }}"
                enctype="multipart/form-data">
             <fieldset>
-
                {{ form.csrf_token }}
 
                <div class="form-group">
-                  <label class="control-label col-md-2">原图</label>
-
-                  <div class="col-md-10">
-                     <img src="{{ work_image.url }}" class='img-responsive'/>
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label class="control-label col-md-2">新图</label>
+                  <label class="control-label col-md-2">图片</label>
 
                   <div class="col-md-8 form-control-static">
-                     <img class="preview" src="" alt=""/>
+                     <img class="preview" src="{{ work_image.url }}" alt=""/>
 
                      <div class="progress">
                         <div class="progress-bar" style="width: 0%;"></div>
@@ -41,6 +32,25 @@
                         选择图片
                      </button>
                      {{ form.image }}
+                  </div>
+               </div>
+
+               <div class="form-group select-is-original">
+                  <label class="control-label col-md-2">类别</label>
+
+                  <div class="col-md-8 form-control-static">
+                     <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default btn-sm
+                              {% if work_image.is_original %}active{% endif %}">
+                           <input type="radio" name="is_original" value="yes"
+                                  {% if work_image.is_original %}checked{% endif %}> 原创
+                        </label>
+                        <label class="btn btn-default btn-sm
+                              {% if not work_image.is_original %}active{% endif %}">
+                           <input type="radio" name="is_original" value="no"
+                                  {% if not work_image.is_original %}checked{% endif %}> 非原创
+                        </label>
+                     </div>
                   </div>
                </div>
 
