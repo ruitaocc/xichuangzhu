@@ -18,5 +18,5 @@ class WorkReviewCommentForm(Form):
 class WorkImageForm(Form):
     """Form for add and edit work image"""
     image = HiddenField('图片', validators=[DataRequired('请上传图片后提交')])
-    is_original = TextField('类别', validators=[DataRequired()])
+    is_original = TextField('类别', validators=[DataRequired('请选择是否为原创作品')])
     from_url = TextField('来源', description='图片的来源网址，选填')

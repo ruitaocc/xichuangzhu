@@ -236,7 +236,9 @@ def add_image(work_id):
     work = Work.query.get_or_404(work_id)
     form = WorkImageForm()
     if form.validate_on_submit():
-        work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=form.image.data)
+        is_original = True if form.is_original.data == 'yes' else False
+        work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=form.image.data,
+                               is_original=is_original)
         db.session.add(work_image)
         db.session.commit()
         return redirect(url_for('.image', work_image_id=work_image.id))
@@ -253,6 +255,8 @@ def edit_image(work_image_id):
         return permission.deny()
     form = WorkImageForm()
     if form.validate_on_submit():
+        is_original = True if form.is_original.data == 'yes' else False
+        work_image.is_original = is_original
         work_image.filename = form.image.data
         db.session.add(work_image)
         db.session.commit()

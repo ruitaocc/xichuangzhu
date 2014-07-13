@@ -37,22 +37,21 @@
                   </div>
                </div>
 
-               <div class="form-group">
+               <div class="form-group select-is-original">
                   <label class="control-label col-md-2">类别</label>
 
                   <div class="col-md-8 form-control-static">
                      <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-default btn-sm">
-                           <input type="radio" name="is_original" value="yes"> 原创
+                           <input type="radio" name="is_original" class="original" value="yes"> 原创
                         </label>
                         <label class="btn btn-default btn-sm active">
-                           <input type="radio" name="is_original" value="no" checked> 非原创
+                           <input type="radio" name="is_original" class="not-original" value="no"
+                                  checked> 非原创
                         </label>
                      </div>
                   </div>
                </div>
-
-               {{ horizontal_field(form.from_url, static=True) }}
 
                <div class="form-group">
                   <div class="col-md-6 col-md-offset-2">
