@@ -12,7 +12,7 @@ class WorkForm(Form):
                          choices=[('center', '居中'), ('indent', '段落缩进')])
     author_id = SelectField('作者', [DataRequired('作者不能为空')], coerce=int)
     foreword = TextAreaField('序')
-    intro = TextAreaField('简析')
+    intro = TextAreaField('评析')
     content = TextAreaField('内容', [DataRequired('内容不能为空')])
 
 
