@@ -56,6 +56,8 @@ class WorkTag(db.Model):
 class WorkImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(200))
+    is_original = db.Column(db.Boolean, default=False)
+    from_url = db.Column(db.String(250))
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
 
     work_id = db.Column(db.Integer, db.ForeignKey('work.id'))
