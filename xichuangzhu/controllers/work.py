@@ -253,17 +253,10 @@ def edit_image(work_image_id):
         return permission.deny()
     form = WorkImageForm()
     if form.validate_on_submit():
-        filename = workimages.save(request.files['image'], name=random_filename() + ".")
-        try:
-            save_to_oss(filename, workimages)
-        except IOError:
-            flash('图片上传失败，请稍后尝试')
-            return redirect(url_for('.edit_image', work_image_id=work_image_id))
-        else:
-            work_image.filename = filename
-            db.session.add(work_image)
-            db.session.commit()
-            return redirect(url_for('.image', work_image_id=work_image_id))
+        work_image.filename = form.image.data
+        db.session.add(work_image)
+        db.session.commit()
+        return redirect(url_for('.image', work_image_id=work_image_id))
     return render_template('work/edit_image.html', work_image=work_image, form=form)
 
 

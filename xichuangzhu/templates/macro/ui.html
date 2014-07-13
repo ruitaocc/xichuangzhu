@@ -32,9 +32,11 @@
       {% set quote_content = quote.quote if quote else "" %}
       <div class='author-item'>
          <div>
-            <a class='author' href="{{ url_for('author.view', author_abbr=author.abbr, q=quote_id) }}">{{ author.name }}</a>
+            <a class='author'
+               href="{{ url_for('author.view', author_abbr=author.abbr, q=quote_id) }}">{{ author.name }}</a>
             <sup class='author-dynasty'>
-               〔<a href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
+               〔<a
+                  href="{{ url_for('dynasty.view', dynasty_abbr=author.dynasty.abbr) }}">{{ author.dynasty.name }}</a>〕
             </sup>
          </div>
          <div class='author-quote'>{{ quote_content }}</div>
@@ -119,7 +121,8 @@
             <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">
                {{ w.title }}</a>
             <sup class="work-author">
-               〔<a href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
+               〔<a
+                  href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
                {% if show %}
                   <span class="glyphicon glyphicon-ok"></span>
                {% endif %}
@@ -257,4 +260,60 @@
          {% endif %}
       </div>
    </div>
+{% endmacro %}
+
+
+{% macro upload_work_image() %}
+   {{ js('bower_components/plupload/js/plupload.full.min.js') }}
+   {{ js('bower_components/plupload/js/i18n/zh_CN.js') }}
+   <script type="text/javascript">
+      var uploader = new plupload.Uploader({
+         browse_button: 'btn-upload-image',
+         url: "{{ url_for('work.upload_image') }}",
+         multipart_params: {
+            csrf_token: "{{ csrf_token() }}"
+         },
+         filters: {
+            max_file_size: '10mb'
+         }
+      });
+
+      uploader.init();
+
+      // 文件添加后立即启动上传
+      uploader.bind('FilesAdded', function (up, files) {
+         uploader.setOption();
+
+         plupload.each(files, function (file) {
+            uploader.start();
+         });
+      });
+
+      var errorList = $('.list-form-errors');
+
+      // 上传结束
+      uploader.bind('FileUploaded', function (up, file, info) {
+         var response = $.parseJSON(info.response);
+         if (response.status === 'yes') {
+            $('#image').val(response.filename);
+            $('.preview').show().attr('src', response.url);
+            errorList.empty();
+         } else if (response.status === 'no') {
+            errorList.html("<li>" + response.error + "</li>");
+         } else {
+            errorList.html("<li>上传失败，请刷新页面后再试。</li>");
+         }
+      });
+
+      // 显示文件上传进度条
+      uploader.bind('UploadProgress', function (up, file) {
+         $('.progress-bar').css('width', file.percent + '%').text(file.percent + "%");
+      });
+
+      // 上传失败
+      uploader.bind('Error', function (up, error) {
+         console.log(error);
+         errorList.html("<li>" + error.message + "</li>");
+      });
+   </script>
 {% endmacro %}

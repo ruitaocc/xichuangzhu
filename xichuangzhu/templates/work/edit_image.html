@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import field_errors %}
+{% from "macro/ui.html" import upload_work_image %}
 
 {% block page_title %}编辑图片{% endblock %}
 {% block page_id %}page-edit-work-image{% endblock %}
@@ -29,10 +30,17 @@
                <div class="form-group">
                   <label class="control-label col-md-2">新图</label>
 
-                  <div class="col-md-6">
-                     {{ form.image }}
-                     <p class="help-block">图片大小不超过5M</p>
+                  <div class="col-md-8 form-control-static">
+                     <img class="preview" src="" alt=""/>
+
+                     <div class="progress">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                     </div>
                      {{ field_errors(form.image) }}
+                     <button type="button" class="btn btn-default btn-xs" id="btn-upload-image">
+                        选择图片
+                     </button>
+                     {{ form.image }}
                   </div>
                </div>
 
@@ -45,5 +53,7 @@
          </form>
       </div>
    </div>
+
+   {{ upload_work_image() }}
 
 {% endblock %}
