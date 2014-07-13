@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import horizontal_field %}
 
-{% block page_title %}添加名言 - {{ quote.author.name }}{% endblock %}
+{% block page_title %}添加摘录 - {{ quote.author.name }}{% endblock %}
 {% block page_id %}page-author-add-quote{% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
    <form id="form-edit-quote" class="form-horizontal" method="post"
          action="{{ url_for('author.add_quote', author_id=author.id) }}">
       <fieldset>
-         <legend>添加名言</legend>
+         <legend>添加摘录</legend>
 
          {{ form.csrf_token }}
 

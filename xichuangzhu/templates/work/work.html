@@ -53,7 +53,7 @@
 
                   <a class="btn btn-default" target="_blank" title="点评作品"
                      href="{{ url_for('work.add_quote', work_id=work.id) }}">
-                     <span class="fa fa-plus"></span> 添加名言
+                     <span class="fa fa-plus"></span> 添加摘录
                   </a>
                {% endif %}
 
@@ -83,7 +83,7 @@
 
          {% if permissions.admin_permission.check() %}
             {% set quotes_count = work.quotes.count() %}
-            <h2>名言 / {{ quotes_count }}</h2>
+            <h2>摘录 / {{ quotes_count }}</h2>
 
             {% if quotes_count %}
                <table class="table table-striped table-hover">
@@ -248,7 +248,7 @@
       });
 
       $('.btn-rm-quote').click(function () {
-         if (!confirm('确认删除此名言？')) {
+         if (!confirm('确认删除此摘录？')) {
             return false;
          }
       });

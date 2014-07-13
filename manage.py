@@ -145,7 +145,7 @@ def gene_sqlite():
                             start_year=dynasty.start_year, end_year=dynasty.end_year)
         session.add(_dynasty)
 
-    # 转存名言
+    # 转存摘录
     for q in Quote.query.filter(Quote.work.has(Work.highlight == True)):
         _quote = _Quote(id=q.id, quote=q.quote, author_id=q.author_id, author=q.author.name,
                         work_id=q.work_id, work=q.work.title)

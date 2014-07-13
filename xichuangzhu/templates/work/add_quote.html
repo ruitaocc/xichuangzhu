@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import horizontal_field %}
 
-{% block page_title %}添加名言 - {{ work.title }}{% endblock %}
+{% block page_title %}添加摘录 - {{ work.title }}{% endblock %}
 {% block page_id %}page-work-edit-quote{% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
          <form id="form-edit-quote" class="form-horizontal" method="post"
                action="{{ url_for('work.add_quote', work_id=work.id) }}">
             <fieldset>
-               <legend>添加名言</legend>
+               <legend>添加摘录</legend>
                {{ form.csrf_token }}
 
                <div class="form-group">

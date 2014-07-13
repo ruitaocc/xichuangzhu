@@ -28,13 +28,13 @@ class AuthorForm(Form):
 
 class AuthorQuoteForm(Form):
     """Form for add & edit author quote"""
-    quote = TextField('名言', [DataRequired('名言不能为空')])
+    quote = TextField('摘录', [DataRequired('摘录不能为空')])
     work_id = IntegerField('出处', [DataRequired('出处不能为空')])
 
 
 class WorkQuoteForm(Form):
     """Form for add & edit quote for work"""
-    quote = TextField('名言', [DataRequired('名言不能为空')])
+    quote = TextField('摘录', [DataRequired('摘录不能为空')])
 
 
 class DynastyForm(Form):

@@ -116,7 +116,7 @@ def edit(work_id):
 @bp.route('/<int:work_id>/add_quote', methods=['GET', 'POST'])
 @admin_permission
 def add_quote(work_id):
-    """为此作品添加名言"""
+    """为此作品添加摘录"""
     work = Work.query.get_or_404(work_id)
     form = WorkQuoteForm()
     if form.validate_on_submit():
@@ -130,7 +130,7 @@ def add_quote(work_id):
 @bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
 @admin_permission
 def edit_quote(quote_id):
-    """编辑名言"""
+    """编辑摘录"""
     quote = Quote.query.get_or_404(quote_id)
     form = WorkQuoteForm(quote=quote.quote)
     if form.validate_on_submit():
@@ -144,7 +144,7 @@ def edit_quote(quote_id):
 @bp.route('/quote/<int:quote_id>/delete', methods=['GET', 'POST'])
 @admin_permission
 def delete_quote(quote_id):
-    """删除名言"""
+    """删除摘录"""
     quote = Quote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()

@@ -68,7 +68,7 @@ def edit(author_id):
 @bp.route('/<int:author_id>/add_quote', methods=['GET', 'POST'])
 @admin_permission
 def add_quote(author_id):
-    """管理文学家的名言"""
+    """管理文学家的摘录"""
     author = Author.query.get_or_404(author_id)
     form = AuthorQuoteForm()
     if form.validate_on_submit():
@@ -82,7 +82,7 @@ def add_quote(author_id):
 @bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
 @admin_permission
 def edit_quote(quote_id):
-    """编辑名言"""
+    """编辑摘录"""
     quote = Quote.query.get_or_404(quote_id)
     form = AuthorQuoteForm(obj=quote)
     if form.validate_on_submit():
@@ -96,7 +96,7 @@ def edit_quote(quote_id):
 @bp.route('/quote/<int:quote_id>/delete')
 @admin_permission
 def delete_quote(quote_id):
-    """删除名言"""
+    """删除摘录"""
     quote = Quote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()

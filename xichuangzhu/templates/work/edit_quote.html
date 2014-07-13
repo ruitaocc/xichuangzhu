@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "macro/form.html" import horizontal_field %}
 
-{% block page_title %}编辑名言 - {{ quote.work.title }}{% endblock %}
+{% block page_title %}编辑摘录 - {{ quote.work.title }}{% endblock %}
 {% block page_id %}page-work-edit-quote{% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
          <form id="form-edit-quote" class="form-horizontal" method="post"
                action="{{ url_for('work.edit_quote', quote_id=quote.id) }}">
             <fieldset>
-               <legend>编辑名言</legend>
+               <legend>编辑摘录</legend>
                {{ form.csrf_token }}
 
                <div class="form-group">

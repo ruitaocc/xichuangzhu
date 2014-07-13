@@ -33,7 +33,7 @@
          $('.quote').tooltip();
 
          $('.btn-rm-quote').click(function () {
-            if (!confirm('确认删除此名言？')) {
+            if (!confirm('确认删除此摘录？')) {
                return false;
             }
          });
@@ -56,7 +56,7 @@
 
                <a class="btn btn-default btn-sm"
                   href="{{ url_for('author.add_quote', author_id=author.id) }}">
-                  <span class="fa fa-plus"></span> 添加名言
+                  <span class="fa fa-plus"></span> 添加摘录
                </a>
             </div>
          {% endif %}
@@ -109,7 +109,7 @@
 
       <div class="col-md-4">
          {% set quotes_count = author.quotes.count() %}
-         <h2>名言 / {{ quotes_count }}</h2>
+         <h2>摘录 / {{ quotes_count }}</h2>
 
          {% if quotes_count %}
             <table class="table table-striped table-quotes">
