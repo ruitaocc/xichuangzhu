@@ -60,8 +60,13 @@
 
    <div class='row'>
       <div class='col-md-10'>
-         <img src="{{ work_image.url }}" class='work-image img-responsive'
-              alt="《{{ work_image.work.title }}》书法作品"/>
+         <div class="work-image-wap">
+            <img src="{{ work_image.url }}" class='work-image img-responsive'
+                 alt="《{{ work_image.work.title }}》书法作品"/>
+            {% if work_image.is_original %}
+               <span title="原创作品" class="is-original-tag">原创</span>
+            {% endif %}
+         </div>
       </div>
    </div>
 
