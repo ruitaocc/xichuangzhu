@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import division
-from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, flash
+from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, flash, \
+    current_app
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment, Quote
 from ..utils import check_is_me
@@ -211,6 +212,23 @@ def image(work_image_id):
     return render_template('work/image.html', work_image=work_image)
 
 
+@bp.route('/upload_image', methods=['POST'])
+@user_permission
+def upload_image():
+    """上传图片"""
+    try:
+        filename = workimages.save(request.files['file'], name=random_filename() + ".")
+        save_to_oss(filename, workimages)
+    except Exception, err:
+        return json.dumps({'status': 'no', 'error': err.__repr__()})
+    else:
+        return json.dumps({
+            'status': 'yes',
+            'filename': filename,
+            'url': current_app.config['OSS_URL'] + filename
+        })
+
+
 @bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
 @user_permission
 def add_image(work_id):
@@ -218,18 +236,10 @@ def add_image(work_id):
     work = Work.query.get_or_404(work_id)
     form = WorkImageForm()
     if form.validate_on_submit():
-        # Save image to local and oss
-        filename = workimages.save(request.files['image'], name=random_filename() + ".")
-        try:
-            save_to_oss(filename, workimages)
-        except IOError:
-            flash('图片上传失败，请稍后尝试')
-            return redirect(url_for('.add_image', work_id=work_id))
-        else:
-            work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=filename)
-            db.session.add(work_image)
-            db.session.commit()
-            return redirect(url_for('.image', work_image_id=work_image.id))
+        work_image = WorkImage(work_id=work_id, user_id=g.user.id, filename=form.image.data)
+        db.session.add(work_image)
+        db.session.commit()
+        return redirect(url_for('.image', work_image_id=work_image.id))
     return render_template('work/add_image.html', work=work, form=form)
 
 

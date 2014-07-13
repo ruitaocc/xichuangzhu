@@ -1,6 +1,7 @@
 # coding: utf-8
 import sys
 from flask import Flask, request, url_for, g, render_template
+from jinja2 import Markup
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
@@ -74,8 +75,22 @@ def register_jinja(app):
         view_args.update(args)
         return url_for(request.endpoint, **view_args)
 
-    app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+    def static(filename):
+        """生成静态资源url"""
+        return url_for('static', filename=filename)
 
+    def js(path):
+        """生成script标签"""
+        return Markup("<script type='text/javascript' src='%s'></script>" % static(path))
+
+    def css(path):
+        """生成link标签"""
+        return Markup("<link rel='stylesheet' href='%s'></script>" % static(path))
+
+    app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+    app.jinja_env.globals['static'] = static
+    app.jinja_env.globals['js'] = js
+    app.jinja_env.globals['css'] = css
 
 def register_logger(app):
     """Send error log to admin by smtp"""
