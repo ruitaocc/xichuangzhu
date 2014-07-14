@@ -11,14 +11,13 @@ bp = Blueprint('author', __name__)
 def view(author_abbr):
     """文学家主页"""
     author = Author.query.filter(Author.abbr == author_abbr).first_or_404()
-    # quote
+    # 获取1条摘录
     quote_id = request.args.get('q')
     quote = Quote.query.get(quote_id) if quote_id else None
     if not quote:
         quote = author.random_quote
     # 随机获取10条以下的摘录
-    permission = admin_permission.check()
-    if permission:
+    if admin_permission.check():
         quotes = author.quotes
     else:
         quotes = author.quotes.order_by(db.func.rand()).limit(10)
