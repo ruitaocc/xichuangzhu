@@ -11,15 +11,23 @@ bp = Blueprint('author', __name__)
 def view(author_abbr):
     """文学家主页"""
     author = Author.query.filter(Author.abbr == author_abbr).first_or_404()
+    # quote
     quote_id = request.args.get('q')
     quote = Quote.query.get(quote_id) if quote_id else None
     if not quote:
         quote = author.random_quote
+    # 随机获取10条以下的摘录
+    permission = admin_permission.check()
+    if permission:
+        quotes = author.quotes
+    else:
+        quotes = author.quotes.order_by(db.func.rand()).limit(10)
     stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(
         Work.author_id == author.id).group_by(Work.type_id).subquery()
     work_types = db.session.query(WorkType, stmt.c.type_num) \
         .join(stmt, WorkType.id == stmt.c.type_id)
-    return render_template('author/author.html', author=author, quote=quote, work_types=work_types)
+    return render_template('author/author.html', author=author, quote=quote, work_types=work_types,
+                           quotes=quotes)
 
 
 @bp.route('/')
