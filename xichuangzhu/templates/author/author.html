@@ -119,7 +119,7 @@
                      <td>
                         <a class="quote" target="_blank" title="《{{ q.work.title }}》"
                            href="{{ url_for('work.view', work_id=q.work_id) }}">
-                           {{ q.quote|truncate(19, true) }}
+                           {{ q.quote|truncate(18, true) }}
                         </a>
 
                         {% if admin_permission %}
