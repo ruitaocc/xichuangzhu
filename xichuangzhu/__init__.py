@@ -62,7 +62,6 @@ def register_jinja(app):
     @app.context_processor
     def inject_vars():
         return dict(
-            douban_login_url=config.DOUBAN_LOGIN_URL,
             roles=roles,
             permissions=permissions
         )

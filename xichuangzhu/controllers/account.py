@@ -1,7 +1,7 @@
 # coding: utf-8
 import requests
 import hashlib
-from flask import render_template, request, redirect, url_for, Blueprint, flash, abort, g
+from flask import render_template, request, redirect, url_for, Blueprint, flash, abort, g, session
 from .. import config
 from ..models import db, User
 from ..utils import signin_user, signout_user
@@ -11,6 +11,14 @@ from ..permissions import require_visitor, new_user_permission
 from ..mails import signup_mail
 
 bp = Blueprint('account', __name__)
+
+
+@bp.route('/pre_signin')
+@require_visitor
+def pre_signin():
+    """跳转豆瓣OAuth登陆之前，记录referer"""
+    session['referer'] = request.referrer
+    return redirect(config.DOUBAN_LOGIN_URL)
 
 
 @bp.route('/signin')
@@ -42,7 +50,9 @@ def signin():
         if user.role == NewUserRole:
             flash('账户尚未激活，请登陆邮箱激活账户')
         signin_user(user, True)
-        return redirect(url_for('site.index'))
+        redirect_url = session.get('referer') or url_for('site.index')
+        session.pop('referer')
+        return redirect(redirect_url)
     return redirect(url_for('.signup', user_id=user_id))
 
 
