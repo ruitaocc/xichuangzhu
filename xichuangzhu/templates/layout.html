@@ -13,23 +13,16 @@
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
    <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
    <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/favicon.png') }}">
-   <link rel="stylesheet"
-         href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='style/bootstrap.theme.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='style/component.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='style/page.css') }}">
-   <link rel="stylesheet"
-         href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
-   <script
-         src="{{ url_for('static', filename='bower_components/respond/dest/respond.min.js') }}"></script>
-   <script
-         src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
-   <script
-         src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-   <script
-         src="{{ url_for('static', filename='bower_components/jquery-cookie/jquery.cookie.js') }}"></script>
-   <script
-         src="{{ url_for('static', filename='bower_components/jquery-s2t/jquery.s2t.js') }}"></script>
+   {{ css('bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+   {{ css('style/bootstrap.theme.css') }}
+   {{ css('style/component.css') }}
+   {{ css('style/page.css') }}
+   {{ css('bower_components/font-awesome/css/font-awesome.min.css') }}
+   {{ js('bower_components/respond/dest/respond.min.js') }}
+   {{ js('bower_components/jquery/dist/jquery.min.js') }}
+   {{ js('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
+   {{ js('bower_components/jquery-cookie/jquery.cookie.js') }}
+   {{ js('bower_components/jquery-s2t/jquery.s2t.js') }}"
 </head>
 
 <body id="{% block page_id %}{% endblock %}">
