@@ -1,4 +1,5 @@
 # coding: utf-8
+import datetime
 from ._base import db
 
 
@@ -9,6 +10,7 @@ class Author(db.Model):
     intro = db.Column(db.Text())
     birth_year = db.Column(db.String(20))
     death_year = db.Column(db.String(20))
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     dynasty_id = db.Column(db.Integer, db.ForeignKey('dynasty.id'))
     dynasty = db.relationship('Dynasty', backref=db.backref('authors', lazy='dynamic',
@@ -26,6 +28,7 @@ class Author(db.Model):
 class Quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quote = db.Column(db.Text())
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     author = db.relationship('Author', backref=db.backref('quotes', lazy='dynamic'))

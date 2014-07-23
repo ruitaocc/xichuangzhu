@@ -1,5 +1,6 @@
 # coding: utf-8
 from __future__ import division
+import datetime
 from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, flash, \
     current_app
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
@@ -108,6 +109,7 @@ def edit(work_id):
     form.type_id.choices = [(t.id, t.cn) for t in WorkType.query]
     if form.validate_on_submit():
         form.populate_obj(work)
+        work.updated_at = datetime.datetime.now()
         db.session.add(work)
         db.session.commit()
         return redirect(url_for('.view', work_id=work_id))
@@ -136,6 +138,7 @@ def edit_quote(quote_id):
     form = WorkQuoteForm(quote=quote.quote)
     if form.validate_on_submit():
         quote.quote = form.quote.data
+        quote.updated_at = datetime.datetime.now()
         db.session.add(quote)
         db.session.commit()
         return redirect(url_for('work.view', work_id=quote.work_id))

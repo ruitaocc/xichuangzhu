@@ -13,6 +13,7 @@ class Work(db.Model):
     layout = db.Column(db.String(10))
     highlight = db.Column(db.Boolean, default=False)
     create_time = db.Column(db.DateTime)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     author = db.relationship('Author', backref=db.backref('works', lazy='dynamic'))

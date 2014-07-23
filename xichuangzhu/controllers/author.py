@@ -1,4 +1,5 @@
 # coding: utf-8
+import datetime
 from flask import render_template, request, redirect, url_for, Blueprint
 from ..models import db, Author, Quote, Work, WorkType, CollectWork, Dynasty
 from ..permissions import admin_permission
@@ -66,6 +67,7 @@ def edit(author_id):
     form.dynasty_id.choices = [(d.id, d.name) for d in Dynasty.query.order_by(Dynasty.start_year)]
     if form.validate_on_submit():
         form.populate_obj(author)
+        author.updated_at = datetime.datetime.now()
         db.session.add(author)
         db.session.commit()
         return redirect(url_for('.view', author_abbr=author.abbr))
@@ -94,6 +96,7 @@ def edit_quote(quote_id):
     form = AuthorQuoteForm(obj=quote)
     if form.validate_on_submit():
         form.populate_obj(quote)
+        quote.updated_at = datetime.datetime.now()
         db.session.add(quote)
         db.session.commit()
         return redirect(url_for('.view', author_abbr=quote.author.abbr))
