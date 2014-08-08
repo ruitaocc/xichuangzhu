@@ -94,17 +94,19 @@
             </span>
          </h2>
 
-         {% for work in author.works %}
-            {% set show = admin_permission and work.highlight %}
-            <a href="{{ url_for('work.view', work_id=work.id) }}"
-               data-work-type="{{ work.type.en }}"
-               class="work-item {% if show %}highlight{% endif %}">
-               <div class="content-wap">
-                  <div class='work-title'>{{ work.title }}</div>
-                  <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
-               </div>
-            </a>
-         {% endfor %}
+         <div class="clearfix">
+            {% for work in author.works %}
+               {% set show = admin_permission and work.highlight %}
+               <a href="{{ url_for('work.view', work_id=work.id) }}"
+                  data-work-type="{{ work.type.en }}"
+                  class="work-item {% if show %}highlight{% endif %}">
+                  <div class="content-wap">
+                     <div class='work-title'>{{ work.title }}</div>
+                     <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
+                  </div>
+               </a>
+            {% endfor %}
+         </div>
       </div>
 
       <div class="col-md-4">
