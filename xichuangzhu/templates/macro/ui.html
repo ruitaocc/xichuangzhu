@@ -185,20 +185,21 @@
    <script type="text/javascript">
       // water fall layout
       function waterfall() {
-         var width = 195,
+         var parentWap = $('.work-images-wap'),
+               width = $('.work-image').width(),
                h_gap = 15,
-               v_gap = 15;
+               v_gap = 15,
+               lefts = [],
+               tops = [],
+               parentWidth = parentWap.width(),
+               columns = Math.floor(parentWidth / width);
 
-         var lefts = [0, width + h_gap, 2 * (width + h_gap)],
-               tops = [0, 0, 0];
+         for (var i = 0; i < columns; i++) {
+            lefts.push(i * (width + h_gap));
+            tops.push(0);
+         }
 
-         // init css style
-         $('.work-image').each(function () {
-            $(this).width(width);
-            $(this).find('img').width(width);
-         });
-
-         $('.work-images-wap').imagesLoaded().progress(function (instance, image) {
+         parentWap.imagesLoaded().progress(function (instance, image) {
             // get the min height column
             var img = image.img;
             var minHeight = tops[0];
@@ -220,22 +221,18 @@
 
             // Overadd height
             tops[minHeightColumn] += $(img).height() + v_gap;
-
+         }).always(function () {
             // Set mother wap's height
-            var maxHeight = 0;
-            for (var i = 0; i < tops.length; i++) {
-               if (tops[i] > maxHeight) {
-                  maxHeight = tops[i];
-               }
-            }
-            $('.work-images-wap').css('height', maxHeight + 'px');
+            var maxHeight = Math.max.apply(null, tops);
+            parentWap.css('height', maxHeight + 'px');
          });
       }
 
-      // if window's width < 992px, do not start water fall
-      if ($(window).width() >= 992) {
+      waterfall();
+
+      $(window).resize(function () {
          waterfall();
-      }
+      });
    </script>
 {% endmacro %}
 
