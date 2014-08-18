@@ -4,6 +4,7 @@ from xichuangzhu import config
 
 
 def deploy():
+    """部署"""
     env.host_string = config.HOST_STRING
     with cd('/var/www/xichuangzhu'):
         run('git pull')
@@ -15,12 +16,14 @@ def deploy():
 
 
 def pull():
+    """仅更新代码"""
     env.host_string = config.HOST_STRING
     with cd('/var/www/xichuangzhu'):
         run('git pull')
 
 
 def restart():
+    """重启服务器"""
     env.host_string = config.HOST_STRING
     run('sudo supervisorctl restart xcz')
 
