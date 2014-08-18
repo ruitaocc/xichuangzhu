@@ -118,7 +118,7 @@ def gene_sqlite():
         session.add(_work)
 
     # 转存文学家
-    for author in Author.query.filter(Author.works.any(Work.highlight == True)):
+    for author in Author.query.filter(Author.works.any(Work.highlight)):
         # 处理birth_year
         birth_year = author.birth_year
         if birth_year and '?' not in birth_year:
