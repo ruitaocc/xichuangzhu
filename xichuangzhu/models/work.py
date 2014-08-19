@@ -5,6 +5,7 @@ from ._base import db
 
 
 class Work(db.Model):
+    """作品"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     foreword = db.Column(db.Text())
@@ -14,6 +15,9 @@ class Work(db.Model):
     highlight = db.Column(db.Boolean, default=False)
     create_time = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    mobile_title = db.Column(db.String(50))
+    mobile_content = db.Column(db.Text())
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     author = db.relationship('Author', backref=db.backref('works', lazy='dynamic'))

@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 class WorkForm(Form):
     """Form for add & edit work"""
     title = TextField('标题', [DataRequired('标题不能为空')])
+    mobile_title = TextField('移动版标题')
     type_id = SelectField('类别', [DataRequired("类别不能为空")], coerce=int)
     layout = SelectField('布局', [DataRequired('布局不能为空')],
                          choices=[('center', '居中'), ('indent', '段落缩进')])
@@ -14,6 +15,7 @@ class WorkForm(Form):
     foreword = TextAreaField('序')
     intro = TextAreaField('评析')
     content = TextAreaField('内容', [DataRequired('内容不能为空')])
+    mobile_content = TextAreaField('移动版内容')
 
 
 class AuthorForm(Form):
