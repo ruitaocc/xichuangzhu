@@ -110,7 +110,7 @@ def gene_sqlite():
         # 去掉注释，将%转换为空格
         work_title = work.mobile_title or work.title
         work_content = work.mobile_content or work.content
-        work_content = re.sub(r'<([^<]+)>', '', work.content)
+        work_content = re.sub(r'<([^<]+)>', '', work_content)
         work_content = work_content.replace('%', "    ")
         work_content = work_content.replace('\r\n\r\n', '\n')
         _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
