@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, redirect, url_for, Blueprint
-from ..models import db, Dynasty
+from ..models import db, Dynasty, Author
 from ..forms import DynastyForm
 from ..permissions import admin_permission
 
@@ -12,7 +12,7 @@ def view(dynasty_abbr):
     """朝代"""
     dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
     dynasty = Dynasty.query.filter(Dynasty.abbr == dynasty_abbr).first_or_404()
-    authors = dynasty.authors.order_by(db.func.rand()).limit(5)
+    authors = Author.query.filter(Author.dynasty_id == dynasty.id).order_by(db.func.rand()).limit(5)
     return render_template('dynasty/dynasty.html', dynasty=dynasty, authors=authors,
                            dynasties=dynasties)
 
