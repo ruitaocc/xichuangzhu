@@ -108,10 +108,12 @@ def gene_sqlite():
     # 转存作品
     for work in Work.query.filter(Work.highlight == True):
         # 去掉注释，将%转换为空格
+        work_title = work.mobile_title or work.title
+        work_content = work.mobile_content or work.content
         work_content = re.sub(r'<([^<]+)>', '', work.content)
         work_content = work_content.replace('%', "    ")
         work_content = work_content.replace('\r\n\r\n', '\n')
-        _work = _Work(id=work.id, title=work.title, author_id=work.author_id,
+        _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
                       author=work.author.name, dynasty=work.author.dynasty.name,
                       kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
                       content=work_content, intro=work.intro, layout=work.layout)
