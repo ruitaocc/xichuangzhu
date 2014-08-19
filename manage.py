@@ -107,16 +107,19 @@ def gene_sqlite():
 
     # 转存作品
     for work in Work.query.filter(Work.highlight == True):
-        # 去掉注释，将%转换为空格
+        # 优先使用mobile版title和content
         work_title = work.mobile_title or work.title
         work_content = work.mobile_content or work.content
+        # 处理content，去掉注释，将%转换为空格
         work_content = re.sub(r'<([^<]+)>', '', work_content)
         work_content = work_content.replace('%', "    ")
         work_content = work_content.replace('\r\n\r\n', '\n')
+        # 处理评析
+        work_intro = work.intro.replace('\r\n\r\n', '\n')
         _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
                       author=work.author.name, dynasty=work.author.dynasty.name,
                       kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
-                      content=work_content, intro=work.intro, layout=work.layout)
+                      content=work_content, intro=work_intro, layout=work.layout)
         session.add(_work)
 
     # 转存文学家

@@ -43,6 +43,11 @@ def markdown_work(content):
     return c
 
 
+def markdown(content):
+    """使用markdown处理字符串"""
+    return markdown2.markdown(content)
+
+
 def format_year(year):
     """将数字表示的年转换成中文"""
     return str(year).replace('-', '前') + "年"

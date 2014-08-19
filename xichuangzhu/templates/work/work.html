@@ -116,7 +116,7 @@
 
          <h2>评析</h2>
 
-         <div class="work-introduction">{{ work.intro }}</div>
+         <div class="work-introduction">{{ work.intro|markdown|safe }}</div>
 
          {% if reviews_num %}
             <h2>

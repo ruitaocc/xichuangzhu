@@ -24,9 +24,11 @@ def create_app():
         DebugToolbarExtension(app)
     else:
         from .sentry import sentry
+
         sentry.init_app(app)
 
     from .mails import mail
+
     mail.init_app(app)
 
     register_db(app)
@@ -51,6 +53,7 @@ def register_jinja(app):
     app.jinja_env.filters['timesince'] = filters.timesince
     app.jinja_env.filters['clean_work'] = filters.clean_work
     app.jinja_env.filters['markdown_work'] = filters.markdown_work
+    app.jinja_env.filters['markdown'] = filters.markdown
     app.jinja_env.filters['format_year'] = filters.format_year
     app.jinja_env.filters['format_text'] = filters.format_text
     app.jinja_env.filters['is_work_collected'] = filters.is_work_collected
@@ -91,6 +94,7 @@ def register_jinja(app):
     app.jinja_env.globals['js'] = js
     app.jinja_env.globals['css'] = css
 
+
 def register_logger(app):
     """Send error log to admin by smtp"""
     pass
@@ -98,6 +102,7 @@ def register_logger(app):
 
 def register_db(app):
     from .models import db
+
     db.init_app(app)
 
 
@@ -130,6 +135,8 @@ def register_error_handle(app):
 
 def register_uploadsets(app):
     from .uploadsets import workimages
+
     configure_uploads(app, (workimages))
+
 
 app = create_app()
