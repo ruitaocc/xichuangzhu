@@ -4,3 +4,5 @@ venv/
 *bower_components/
 *config.py
 *config_remote.py
+config/production.py
+config/development.py

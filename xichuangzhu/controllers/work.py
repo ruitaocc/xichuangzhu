@@ -219,6 +219,7 @@ def image(work_image_id):
 @user_permission
 def upload_image():
     """上传图片"""
+    config = current_app.config
     try:
         filename = workimages.save(request.files['file'], name=random_filename() + ".")
         save_to_oss(filename, workimages)
@@ -228,7 +229,7 @@ def upload_image():
         return json.dumps({
             'status': 'yes',
             'filename': filename,
-            'url': current_app.config['OSS_URL'] + filename
+            'url': config.get('OSS_URL') + filename
         })
 
 

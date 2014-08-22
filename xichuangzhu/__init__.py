@@ -6,7 +6,7 @@ from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
 from .utils import get_current_user, get_current_user_role
-from . import config
+from config import load_config
 
 # convert python's encoding to utf8
 reload(sys)
@@ -15,6 +15,7 @@ sys.setdefaultencoding('utf8')
 
 def create_app():
     app = Flask(__name__)
+    config = load_config()
     app.config.from_object(config)
 
     # CSRF protect
@@ -25,7 +26,7 @@ def create_app():
     else:
         from .sentry import sentry
 
-        sentry.init_app(app)
+        sentry.init_app(app, dsn=app.config.get('SENTRY_DSN'))
 
     from .mails import mail
 
@@ -137,6 +138,3 @@ def register_uploadsets(app):
     from .uploadsets import workimages
 
     configure_uploads(app, (workimages))
-
-
-app = create_app()

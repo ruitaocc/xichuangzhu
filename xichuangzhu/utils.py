@@ -2,8 +2,8 @@
 import datetime
 import uuid
 from oss.oss_api import OssAPI
-from flask import session, g
-from . import config, roles
+from flask import session, g, current_app
+from . import roles
 from .models import User
 
 
@@ -66,8 +66,9 @@ def random_filename():
 
 def save_to_oss(filename, uploadset):
     """将文件保存到OSS上，若保存失败，则抛出IO异常"""
-    oss = OssAPI(config.OSS_HOST, config.OSS_KEY, config.OSS_SECRET)
-    res = oss.put_object_from_file("xichuangzhu", filename, uploadset.config.destination + '/' + filename)
-    status = res.status
-    if status != 200:
+    config = current_app.config
+    oss = OssAPI(config.get('OSS_HOST'), config.get('OSS_KEY'), config.get('OSS_SECRET'))
+    res = oss.put_object_from_file("xichuangzhu", filename,
+                                   uploadset.config.destination + '/' + filename)
+    if res.status != 200:
         raise IOError

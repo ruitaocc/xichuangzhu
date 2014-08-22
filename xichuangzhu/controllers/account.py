@@ -1,8 +1,8 @@
 # coding: utf-8
 import requests
 import hashlib
-from flask import render_template, request, redirect, url_for, Blueprint, flash, abort, g, session
-from .. import config
+from flask import render_template, request, redirect, url_for, Blueprint, flash, abort, g, \
+    session, current_app
 from ..models import db, User
 from ..utils import signin_user, signout_user
 from ..forms import SignupForm, SettingsForm
@@ -18,7 +18,8 @@ bp = Blueprint('account', __name__)
 def pre_signin():
     """跳转豆瓣OAuth登陆之前，记录referer"""
     session['referer'] = request.referrer
-    return redirect(config.DOUBAN_LOGIN_URL)
+    config = current_app.config
+    return redirect(config.get('DOUBAN_LOGIN_URL'))
 
 
 @bp.route('/signin')
@@ -30,10 +31,11 @@ def signin():
     if not code:
         return redirect(url_for('site.index'))
     url = "https://www.douban.com/service/auth2/token"
+    config = current_app.config
     data = {
-        'client_id': config.DOUBAN_CLIENT_ID,
-        'client_secret': config.DOUBAN_SECRET,
-        'redirect_uri': config.DOUBAN_REDIRECT_URI,
+        'client_id': config.get('DOUBAN_CLIENT_ID'),
+        'client_secret': config.get('DOUBAN_SECRET'),
+        'redirect_uri': config.get('DOUBAN_REDIRECT_URI'),
         'grant_type': 'authorization_code',
         'code': code
     }

@@ -4,11 +4,13 @@ import re
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
-from xichuangzhu import app, config
+from xichuangzhu import create_app
 from xichuangzhu.models import db, Work, Author, Dynasty, Quote
 
+app = create_app()
 manager = Manager(app)
 
+# 添加migrate命令
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
@@ -105,68 +107,70 @@ def gene_sqlite():
 
     Base.metadata.create_all(engine)
 
-    # 转存作品
-    for work in Work.query.filter(Work.highlight == True):
-        # 优先使用mobile版title和content
-        work_title = work.mobile_title or work.title
-        work_content = work.mobile_content or work.content
-        # 处理content，去掉注释，将%转换为空格
-        work_content = re.sub(r'<([^<]+)>', '', work_content)
-        work_content = work_content.replace('%', "    ")
-        work_content = work_content.replace('\r\n\r\n', '\n')
-        # 处理评析
-        work_intro = work.intro.replace('\r\n\r\n', '\n')
-        _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
-                      author=work.author.name, dynasty=work.author.dynasty.name,
-                      kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
-                      content=work_content, intro=work_intro, layout=work.layout)
-        session.add(_work)
+    with app.context_processor():
+        # 转存作品
+        for work in Work.query.filter(Work.highlight == True):
+            # 优先使用mobile版title和content
+            work_title = work.mobile_title or work.title
+            work_content = work.mobile_content or work.content
+            # 处理content，去掉注释，将%转换为空格
+            work_content = re.sub(r'<([^<]+)>', '', work_content)
+            work_content = work_content.replace('%', "    ")
+            work_content = work_content.replace('\r\n\r\n', '\n')
+            # 处理评析
+            work_intro = work.intro.replace('\r\n\r\n', '\n')
+            _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
+                          author=work.author.name, dynasty=work.author.dynasty.name,
+                          kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
+                          content=work_content, intro=work_intro, layout=work.layout)
+            session.add(_work)
 
-    # 转存文学家
-    for author in Author.query.filter(Author.works.any(Work.highlight)).order_by(
-            Author.birth_year.asc()):
-        # 处理birth_year
-        birth_year = author.birth_year
-        if birth_year and '?' not in birth_year:
-            birth_year += "年"
-        if '-' in birth_year:
-            birth_year = birth_year.replace('-', '前')
+        # 转存文学家
+        for author in Author.query.filter(Author.works.any(Work.highlight)).order_by(
+                Author.birth_year.asc()):
+            # 处理birth_year
+            birth_year = author.birth_year
+            if birth_year and '?' not in birth_year:
+                birth_year += "年"
+            if '-' in birth_year:
+                birth_year = birth_year.replace('-', '前')
 
-        # 处理death_year
-        death_year = author.death_year
-        if death_year and '?' not in death_year:
-            death_year += "年"
-        if '-' in death_year:
-            death_year = death_year.replace('-', '前')
+            # 处理death_year
+            death_year = author.death_year
+            if death_year and '?' not in death_year:
+                death_year += "年"
+            if '-' in death_year:
+                death_year = death_year.replace('-', '前')
 
-        _author = _Author(id=author.id, name=author.name, intro=author.intro,
-                          dynasty=author.dynasty.name, birth_year=birth_year,
-                          death_year=death_year)
-        session.add(_author)
+            _author = _Author(id=author.id, name=author.name, intro=author.intro,
+                              dynasty=author.dynasty.name, birth_year=birth_year,
+                              death_year=death_year)
+            session.add(_author)
 
-    # 转存朝代
-    for dynasty in Dynasty.query.filter(
-            Dynasty.authors.any(Author.works.any(Work.highlight == True))):
-        _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
-                            start_year=dynasty.start_year, end_year=dynasty.end_year)
-        session.add(_dynasty)
+        # 转存朝代
+        for dynasty in Dynasty.query.filter(
+                Dynasty.authors.any(Author.works.any(Work.highlight == True))):
+            _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
+                                start_year=dynasty.start_year, end_year=dynasty.end_year)
+            session.add(_dynasty)
 
-    # 转存摘录
-    for q in Quote.query.filter(Quote.work.has(Work.highlight == True)):
-        _quote = _Quote(id=q.id, quote=q.quote, author_id=q.author_id, author=q.author.name,
-                        work_id=q.work_id, work=q.work.title)
-        session.add(_quote)
+        # 转存摘录
+        for q in Quote.query.filter(Quote.work.has(Work.highlight == True)):
+            _quote = _Quote(id=q.id, quote=q.quote, author_id=q.author_id, author=q.author.name,
+                            work_id=q.work_id, work=q.work.title)
+            session.add(_quote)
 
-    session.commit()
+        session.commit()
 
-    # 将数据库文件以邮件的形式发送
-    from flask_mail import Message
-    from xichuangzhu.mails import mail
+        # 将数据库文件以邮件的形式发送
+        from flask_mail import Message
+        from xichuangzhu.mails import mail
 
-    msg = Message("SQLite File", recipients=[config.MAIL_ADMIN_ADDR])
-    with open(db_file_path, 'rb') as f:
-        msg.attach("xcz.db", "application/octet-stream", f.read())
-    mail.send(msg)
+        config = app.config
+        msg = Message("SQLite File", recipients=[config.get('MAIL_ADMIN_ADDR')])
+        with open(db_file_path, 'rb') as f:
+            msg.attach("xcz.db", "application/octet-stream", f.read())
+        mail.send(msg)
 
 
 @manager.command
