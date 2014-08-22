@@ -107,9 +107,9 @@ def gene_sqlite():
 
     Base.metadata.create_all(engine)
 
-    with app.context_processor():
+    with app.app_context():
         # 转存作品
-        for work in Work.query.filter(Work.highlight == True):
+        for work in Work.query.filter(Work.highlight):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
             work_content = work.mobile_content or work.content

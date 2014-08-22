@@ -1,3 +1,4 @@
+# coding: utf-8
 import os
 from xichuangzhu import create_app
 from xichuangzhu.models import db

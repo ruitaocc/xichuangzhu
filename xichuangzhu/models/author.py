@@ -22,7 +22,7 @@ class Author(db.Model):
     @property
     def random_quote(self):
         """Get a random quote of the author"""
-        return self.quotes.order_by(db.func.rand()).first()
+        return self.quotes.order_by(db.func.random()).first()
 
 
 class Quote(db.Model):

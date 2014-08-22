@@ -8,11 +8,11 @@ bp = Blueprint('site', __name__)
 @bp.route('/')
 def index():
     """首页"""
-    works = Work.query.order_by(db.func.rand()).limit(4)
+    works = Work.query.order_by(db.func.random()).limit(4)
     work_images = WorkImage.query.order_by(WorkImage.create_time.desc()).limit(18)
     work_reviews = WorkReview.query.filter(WorkReview.is_publish == True).order_by(
         WorkReview.create_time.desc()).limit(4)
-    authors = Author.query.order_by(db.func.rand()).limit(5)
+    authors = Author.query.order_by(db.func.random()).limit(5)
     dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
     return render_template('site/index.html', works=works, work_images=work_images,
                            work_reviews=work_reviews, authors=authors, dynasties=dynasties)
@@ -21,7 +21,7 @@ def index():
 @bp.route('/works', methods=['POST'])
 def works():
     """生成首页需要的作品json数据"""
-    works = Work.query.order_by(db.func.rand()).limit(4)
+    works = Work.query.order_by(db.func.random()).limit(4)
     return render_template('macro/index_works.html', works=works)
 
 

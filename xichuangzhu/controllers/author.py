@@ -21,7 +21,7 @@ def view(author_abbr):
     if admin_permission.check():
         quotes = author.quotes
     else:
-        quotes = author.quotes.order_by(db.func.rand()).limit(10)
+        quotes = author.quotes.order_by(db.func.random()).limit(10)
     stmt = db.session.query(Work.type_id, db.func.count(Work.type_id).label('type_num')).filter(
         Work.author_id == author.id).group_by(Work.type_id).subquery()
     work_types = db.session.query(WorkType, stmt.c.type_num) \
