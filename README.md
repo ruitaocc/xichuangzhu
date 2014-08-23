@@ -1,4 +1,4 @@
-西窗烛
+西窗烛 [![Build Status](https://travis-ci.org/hustlzp/xichuangzhu.svg?branch=master)](https://travis-ci.org/hustlzp/xichuangzhu)
 ===
 
 http://www.xichuangzhu.com
