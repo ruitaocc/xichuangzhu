@@ -109,7 +109,7 @@ def activate(user_id, token):
 def signout():
     """登出"""
     signout_user()
-    return redirect(url_for('site.index'))
+    return redirect(request.referrer or url_for('site.index'))
 
 
 @bp.route('/settings', methods=['GET', 'POST'])
