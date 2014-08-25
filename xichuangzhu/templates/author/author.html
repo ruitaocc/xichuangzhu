@@ -118,19 +118,6 @@
                            href="{{ url_for('work.view', work_id=q.work_id) }}">
                            {{ q.quote|truncate(18, true) }}
                         </a>
-
-                        {% if admin_permission %}
-                           <div class='btn-group btn-group-xs cmds'>
-                              <a class="btn btn-default" title="编辑"
-                                 href="{{ url_for('author.edit_quote', quote_id=q.id) }}">
-                                 <span class="glyphicon glyphicon-edit"></span>
-                              </a>
-                              <a class="btn btn-default btn-rm-quote" title='删除'
-                                 href="{{ url_for('author.delete_quote', quote_id=q.id) }}">
-                                 <span class="glyphicon glyphicon-trash"></span>
-                              </a>
-                           </div>
-                        {% endif %}
                      </td>
                   </tr>
                {% endfor %}
