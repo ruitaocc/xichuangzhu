@@ -74,35 +74,6 @@ def edit(author_id):
     return render_template('author/edit.html', author=author, form=form)
 
 
-@bp.route('/<int:author_id>/add_quote', methods=['GET', 'POST'])
-@admin_permission
-def add_quote(author_id):
-    """管理文学家的摘录"""
-    author = Author.query.get_or_404(author_id)
-    form = AuthorQuoteForm()
-    if form.validate_on_submit():
-        quote = Quote(quote=form.quote.data, work_id=form.work_id.data, author_id=author_id)
-        db.session.add(quote)
-        db.session.commit()
-        return redirect(url_for('.view', author_abbr=author.abbr))
-    return render_template('author/add_quote.html', author=author, form=form)
-
-
-@bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
-@admin_permission
-def edit_quote(quote_id):
-    """编辑摘录"""
-    quote = Quote.query.get_or_404(quote_id)
-    form = AuthorQuoteForm(obj=quote)
-    if form.validate_on_submit():
-        form.populate_obj(quote)
-        quote.updated_at = datetime.datetime.now()
-        db.session.add(quote)
-        db.session.commit()
-        return redirect(url_for('.view', author_abbr=quote.author.abbr))
-    return render_template('author/edit_quote.html', quote=quote, form=form)
-
-
 @bp.route('/quote/<int:quote_id>/delete')
 @admin_permission
 def delete_quote(quote_id):
