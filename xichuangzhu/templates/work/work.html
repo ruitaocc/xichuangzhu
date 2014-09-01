@@ -161,13 +161,14 @@
 
          <h2>其他版本</h2>
 
-         <span class="mobile-tag">
+         <span class="mobile-tag">{% if work.highlight %}有移动版{% else %}无移动版{% endif %}</span>
+
          {% if work.highlight %}
-            有移动版
-         {% else %}
-            无移动版
+            <a class="download-ios-app"
+               href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104" target="_blank">
+               下载 iOS App
+            </a>
          {% endif %}
-         </span>
 
          <h2>作者简介</h2>
 

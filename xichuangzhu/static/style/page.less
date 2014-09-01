@@ -251,16 +251,29 @@ html {
     }
   }
 
-  .mobile-tag {
+  .mobile-tag,
+  .download-ios-app {
     background: white;
     color: #888;
     font-family: heiti;
     border: 1px solid #AAAAAA;
     border-radius: 2px;
     padding: 3px 5px;
+    margin-right: 5px;
     font-size: 12px;
     line-height: 1;
     .font-hei;
+  }
+
+  .download-ios-app {
+    cursor: pointer;
+
+    &:hover {
+      color: #8b0000;
+      border-color: #8b0000;
+      text-decoration: none;
+    }
+
   }
 
   .other-work-item {
