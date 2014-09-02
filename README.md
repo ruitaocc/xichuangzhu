@@ -3,7 +3,7 @@
 
 http://www.xichuangzhu.com
 
-何当共剪西窗烛，却话巴山夜雨时。<small>—〔唐〕李商隐《夜雨寄北》</small>
+何当共剪西窗烛，却话巴山夜雨时。——〔唐〕李商隐《夜雨寄北》
 
 Lovely build with Flask & Bootstrap3.
 
