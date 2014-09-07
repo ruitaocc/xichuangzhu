@@ -149,15 +149,15 @@ def gene_sqlite():
 
         # 转存朝代
         for dynasty in Dynasty.query.filter(
-                Dynasty.authors.any(Author.works.any(Work.highlight == True))):
+                Dynasty.authors.any(Author.works.any(Work.highlight))):
             _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
                                 start_year=dynasty.start_year, end_year=dynasty.end_year)
             session.add(_dynasty)
 
         # 转存摘录
-        for q in Quote.query.filter(Quote.work.has(Work.highlight == True)):
-            _quote = _Quote(id=q.id, quote=q.quote, author_id=q.author_id, author=q.author.name,
-                            work_id=q.work_id, work=q.work.title)
+        for quote in Quote.query.filter(Quote.work.has(Work.highlight)):
+            _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
+                            author=quote.author.name, work_id=quote.work_id, work=quote.work.title)
             session.add(_quote)
 
         session.commit()
