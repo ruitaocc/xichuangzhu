@@ -51,6 +51,8 @@ def signin():
         if user.is_new:
             flash('账户尚未激活，请登陆邮箱激活账户')
             return redirect(url_for('site.index'))
+
+        flash('欢迎来到西窗烛')
         signin_user(user, True)
         redirect_url = session.get('referer') or url_for('site.index')
         session.pop('referer')
