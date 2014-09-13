@@ -50,7 +50,7 @@
    <div class="row">
       <div class="col-md-8">
          <div id="dynasty-wap">
-            {% if permissions.admin_permission.check() %}
+            {% if permissions.AdminPermission().check() %}
                <a class="btn btn-default btn-sm pull-right"
                   href="{{ url_for('dynasty.edit', dynasty_id=dynasty.id) }}">
                   <span class="glyphicon glyphicon-edit"></span> 编辑

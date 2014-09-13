@@ -11,7 +11,7 @@
       <div class="col-md-8">
          <div class="work-title">
             {{ work.title }}
-            {% if permissions.admin_permission.check() and work.highlight %}
+            {% if permissions.AdminPermission().check() and work.highlight %}
                <sup><i class="glyphicon glyphicon-ok"></i></sup>
             {% endif %}
          </div>
@@ -35,7 +35,7 @@
 
          {% if g.user %}
             <div class="btn-group btn-group-sm pull-right" id="work-cmds">
-               {% if permissions.admin_permission.check() %}
+               {% if permissions.AdminPermission().check() %}
                   <a class="btn btn-default" href="{{ url_for('work.edit', work_id=work.id) }}">
                      <span class="glyphicon glyphicon-edit"></span> 编辑
                   </a>
@@ -81,7 +81,7 @@
             </div>
          {% endif %}
 
-         {% if permissions.admin_permission.check() %}
+         {% if permissions.AdminPermission().check() %}
             {% set quotes_count = work.quotes.count() %}
             <h2>摘录 / {{ quotes_count }}</h2>
 

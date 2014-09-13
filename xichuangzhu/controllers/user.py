@@ -3,7 +3,7 @@ from __future__ import division
 from flask import render_template, Blueprint, g
 from ..models import User, CollectWork, CollectWorkImage, Work, WorkImage, WorkReview
 from ..utils import check_is_me
-from ..permissions import user_permission
+from ..permissions import UserPermission
 
 bp = Blueprint('user', __name__)
 
@@ -56,7 +56,7 @@ def work_images(user_abbr, page):
 
 @bp.route('/collects', defaults={'page': 1})
 @bp.route('/collects/<int:page>')
-@user_permission
+@UserPermission()
 def collects(page):
     """用户收藏页"""
     paginator = Work.query.join(CollectWork).filter(CollectWork.user_id == g.user.id).order_by(
@@ -70,7 +70,7 @@ def collects(page):
 
 @bp.route('/collect_works', defaults={'page': 1})
 @bp.route('/collect_works/page/<int:page>')
-@user_permission
+@UserPermission()
 def collect_works(page):
     """用户收藏的文学作品"""
     paginator = Work.query.join(CollectWork).filter(
@@ -81,7 +81,7 @@ def collect_works(page):
 
 @bp.route('/collect_work_images', defaults={'page': 1})
 @bp.route('/collect_work_images/page/<int:page>')
-@user_permission
+@UserPermission()
 def collect_work_images(page):
     """用户收藏的图片"""
     paginator = WorkImage.query.join(CollectWorkImage).filter(

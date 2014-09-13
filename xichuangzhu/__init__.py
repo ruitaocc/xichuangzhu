@@ -7,12 +7,12 @@ project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if project_path not in sys.path:
     sys.path.insert(0, project_path)
 
-from flask import Flask, request, url_for, g, render_template
+from flask import Flask, request, url_for, g, render_template, flash
 from jinja2 import Markup
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.uploads import configure_uploads
 from flask_debugtoolbar import DebugToolbarExtension
-from .utils import get_current_user, get_current_user_role
+from .utils import get_current_user, signout_user
 from config import load_config
 
 # convert python's encoding to utf8
@@ -50,7 +50,13 @@ def create_app():
     @app.before_request
     def before_request():
         g.user = get_current_user()
-        g.user_role = get_current_user_role()
+        if g.user:
+            if g.user.is_new:
+                flash('请登录邮箱激活账户。')
+                signout_user()
+            if g.user.is_banned:
+                flash('账户已被禁用，请联系管理员。')
+                signout_user()
 
     return app
 
@@ -67,13 +73,12 @@ def register_jinja(app):
     app.jinja_env.filters['is_work_collected'] = filters.is_work_collected
     app.jinja_env.filters['is_work_image_collected'] = filters.is_work_image_collected
 
-    from . import roles, permissions
+    from . import permissions
 
     # inject vars into template context
     @app.context_processor
     def inject_vars():
         return dict(
-            roles=roles,
             permissions=permissions
         )
 

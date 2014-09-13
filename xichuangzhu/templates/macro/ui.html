@@ -113,7 +113,7 @@
 
 {% macro render_works(works) %}
    {% for w in works %}
-      {% set show = permissions.admin_permission.check() and w.highlight %}
+      {% set show = permissions.AdminPermission().check() and w.highlight %}
       <div class="work-item">
          <div class="work-header">
             <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
@@ -185,8 +185,15 @@
    <script type="text/javascript">
       // water fall layout
       function waterfall() {
+         // 一个很奇怪的bug，如果没有image存在，页面会崩溃。
+         // 这个是不是imagesloaded插件的bug？
+         var workImages = $('.work-image');
+         if (workImages.length === 0) {
+            return;
+         }
+
          var parentWap = $('.work-images-wap'),
-               width = $('.work-image').width(),
+               width = workImages.width(),
                h_gap = 15,
                v_gap = 15,
                lefts = [],
@@ -229,10 +236,10 @@
       }
 
       waterfall();
-
-      $(window).resize(function () {
-         waterfall();
-      });
+      {##}
+      {#      $(window).resize(function () {#}
+      {#         waterfall();#}
+      {#      });#}
    </script>
 {% endmacro %}
 
@@ -246,11 +253,11 @@
 
       <div class="media-body user-info">
          <div class="user-name">
-            <a href="{{ url_for('user.view', user_abbr=user.abbr) }}">{{ user.name }}</a>
+            <a href="{{ url_for('user.view', user_abbr=user.abbr) }}">{{ user.name }} </a>
          </div>
 
          {% if user.signature %}
-            <div class="user-signature">{{ user.signature }}</div>
+            <div class="user-signature">{{ user.signature }} </div>
          {% endif %}
       </div>
    </div>

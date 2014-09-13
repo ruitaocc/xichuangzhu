@@ -42,7 +42,7 @@
 
    <div class="row">
       <div class="col-md-8">
-         {% set admin_permission = permissions.admin_permission.check() %}
+         {% set admin_permission = permissions.AdminPermission().check() %}
          {% if admin_permission %}
             <div class='btn-group pull-right margin-top-15'>
                <a class="btn btn-default btn-sm"

@@ -6,8 +6,8 @@ from flask import render_template, request, redirect, url_for, json, Blueprint, 
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment, Quote
 from ..utils import check_is_me
-from ..permissions import user_permission, admin_permission, WorkImageOwnerPermission, \
-    WorkReviewOwnerPermission
+from ..permissions import UserPermission, AdminPermission, WorkImageAdminPermission, \
+    WorkReviewAdminPermission
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm, WorkQuoteForm
 from ..utils import random_filename, save_to_oss
 from ..uploadsets import workimages
@@ -31,7 +31,7 @@ def view(work_id):
 
 
 @bp.route('/<int:work_id>/collect', methods=['GET'])
-@user_permission
+@UserPermission()
 def collect(work_id):
     """收藏作品"""
     collect = CollectWork(user_id=g.user.id, work_id=work_id)
@@ -41,7 +41,7 @@ def collect(work_id):
 
 
 @bp.route('/<int:work_id>/discollect')
-@user_permission
+@UserPermission()
 def discollect(work_id):
     """取消收藏文学作品"""
     db.session.query(CollectWork).filter(CollectWork.user_id == g.user.id).filter(
@@ -85,7 +85,7 @@ def tag(tag_id, page):
 
 
 @bp.route('/add', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def add():
     """添加作品"""
     form = WorkForm(author_id=request.args.get('author_id', None))
@@ -100,7 +100,7 @@ def add():
 
 
 @bp.route('/<int:work_id>/edit', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def edit(work_id):
     """编辑作品"""
     work = Work.query.get_or_404(work_id)
@@ -117,7 +117,7 @@ def edit(work_id):
 
 
 @bp.route('/<int:work_id>/add_quote', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def add_quote(work_id):
     """为此作品添加摘录"""
     work = Work.query.get_or_404(work_id)
@@ -131,7 +131,7 @@ def add_quote(work_id):
 
 
 @bp.route('/quote/<int:quote_id>/edit', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def edit_quote(quote_id):
     """编辑摘录"""
     quote = Quote.query.get_or_404(quote_id)
@@ -146,7 +146,7 @@ def edit_quote(quote_id):
 
 
 @bp.route('/quote/<int:quote_id>/delete', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def delete_quote(quote_id):
     """删除摘录"""
     quote = Quote.query.get_or_404(quote_id)
@@ -156,7 +156,7 @@ def delete_quote(quote_id):
 
 
 @bp.route('/<int:work_id>/highlight')
-@admin_permission
+@AdminPermission()
 def highlight(work_id):
     """加精作品"""
     work = Work.query.get_or_404(work_id)
@@ -167,7 +167,7 @@ def highlight(work_id):
 
 
 @bp.route('/<int:work_id>/shade')
-@admin_permission
+@AdminPermission()
 def shade(work_id):
     """取消加精"""
     work = Work.query.get_or_404(work_id)
@@ -197,7 +197,7 @@ def images(work_id, page):
 
 
 @bp.route('/search_authors', methods=['POST'])
-@admin_permission
+@AdminPermission()
 def search_authors():
     """根据关键字返回json格式的作者信息"""
     author_name = request.form.get('author_name', '')
@@ -216,7 +216,7 @@ def image(work_image_id):
 
 
 @bp.route('/upload_image', methods=['POST'])
-@user_permission
+@AdminPermission()
 def upload_image():
     """上传图片"""
     config = current_app.config
@@ -234,7 +234,7 @@ def upload_image():
 
 
 @bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
-@user_permission
+@AdminPermission()
 def add_image(work_id):
     """添加作品图片"""
     work = Work.query.get_or_404(work_id)
@@ -250,11 +250,10 @@ def add_image(work_id):
 
 
 @bp.route('/image/<int:work_image_id>/edit', methods=['GET', 'POST'])
-@user_permission
 def edit_image(work_image_id):
     """编辑作品图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
-    permission = WorkImageOwnerPermission(work_image_id)
+    permission = WorkImageAdminPermission(work_image_id)
     if not permission.check():
         return permission.deny()
     form = WorkImageForm(image=work_image.filename)
@@ -269,11 +268,10 @@ def edit_image(work_image_id):
 
 
 @bp.route('/image/<int:work_image_id>/delete', methods=['GET'])
-@user_permission
 def delete_image(work_image_id):
     """删除作品图片"""
     work_image = WorkImage.query.get_or_404(work_image_id)
-    permission = WorkImageOwnerPermission(work_image_id)
+    permission = WorkImageAdminPermission(work_image_id)
     if not permission.check():
         return permission.deny()
     db.session.delete(work_image)
@@ -282,7 +280,7 @@ def delete_image(work_image_id):
 
 
 @bp.route('/image/<int:work_image_id>/collect', methods=['GET'])
-@user_permission
+@UserPermission()
 def collect_image(work_image_id):
     """收藏作品图片"""
     collect = CollectWorkImage(user_id=g.user.id, work_image_id=work_image_id)
@@ -292,7 +290,7 @@ def collect_image(work_image_id):
 
 
 @bp.route('/image/<int:work_image_id>/discollect')
-@user_permission
+@UserPermission()
 def discollect_image(work_image_id):
     """取消收藏作品图片"""
     db.session.query(CollectWorkImage).filter(CollectWorkImage.user_id == g.user.id).filter(
@@ -343,7 +341,7 @@ def all_reviews(page):
 
 
 @bp.route('/<int:work_id>/add_review', methods=['GET', 'POST'])
-@user_permission
+@UserPermission()
 def add_review(work_id):
     """添加作品点评"""
     work = Work.query.get_or_404(work_id)
@@ -359,11 +357,10 @@ def add_review(work_id):
 
 
 @bp.route('/review/<int:review_id>/edit', methods=['GET', 'POST'])
-@user_permission
 def edit_review(review_id):
     """编辑作品点评"""
     review = WorkReview.query.get_or_404(review_id)
-    permission = WorkReviewOwnerPermission(review_id)
+    permission = WorkReviewAdminPermission(review_id)
     if not permission.check():
         return permission.deny()
     form = WorkReviewForm(obj=review)
@@ -377,11 +374,10 @@ def edit_review(review_id):
 
 
 @bp.route('/review/<int:review_id>/delete')
-@user_permission
 def delete_review(review_id):
     """删除作品点评"""
     review = WorkReview.query.get_or_404(review_id)
-    permission = WorkReviewOwnerPermission(review_id)
+    permission = WorkReviewAdminPermission(review_id)
     if not permission.check():
         return permission.deny()
     db.session.delete(review)

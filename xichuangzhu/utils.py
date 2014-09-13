@@ -3,7 +3,6 @@ import datetime
 import uuid
 from oss.oss_api import OssAPI
 from flask import session, g, current_app
-from . import roles
 from .models import User
 
 
@@ -50,13 +49,6 @@ def get_current_user():
         signout_user()
         return None
     return user
-
-
-def get_current_user_role():
-    """获取当前用户的角色，若无有效用户，则返回VisitorRole"""
-    if not g.user:
-        return roles.VisitorRole
-    return g.user.role
 
 
 def random_filename():

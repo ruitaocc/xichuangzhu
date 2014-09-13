@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, session, abort, Blueprint, g
 from ..models import db, Topic, TopicComment
 from ..forms import TopicForm, TopicCommentForm
-from ..permissions import user_permission, TopicOwnerPermission
+from ..permissions import UserPermission, TopicAdminPermission
 
 
 bp = Blueprint('topic', __name__)
@@ -17,8 +17,9 @@ def view(topic_id):
     db.session.add(topic)
     db.session.commit()
     if form.validate_on_submit():
-        if not user_permission.check():
-            return user_permission.deny()
+        permission = UserPermission()
+        if not permission.check():
+            return permission.deny()
         comment = TopicComment(user_id=g.user.id, topic_id=topic_id, **form.data)
         db.session.add(comment)
         db.session.commit()
@@ -35,7 +36,7 @@ def topics(page):
 
 
 @bp.route('/add', methods=['POST', 'GET'])
-@user_permission
+@UserPermission()
 def add():
     """添加话题"""
     form = TopicForm()
@@ -48,11 +49,10 @@ def add():
 
 
 @bp.route('/<int:topic_id>/edit', methods=['POST', 'GET'])
-@user_permission
 def edit(topic_id):
     """编辑话题"""
     topic = Topic.query.get_or_404(topic_id)
-    permission = TopicOwnerPermission(topic_id)
+    permission = TopicAdminPermission(topic_id)
     if not permission.check():
         return permission.deny()
     form = TopicForm(obj=topic)
@@ -65,11 +65,10 @@ def edit(topic_id):
 
 
 @bp.route('/<int:topic_id>/delete')
-@user_permission
 def delete(topic_id):
     """删除话题"""
     topic = Topic.query.get_or_404(topic_id)
-    permission = TopicOwnerPermission(topic_id)
+    permission = TopicAdminPermission(topic_id)
     if not permission.check():
         return permission.deny()
     db.session.delete(topic)

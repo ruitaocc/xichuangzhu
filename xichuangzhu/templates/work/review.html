@@ -73,7 +73,7 @@
             ·
             <span>{{ review.click_num }} 点击</span>
 
-            {% if permissions.WorkReviewOwnerPermission(review.id).check() %}
+            {% if permissions.WorkReviewAdminPermission(review.id).check() %}
                <a id="btn-edit-review"
                   href="{{ url_for('work.edit_review', review_id=review.id) }}">编辑</a>
                /

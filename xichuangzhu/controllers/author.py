@@ -2,8 +2,8 @@
 import datetime
 from flask import render_template, request, redirect, url_for, Blueprint
 from ..models import db, Author, Quote, Work, WorkType, CollectWork, Dynasty
-from ..permissions import admin_permission
-from ..forms import AuthorForm, AuthorQuoteForm
+from ..permissions import AdminPermission
+from ..forms import AuthorForm
 
 bp = Blueprint('author', __name__)
 
@@ -18,7 +18,7 @@ def view(author_abbr):
     if not quote:
         quote = author.random_quote
     # 随机获取10条以下的摘录
-    if admin_permission.check():
+    if AdminPermission().check():
         quotes = author.quotes
     else:
         quotes = author.quotes.order_by(db.func.random()).limit(10)
@@ -45,7 +45,7 @@ def authors():
 
 
 @bp.route('/add', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def add():
     """添加文学家"""
     form = AuthorForm()
@@ -59,7 +59,7 @@ def add():
 
 
 @bp.route('/<int:author_id>/edit', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def edit(author_id):
     """编辑文学家"""
     author = Author.query.get_or_404(author_id)
@@ -75,7 +75,7 @@ def edit(author_id):
 
 
 @bp.route('/quote/<int:quote_id>/delete')
-@admin_permission
+@AdminPermission()
 def delete_quote(quote_id):
     """删除摘录"""
     quote = Quote.query.get_or_404(quote_id)

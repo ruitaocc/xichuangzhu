@@ -6,15 +6,14 @@ from flask import render_template, request, redirect, url_for, Blueprint, flash,
 from ..models import db, User
 from ..utils import signin_user, signout_user
 from ..forms import SignupForm, SettingsForm
-from ..roles import NewUserRole, BanUserRole, UserRole
-from ..permissions import require_visitor, new_user_permission
+from ..permissions import UserPermission, VisitorPermission
 from ..mails import signup_mail
 
 bp = Blueprint('account', __name__)
 
 
 @bp.route('/pre_signin')
-@require_visitor
+@VisitorPermission()
 def pre_signin():
     """跳转豆瓣OAuth登陆之前，记录referer"""
     session['referer'] = request.referrer
@@ -23,7 +22,7 @@ def pre_signin():
 
 
 @bp.route('/signin')
-@require_visitor
+@VisitorPermission()
 def signin():
     """通过豆瓣OAuth登陆"""
     # get current authed user id
@@ -46,11 +45,12 @@ def signin():
 
     user = User.query.get(user_id)
     if user:
-        if user.role == BanUserRole:
+        if user.is_banned:
             flash('账户已被禁用')
             return redirect(url_for('site.index'))
-        if user.role == NewUserRole:
+        if user.is_new:
             flash('账户尚未激活，请登陆邮箱激活账户')
+            return redirect(url_for('site.index'))
         signin_user(user, True)
         redirect_url = session.get('referer') or url_for('site.index')
         session.pop('referer')
@@ -59,7 +59,7 @@ def signin():
 
 
 @bp.route('/signup/<int:user_id>', methods=['GET', 'POST'])
-@require_visitor
+@VisitorPermission()
 def signup(user_id):
     """发送激活邮件"""
     # Get user info from douban
@@ -77,7 +77,6 @@ def signup(user_id):
             user.avatar = user_info['avatar']
         db.session.add(user)
         db.session.commit()
-        signin_user(user, True)
 
         # send activate email
         try:
@@ -95,7 +94,7 @@ def activate(user_id, token):
     """激活用户"""
     user = User.query.get_or_404(user_id)
     if token == hashlib.sha1(user.name).hexdigest():
-        user.role = UserRole
+        user.is_new = False
         db.session.add(user)
         db.session.commit()
         signin_user(user, True)
@@ -113,7 +112,7 @@ def signout():
 
 
 @bp.route('/settings', methods=['GET', 'POST'])
-@new_user_permission
+@UserPermission()
 def settings():
     """个人设置"""
     form = SettingsForm(signature=g.user.signature)
@@ -126,15 +125,13 @@ def settings():
     return render_template('account/settings.html', form=form)
 
 
-@bp.route('/resend_activate_mail')
-@new_user_permission
-def resend_activate_mail():
-    if g.user_role != NewUserRole:
-        abort(403)
-    try:
-        signup_mail(g.user)
-    except:
-        flash('邮件发送失败，请稍后尝试')
-    else:
-        flash('激活邮件已发送到你的邮箱，请查收')
-    return redirect(url_for('.settings'))
+    # @bp.route('/resend_activate_mail')
+    # @UserPermission()
+    # def resend_activate_mail():
+    # try:
+    #         signup_mail(g.user)
+    #     except Exception:
+    #         flash('邮件发送失败，请稍后尝试')
+    #     else:
+    #         flash('激活邮件已发送到你的邮箱，请查收')
+    #     return redirect(url_for('.settings'))

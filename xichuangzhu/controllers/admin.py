@@ -1,14 +1,14 @@
 # coding: utf-8
 from flask import render_template, Blueprint, request
 from ..models import Work, Author, Dynasty, WorkType, Quote
-from ..permissions import admin_permission
+from ..permissions import AdminPermission
 
 bp = Blueprint('admin', __name__)
 
 
 @bp.route('/authors', defaults={'page': 1})
 @bp.route('/authors/<int:page>', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def authors(page):
     """管理文学家"""
     paginator = Author.query.paginate(page, 30)
@@ -17,7 +17,7 @@ def authors(page):
 
 @bp.route('/works', defaults={'page': 1})
 @bp.route('/works/page/<int:page>', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def works(page):
     """管理作品"""
     paginator = Work.query.paginate(page, 15)
@@ -26,7 +26,7 @@ def works(page):
 
 @bp.route('/highlight_works', defaults={'page': 1})
 @bp.route('/highlight_works/page/<int:page>', methods=['GET', 'POST'])
-@admin_permission
+@AdminPermission()
 def highlight_works(page):
     """全部加精作品"""
     # 查询条件
@@ -34,7 +34,7 @@ def highlight_works(page):
     dynasty_abbr = request.args.get('dynasty', 'all')
 
     # 符合条件的作品
-    works = Work.query.filter(Work.highlight == True)
+    works = Work.query.filter(Work.highlight)
     if work_type != 'all':
         works = works.filter(Work.type.has(WorkType.en == work_type))
     if dynasty_abbr != 'all':

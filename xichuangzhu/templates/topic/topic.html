@@ -60,14 +60,14 @@
             <h1 class="topic-title">{{ topic.title|safe }}</h1>
 
             <div class="topic-extra-info">
-               By <a class="topic-creator"
+               <a class="topic-creator"
                   href="{{ url_for('user.view', user_abbr=topic.user.abbr) }}">
                   {{ topic.user.name }}</a>
                ·
                <span class="topic-time">{{ topic.create_time|timesince }}</span>
                ·
                <span>{{ topic.click_num }} 点击</span>
-               {% if permissions.TopicOwnerPermission(topic.id).check() %}
+               {% if permissions.TopicAdminPermission(topic.id).check() %}
                   <a class="btn-edit-topic"
                      href="{{ url_for('topic.edit', topic_id=topic.id) }}">编辑</a>
                   /

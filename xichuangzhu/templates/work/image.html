@@ -33,7 +33,7 @@
       <div class='col-md-2'>
          <div class='btn-group btn-group-sm'>
             {% if g.user %}
-               {% if permissions.WorkImageOwnerPermission(work_image.id).check() %}
+               {% if permissions.WorkImageAdminPermission(work_image.id).check() %}
                   <a class='btn btn-default'
                      href="{{ url_for('work.edit_image', work_image_id=work_image.id) }}"><span
                         class='glyphicon glyphicon-edit'></span> 编辑</a>
