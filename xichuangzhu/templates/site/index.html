@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import render_authors, render_work_reviews, render_work_images %}
+{% from 'macro/ui.html' import render_authors, render_work_reviews, render_work_images, app_panel %}
 
 {% block page_id %}page-index{% endblock %}
 {% block page_title %}西窗烛 | 品味传统文学之美{% endblock %}
@@ -87,12 +87,7 @@
             {% endfor %}
          </ul>
 
-         <h2>下载 iOS 版</h2>
-
-         <a href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104" target="_blank">
-            <img src="{{ static('img/itunes.png') }}"
-                 class="img-responsive itunes-img" alt=""/>
-         </a>
+         {{ app_panel() }}
       </div>
    </div>
 

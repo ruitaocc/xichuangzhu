@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import render_users, render_work_reviews, render_work_images %}
+{% from 'macro/ui.html' import render_users, render_work_reviews, render_work_images, app_panel %}
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
 {% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}
@@ -196,6 +196,8 @@
 
             {{ render_users(collectors) }}
          {% endif %}
+
+         {{ app_panel() }}
       </div>
    </div>
 
