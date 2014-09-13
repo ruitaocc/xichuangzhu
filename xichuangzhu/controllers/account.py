@@ -97,6 +97,8 @@ def signup():
             flash('邮件发送失败，请稍后尝试')
         else:
             flash('激活邮件已发送到你的邮箱，请查收')
+
+        session.pop('signup_user_id')
         return redirect(url_for('site.index'))
     return render_template('account/signup.html', user_info=user_info, form=form)
 
@@ -143,7 +145,7 @@ def settings():
     # try:
     # signup_mail(g.user)
     # except Exception:
-    #         flash('邮件发送失败，请稍后尝试')
+    # flash('邮件发送失败，请稍后尝试')
     #     else:
     #         flash('激活邮件已发送到你的邮箱，请查收')
     #     return redirect(url_for('.settings'))
