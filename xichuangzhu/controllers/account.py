@@ -57,13 +57,23 @@ def signin():
         redirect_url = session.get('referer') or url_for('site.index')
         session.pop('referer')
         return redirect(redirect_url)
-    return redirect(url_for('.signup', user_id=user_id))
+    # 通过加密的session传递user_id数据，防止恶意注册
+    session['signup_user_id'] = user_id
+    return redirect(url_for('.signup'))
 
 
-@bp.route('/signup/<int:user_id>', methods=['GET', 'POST'])
+@bp.route('/signup', methods=['GET', 'POST'])
 @VisitorPermission()
-def signup(user_id):
+def signup():
     """发送激活邮件"""
+    if not 'signup_user_id' in session:
+        abort(403)
+
+    user_id = int(session['signup_user_id'])
+    user = User.query.filter(User.id == user_id).first()
+    if user:
+        abort(403)
+
     # Get user info from douban
     url = "https://api.douban.com/v2/user/%d" % user_id
     user_info = requests.get(url).json()
@@ -131,8 +141,8 @@ def settings():
     # @UserPermission()
     # def resend_activate_mail():
     # try:
-    #         signup_mail(g.user)
-    #     except Exception:
+    # signup_mail(g.user)
+    # except Exception:
     #         flash('邮件发送失败，请稍后尝试')
     #     else:
     #         flash('激活邮件已发送到你的邮箱，请查收')
