@@ -110,13 +110,17 @@
             {% endif %}
          {% endif %}
 
-         <h2>注释</h2>
+         {% if '<' in work.content %}
+            <h2>注释</h2>
 
-         <div class='work-annotate'></div>
+            <div class='work-annotate'></div>
+         {% endif %}
 
-         <h2>评析</h2>
+         {% if work.intro %}
+            <h2>评析</h2>
 
-         <div class="work-introduction">{{ work.intro|markdown|safe }}</div>
+            <div class="work-introduction">{{ work.intro|markdown|safe }}</div>
+         {% endif %}
 
          {% if reviews_num %}
             <h2>
@@ -179,17 +183,19 @@
             </span>
          </div>
 
-         <h2>其他作品</h2>
+         {% if other_works.count() %}
+            <h2>其他作品</h2>
 
-         {% for work in other_works %}
-            <div class="other-work-item">
-               <a class="other-work-title" href="{{ url_for('work.view', work_id=work.id) }}">
-                  {{ work.title|truncate(12, True, '') }}</a>
+            {% for work in other_works %}
+               <div class="other-work-item">
+                  <a class="other-work-title" href="{{ url_for('work.view', work_id=work.id) }}">
+                     {{ work.title|truncate(12, True, '') }}</a>
                <span class="other-work-content">
                   {{ work.content|clean_work|truncate(8, True) }}
                </span>
-            </div>
-         {% endfor %}
+               </div>
+            {% endfor %}
+         {% endif %}
 
          {% if collectors.count() > 0 %}
             <h2>谁收藏了它？</h2>
