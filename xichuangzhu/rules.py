@@ -83,7 +83,7 @@ class WorkImageOwnerRule(Rule):
         return UserRule()
 
     def check(self):
-        work_image = WorkImage.query.get_or_404()
+        work_image = WorkImage.query.get_or_404(self.work_image_id)
         return work_image.user_id == g.user.id
 
     def deny(self):
