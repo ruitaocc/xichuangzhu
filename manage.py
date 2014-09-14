@@ -40,7 +40,7 @@ def gene_sqlite():
     from sqlalchemy import create_engine
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
-    from sqlalchemy import Column, Integer, String, Enum, Text
+    from sqlalchemy import Column, Integer, String, Enum, Text, DateTime
 
     db_file_path = "/tmp/xcz.db"
 
@@ -72,6 +72,7 @@ def gene_sqlite():
         content = Column(Text)
         intro = Column(Text)
         layout = Column(String(10))
+        updated_at = Column(DateTime)
 
         def __repr__(self):
             return '<Work %s>' % self.title
@@ -85,6 +86,7 @@ def gene_sqlite():
         dynasty = Column(String(10))
         birth_year = Column(String(20))
         death_year = Column(String(20))
+        updated_at = Column(DateTime)
 
     class _Dynasty(Base):
         __tablename__ = 'dynasties'
@@ -104,6 +106,7 @@ def gene_sqlite():
         author = Column(String(10))
         work_id = Column(Integer)
         work = Column(String(50))
+        updated_at = Column(DateTime)
 
     Base.metadata.create_all(engine)
 
@@ -122,7 +125,8 @@ def gene_sqlite():
             _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
                           author=work.author.name, dynasty=work.author.dynasty.name,
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
-                          content=work_content, intro=work_intro, layout=work.layout)
+                          content=work_content, intro=work_intro, layout=work.layout,
+                          updated_at=work.updated_at)
             session.add(_work)
 
         # 转存文学家
@@ -144,7 +148,7 @@ def gene_sqlite():
 
             _author = _Author(id=author.id, name=author.name, intro=author.intro,
                               dynasty=author.dynasty.name, birth_year=birth_year,
-                              death_year=death_year)
+                              death_year=death_year, updated_at=author.updated_at)
             session.add(_author)
 
         # 转存朝代
@@ -157,7 +161,8 @@ def gene_sqlite():
         # 转存摘录
         for quote in Quote.query.filter(Quote.work.has(Work.highlight)):
             _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
-                            author=quote.author.name, work_id=quote.work_id, work=quote.work.title)
+                            author=quote.author.name, work_id=quote.work_id, work=quote.work.title,
+                            updated_at=quote.updated_at)
             session.add(_quote)
 
         session.commit()

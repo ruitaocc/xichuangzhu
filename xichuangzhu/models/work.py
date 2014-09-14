@@ -13,7 +13,7 @@ class Work(db.Model):
     intro = db.Column(db.Text())
     layout = db.Column(db.String(10))
     highlight = db.Column(db.Boolean, default=False)
-    create_time = db.Column(db.DateTime)
+    create_time = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     mobile_title = db.Column(db.String(50))
