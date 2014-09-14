@@ -72,7 +72,7 @@ def gene_sqlite():
         content = Column(Text)
         intro = Column(Text)
         layout = Column(String(10))
-        updated_at = Column(DateTime)
+        updated_at = Column(String(30))
 
         def __repr__(self):
             return '<Work %s>' % self.title
@@ -86,7 +86,7 @@ def gene_sqlite():
         dynasty = Column(String(10))
         birth_year = Column(String(20))
         death_year = Column(String(20))
-        updated_at = Column(DateTime)
+        updated_at = Column(String(30))
 
     class _Dynasty(Base):
         __tablename__ = 'dynasties'
@@ -106,7 +106,7 @@ def gene_sqlite():
         author = Column(String(10))
         work_id = Column(Integer)
         work = Column(String(50))
-        updated_at = Column(DateTime)
+        updated_at = Column(String(30))
 
     Base.metadata.create_all(engine)
 
@@ -126,7 +126,7 @@ def gene_sqlite():
                           author=work.author.name, dynasty=work.author.dynasty.name,
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
                           content=work_content, intro=work_intro, layout=work.layout,
-                          updated_at=work.updated_at)
+                          updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
             session.add(_work)
 
         # 转存文学家
@@ -148,7 +148,8 @@ def gene_sqlite():
 
             _author = _Author(id=author.id, name=author.name, intro=author.intro,
                               dynasty=author.dynasty.name, birth_year=birth_year,
-                              death_year=death_year, updated_at=author.updated_at)
+                              death_year=death_year,
+                              updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
             session.add(_author)
 
         # 转存朝代
@@ -162,7 +163,7 @@ def gene_sqlite():
         for quote in Quote.query.filter(Quote.work.has(Work.highlight)):
             _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
                             author=quote.author.name, work_id=quote.work_id, work=quote.work.title,
-                            updated_at=quote.updated_at)
+                            updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
             session.add(_quote)
 
         session.commit()
