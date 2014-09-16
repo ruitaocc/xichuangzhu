@@ -29,3 +29,8 @@ def works():
 def about():
     """关于页"""
     return render_template('site/about.html')
+
+@bp.route('/disclaimer')
+def disclaimer():
+    """免责声明"""
+    return render_template('site/disclaimer.html')
