@@ -234,7 +234,7 @@ def upload_image():
 
 
 @bp.route('/<int:work_id>/add_image', methods=['GET', 'POST'])
-@AdminPermission()
+@UserPermission()
 def add_image(work_id):
     """添加作品图片"""
     work = Work.query.get_or_404(work_id)
