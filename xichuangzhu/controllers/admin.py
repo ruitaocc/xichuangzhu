@@ -39,6 +39,7 @@ def highlight_works(page):
         works = works.filter(Work.type.has(WorkType.en == work_type))
     if dynasty_abbr != 'all':
         works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.abbr == dynasty_abbr)))
+    works = works.order_by(Work.highlight_at.desc())
     paginator = works.paginate(page, 15)
 
     work_types = WorkType.query
