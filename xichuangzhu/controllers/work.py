@@ -161,6 +161,7 @@ def highlight(work_id):
     """加精作品"""
     work = Work.query.get_or_404(work_id)
     work.highlight = True
+    work.highlight_at = datetime.datetime.now()
     db.session.add(work)
     db.session.commit()
     return redirect(url_for('.view', work_id=work_id))

@@ -15,6 +15,7 @@ class Work(db.Model):
     highlight = db.Column(db.Boolean, default=False)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    highlight_at = db.Column(db.Boolean)
 
     mobile_title = db.Column(db.String(50))
     mobile_content = db.Column(db.Text())
