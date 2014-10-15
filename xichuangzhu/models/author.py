@@ -28,6 +28,7 @@ class Author(db.Model):
 class Quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quote = db.Column(db.Text())
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))

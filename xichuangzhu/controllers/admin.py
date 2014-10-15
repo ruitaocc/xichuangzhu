@@ -52,3 +52,12 @@ def highlight_works(page):
                            dynasty_abbr=dynasty_abbr, work_types=work_types, dynasties=dynasties,
                            authors_count=authors_count, works_count=works_count,
                            quotes_count=quotes_count)
+
+
+@bp.route('/quotes', defaults={'page': 1})
+@bp.route('/quotes/page/<int:page>', methods=['GET', 'POST'])
+@AdminPermission()
+def quotes(page):
+    """管理摘录"""
+    paginator = Quote.query.order_by(Quote.created_at.desc()).paginate(page, 20)
+    return render_template('admin/quotes.html', paginator=paginator)
