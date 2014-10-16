@@ -37,4 +37,4 @@ def sqlite():
     with cd('/var/www/xichuangzhu'):
         with shell_env(MODE='PRODUCTION'):
             with prefix('source venv/bin/activate'):
-                run('python manage.py gene_sqlite')
+                run('python manage.py sqlite')
