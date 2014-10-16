@@ -31,7 +31,7 @@ def restart():
     run('sudo supervisorctl restart xcz')
 
 
-def gene_sqlite():
+def sqlite():
     """生成sqlite文件，并通过邮件发送"""
     env.host_string = config.HOST_STRING
     with cd('/var/www/xichuangzhu'):

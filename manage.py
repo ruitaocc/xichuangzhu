@@ -35,7 +35,7 @@ def backdb():
 
 
 @manager.command
-def gene_sqlite():
+def sqlite():
     """生成SQLite3数据库文件"""
     from sqlalchemy import create_engine
     from sqlalchemy.ext.declarative import declarative_base
@@ -112,7 +112,7 @@ def gene_sqlite():
 
     with app.app_context():
         # 转存作品
-        for work in Work.query.filter(Work.highlight):
+        for work in Work.query.filter(Work.highlight).order_by(Work.highlight_at.desc()):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
             work_content = work.mobile_content or work.content
