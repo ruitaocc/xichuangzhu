@@ -5,7 +5,7 @@
             {{ w.type.cn }}
          </a>
          <a class="work-title" href="{{ url_for('work.view', work_id = w.id) }}" target="_blank">
-            {{ w.title }}</a>
+            {{ w.full_title }}</a>
          <sup class="work-author">
             〔<a
                href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕
