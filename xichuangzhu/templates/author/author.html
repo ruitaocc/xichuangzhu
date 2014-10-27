@@ -96,7 +96,7 @@
                   data-work-type="{{ work.type.en }}"
                   class="work-item {% if show %}highlight{% endif %}">
                   <div class="content-wap">
-                     <div class='work-title'>{{ work.title }}</div>
+                     <div class='work-title'>{{ work.final_title }}</div>
                      <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
                   </div>
                </a>
@@ -114,7 +114,8 @@
                {% for q in quotes %}
                   <tr>
                      <td>
-                        <a class="quote" target="_blank" title="《{{ q.work.title }}》"
+                        <a class="quote" target="_blank"
+                           title="《{{ q.work.final_title }}》"
                            href="{{ url_for('work.view', work_id=q.work_id) }}">
                            {{ q.quote|truncate(18, true) }}
                         </a>

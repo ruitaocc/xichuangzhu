@@ -119,7 +119,7 @@
             <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}">
                {{ w.type.cn }}</a>
             <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}">
-               {{ w.title }}</a>
+               {{ w.final_title }}</a>
             <sup class="work-author">
                〔<a
                   href="{{ url_for('author.view', author_abbr=w.author.abbr) }}">{{ w.author.name }}</a>〕

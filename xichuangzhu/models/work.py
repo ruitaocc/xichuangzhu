@@ -27,6 +27,10 @@ class Work(db.Model):
     type_id = db.Column(db.Integer, db.ForeignKey('work_type.id'))
     type = db.relationship('WorkType', backref=db.backref('works', lazy='dynamic'))
 
+    @property
+    def final_title(self):
+        return self.full_title or self.title
+
     def __repr__(self):
         return '<Work %s>' % self.title
 
