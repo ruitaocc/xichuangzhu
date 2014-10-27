@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired
 class WorkForm(Form):
     """Form for add & edit work"""
     title = TextField('标题', [DataRequired('标题不能为空')])
-    full_title = TextField('完整标题')
+    title_suffix = TextField('标题后缀')
     mobile_title = TextField('移动版标题')
     type_id = SelectField('类别', [DataRequired("类别不能为空")], coerce=int)
     layout = SelectField('布局', [DataRequired('布局不能为空')],

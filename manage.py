@@ -63,6 +63,7 @@ def sqlite():
 
         id = Column(Integer, primary_key=True)
         title = Column(String(50))
+        full_title = Column(String(50))
         author = Column(String(50))
         author_id = Column(Integer)
         dynasty = Column(String(10))
@@ -115,6 +116,10 @@ def sqlite():
         for work in Work.query.filter(Work.highlight):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
+            if work.title_suffix:
+                work_full_title = "%s-%s" % (work_title, work.title_suffix)
+            else:
+                work_full_title = work_title
             work_content = work.mobile_content or work.content
             # 处理content，去掉注释，将%转换为空格
             work_content = re.sub(r'<([^<]+)>', '', work_content)
@@ -122,8 +127,9 @@ def sqlite():
             work_content = work_content.replace('\r\n\r\n', '\n')
             # 处理评析
             work_intro = work.intro.replace('\r\n\r\n', '\n')
-            _work = _Work(id=work.id, title=work_title, author_id=work.author_id,
-                          author=work.author.name, dynasty=work.author.dynasty.name,
+            _work = _Work(id=work.id, title=work_title, full_title=work_full_title,
+                          author_id=work.author_id, author=work.author.name,
+                          dynasty=work.author.dynasty.name,
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
                           content=work_content, intro=work_intro, layout=work.layout,
                           updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))

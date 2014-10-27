@@ -66,7 +66,7 @@
          <div class="review-extra-info">
             <a href="{{ url_for('user.view', user_abbr=review.user.abbr) }}">{{ review.user.name }}</a>
             <span style="color:#333;">评</span>
-            <a href="{{ url_for('work.view', work_id=review.work_id) }}">{{ review.work.final_title }}</a>
+            <a href="{{ url_for('work.view', work_id=review.work_id) }}">{{ review.work.full_title }}</a>
             <span style="color:#333;">〔{{ review.work.author.name }}〕</span>
             ·
             <span class="review-time">{{ review.create_time|timesince }}</span>

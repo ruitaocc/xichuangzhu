@@ -189,7 +189,7 @@
             {% for work in other_works %}
                <div class="other-work-item">
                   <a class="other-work-title" href="{{ url_for('work.view', work_id=work.id) }}">
-                     {{ work.final_title|truncate(12, True, '') }}</a>
+                     {{ work.full_title|truncate(12, True, '') }}</a>
                <span class="other-work-content">
                   {{ work.content|clean_work|truncate(8, True) }}
                </span>

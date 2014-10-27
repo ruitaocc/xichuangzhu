@@ -29,7 +29,7 @@
                <td>
                   [{{ w.type.cn }}]
                   <a target="_blank" href="{{ url_for('work.view', work_id=w.id) }}">
-                     {{ w.final_title|truncate(12, True) }}
+                     {{ w.full_title|truncate(12, True) }}
                   </a>
                   {% if w.highlight %}
                      <span class="glyphicon glyphicon-ok"></span>
@@ -41,7 +41,7 @@
                <td {% if not w.tags %}class='danger'{% endif %}>
                   <ul class="work-tags">
                      {% if not w.tags %}
-                        <a title="为《{{ w.final_title }}》添加标签" target="_blank"
+                        <a title="为《{{ w.full_title }}》添加标签" target="_blank"
                            class="btn btn-sm btn-default" href="#">
                            <span class="glyphicon glyphicon-tags"></span>
                         </a>
@@ -64,7 +64,7 @@
 
                <td {% if '<' not in w.content %}class='danger'{% endif %}>
                   {% if '<' not in w.content %}
-                     <a title="编辑《{{ w.final_title }}》" target="_blank" class="btn btn-sm btn-default"
+                     <a title="编辑《{{ w.full_title }}》" target="_blank" class="btn btn-sm btn-default"
                         href="{{ url_for('work.edit', work_id=w.id) }}"><span
                            class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
@@ -72,7 +72,7 @@
 
                <td {% if w.intro == '' %}class='danger'{% endif %}>
                   {% if w.intro == '' %}
-                     <a title="编辑《{{ w.final_title }}》" target="_blank" class="btn btn-sm btn-default"
+                     <a title="编辑《{{ w.full_title }}》" target="_blank" class="btn btn-sm btn-default"
                         href="{{ url_for('work.edit', work_id=w.id) }}"><span
                            class="glyphicon glyphicon-edit"></span></a>
                   {% endif %}
@@ -80,14 +80,14 @@
 
                <!-- <td {% if w.reviews.count() == 0 %}class='danger'{% endif %}>
                   {% if w.reviews.count() == 0 %}
-                  <a title="点评《{{ w.final_title }}》" target="_blank" class='btn btn-sm btn-default' href="
+                  <a title="点评《{{ w.full_title }}》" target="_blank" class='btn btn-sm btn-default' href="
                         {{ url_for('work.add_review', work_id=w.id) }}"><span class='glyphicon glyphicon-pencil'></span></a>
                   {% endif %}
                </td>
 
                <td {% if w.images.count() == 0 %}class='danger'{% endif %}>
                   {% if w.images.count() == 0 %}
-                  <a title="为《{{ w.final_title }}》添加书法作品" target="_blank" class='btn btn-sm btn-default' href="
+                  <a title="为《{{ w.full_title }}》添加书法作品" target="_blank" class='btn btn-sm btn-default' href="
                         {{ url_for('work.add_image', work_id=w.id) }}"><span class='glyphicon glyphicon-picture'></span></a>
                   {% endif %}
                </td> -->

@@ -8,7 +8,7 @@ class Work(db.Model):
     """作品"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
-    full_title = db.Column(db.String(50))  # 完整的标题，用于没有题目的词，使用第一个短句作为其题目
+    title_suffix = db.Column(db.String(50))  # 完整的标题，用于没有题目的词，使用第一个短句作为其题目
     foreword = db.Column(db.Text())
     content = db.Column(db.Text())
     intro = db.Column(db.Text())
@@ -28,8 +28,11 @@ class Work(db.Model):
     type = db.relationship('WorkType', backref=db.backref('works', lazy='dynamic'))
 
     @property
-    def final_title(self):
-        return self.full_title or self.title
+    def full_title(self):
+        if self.title_suffix:
+            return "%s-%s" % (self.title, self.title_suffix)
+        else:
+            return self.title
 
     def __repr__(self):
         return '<Work %s>' % self.title
