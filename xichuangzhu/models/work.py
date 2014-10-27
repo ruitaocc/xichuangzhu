@@ -8,6 +8,7 @@ class Work(db.Model):
     """作品"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
+    full_title = db.Column(db.String(50))  # 完整的标题，用于没有题目的词，使用第一个短句作为其题目
     foreword = db.Column(db.Text())
     content = db.Column(db.Text())
     intro = db.Column(db.Text())
