@@ -116,8 +116,8 @@ def sqlite():
         for work in Work.query.filter(Work.highlight):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
-            if work.title_suffix:
-                work_full_title = "%s（%s）" % (work_title, work.title_suffix)
+            if work.title_suffix and '-' not in work.title:
+                work_full_title = "%s-%s" % (work_title, work.title_suffix)
             else:
                 work_full_title = work_title
             work_content = work.mobile_content or work.content
@@ -183,18 +183,6 @@ def sqlite():
         with open(db_file_path, 'rb') as f:
             msg.attach("xcz.db", "application/octet-stream", f.read())
         mail.send(msg)
-
-
-# @manager.command
-# def gene_title_suffix():
-#     with app.app_context():
-#         for work in Work.query:
-#             # 提取词的title_suffix
-#             if work.type.en == 'ci':
-#                 work.title_suffix = ""
-#                 db.session.add(work)
-#                 print(work.title_suffix)
-#         db.session.commit()
 
 
 @manager.command

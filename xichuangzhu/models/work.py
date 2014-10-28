@@ -29,8 +29,8 @@ class Work(db.Model):
 
     @property
     def full_title(self):
-        if self.title_suffix:
-            return "%s（%s）" % (self.title, self.title_suffix)
+        if self.title_suffix and '-' not in self.title:
+            return "%s-%s" % (self.title, self.title_suffix)
         else:
             return self.title
 
