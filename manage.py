@@ -64,6 +64,7 @@ def sqlite():
         id = Column(Integer, primary_key=True)
         title = Column(String(50))
         full_title = Column(String(50))
+        show_order = Column(Integer)
         author = Column(String(50))
         author_id = Column(Integer)
         dynasty = Column(String(10))
@@ -113,7 +114,8 @@ def sqlite():
 
     with app.app_context():
         # 转存作品
-        for work in Work.query.filter(Work.highlight):
+        works = Work.query.filter(Work.highlight).order_by(db.func.random())
+        for index, work in enumerate(works):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
             if work.title_suffix and '-' not in work.title:
@@ -127,7 +129,8 @@ def sqlite():
             work_content = work_content.replace('\r\n\r\n', '\n')
             # 处理评析
             work_intro = work.intro.replace('\r\n\r\n', '\n')
-            _work = _Work(id=work.id, title=work_title, full_title=work_full_title,
+            _work = _Work(id=work.id, show_order=index, title=work_title,
+                          full_title=work_full_title,
                           author_id=work.author_id, author=work.author.name,
                           dynasty=work.author.dynasty.name,
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
@@ -183,11 +186,6 @@ def sqlite():
         with open(db_file_path, 'rb') as f:
             msg.attach("xcz.db", "application/octet-stream", f.read())
         mail.send(msg)
-
-
-@manager.command
-def test():
-    pass
 
 
 if __name__ == "__main__":
