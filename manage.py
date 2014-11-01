@@ -1,6 +1,7 @@
 # coding: utf-8
 import os
 import re
+from werkzeug.security import gen_salt
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
@@ -58,6 +59,11 @@ def sqlite():
     # -has-no-attribute-model-chan
     session._model_changes = {}
 
+    class _Version(Base):
+        __tablename__ = 'version'
+
+        version = Column(String(20))
+
     class _Work(Base):
         __tablename__ = 'works'
 
@@ -113,6 +119,10 @@ def sqlite():
     Base.metadata.create_all(engine)
 
     with app.app_context():
+        # 设置version
+        version = _Version(version=gen_salt(20))
+        session.add(version)
+
         # 转存作品
         works = Work.query.filter(Work.highlight).order_by(db.func.random())
         for index, work in enumerate(works):
