@@ -62,7 +62,7 @@ def sqlite():
     class _Version(Base):
         __tablename__ = 'version'
 
-        version = Column(String(20))
+        version = Column(String(20), primary_key=True)
 
     class _Work(Base):
         __tablename__ = 'works'
