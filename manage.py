@@ -7,6 +7,7 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from xichuangzhu import create_app
 from xichuangzhu.models import db, Work, Author, Dynasty, Quote
+from xichuangzhu.utils import s2t
 
 app = create_app()
 manager = Manager(app)
@@ -146,6 +147,7 @@ def sqlite():
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
                           content=work_content, intro=work_intro, layout=work.layout,
                           updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
+            _s2t_work(_work)
             session.add(_work)
 
         # 转存文学家
@@ -169,6 +171,7 @@ def sqlite():
                               dynasty=author.dynasty.name, birth_year=birth_year,
                               death_year=death_year,
                               updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
+            _s2t_author(_author)
             session.add(_author)
 
         # 转存朝代
@@ -176,6 +179,7 @@ def sqlite():
                 Dynasty.authors.any(Author.works.any(Work.highlight))):
             _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
                                 start_year=dynasty.start_year, end_year=dynasty.end_year)
+            _s2t_dynasty(_dynasty)
             session.add(_dynasty)
 
         # 转存摘录
@@ -183,6 +187,7 @@ def sqlite():
             _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
                             author=quote.author.name, work_id=quote.work_id, work=quote.work.title,
                             updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
+            _s2t_quote(_quote)
             session.add(_quote)
 
         session.commit()
@@ -196,6 +201,33 @@ def sqlite():
         with open(db_file_path, 'rb') as f:
             msg.attach("xcz.db", "application/octet-stream", f.read())
         mail.send(msg)
+
+
+def _s2t_work(work):
+    work.title = s2t(work.title)
+    work.full_title = s2t(work.full_title)
+    work.author = s2t(work.author)
+    work.dynasty = s2t(work.dynasty)
+    work.intro = s2t(work.intro)
+    work.content = s2t(work.content)
+    work.foreword = s2t(work.foreword)
+
+
+def _s2t_dynasty(dynasty):
+    dynasty.name = s2t(dynasty.name)
+    dynasty.intro = s2t(dynasty.intro)
+
+
+def _s2t_quote(quote):
+    quote.quote = s2t(quote.quote)
+    quote.author = s2t(quote.author)
+    quote.work = s2t(quote.work)
+
+
+def _s2t_author(author):
+    author.name = s2t(author.name)
+    author.intro = s2t(author.intro)
+    author.dynasty = s2t(author.dynasty)
 
 
 if __name__ == "__main__":
