@@ -147,7 +147,7 @@ def sqlite():
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
                           content=work_content, intro=work_intro, layout=work.layout,
                           updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            _s2t_work(_work)
+            # _s2t_work(_work)
             session.add(_work)
 
         # 转存文学家
@@ -171,7 +171,7 @@ def sqlite():
                               dynasty=author.dynasty.name, birth_year=birth_year,
                               death_year=death_year,
                               updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            _s2t_author(_author)
+            # _s2t_author(_author)
             session.add(_author)
 
         # 转存朝代
@@ -179,7 +179,7 @@ def sqlite():
                 Dynasty.authors.any(Author.works.any(Work.highlight))):
             _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
                                 start_year=dynasty.start_year, end_year=dynasty.end_year)
-            _s2t_dynasty(_dynasty)
+            # _s2t_dynasty(_dynasty)
             session.add(_dynasty)
 
         # 转存摘录
@@ -187,7 +187,7 @@ def sqlite():
             _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
                             author=quote.author.name, work_id=quote.work_id, work=quote.work.title,
                             updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            _s2t_quote(_quote)
+            # _s2t_quote(_quote)
             session.add(_quote)
 
         session.commit()
