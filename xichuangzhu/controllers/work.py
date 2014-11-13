@@ -9,7 +9,7 @@ from ..utils import check_is_me
 from ..permissions import UserPermission, AdminPermission, WorkImageAdminPermission, \
     WorkReviewAdminPermission
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm, WorkQuoteForm
-from ..utils import random_filename, save_to_oss
+from ..utils import random_filename, save_to_oss, s2t
 from ..uploadsets import workimages
 
 bp = Blueprint('work', __name__)
