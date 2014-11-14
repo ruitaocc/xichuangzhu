@@ -134,10 +134,12 @@ def sqlite():
             else:
                 work_full_title = work_title
             work_content = work.mobile_content or work.content
+
             # 处理content，去掉注释，将%转换为空格
             work_content = re.sub(r'<([^<]+)>', '', work_content)
             work_content = work_content.replace('%', "    ")
             work_content = work_content.replace('\r\n\r\n', '\n')
+
             # 处理评析
             work_intro = work.intro.replace('\r\n\r\n', '\n')
             _work = _Work(id=work.id, show_order=index, title=work_title,
