@@ -24,7 +24,8 @@
 
          <!-- TODO: 32 is a experienced value -->
          {% if work.foreword %}
-            <div class="work-foreword {% if work.foreword|length < 32 %}single-line{% endif %}">
+            <div class="work-foreword work-{{ work.type.en }}-foreward
+               {% if work.foreword|length < 32 %}single-line{% endif %}">
                {{ work.foreword }}
             </div>
          {% endif %}
