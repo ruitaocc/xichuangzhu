@@ -65,6 +65,8 @@
          <ul class="nav navbar-nav">
             <li><a href="{{ url_for('site.index') }}">首页</a></li>
 
+            <li><a href="{{ url_for('author.authors') }}">文学家</a></li>
+
             {# <li><a href="{{ url_for('work.tags') }}">标签</a></li>#}
 
             {% if g.user %}
