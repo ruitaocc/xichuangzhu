@@ -19,7 +19,7 @@
          <div class="work-author">
             〔<a
                href="{{ url_for('dynasty.view', dynasty_abbr = work.author.dynasty.abbr) }}">{{ work.author.dynasty.name }}</a>〕<a
-               href="{{ url_for('author.view', author_abbr=work.author.abbr) }}">{{ work.author.name }}</a>
+               href="{{ url_for('author.view', author_id=work.author.id) }}">{{ work.author.name }}</a>
          </div>
 
          <!-- TODO: 32 is a experienced value -->
@@ -180,7 +180,7 @@
          <div>
             {{ work.author.intro|truncate(55, True) }}
             <span class='link-more'>
-               <a href="{{ url_for('author.view', author_abbr=work.author.abbr) }}">更多»</a>
+               <a href="{{ url_for('author.view', author_id=work.author.id) }}">更多»</a>
             </span>
          </div>
 

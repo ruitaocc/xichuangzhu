@@ -8,10 +8,10 @@ from ..forms import AuthorForm
 bp = Blueprint('author', __name__)
 
 
-@bp.route('/<author_abbr>')
-def view(author_abbr):
+@bp.route('/<author_id>')
+def view(author_id):
     """文学家主页"""
-    author = Author.query.filter(Author.abbr == author_abbr).first_or_404()
+    author = Author.query.get_or_404(author_id)
     # 获取1条摘录
     quote_id = request.args.get('q')
     quote = Quote.query.get(quote_id) if quote_id else None
@@ -54,7 +54,7 @@ def add():
         author = Author(**form.data)
         db.session.add(author)
         db.session.commit()
-        return redirect(url_for('.view', author_abbr=author.abbr))
+        return redirect(url_for('.view', author_id=author.id))
     return render_template('author/add.html', form=form)
 
 
@@ -70,7 +70,7 @@ def edit(author_id):
         author.updated_at = datetime.datetime.now()
         db.session.add(author)
         db.session.commit()
-        return redirect(url_for('.view', author_abbr=author.abbr))
+        return redirect(url_for('.view', author_id=author.id))
     return render_template('author/edit.html', author=author, form=form)
 
 
@@ -81,4 +81,4 @@ def delete_quote(quote_id):
     quote = Quote.query.get_or_404(quote_id)
     db.session.delete(quote)
     db.session.commit()
-    return redirect(url_for('.view', author_abbr=quote.author.abbr))
+    return redirect(url_for('.view', author_id=quote.author.id))

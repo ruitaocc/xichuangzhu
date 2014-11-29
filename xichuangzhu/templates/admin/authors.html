@@ -28,7 +28,7 @@
                {% if works_count <= 1 or quotes_count <= 1 or works_count > 2 * quotes_count %}
                   <tr>
                      <td>
-                        <a target="_blank" href="{{ url_for('author.view', author_abbr=a.abbr) }}">
+                        <a target="_blank" href="{{ url_for('author.view', author_id=a.id) }}">
                            {{ a.name }}
                         </a>
                      </td>

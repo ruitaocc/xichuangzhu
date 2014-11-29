@@ -22,7 +22,7 @@
                <ul class="author-group clearfix">
                   {% for author in dynasty.authors %}
                      <li class='author'>
-                        <a href="{{ url_for('author.view', author_abbr=author.abbr) }}">
+                        <a href="{{ url_for('author.view', author_id=author.id) }}">
                            {{ author.name }}
                         </a>
                      </li>
