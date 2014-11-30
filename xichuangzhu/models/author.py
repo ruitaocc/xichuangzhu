@@ -6,7 +6,6 @@ from ._base import db
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    abbr = db.Column(db.String(50), index=True)
     intro = db.Column(db.Text())
     birth_year = db.Column(db.String(20))
     death_year = db.Column(db.String(20))

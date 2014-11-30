@@ -22,7 +22,6 @@ class WorkForm(Form):
 class AuthorForm(Form):
     """Form for add & edit author"""
     name = TextField('姓名', [DataRequired('姓名不能为空')])
-    abbr = TextField('拼音', [DataRequired('拼音不能为空')])
     dynasty_id = SelectField('朝代', [DataRequired('朝代不能为空')], coerce=int)
     birth_year = TextField('生年', [DataRequired('生年不能为空')])
     death_year = TextField('卒年')
