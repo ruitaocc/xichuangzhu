@@ -42,7 +42,7 @@ def sqlite():
     from sqlalchemy import create_engine
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
-    from sqlalchemy import Column, Integer, String, Enum, Text, DateTime
+    from sqlalchemy import Column, Integer, String, Enum, Text
 
     db_file_path = "/tmp/xcz.db"
 
@@ -203,6 +203,39 @@ def sqlite():
         with open(db_file_path, 'rb') as f:
             msg.attach("xcz.db", "application/octet-stream", f.read())
         mail.send(msg)
+
+
+@manager.command
+def generate_like_db():
+    """生成xcz_user.db"""
+    from sqlalchemy import create_engine
+    from sqlalchemy.ext.declarative import declarative_base
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy import Column, Integer, String, Enum, Text
+
+    db_file_path = "/tmp/xcz_user.db"
+
+    if os.path.isfile(db_file_path):
+        os.remove(db_file_path)
+
+    engine = create_engine('sqlite:///%s' % db_file_path)
+    Base = declarative_base()
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    session._model_changes = {}
+
+    class _Like(Base):
+        __tablename__ = 'likes'
+
+        id = Column(Integer, primary_key=True)
+        work_id = Column(Integer)
+        show_order = Column(Integer, default=0)
+        created_at = Column(String(30))
+
+        def __repr__(self):
+            return '<Like %s>' % self.work_id
+
+    Base.metadata.create_all(engine)
 
 
 def _s2t_work(work):
