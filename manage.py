@@ -37,14 +37,17 @@ def backdb():
 
 
 @manager.command
-def sqlite():
+def sqlite(tr=False):
     """生成SQLite3数据库文件"""
     from sqlalchemy import create_engine
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
     from sqlalchemy import Column, Integer, String, Enum, Text
 
-    db_file_path = "/tmp/xcz.db"
+    if tr:
+        db_file_path = "/tmp/xcz_tr.db"
+    else:
+        db_file_path = "/tmp/xcz.db"
 
     if os.path.isfile(db_file_path):
         os.remove(db_file_path)
@@ -149,7 +152,8 @@ def sqlite():
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
                           content=work_content, intro=work_intro, layout=work.layout,
                           updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            # _s2t_work(_work)
+            if tr:
+                _s2t_work(_work)
             session.add(_work)
 
         # 转存文学家
@@ -173,7 +177,8 @@ def sqlite():
                               dynasty=author.dynasty.name, birth_year=birth_year,
                               death_year=death_year,
                               updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            # _s2t_author(_author)
+            if tr:
+                _s2t_author(_author)
             session.add(_author)
 
         # 转存朝代
@@ -181,7 +186,8 @@ def sqlite():
                 Dynasty.authors.any(Author.works.any(Work.highlight))):
             _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
                                 start_year=dynasty.start_year, end_year=dynasty.end_year)
-            # _s2t_dynasty(_dynasty)
+            if tr:
+                _s2t_dynasty(_dynasty)
             session.add(_dynasty)
 
         # 转存摘录
@@ -189,7 +195,8 @@ def sqlite():
             _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
                             author=quote.author.name, work_id=quote.work_id, work=quote.work.title,
                             updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            # _s2t_quote(_quote)
+            if tr:
+                _s2t_quote(_quote)
             session.add(_quote)
 
         session.commit()
