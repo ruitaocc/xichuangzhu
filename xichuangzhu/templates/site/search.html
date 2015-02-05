@@ -8,12 +8,14 @@
 
    <div class="row">
       <div class="col-md-8">
-         <h2>搜索结果 / 作品</h2>
+         <h2>
+            作品{% if keyword %} / {{ keyword }}{% endif %}
+         </h2>
 
          {% if not keyword %}
-            <p class="text-light">请输入关键字</p>
+            <p class="text-light text-small">请输入关键字</p>
          {% elif not works.total %}
-            <p class="text-light">找不到相关作品</p>
+            <p class="text-light text-small">找不到相关作品</p>
          {% else %}
             {{ render_works(works.items) }}
 
@@ -23,13 +25,13 @@
 
       <div class="col-md-4">
          <h2>
-            搜索结果 / 文学家
+            文学家{% if keyword %} / {{ keyword }}{% endif %}
          </h2>
 
          {% if not keyword %}
-            <p class="text-light">请输入关键字</p>
+            <p class="text-light text-small">请输入关键字</p>
          {% elif not authors.count() %}
-            <p class="text-light">找不到相关文学家</p>
+            <p class="text-light text-small">找不到相关文学家</p>
          {% else %}
             {{ render_authors(authors) }}
          {% endif %}
