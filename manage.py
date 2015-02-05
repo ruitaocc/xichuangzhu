@@ -45,9 +45,10 @@ def sqlite(tr=False):
     from sqlalchemy import Column, Integer, String, Enum, Text
 
     if tr:
-        db_file_path = "/tmp/xcz_tr.db"
+        db_file = "xcz_tr.db"
     else:
-        db_file_path = "/tmp/xcz.db"
+        db_file = "/xcz.db"
+    db_file_path = "/tmp/%s" % db_file
 
     if os.path.isfile(db_file_path):
         os.remove(db_file_path)
@@ -208,7 +209,7 @@ def sqlite(tr=False):
         config = app.config
         msg = Message("SQLite File", recipients=[config.get('MAIL_ADMIN_ADDR')])
         with open(db_file_path, 'rb') as f:
-            msg.attach("xcz.db", "application/octet-stream", f.read())
+            msg.attach(db_file, "application/octet-stream", f.read())
         mail.send(msg)
 
 
