@@ -80,10 +80,12 @@
             {% endif %}
          </ul>
 
-         <form class="navbar-form navbar-left" role="search">
+         <form class="navbar-form navbar-left" method="get" action="{{ url_for('site.search') }}"
+               role="search">
             <div class="form-group">
                <div class='input-group-sm position-relative'>
-                  <input type="text" class="search-content form-control" placeholder="作品 / 文学家">
+                  <input type="text" class="search-content form-control" placeholder="作品 / 文学家"
+                         value="{{ keyword or "" }}" name="q">
 
                   <button type="submit" title='搜索' class="btn btn-default btn-sm embed-btn">
                      <span class='glyphicon glyphicon-search'></span>
@@ -92,14 +94,14 @@
             </div>
          </form>
 
-         <script type="text/javascript">
-            $('.navbar-form').submit(function () {
-               var query = $('.search-content').val();
-               var url = "https://www.google.com.hk/search?q=site:www.xichuangzhu.com " + query;
-               window.open(url, "_blank");
-               return false;
-            });
-         </script>
+         {#         <script type="text/javascript">#}
+         {#            $('.navbar-form').submit(function () {#}
+         {#               var query = $('.search-content').val();#}
+         {#               var url = "https://www.google.com.hk/search?q=site:www.xichuangzhu.com " + query;#}
+         {#               window.open(url, "_blank");#}
+         {#               return false;#}
+         {#            });#}
+         {#         </script>#}
 
          {% if g.user %}
             <ul class="nav navbar-nav navbar-right">
@@ -217,7 +219,7 @@
    } else {
       $('#btn-s2t').text('简');
    }
-   
+
    // 百度统计
    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff6ec6187fb2e01e57301c5f03953176f' type='text/javascript'%3E%3C/script%3E"));

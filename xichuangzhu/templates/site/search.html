@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% from 'macro/ui.html' import pagination, render_authors, render_works with context %}
+
+{% block page_title %}搜索结果{% endblock %}
+{% block page_id %}page-search{% endblock %}
+
+{% block body %}
+
+   <div class="row">
+      <div class="col-md-8">
+         <h2>搜索结果 / 作品</h2>
+
+         {% if not keyword %}
+            <p class="text-light">请输入关键字</p>
+         {% elif not works.total %}
+            <p class="text-light">找不到相关作品</p>
+         {% else %}
+            {{ render_works(works.items) }}
+
+            {{ pagination(works) }}
+         {% endif %}
+      </div>
+
+      <div class="col-md-4">
+         <h2>
+            搜索结果 / 文学家
+         </h2>
+
+         {% if not keyword %}
+            <p class="text-light">请输入关键字</p>
+         {% elif not authors.count() %}
+            <p class="text-light">找不到相关文学家</p>
+         {% else %}
+            {{ render_authors(authors) }}
+         {% endif %}
+      </div>
+   </div>
+
+{% endblock %}

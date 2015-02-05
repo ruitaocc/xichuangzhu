@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, request
 from ..models import db, Work, WorkImage, WorkReview, Author, Dynasty
 
 bp = Blueprint('site', __name__)
@@ -23,6 +23,19 @@ def works():
     """生成首页需要的作品json数据"""
     works = Work.query.order_by(db.func.random()).limit(4)
     return render_template('macro/index_works.html', works=works)
+
+
+@bp.route('/search')
+def search():
+    keyword = request.args.get('q')
+    page = request.args.get('page', 1, int)
+    if not keyword:
+        authors = None
+        works = None
+    else:
+        authors = Author.query.filter(Author.name.like('%%%s%%' % keyword)).limit(8)
+        works = Work.query.filter(Work.title.like('%%%s%%' % keyword)).paginate(page, 15)
+    return render_template('site/search.html', keyword=keyword, authors=authors, works=works)
 
 
 @bp.route('/about')
