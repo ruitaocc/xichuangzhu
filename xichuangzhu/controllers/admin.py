@@ -54,6 +54,14 @@ def highlight_works(page):
                            quotes_count=quotes_count)
 
 
+@bp.route('/unhighlight_works', defaults={'page': 1})
+@bp.route('/unhighlight_works/page/<int:page>', methods=['GET', 'POST'])
+@AdminPermission()
+def unhighlight_works(page):
+    """全部未加精作品"""
+    works = Work.query.filter(~Work.highlight).paginate(page, 15)
+    return render_template('admin/unhighlight_works.html', works=works)
+
 @bp.route('/quotes', defaults={'page': 1})
 @bp.route('/quotes/page/<int:page>', methods=['GET', 'POST'])
 @AdminPermission()
