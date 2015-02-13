@@ -19,13 +19,13 @@
       <div class="col-md-4">
          <h2>年代</h2>
          <ul id="dynasty-selector">
-            <li {% if dynasty_abbr == 'all' %}class="active"{% endif %}>
-               <a href="{{ url_for('work.works') }}?type={{ work_type }}&dynasty=all">全部</a>
+            <li {% if not dynasty_id %}class="active"{% endif %}>
+               <a href="{{ url_for('work.works') }}?type={{ work_type }}">全部</a>
             </li>
 
             {% for d in dynasties %}
-               <li {% if dynasty_abbr == d.abbr %}class="active"{% endif %}>
-                  <a href="{{ url_for('work.works') }}?type={{ work_type }}&dynasty={{ d.abbr }}">{{ d.name }}</a>
+               <li {% if dynasty_id == d.id %}class="active"{% endif %}>
+                  <a href="{{ url_for('work.works') }}?type={{ work_type }}&dynasty_id={{ d.id }}">{{ d.name }}</a>
                </li>
             {% endfor %}
          </ul>
@@ -33,12 +33,12 @@
          <h2>体裁</h2>
          <ul id="type-selector">
             <li {% if work_type == 'all' %}class="active"{% endif %}>
-               <a href="{{ url_for('work.works') }}?type=all&dynasty={{ dynasty_abbr }}">全部</a>
+               <a href="{{ url_for('work.works') }}?type=all&dynasty_id={{ dynasty_id }}">全部</a>
             </li>
 
             {% for t in work_types %}
                <li {% if work_type == t.en %}class="active"{% endif %}>
-                  <a href="{{ url_for('work.works') }}?type={{ t.en }}&dynasty={{ dynasty_abbr }}">{{ t.cn }}</a>
+                  <a href="{{ url_for('work.works') }}?type={{ t.en }}&dynasty_id={{ dynasty_id }}">{{ t.cn }}</a>
                </li>
             {% endfor %}
          </ul>

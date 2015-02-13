@@ -55,17 +55,17 @@ def discollect(work_id):
 def works(page):
     """全部文学作品"""
     work_type = request.args.get('type', 'all')
-    dynasty_abbr = request.args.get('dynasty', 'all')
+    dynasty_id = request.args.get('dynasty_id', type=int)
     works = Work.query
     if work_type != 'all':
         works = works.filter(Work.type.has(WorkType.en == work_type))
-    if dynasty_abbr != 'all':
-        works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.abbr == dynasty_abbr)))
+    if dynasty_id:
+        works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.id == dynasty_id)))
     paginator = works.paginate(page, 10)
     work_types = WorkType.query
     dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
     return render_template('work/works.html', paginator=paginator, work_type=work_type,
-                           dynasty_abbr=dynasty_abbr, work_types=work_types, dynasties=dynasties)
+                           dynasty_id=dynasty_id, work_types=work_types, dynasties=dynasties)
 
 
 @bp.route('/tags')

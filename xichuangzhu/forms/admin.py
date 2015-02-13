@@ -42,7 +42,6 @@ class WorkQuoteForm(Form):
 class DynastyForm(Form):
     """Form for add & edit dynasty"""
     name = TextField('朝代', [DataRequired('朝代不能为空')])
-    abbr = TextField('拼音', [DataRequired('拼音不能为空')])
     intro = TextAreaField('简介', [DataRequired('简介不能为空')])
     start_year = IntegerField('起始年', [DataRequired('起始年不能为空')])
     end_year = IntegerField('结束年', [DataRequired('结束年不能为空')])
