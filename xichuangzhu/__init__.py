@@ -90,6 +90,15 @@ def register_jinja(app):
         view_args.update(args)
         return url_for(request.endpoint, **view_args)
 
+    def set_url_param(**params):
+        """Set param in url"""
+        view_args = request.view_args.copy()
+        args = request.args.copy().to_dict()
+        combined_args = dict(view_args.items() + args.items())
+        if params:
+            combined_args.update(params)
+        return url_for(request.endpoint, **combined_args)
+
     def static(filename):
         """生成静态资源url"""
         return url_for('static', filename=filename)
@@ -103,6 +112,7 @@ def register_jinja(app):
         return Markup("<link rel='stylesheet' href='%s'></script>" % static(path))
 
     app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+    app.jinja_env.globals['set_url_param'] = set_url_param
     app.jinja_env.globals['static'] = static
     app.jinja_env.globals['js'] = js
     app.jinja_env.globals['css'] = css

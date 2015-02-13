@@ -30,12 +30,12 @@ def works(page):
 def highlight_works(page):
     """全部加精作品"""
     # 查询条件
-    work_type = request.args.get('type', 'all')
+    work_type = request.args.get('type')
     dynasty_id = request.args.get('dynasty_id', type=int)
 
     # 符合条件的作品
     works = Work.query.filter(Work.highlight)
-    if work_type != 'all':
+    if work_type:
         works = works.filter(Work.type.has(WorkType.en == work_type))
     if dynasty_id:
         works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.id == dynasty_id)))
