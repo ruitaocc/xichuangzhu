@@ -29,11 +29,13 @@
       }
 
       $(function () {
+         var dynastiesCount = {{ dynasties.count() }};
+
          // set random color
          $('#dyn-selector a').each(function () {
             $(this).css({
                'height': '22px',
-               'width': $(window).width() / 17 + 'px',
+               'width': $(window).width() / dynastiesCount + 'px',
                'background-color': random_color()
             });
          });
@@ -41,7 +43,7 @@
          // when change window size
          $(window).resize(function () {
             $('#dyn-selector a').css({
-               'width': $(window).width() / 17 + 'px'
+               'width': $(window).width() / dynastiesCount + 'px'
             });
          });
       })
