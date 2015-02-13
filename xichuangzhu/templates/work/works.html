@@ -20,25 +20,32 @@
          <h2>年代</h2>
          <ul id="dynasty-selector">
             <li {% if not dynasty_id %}class="active"{% endif %}>
-               <a href="{{ url_for('work.works') }}?type={{ work_type }}">全部</a>
+               <a href="{{ set_url_param(type=work_type, dynasty_id=None, page=None) }}">
+                  全部
+               </a>
             </li>
 
             {% for d in dynasties %}
                <li {% if dynasty_id == d.id %}class="active"{% endif %}>
-                  <a href="{{ url_for('work.works') }}?type={{ work_type }}&dynasty_id={{ d.id }}">{{ d.name }}</a>
+                  <a href="{{ set_url_param(type=work_type, dynasty_id=d.id, page=None) }}">
+                     {{ d.name }}
+                  </a>
                </li>
             {% endfor %}
          </ul>
 
          <h2>体裁</h2>
          <ul id="type-selector">
-            <li {% if work_type == 'all' %}class="active"{% endif %}>
-               <a href="{{ url_for('work.works') }}?type=all&dynasty_id={{ dynasty_id }}">全部</a>
+            <li {% if not work_type %}class="active"{% endif %}>
+               <a href="{{ set_url_param(type=None, dynasty_id=dynasty_id, page=None) }}">
+                  全部</a>
             </li>
 
             {% for t in work_types %}
                <li {% if work_type == t.en %}class="active"{% endif %}>
-                  <a href="{{ url_for('work.works') }}?type={{ t.en }}&dynasty_id={{ dynasty_id }}">{{ t.cn }}</a>
+                  <a href="{{ set_url_param(type=t.en, dynasty_id=dynasty_id, page=None) }}">
+                     {{ t.cn }}
+                  </a>
                </li>
             {% endfor %}
          </ul>

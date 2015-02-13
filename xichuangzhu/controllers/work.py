@@ -54,10 +54,10 @@ def discollect(work_id):
 @bp.route('/page/<int:page>')
 def works(page):
     """全部文学作品"""
-    work_type = request.args.get('type', 'all')
+    work_type = request.args.get('type')
     dynasty_id = request.args.get('dynasty_id', type=int)
     works = Work.query
-    if work_type != 'all':
+    if work_type:
         works = works.filter(Work.type.has(WorkType.en == work_type))
     if dynasty_id:
         works = works.filter(Work.author.has(Author.dynasty.has(Dynasty.id == dynasty_id)))
