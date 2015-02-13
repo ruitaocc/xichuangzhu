@@ -18,7 +18,7 @@
 
          <div class="work-author">
             〔<a
-               href="{{ url_for('dynasty.view', dynasty_abbr = work.author.dynasty.abbr) }}">{{ work.author.dynasty.name }}</a>〕<a
+               href="{{ url_for('dynasty.view', uid = work.author.dynasty_id) }}">{{ work.author.dynasty.name }}</a>〕<a
                href="{{ url_for('author.view', author_id=work.author.id) }}">{{ work.author.name }}</a>
          </div>
 

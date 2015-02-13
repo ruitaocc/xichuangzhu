@@ -7,13 +7,12 @@ from ..permissions import AdminPermission
 bp = Blueprint('dynasty', __name__)
 
 
-@bp.route('/<dynasty_abbr>')
-def view(dynasty_abbr):
+@bp.route('/<int:uid>')
+def view(uid):
     """朝代"""
     dynasties = Dynasty.query.order_by(Dynasty.start_year.asc())
-    dynasty = Dynasty.query.filter(Dynasty.abbr == dynasty_abbr).first_or_404()
-    authors = Author.query.filter(Author.dynasty_id == dynasty.id).order_by(db.func.random()) \
-        .limit(5)
+    dynasty = Dynasty.query.get_or_404(uid)
+    authors = dynasty.authors.order_by(db.func.random()).limit(5)
     return render_template('dynasty/dynasty.html', dynasty=dynasty, authors=authors,
                            dynasties=dynasties)
 
@@ -27,7 +26,7 @@ def add():
         dynasty = Dynasty(**form.data)
         db.session.add(dynasty)
         db.session.commit()
-        return redirect(url_for('.view', dynasty_abbr=dynasty.abbr))
+        return redirect(url_for('.view', uid=dynasty.id))
     return render_template('dynasty/add.html', form=form)
 
 
@@ -41,5 +40,5 @@ def edit(dynasty_id):
         form.populate_obj(dynasty)
         db.session.add(dynasty)
         db.session.commit()
-        return redirect(url_for('.view', dynasty_abbr=dynasty.abbr))
+        return redirect(url_for('.view', uid=dynasty.id))
     return render_template('dynasty/edit.html', dynasty=dynasty, form=form)
