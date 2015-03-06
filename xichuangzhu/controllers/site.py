@@ -24,8 +24,8 @@ def index():
 def works():
     """生成首页需要的作品json数据"""
     works = Work.query.order_by(db.func.random()).limit(4)
-    render_index_works = get_template_attribute('macro/ui.html', 'render_index_works')
-    return render_index_works(works)
+    render_works = get_template_attribute('macro/ui.html', 'render_works')
+    return render_works(works)
 
 
 @bp.route('/search')

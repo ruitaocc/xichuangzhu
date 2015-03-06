@@ -64,25 +64,18 @@ def create_app():
 
 
 def register_jinja(app):
-    from . import filters
+    from . import filters, permissions
 
-    app.jinja_env.filters['timesince'] = filters.timesince
-    app.jinja_env.filters['clean_work'] = filters.clean_work
-    app.jinja_env.filters['markdown_work'] = filters.markdown_work
-    app.jinja_env.filters['markdown'] = filters.markdown
-    app.jinja_env.filters['format_year'] = filters.format_year
-    app.jinja_env.filters['format_text'] = filters.format_text
-    app.jinja_env.filters['is_work_collected'] = filters.is_work_collected
-    app.jinja_env.filters['is_work_image_collected'] = filters.is_work_image_collected
-
-    from . import permissions
-
-    # inject vars into template context
-    @app.context_processor
-    def inject_vars():
-        return dict(
-            permissions=permissions
-        )
+    app.jinja_env.filters.update({
+        'clean_work': filters.clean_work,
+        'timesince': filters.timesince,
+        'markdown_work': filters.markdown_work,
+        'markdown': filters.markdown,
+        'format_year': filters.format_year,
+        'format_text': filters.format_text,
+        'is_work_collected': filters.is_work_collected,
+        'is_work_image_collected': filters.is_work_image_collected
+    })
 
     # url generator for pagination
     def url_for_other_page(page):
@@ -113,11 +106,14 @@ def register_jinja(app):
         """生成link标签"""
         return Markup("<link rel='stylesheet' href='%s'></script>" % static(path))
 
-    app.jinja_env.globals['url_for_other_page'] = url_for_other_page
-    app.jinja_env.globals['set_url_param'] = set_url_param
-    app.jinja_env.globals['static'] = static
-    app.jinja_env.globals['js'] = js
-    app.jinja_env.globals['css'] = css
+    app.jinja_env.globals.update({
+        'url_for_other_page': url_for_other_page,
+        'set_url_param': set_url_param,
+        'static': static,
+        'js': js,
+        'css': css,
+        'permissions': permissions
+    })
 
 
 def register_logger(app):
