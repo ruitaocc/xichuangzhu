@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% from 'macro/ui.html' import render_authors, render_work_reviews, render_work_images, app_panel %}
+{% from 'macro/ui.html' import render_authors, render_work_reviews, render_index_works,
+   render_work_images, app_panel %}
 
 {% block page_id %}page-index{% endblock %}
 {% block page_title %}西窗烛 | 品味传统文学之美{% endblock %}
@@ -13,9 +14,6 @@
             $.ajax({
                url: "{{ url_for('site.works') }}",
                type: 'POST',
-               data: {
-                  'csrf_token': '{{ csrf_token() }}'
-               },
                success: function (data) {
                   $('#index-works-wap').html(data);
 
@@ -41,7 +39,7 @@
          </h2>
 
          <div id="index-works-wap">
-            {% include "macro/index_works.html" %}
+            {{ render_index_works(works) }}
          </div>
 
          <h2>

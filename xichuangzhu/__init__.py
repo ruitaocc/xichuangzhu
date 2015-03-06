@@ -19,6 +19,8 @@ from config import load_config
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+csrf = CsrfProtect()
+
 
 def create_app():
     app = Flask(__name__)
@@ -26,7 +28,7 @@ def create_app():
     app.config.from_object(config)
 
     # CSRF protect
-    CsrfProtect(app)
+    csrf.init_app(app)
 
     if app.debug:
         DebugToolbarExtension(app)

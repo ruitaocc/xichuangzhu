@@ -1,5 +1,6 @@
 # coding: utf-8
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, get_template_attribute
+from xichuangzhu import csrf
 from ..models import db, Work, WorkImage, WorkReview, Author, Dynasty
 
 bp = Blueprint('site', __name__)
@@ -18,11 +19,13 @@ def index():
                            work_reviews=work_reviews, authors=authors, dynasties=dynasties)
 
 
+@csrf.exempt
 @bp.route('/works', methods=['POST'])
 def works():
     """生成首页需要的作品json数据"""
     works = Work.query.order_by(db.func.random()).limit(4)
-    return render_template('macro/index_works.html', works=works)
+    render_index_works = get_template_attribute('macro/ui.html', 'render_index_works')
+    return render_index_works(works)
 
 
 @bp.route('/search')

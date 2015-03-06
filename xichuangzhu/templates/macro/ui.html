@@ -135,6 +135,27 @@
 {% endmacro %}
 
 
+{% macro render_index_works(works) %}
+   {% for w in works %}
+      <div class="work-item">
+         <div class="work-header">
+            <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}"
+               target="_blank">
+               {{ w.type.cn }}
+            </a>
+            <a class="work-title" href="{{ url_for('work.view', work_id = w.id) }}" target="_blank">
+               {{ w.full_title }}</a>
+            <sup class="work-author">
+               〔<a href="{{ url_for('author.view', author_id=w.author.id) }}"
+                   target="_blank">{{ w.author.name }}</a>〕
+            </sup>
+         </div>
+
+         <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
+      </div>
+   {% endfor %}
+{% endmacro %}
+
 {% macro render_work_reviews(work_reviews) %}
    {% for r in work_reviews %}
       <div class="work-review-item media">
