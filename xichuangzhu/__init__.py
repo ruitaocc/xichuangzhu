@@ -128,7 +128,7 @@ def register_db(app):
 
 
 def register_routes(app):
-    from .controllers import account, admin, author, dynasty, topic, site, user, work
+    from .controllers import account, admin, author, dynasty, topic, site, user, work, api
 
     app.register_blueprint(site.bp, url_prefix='')
     app.register_blueprint(account.bp, url_prefix='/account')
@@ -138,6 +138,7 @@ def register_routes(app):
     app.register_blueprint(author.bp, url_prefix='/author')
     app.register_blueprint(work.bp, url_prefix='/work')
     app.register_blueprint(user.bp, url_prefix='/user')
+    app.register_blueprint(api.bp, url_prefix='/api')
 
 
 def register_error_handle(app):

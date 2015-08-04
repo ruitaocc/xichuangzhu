@@ -2,8 +2,9 @@
 import datetime
 import uuid
 from oss.oss_api import OssAPI
-from flask import session, g, current_app
+from flask import session, g, current_app, Response, json, url_for
 from .models import User
+import functools
 
 
 # count the time diff by timedelta, return a user-friendly format
@@ -84,3 +85,31 @@ def s2t(content):
         else:
             result_list.append(char)
     return ''.join(result_list)
+
+
+def jsonify(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        r = func(*args, **kwargs)
+        if isinstance(r, tuple):
+            code, data = r
+        else:
+            code, data = 200, r
+        response = Response(json.dumps(data), status=code, mimetype='application/json')
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    return wrapper
+
+
+def absolute_url_for(endpoint, **values):
+    """Absolute url for endpoint."""
+    config = current_app.config
+    site_domain = config.get('SITE_DOMAIN')
+    relative_url = url_for(endpoint, **values)
+    return join_url(site_domain, relative_url)
+
+
+def join_url(pre_url, pro_url):
+    """拼接url"""
+    return "%s/%s" % (pre_url.rstrip('/'), pro_url.lstrip('/'))
