@@ -3,12 +3,12 @@ from .default import Config
 
 
 class DevelopmentConfig(Config):
-# App config
+    # App config
     DEBUG = True
 
     # Uploadsets config
-    UPLOADS_DEFAULT_DEST = "/var/www/xcz_uploads"   # 上传文件存储路径
-    UPLOADS_DEFAULT_URL = "http://localhost/xcz_uploads/"   # 上传文件访问URL
+    UPLOADS_DEFAULT_DEST = "/var/www/xcz_uploads"  # 上传文件存储路径
+    UPLOADS_DEFAULT_URL = "http://localhost/xcz_uploads/"  # 上传文件访问URL
 
     SENTRY_DSN = ''
 
@@ -27,3 +27,9 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = "mysql://root:password@localhost/xcz"
 
     HOST_STRING = ""
+
+    # Aliyun OSS config
+    OSS_HOST = 'oss.aliyuncs.com'
+    OSS_KEY = ''
+    OSS_SECRET = ''
+    OSS_URL = ''

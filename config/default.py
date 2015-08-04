@@ -60,5 +60,3 @@ class Config(object):
     OSS_KEY = ''
     OSS_SECRET = ''
     OSS_URL = ''
-
-
