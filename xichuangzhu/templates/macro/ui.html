@@ -1,353 +1,355 @@
 {% macro pagination(paginator) %}
-   {% if paginator.pages > 1 %}
-      <ul class='pagination pagination-sm'>
-         {% if paginator.has_prev %}
-            <li><a href="{{ url_for_other_page(paginator.prev_num) }}">上一页</a></li>
-         {% endif %}
-
-         {% for page in paginator.iter_pages() %}
-            {% if page %}
-               {% if page != paginator.page %}
-                  <li><a href="{{ url_for_other_page(page) }}">{{ page }}</a></li>
-               {% else %}
-                  <li class="active"><span>{{ page }}</span></li>
-               {% endif %}
-            {% else %}
-               <li class="ellipsis"><span>...</span></li>
+    {% if paginator.pages > 1 %}
+        <ul class='pagination pagination-sm'>
+            {% if paginator.has_prev %}
+                <li><a href="{{ url_for_other_page(paginator.prev_num) }}">上一页</a></li>
             {% endif %}
-         {% endfor %}
 
-         {% if paginator.has_next %}
-            <li><a href="{{ url_for_other_page(paginator.next_num) }}">下一页</a></li>
-         {% endif %}
-      </ul>
-   {% endif %}
+            {% for page in paginator.iter_pages() %}
+                {% if page %}
+                    {% if page != paginator.page %}
+                        <li><a href="{{ url_for_other_page(page) }}">{{ page }}</a></li>
+                    {% else %}
+                        <li class="active"><span>{{ page }}</span></li>
+                    {% endif %}
+                {% else %}
+                    <li class="ellipsis"><span>...</span></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if paginator.has_next %}
+                <li><a href="{{ url_for_other_page(paginator.next_num) }}">下一页</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% endmacro %}
 
 
 {% macro render_authors(authors) %}
-   {% for author in authors %}
-      {% set quote = author.random_quote %}
-      {% set quote_id = quote.id if quote else "" %}
-      {% set quote_content = quote.quote if quote else "" %}
-      <div class='author-item'>
-         <div>
-            <a class='author'
-               href="{{ url_for('author.view', author_id=author.id, q=quote_id) }}">{{ author.name }}</a>
-            <sup class='author-dynasty'>
-               〔<a
-                  href="{{ url_for('dynasty.view', uid=author.dynasty_id) }}">{{ author.dynasty.name }}</a>〕
-            </sup>
-         </div>
-         <div class='author-quote'>{{ quote_content }}</div>
-      </div>
-   {% endfor %}
+    {% for author in authors %}
+        {% set quote = author.random_quote %}
+        {% set quote_id = quote.id if quote else "" %}
+        {% set quote_content = quote.quote if quote else "" %}
+        <div class='author-item'>
+            <div>
+                <a class='author'
+                   href="{{ url_for('author.view', author_id=author.id, q=quote_id) }}">{{ author.name }}</a>
+                <sup class='author-dynasty'>
+                    〔<a
+                        href="{{ url_for('dynasty.view', uid=author.dynasty_id) }}">{{ author.dynasty.name }}</a>〕
+                </sup>
+            </div>
+            <div class='author-quote'>{{ quote_content }}</div>
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 
 {% macro render_users(users) %}
-   {% for u in users %}
-      <div class="user-item clearfix">
-         <a class="user-avatar" href="{{ url_for('user.view', user_abbr=u.abbr) }}">
-            <img class="avatar-sm" src="{{ u.avatar }}"/>
-         </a>
+    {% for u in users %}
+        <div class="user-item clearfix">
+            <a class="user-avatar" href="{{ url_for('user.view', user_abbr=u.abbr) }}">
+                <img class="avatar-sm" src="{{ u.avatar }}"/>
+            </a>
 
-         <div class="user-info">
-            <div class="user-name">
-               <a href="{{ url_for('user.view', user_abbr=u.abbr) }}">{{ u.name }}</a>
+            <div class="user-info">
+                <div class="user-name">
+                    <a href="{{ url_for('user.view', user_abbr=u.abbr) }}">{{ u.name }}</a>
+                </div>
+                <div class="user-signature">{{ u.signature }}</div>
             </div>
-            <div class="user-signature">{{ u.signature }}</div>
-         </div>
-      </div>
-   {% endfor %}
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 
 {% macro render_comments(comments) %}
-   {% for c in comments %}
-      <div class="comment-item clearfix media">
-         <a name="{{ c.id }}"></a>
-         <a class="comment-user-avatar pull-left"
-            href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">
-            <img class="avatar-sm" src="{{ c.user.avatar }}">
-         </a>
+    {% for c in comments %}
+        <div class="comment-item clearfix media">
+            <a name="{{ c.id }}"></a>
+            <a class="comment-user-avatar pull-left"
+               href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">
+                <img class="avatar-sm" src="{{ c.user.avatar }}">
+            </a>
 
-         <div class="comment-wap media-body">
-            <div class="comment-extra-info">
-               <a href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">{{ c.user.name }}</a>
-               <span class="comment-time">{{ c.create_time|timesince }}</span>
-               <!-- <a class="btn-reply-somebody" data-username="{{ c.user.name }}">回应</a> -->
+            <div class="comment-wap media-body">
+                <div class="comment-extra-info">
+                    <a href="{{ url_for('user.view', user_abbr=c.user.abbr) }}">{{ c.user.name }}</a>
+                    <span class="comment-time">{{ c.create_time|timesince }}</span>
+                    <!-- <a class="btn-reply-somebody" data-username="{{ c.user.name }}">回应</a> -->
+                </div>
+
+                <div class="comment-body">{{ c.content }}</div>
             </div>
-
-            <div class="comment-body">{{ c.content }}</div>
-         </div>
-      </div>
-   {% endfor %}
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 
 {% macro render_topics(topics) %}
-   {% for t in topics %}
-      <div class="topic-item media">
-         <a class="pull-left" href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">
-            <img class="avatar" src="{{ t.user.avatar }}">
-         </a>
+    {% for t in topics %}
+        <div class="topic-item media">
+            <a class="pull-left" href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">
+                <img class="avatar" src="{{ t.user.avatar }}">
+            </a>
 
-         <div class="topic-info media-body">
-            <div class="topic-title">
-               <a href="{{ url_for('topic.view', topic_id=t.id) }}">{{ t.title }}</a>
+            <div class="topic-info media-body">
+                <div class="topic-title">
+                    <a href="{{ url_for('topic.view', topic_id=t.id) }}">{{ t.title }}</a>
+                </div>
+                <div class="topic-extra-info">
+                    <a class="topic-creator"
+                       href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
+                    <span class="topic-time">{{ t.create_time|timesince }}</span>
+                </div>
+                {% if t.comments.count() > 0 %}
+                    <div class="topic-comment-num">{{ t.comments.count() }}</div>
+                {% endif %}
             </div>
-            <div class="topic-extra-info">
-               <a class="topic-creator"
-                  href="{{ url_for('user.view', user_abbr=t.user.abbr) }}">{{ t.user.name }}</a>
-               <span class="topic-time">{{ t.create_time|timesince }}</span>
-            </div>
-            {% if t.comments.count() > 0 %}
-               <div class="topic-comment-num">{{ t.comments.count() }}</div>
-            {% endif %}
-         </div>
-      </div>
-   {% endfor %}
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 
 {% macro render_works(works, external_link=False) %}
-   {% for w in works %}
-      {% set show = permissions.AdminPermission().check() and w.highlight %}
-      <div class="work-item">
-         <div class="work-header">
-            <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}"
-               {% if external_link %}target="_blank" {% endif %}>
-               {{ w.type.cn }}</a>
-            <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}"
-               {% if external_link %}target="_blank"{% endif %}>
-               {{ w.full_title }}</a>
-            <sup class="work-author">
-               〔<a href="{{ url_for('author.view', author_id=w.author.id) }}"
-                   {% if external_link %}target="_blank"{% endif %}>{{ w.author.name }}</a>〕
-               {% if show %}
-                  <span class="glyphicon glyphicon-ok"></span>
-               {% endif %}
-            </sup>
-         </div>
+    {% for w in works %}
+        {% set show = permissions.AdminPermission().check() and w.highlight %}
+        <div class="work-item">
+            <div class="work-header">
+                <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}"
+                   {% if external_link %}target="_blank" {% endif %}>
+                    {{ w.type.cn }}</a>
+                <a class="work-title" href="{{ url_for('work.view', work_id=w.id) }}"
+                   {% if external_link %}target="_blank"{% endif %}>
+                    {{ w.full_title }}</a>
+                <sup class="work-author">
+                    〔<a href="{{ url_for('author.view', author_id=w.author.id) }}"
+                        {% if external_link %}target="_blank"{% endif %}>{{ w.author.name }}</a>〕
+                    {% if show %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% endif %}
+                </sup>
+            </div>
 
-         <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
-      </div>
-   {% endfor %}
+            <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 
 {% macro render_index_works(works) %}
-   {% for w in works %}
-      <div class="work-item">
-         <div class="work-header">
-            <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}"
-               target="_blank">
-               {{ w.type.cn }}
-            </a>
-            <a class="work-title" href="{{ url_for('work.view', work_id = w.id) }}" target="_blank">
-               {{ w.full_title }}</a>
-            <sup class="work-author">
-               〔<a href="{{ url_for('author.view', author_id=w.author.id) }}"
-                   target="_blank">{{ w.author.name }}</a>〕
-            </sup>
-         </div>
+    {% for w in works %}
+        <div class="work-item">
+            <div class="work-header">
+                <a class="work-type" href="{{ url_for('work.works') }}?type={{ w.type.en }}"
+                   target="_blank">
+                    {{ w.type.cn }}
+                </a>
+                <a class="work-title" href="{{ url_for('work.view', work_id = w.id) }}" target="_blank">
+                    {{ w.full_title }}</a>
+                <sup class="work-author">
+                    〔<a href="{{ url_for('author.view', author_id=w.author.id) }}"
+                        target="_blank">{{ w.author.name }}</a>〕
+                </sup>
+            </div>
 
-         <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
-      </div>
-   {% endfor %}
+            <div class="work-content">{{ w.content|clean_work|truncate(35, True) }}</div>
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 {% macro render_work_reviews(work_reviews) %}
-   {% for r in work_reviews %}
-      <div class="work-review-item media">
-         <a class="user-avatar pull-left" href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">
-            <img class="avatar" src="{{ r.user.avatar }}"/>
-         </a>
+    {% for r in work_reviews %}
+        <div class="work-review-item media">
+            <a class="user-avatar pull-left" href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">
+                <img class="avatar" src="{{ r.user.avatar }}"/>
+            </a>
 
-         <div class="review-wap media-body">
-            <div class="review-title">
-               <a href="{{ url_for('work.review', review_id = r.id) }}">{{ r.title }}</a>
-               {% if not r.is_publish %}
-                  <sup>
-                     <span class="label label-primary">草稿</span>
-                  </sup>
-               {% endif %}
+            <div class="review-wap media-body">
+                {% if r.title %}
+                    <div class="review-title">
+                        <a href="{{ url_for('work.review', review_id = r.id) }}">{{ r.title }}</a>
+                        {% if not r.is_publish %}
+                            <sup>
+                                <span class="label label-primary">草稿</span>
+                            </sup>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <div class="review-content">{{ r.content|truncate(30, True)|safe }}</div>
+
+                <div class="review-meta-info">
+                    <a href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">{{ r.user.name }}</a>
+                    评
+                    <a href="{{ url_for('work.view', work_id=r.work.id) }}">{{ r.work.full_title }}</a>〔{{ r.work.author.name }}〕
+                    <span class="review-time">{{ r.create_time|timesince }}</span>
+                    <span class="comments-count">{{ r.comments.count() }} 回复</span>
+                </div>
             </div>
-
-            <div class="review-content">{{ r.content|truncate(30, True)|safe }}</div>
-
-            <div class="review-meta-info">
-               <a href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">{{ r.user.name }}</a>
-               评
-               <a href="{{ url_for('work.view', work_id=r.work.id) }}">{{ r.work.full_title }}</a>〔{{ r.work.author.name }}〕
-               <span class="review-time">{{ r.create_time|timesince }}</span>
-               <span class="comments-count">{{ r.comments.count() }} 回复</span>
-            </div>
-         </div>
-      </div>
-   {% endfor %}
+        </div>
+    {% endfor %}
 {% endmacro %}
 
 
 {% macro render_work_images(work_images) %}
-   <div class='work-images-wap'>
-      {% for image in work_images %}
-         <a href="{{ url_for('work.image', work_image_id=image.id) }}" class="work-image">
-            <img class='img-responsive' src="{{ image.url }}">
-            {% if image.is_original %}
-               <span title="原创作品" class="is-original-tag">原</span>
-            {% endif %}
-         </a>
-      {% endfor %}
-   </div>
+    <div class='work-images-wap'>
+        {% for image in work_images %}
+            <a href="{{ url_for('work.image', work_image_id=image.id) }}" class="work-image">
+                <img class='img-responsive' src="{{ image.url }}">
+                {% if image.is_original %}
+                    <span title="原创作品" class="is-original-tag">原</span>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
 
-   {{ js('bower_components/eventEmitter/EventEmitter.min.js') }}
-   {{ js('bower_components/eventie/eventie.js') }}
-   {{ js('bower_components/imagesloaded/imagesloaded.js') }}
-   <script type="text/javascript">
-      // water fall layout
-      function waterfall() {
-         // 一个很奇怪的bug，如果没有image存在，页面会崩溃。
-         // 这个是不是imagesloaded插件的bug？
-         var workImages = $('.work-image');
-         if (workImages.length === 0) {
-            return;
-         }
-
-         var parentWap = $('.work-images-wap'),
-               width = workImages.width(),
-               h_gap = 15,
-               v_gap = 15,
-               lefts = [],
-               tops = [],
-               parentWidth = parentWap.width(),
-               columns = Math.floor(parentWidth / width);
-
-         for (var i = 0; i < columns; i++) {
-            lefts.push(i * (width + h_gap));
-            tops.push(0);
-         }
-
-         parentWap.imagesLoaded().progress(function (instance, image) {
-            // get the min height column
-            var img = image.img;
-            var minHeight = tops[0];
-            var minHeightColumn = 0;
-
-            for (var i = 0; i < tops.length; i++) {
-               if (tops[i] < minHeight) {
-                  minHeight = tops[i];
-                  minHeightColumn = i;
-               }
+    {{ js('bower_components/eventEmitter/EventEmitter.min.js') }}
+    {{ js('bower_components/eventie/eventie.js') }}
+    {{ js('bower_components/imagesloaded/imagesloaded.js') }}
+    <script type="text/javascript">
+        // water fall layout
+        function waterfall() {
+            // 一个很奇怪的bug，如果没有image存在，页面会崩溃。
+            // 这个是不是imagesloaded插件的bug？
+            var workImages = $('.work-image');
+            if (workImages.length === 0) {
+                return;
             }
 
-            $(img).parent().css({
-               'display': 'block',
-               'left': lefts[minHeightColumn] + 'px',
-               'top': tops[minHeightColumn] + 'px',
-               'height': $(img).height()
+            var parentWap = $('.work-images-wap'),
+                    width = workImages.width(),
+                    h_gap = 15,
+                    v_gap = 15,
+                    lefts = [],
+                    tops = [],
+                    parentWidth = parentWap.width(),
+                    columns = Math.floor(parentWidth / width);
+
+            for (var i = 0; i < columns; i++) {
+                lefts.push(i * (width + h_gap));
+                tops.push(0);
+            }
+
+            parentWap.imagesLoaded().progress(function (instance, image) {
+                // get the min height column
+                var img = image.img;
+                var minHeight = tops[0];
+                var minHeightColumn = 0;
+
+                for (var i = 0; i < tops.length; i++) {
+                    if (tops[i] < minHeight) {
+                        minHeight = tops[i];
+                        minHeightColumn = i;
+                    }
+                }
+
+                $(img).parent().css({
+                    'display': 'block',
+                    'left': lefts[minHeightColumn] + 'px',
+                    'top': tops[minHeightColumn] + 'px',
+                    'height': $(img).height()
+                });
+
+                // Overadd height
+                tops[minHeightColumn] += $(img).height() + v_gap;
+
+                // Set mother wap's height
+                var maxHeight = Math.max.apply(null, tops);
+                parentWap.css('height', maxHeight + 'px');
             });
+        }
 
-            // Overadd height
-            tops[minHeightColumn] += $(img).height() + v_gap;
+        waterfall();
 
-            // Set mother wap's height
-            var maxHeight = Math.max.apply(null, tops);
-            parentWap.css('height', maxHeight + 'px');
-         });
-      }
-
-      waterfall();
-
-      $(window).resize(function () {
-         waterfall();
-      });
-   </script>
+        $(window).resize(function () {
+            waterfall();
+        });
+    </script>
 {% endmacro %}
 
 
 {% macro user_profile(user, suffix) %}
-   <div class="media user-profile">
-      <a class="pull-left" id="user-avatar"
-         href="{{ url_for('user.view', user_abbr=user.abbr) }}">
-         <img class="avatar" src="{{ user.avatar }}"/>
-      </a>
+    <div class="media user-profile">
+        <a class="pull-left" id="user-avatar"
+           href="{{ url_for('user.view', user_abbr=user.abbr) }}">
+            <img class="avatar" src="{{ user.avatar }}"/>
+        </a>
 
-      <div class="media-body user-info">
-         <div class="user-name">
-            <a href="{{ url_for('user.view', user_abbr=user.abbr) }}">{{ user.name }}</a>
-         </div>
+        <div class="media-body user-info">
+            <div class="user-name">
+                <a href="{{ url_for('user.view', user_abbr=user.abbr) }}">{{ user.name }}</a>
+            </div>
 
-         {% if user.signature %}
-            <div class="user-signature">{{ user.signature }}</div>
-         {% endif %}
-      </div>
-   </div>
+            {% if user.signature %}
+                <div class="user-signature">{{ user.signature }}</div>
+            {% endif %}
+        </div>
+    </div>
 {% endmacro %}
 
 
 {% macro upload_work_image() %}
-   {{ js('bower_components/plupload/js/plupload.full.min.js') }}
-   {{ js('bower_components/plupload/js/i18n/zh_CN.js') }}
-   <script type="text/javascript">
-      var uploader = new plupload.Uploader({
-         browse_button: 'btn-upload-image',
-         url: "{{ url_for('work.upload_image') }}",
-         multipart_params: {
-            csrf_token: "{{ csrf_token() }}"
-         },
-         filters: {
-            max_file_size: '10mb'
-         }
-      });
+    {{ js('bower_components/plupload/js/plupload.full.min.js') }}
+    {{ js('bower_components/plupload/js/i18n/zh_CN.js') }}
+    <script type="text/javascript">
+        var uploader = new plupload.Uploader({
+            browse_button: 'btn-upload-image',
+            url: "{{ url_for('work.upload_image') }}",
+            multipart_params: {
+                csrf_token: "{{ csrf_token() }}"
+            },
+            filters: {
+                max_file_size: '10mb'
+            }
+        });
 
-      uploader.init();
+        uploader.init();
 
-      // 文件添加后立即启动上传
-      uploader.bind('FilesAdded', function (up, files) {
-         uploader.setOption();
+        // 文件添加后立即启动上传
+        uploader.bind('FilesAdded', function (up, files) {
+            uploader.setOption();
 
-         plupload.each(files, function (file) {
-            uploader.start();
-         });
-      });
+            plupload.each(files, function (file) {
+                uploader.start();
+            });
+        });
 
-      var errorList = $('.list-form-errors');
+        var errorList = $('.list-form-errors');
 
-      // 上传结束
-      uploader.bind('FileUploaded', function (up, file, info) {
-         var response = $.parseJSON(info.response);
-         if (response.status === 'yes') {
-            $('#image').val(response.filename);
-            $('.preview').show().attr('src', response.url);
-            errorList.empty();
-         } else if (response.status === 'no') {
-            errorList.html("<li>" + response.error + "</li>");
-         } else {
-            errorList.html("<li>上传失败，请刷新页面后再试。</li>");
-         }
-      });
+        // 上传结束
+        uploader.bind('FileUploaded', function (up, file, info) {
+            var response = $.parseJSON(info.response);
+            if (response.status === 'yes') {
+                $('#image').val(response.filename);
+                $('.preview').show().attr('src', response.url);
+                errorList.empty();
+            } else if (response.status === 'no') {
+                errorList.html("<li>" + response.error + "</li>");
+            } else {
+                errorList.html("<li>上传失败，请刷新页面后再试。</li>");
+            }
+        });
 
-      // 显示文件上传进度条
-      uploader.bind('UploadProgress', function (up, file) {
-         $('.progress-bar').css('width', file.percent + '%').text(file.percent + "%");
-      });
+        // 显示文件上传进度条
+        uploader.bind('UploadProgress', function (up, file) {
+            $('.progress-bar').css('width', file.percent + '%').text(file.percent + "%");
+        });
 
-      // 上传失败
-      uploader.bind('Error', function (up, error) {
-         console.log(error);
-         errorList.html("<li>" + error.message + "</li>");
-      });
-   </script>
+        // 上传失败
+        uploader.bind('Error', function (up, error) {
+            console.log(error);
+            errorList.html("<li>" + error.message + "</li>");
+        });
+    </script>
 {% endmacro %}
 
 
 {% macro app_panel() %}
-   <h2>下载 iPhone 应用</h2>
+    <h2>下载 iPhone 应用</h2>
 
-   <a href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104" target="_blank">
-      <img src="{{ static('img/itunes.png') }}"
-           class="img-responsive itunes-img" alt=""/>
-   </a>
+    <a href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104" target="_blank">
+        <img src="{{ static('img/itunes.png') }}"
+             class="img-responsive itunes-img" alt=""/>
+    </a>
 {% endmacro %}

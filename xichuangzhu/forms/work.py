@@ -1,12 +1,12 @@
 # coding: utf-8
 from flask_wtf import Form
 from wtforms import TextField, TextAreaField, HiddenField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional
 
 
 class WorkReviewForm(Form):
     """Form for add and edit work review"""
-    title = TextField('标题', [DataRequired("标题不能为空")])
+    title = TextField('标题', [Optional()], description='选填')
     content = TextAreaField('内容', [DataRequired("内容不能为空")])
 
 
