@@ -177,7 +177,12 @@
                     </div>
                 {% endif %}
 
-                <div class="review-content">{{ r.content|truncate(30, True)|safe }}</div>
+                <div class="review-content">
+                    {{ r.content|truncate(30, True)|safe }}
+                    {% if not r.title and r.content|length > 30 %}
+                        <a href="{{ url_for('work.review', review_id = r.id) }}">全部»</a>
+                    {% endif %}
+                </div>
 
                 <div class="review-meta-info">
                     <a href="{{ url_for('user.view', user_abbr=r.user.abbr) }}">{{ r.user.name }}</a>
