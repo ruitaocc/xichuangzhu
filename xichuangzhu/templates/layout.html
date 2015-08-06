@@ -1,229 +1,231 @@
 <!doctype html>
 <html>
 <head>
-   <title>{% block page_title %}{% endblock %}</title>
-   <meta name="viewport"
-         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-   <meta name="renderer" content="webkit">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-   <meta name='description' content="{% block description %}{% endblock %}"/>
-   {% block meta %}{% endblock %}
-   <meta name="google-site-verification" content="zJepc6vImx49zVPi4ID-67OUzuetR1JQNKrHN26bU7E"/>
-   <meta name="baidu-site-verification" content="fKxRmqSY9r"/>
-   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-   <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
-   <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/favicon.png') }}">
-   {{ css('bower_components/bootstrap/dist/css/bootstrap.min.css') }}
-   {{ css('style/bootstrap.theme.css') }}
-   {{ css('style/component.css') }}
-   {{ css('style/page.css') }}
-   {{ css('bower_components/font-awesome/css/font-awesome.min.css') }}
-   {{ js('bower_components/respond/dest/respond.min.js') }}
-   {{ js('bower_components/jquery/dist/jquery.min.js') }}
-   {{ js('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
-   {{ js('bower_components/jquery-cookie/jquery.cookie.js') }}
-   {{ js('bower_components/jquery-s2t/jquery.s2t.js') }}
+    <title>{% block page_title %}{% endblock %}</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name='description' content="{% block description %}{% endblock %}"/>
+    {% block meta %}{% endblock %}
+    <meta name="google-site-verification" content="zJepc6vImx49zVPi4ID-67OUzuetR1JQNKrHN26bU7E"/>
+    <meta name="baidu-site-verification" content="fKxRmqSY9r"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <!-- tY01T6z2-CO7TsfMMZfvk7vkMhY -->
+    <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+    {{ css('bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+    {{ css('style/bootstrap.theme.css') }}
+    {{ css('style/component.css') }}
+    {{ css('style/page.css') }}
+    {{ css('bower_components/font-awesome/css/font-awesome.min.css') }}
+    {{ js('bower_components/respond/dest/respond.min.js') }}
+    {{ js('bower_components/jquery/dist/jquery.min.js') }}
+    {{ js('bower_components/bootstrap/dist/js/bootstrap.min.js') }}
+    {{ js('bower_components/jquery-cookie/jquery.cookie.js') }}
+    {{ js('bower_components/jquery-s2t/jquery.s2t.js') }}
 </head>
 
 <body id="{% block page_id %}{% endblock %}">
 
 {% with message = get_flashed_messages()[0] %}
-   {% if message %}
-      <div class="alert alert-success flash-message">{{ message }}</div>
-   {% endif %}
+    {% if message %}
+        <div class="alert alert-success flash-message">{{ message }}</div>
+    {% endif %}
 {% endwith %}
 
 {# Fade out flash message #}
 <script>
-   function flashMessageFade() {
-      $('.flash-message').fadeOut('slow');
-   }
+    function flashMessageFade() {
+        $('.flash-message').fadeOut('slow');
+    }
 
-   $(function () {
-      var flashMessage = $('.flash-message');
-      var flashWidth = ($(window).width() - flashMessage.width()) / 2;
-      flashMessage.css({'left': flashWidth + 'px'});
-      flashMessage.fadeIn(200);
-      setTimeout(flashMessageFade, 2000);
-   });
+    $(function () {
+        var flashMessage = $('.flash-message');
+        var flashWidth = ($(window).width() - flashMessage.width()) / 2;
+        flashMessage.css({'left': flashWidth + 'px'});
+        flashMessage.fadeIn(200);
+        setTimeout(flashMessageFade, 2000);
+    });
 </script>
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
-   <div class='container'>
-      <div class="navbar-header">
-         <button type="button" class="navbar-toggle" data-toggle="collapse"
-                 data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-         <a class="navbar-brand" href="{{ url_for('site.index') }}">西窗烛</a>
-      </div>
+    <div class='container'>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('site.index') }}">西窗烛</a>
+        </div>
 
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-         <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('site.index') }}">首页</a></li>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('site.index') }}">首页</a></li>
 
-            <li><a href="{{ url_for('author.authors') }}">文学家</a></li>
+                <li><a href="{{ url_for('author.authors') }}">文学家</a></li>
 
-            {# <li><a href="{{ url_for('work.tags') }}">标签</a></li>#}
+                {# <li><a href="{{ url_for('work.tags') }}">标签</a></li>#}
 
-            {% if g.user %}
-               <li><a href="{{ url_for('user.collects') }}">收藏</a></li>
-            {% endif %}
+                {% if g.user %}
+                    <li><a href="{{ url_for('user.collects') }}">收藏</a></li>
+                {% endif %}
 
-            {#            <li><a href="{{ url_for('topic.topics') }}">社区</a></li>#}
+                {#            <li><a href="{{ url_for('topic.topics') }}">社区</a></li>#}
 
-            {% if not g.user %}
-               <li><a href="{{ url_for('site.about') }}">关于</a></li>
-            {% endif %}
-         </ul>
+                <li><a href="http://one.xichuangzhu.com" target="_blank">一句</a></li>
 
-         <form class="navbar-form navbar-left" method="get" action="{{ url_for('site.search') }}"
-               role="search">
-            <div class="form-group">
-               <div class='input-group-sm position-relative'>
-                  <input type="text" class="search-content form-control" placeholder="作品 / 文学家"
-                         value="{{ keyword or "" }}" name="q">
-
-                  <button type="submit" title='搜索' class="btn btn-default btn-sm embed-btn">
-                     <span class='glyphicon glyphicon-search'></span>
-                  </button>
-               </div>
-            </div>
-         </form>
-
-         {#         <script type="text/javascript">#}
-         {#            $('.navbar-form').submit(function () {#}
-         {#               var query = $('.search-content').val();#}
-         {#               var url = "https://www.google.com.hk/search?q=site:www.xichuangzhu.com " + query;#}
-         {#               window.open(url, "_blank");#}
-         {#               return false;#}
-         {#            });#}
-         {#         </script>#}
-
-         {% if g.user %}
-            <ul class="nav navbar-nav navbar-right">
-               <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                     {{ g.user.name }} <i class="fa fa-angle-down"></i>
-                  </a>
-                  <ul class="dropdown-menu">
-                     <li>
-                        <a href="{{ url_for('user.view', user_abbr=g.user.abbr) }}">我的主页</a>
-                     </li>
-                     <li>
-                        <a href="{{ url_for('account.settings') }}">个人设置</a>
-                     </li>
-                     <li>
-                        <a href="{{ url_for('account.signout') }}">退出</a>
-                     </li>
-                  </ul>
-               </li>
+                {% if not g.user %}
+                    <li><a href="{{ url_for('site.about') }}">关于</a></li>
+                {% endif %}
             </ul>
 
-            {% if permissions.AdminPermission().check() %}
-               <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        添加 <i class="fa fa-angle-down"></i>
-                     </a>
+            <form class="navbar-form navbar-left" method="get" action="{{ url_for('site.search') }}"
+                  role="search">
+                <div class="form-group">
+                    <div class='input-group-sm position-relative'>
+                        <input type="text" class="search-content form-control" placeholder="作品 / 文学家"
+                               value="{{ keyword or "" }}" name="q">
 
-                     <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('work.add') }}">作品</a></li>
-                        <li><a href="{{ url_for('author.add') }}">文学家</a></li>
-                        <li><a href="{{ url_for('dynasty.add') }}">朝代</a></li>
-                     </ul>
-                  </li>
-               </ul>
+                        <button type="submit" title='搜索' class="btn btn-default btn-sm embed-btn">
+                            <span class='glyphicon glyphicon-search'></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
 
-               <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        管理 <i class="fa fa-angle-down"></i>
-                     </a>
+            {#         <script type="text/javascript">#}
+            {#            $('.navbar-form').submit(function () {#}
+            {#               var query = $('.search-content').val();#}
+            {#               var url = "https://www.google.com.hk/search?q=site:www.xichuangzhu.com " + query;#}
+            {#               window.open(url, "_blank");#}
+            {#               return false;#}
+            {#            });#}
+            {#         </script>#}
 
-                     <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('admin.works') }}">作品</a></li>
-                        <li><a href="{{ url_for('admin.highlight_works') }}">加精作品</a></li>
-                        <li><a href="{{ url_for('admin.unhighlight_works') }}">未加精作品</a></li>
-                        <li><a href="{{ url_for('admin.authors') }}">文学家</a></li>
-                        <li><a href="{{ url_for('admin.quotes') }}">摘录</a></li>
-                     </ul>
-                  </li>
-               </ul>
+            {% if g.user %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ g.user.name }} <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ url_for('user.view', user_abbr=g.user.abbr) }}">我的主页</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('account.settings') }}">个人设置</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('account.signout') }}">退出</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                {% if permissions.AdminPermission().check() %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                添加 <i class="fa fa-angle-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('work.add') }}">作品</a></li>
+                                <li><a href="{{ url_for('author.add') }}">文学家</a></li>
+                                <li><a href="{{ url_for('dynasty.add') }}">朝代</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                管理 <i class="fa fa-angle-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('admin.works') }}">作品</a></li>
+                                <li><a href="{{ url_for('admin.highlight_works') }}">加精作品</a></li>
+                                <li><a href="{{ url_for('admin.unhighlight_works') }}">未加精作品</a></li>
+                                <li><a href="{{ url_for('admin.authors') }}">文学家</a></li>
+                                <li><a href="{{ url_for('admin.quotes') }}">摘录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% endif %}
+            {% else %}
+                <a class='navbar-right navbar-btn' id='douban-icon'
+                   href="{{ url_for('account.pre_signin') }}">
+                    <img title="用豆瓣帐号登陆"
+                         src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png"/>
+                </a>
             {% endif %}
-         {% else %}
-            <a class='navbar-right navbar-btn' id='douban-icon'
-               href="{{ url_for('account.pre_signin') }}">
-               <img title="用豆瓣帐号登陆"
-                    src="http://img3.douban.com/pics/douban-icons/login_with_douban_32.png"/>
-            </a>
-         {% endif %}
 
-         <button id="btn-s2t" class="btn btn-sm btn-default navbar-btn navbar-right">简</button>
+            <button id="btn-s2t" class="btn btn-sm btn-default navbar-btn navbar-right">简</button>
 
-         <script type="text/javascript">
-            var bodyIsFt = $.cookie("bodyIsFt");
+            <script type="text/javascript">
+                var bodyIsFt = $.cookie("bodyIsFt");
 
-            $('#btn-s2t').click(function () {
-               // to simplified
-               if (bodyIsFt == "1") {
-                  $.cookie("bodyIsFt", 0, { expires: 365, path: '/'});
-                  bodyIsFt = "0";
-                  $('#btn-s2t').text('简');
-                  $(document.body).t2s();
-               } else {
-                  // to traditional
-                  $.cookie("bodyIsFt", 1, { expires: 365, path: '/'});
-                  bodyIsFt = "1";
-                  $('#btn-s2t').text('繁');
-                  $(document.body).s2t();
-               }
-            });
-         </script>
-      </div>
-   </div>
+                $('#btn-s2t').click(function () {
+                    // to simplified
+                    if (bodyIsFt == "1") {
+                        $.cookie("bodyIsFt", 0, {expires: 365, path: '/'});
+                        bodyIsFt = "0";
+                        $('#btn-s2t').text('简');
+                        $(document.body).t2s();
+                    } else {
+                        // to traditional
+                        $.cookie("bodyIsFt", 1, {expires: 365, path: '/'});
+                        bodyIsFt = "1";
+                        $('#btn-s2t').text('繁');
+                        $(document.body).s2t();
+                    }
+                });
+            </script>
+        </div>
+    </div>
 </nav>
 
 <div id="main-wap" class="container">
-   {% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </div>
 
 <div id="footer">
-   <div class='container'>
-      <div id='copyright'>西窗烛 ©2015 by <a href="http://hustlzp.com" target="_blank">hustlzp</a>
-      </div>
+    <div class='container'>
+        <div id='copyright'>西窗烛 ©2015 by <a href="http://hustlzp.com" target="_blank">hustlzp</a>
+        </div>
 
-      <ul id='links'>
-         <li id="beian" class="hidden-xs">
-            <a target="_blank" href="http://www.miitbeian.gov.cn/">鄂ICP备14000800号</a></li>
-         <li class="hidden-xs"><a href="{{ url_for('site.disclaimer') }}">免责声明</a></li>
-         <li><a href="{{ url_for('site.about') }}">关于</a></li>
-         <li><a href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104">iPhone 应用</a></li>
-         <li class="hidden-xs">
-            <a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a>
-         </li>
-      </ul>
-      <!-- <script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script> -->
-   </div>
+        <ul id='links'>
+            <li id="beian" class="hidden-xs">
+                <a target="_blank" href="http://www.miitbeian.gov.cn/">鄂ICP备14000800号</a></li>
+            <li class="hidden-xs"><a href="{{ url_for('site.disclaimer') }}">免责声明</a></li>
+            <li><a href="{{ url_for('site.about') }}">关于</a></li>
+            <li><a href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104">iPhone 应用</a></li>
+            <li class="hidden-xs">
+                <a target="_blank" href="https://github.com/hustlzp/xichuangzhu">GitHub</a>
+            </li>
+        </ul>
+        <!-- <script src="http://s15.cnzz.com/stat.php?id=5192863&web_id=5192863&show=pic" language="JavaScript"></script> -->
+    </div>
 </div>
 
 <script type="text/javascript">
-   // convert simple to fanti if needed
-   var bodyIsFt = $.cookie("bodyIsFt");
+    // convert simple to fanti if needed
+    var bodyIsFt = $.cookie("bodyIsFt");
 
-   if (bodyIsFt == "1") {
-      $(document.body).s2t();
-      $('#btn-s2t').text('繁');
-   } else {
-      $('#btn-s2t').text('简');
-   }
+    if (bodyIsFt == "1") {
+        $(document.body).s2t();
+        $('#btn-s2t').text('繁');
+    } else {
+        $('#btn-s2t').text('简');
+    }
 
-   // 百度统计
-   var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-   document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff6ec6187fb2e01e57301c5f03953176f' type='text/javascript'%3E%3C/script%3E"));
+    // 百度统计
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff6ec6187fb2e01e57301c5f03953176f' type='text/javascript'%3E%3C/script%3E"));
 </script>
 </body>
 </html>
