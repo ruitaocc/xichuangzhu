@@ -5,19 +5,19 @@
 {% block page_id %}page-user-work-images{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {{ user_profile(user) }}
 
-   <div class="row">
-      <div class="col-md-8">
-         {{ user_profile(user) }}
+                <h2>图片 / {{ paginator.total }}</h2>
 
-         <h2>图片 / {{ paginator.total }}</h2>
+                {{ render_work_images(paginator.items) }}
 
-         {{ render_work_images(paginator.items) }}
+                {{ pagination(paginator) }}
+            </div>
 
-         {{ pagination(paginator) }}
-      </div>
-
-      <div class="col-md-4"></div>
-   </div>
-
+            <div class="col-md-4"></div>
+        </div>
+    </div>
 {% endblock %}

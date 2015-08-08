@@ -5,19 +5,19 @@
 {% block page_id %}page-user-topics{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {{ user_profile(user) }}
 
-   <div class="row">
-      <div class="col-md-8">
-         {{ user_profile(user) }}
+                <h2>话题 / {{ paginator.total }}</h2>
 
-         <h2>话题 / {{ paginator.total }}</h2>
+                {{ render_topics(paginator.items) }}
 
-         {{ render_topics(paginator.items) }}
+                {{ pagination(paginator) }}
+            </div>
 
-         {{ pagination(paginator) }}
-      </div>
-
-      <div class="col-md-4"></div>
-   </div>
-
+            <div class="col-md-4"></div>
+        </div>
+    </div>
 {% endblock %}

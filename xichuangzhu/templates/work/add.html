@@ -6,55 +6,55 @@
 {% block page_id %}page-add-work{% endblock %}
 
 {% block body %}
+    <div class="container">
+        {{ search_authors_script() }}
 
-   {{ search_authors_script() }}
+        <form id="form-add-work" class="form-horizontal" method="post"
+              action="{{ url_for('work.add') }}">
+            <fieldset>
+                <legend>添加作品{% if author %} - {{ author.name }}{% endif %}</legend>
 
-   <form id="form-add-work" class="form-horizontal" method="post"
-         action="{{ url_for('work.add') }}">
-      <fieldset>
-         <legend>添加作品{% if author %} - {{ author.name }}{% endif %}</legend>
+                {{ form.csrf_token }}
 
-         {{ form.csrf_token }}
+                {{ horizontal_field(form.title, length=3) }}
 
-         {{ horizontal_field(form.title, length=3) }}
+                {{ horizontal_field(form.mobile_title, length=3) }}
 
-         {{ horizontal_field(form.mobile_title, length=3) }}
+                {{ horizontal_field(form.title_suffix, length=3) }}
 
-         {{ horizontal_field(form.title_suffix, length=3) }}
+                {{ horizontal_field(form.type_id, length=3) }}
 
-         {{ horizontal_field(form.type_id, length=3) }}
+                {{ horizontal_field(form.layout, length=3) }}
 
-         {{ horizontal_field(form.layout, length=3) }}
+                <div class="form-group">
+                    {{ form.author_id.label(class="col-md-2 control-label") }}
+                    <div class="col-md-3">
+                        <div class="position-relative">
+                            <input id="input-author-name" type="text" class='form-control'
+                                   placeholder="搜索作者"/>
+                            <button id="btn-search-author" class="btn btn-default embed-btn" title="搜索作者">
+                                <span class='glyphicon glyphicon-search'></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-         <div class="form-group">
-            {{ form.author_id.label(class="col-md-2 control-label") }}
-            <div class="col-md-3">
-               <div class="position-relative">
-                  <input id="input-author-name" type="text" class='form-control'
-                         placeholder="搜索作者"/>
-                  <button id="btn-search-author" class="btn btn-default embed-btn" title="搜索作者">
-                     <span class='glyphicon glyphicon-search'></span>
-                  </button>
-               </div>
-            </div>
-         </div>
+                {{ horizontal_field(form.author_id, length=3, label=False) }}
 
-         {{ horizontal_field(form.author_id, length=3, label=False) }}
+                {{ horizontal_field(form.foreword, rows=5) }}
 
-         {{ horizontal_field(form.foreword, rows=5) }}
+                {{ horizontal_field(form.intro, rows=5) }}
 
-         {{ horizontal_field(form.intro, rows=5) }}
+                {{ horizontal_field(form.content, rows=15) }}
 
-         {{ horizontal_field(form.content, rows=15) }}
+                {{ horizontal_field(form.mobile_content, rows=15) }}
 
-         {{ horizontal_field(form.mobile_content, rows=15) }}
-
-         <div class="form-group">
-            <div class="col-md-6 col-md-offset-2">
-               <input type="submit" value="提交" class="btn btn-sm btn-primary"/>
-            </div>
-         </div>
-      </fieldset>
-   </form>
-
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-2">
+                        <input type="submit" value="提交" class="btn btn-sm btn-primary"/>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 {% endblock %}

@@ -31,7 +31,8 @@ def create_app():
     csrf.init_app(app)
 
     if app.debug:
-        DebugToolbarExtension(app)
+        pass
+        # DebugToolbarExtension(app)
     else:
         from .sentry import sentry
 

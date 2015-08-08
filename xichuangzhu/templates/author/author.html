@@ -5,127 +5,128 @@
 {% block description %}{{ author.name }}简介、{{ author.name }}诗词文作品。{% endblock %}
 
 {% block body %}
-   <script type="text/javascript">
-      $(function () {
-         $('.works-num-wap span').click(function () {
-            $('.works-num-wap span').removeClass('active');
-            $(this).addClass('active');
+    <div class="container">
+        <script type="text/javascript">
+            $(function () {
+                $('.works-num-wap span').click(function () {
+                    $('.works-num-wap span').removeClass('active');
+                    $(this).addClass('active');
 
-            // show works of certain type
-            var type = $(this).attr('data-work-type');
-            if (type == 'all') {
-               $('.work-item').show();
-            } else {
-               $('.work-item').each(function () {
-                  if ($(this).attr('data-work-type') === type) {
-                     $(this).show();
-                  } else {
-                     $(this).hide();
-                  }
-               });
-            }
-         });
+                    // show works of certain type
+                    var type = $(this).attr('data-work-type');
+                    if (type == 'all') {
+                        $('.work-item').show();
+                    } else {
+                        $('.work-item').each(function () {
+                            if ($(this).attr('data-work-type') === type) {
+                                $(this).show();
+                            } else {
+                                $(this).hide();
+                            }
+                        });
+                    }
+                });
 
-         $('.author-quote').tooltip({
-            placement: 'right'
-         });
+                $('.author-quote').tooltip({
+                    placement: 'right'
+                });
 
-         $('.quote').tooltip();
+                $('.quote').tooltip();
 
-         $('.btn-rm-quote').click(function () {
-            if (!confirm('确认删除此摘录？')) {
-               return false;
-            }
-         });
-      });
-   </script>
+                $('.btn-rm-quote').click(function () {
+                    if (!confirm('确认删除此摘录？')) {
+                        return false;
+                    }
+                });
+            });
+        </script>
 
-   <div class="row">
-      <div class="col-md-8">
-         {% set admin_permission = permissions.AdminPermission().check() %}
-         {% if admin_permission %}
-            <div class='btn-group pull-right margin-top-15'>
-               <a class="btn btn-default btn-sm"
-                  href="{{ url_for('author.edit', author_id=author.id) }}">
-                  <span class="glyphicon glyphicon-edit"></span> 编辑
-               </a>
-               <a class="btn btn-default btn-sm"
-                  href="{{ url_for('work.add', author_id=author.id) }}">
-                  <span class="glyphicon glyphicon-file"></span> 添加作品
-               </a>
-            </div>
-         {% endif %}
+        <div class="row">
+            <div class="col-md-8">
+                {% set admin_permission = permissions.AdminPermission().check() %}
+                {% if admin_permission %}
+                    <div class='btn-group pull-right margin-top-15'>
+                        <a class="btn btn-default btn-sm"
+                           href="{{ url_for('author.edit', author_id=author.id) }}">
+                            <span class="glyphicon glyphicon-edit"></span> 编辑
+                        </a>
+                        <a class="btn btn-default btn-sm"
+                           href="{{ url_for('work.add', author_id=author.id) }}">
+                            <span class="glyphicon glyphicon-file"></span> 添加作品
+                        </a>
+                    </div>
+                {% endif %}
 
-         <div class="author">
-            <h1>{{ author.name }}</h1>
+                <div class="author">
+                    <h1>{{ author.name }}</h1>
 
-            {% if quote %}
-               <a href="{{ url_for('work.view', work_id=quote.work.id) }}" class="author-quote"
-                  title="《{{ quote.work.title }}》">{{ quote.quote }}</a>
-            {% endif %}
-         </div>
+                    {% if quote %}
+                        <a href="{{ url_for('work.view', work_id=quote.work.id) }}" class="author-quote"
+                           title="《{{ quote.work.title }}》">{{ quote.quote }}</a>
+                    {% endif %}
+                </div>
 
-         <div class='author-period'>
-            〔<a
-               href="{{ url_for('dynasty.view', uid=author.dynasty_id) }}">{{ author.dynasty.name }}</a>〕
-            {% if author.death_year %}
-               {{ author.birth_year|format_year }} ~ {{ author.death_year|format_year }}
-            {% endif %}
-         </div>
+                <div class='author-period'>
+                    〔<a
+                        href="{{ url_for('dynasty.view', uid=author.dynasty_id) }}">{{ author.dynasty.name }}</a>〕
+                    {% if author.death_year %}
+                        {{ author.birth_year|format_year }} ~ {{ author.death_year|format_year }}
+                    {% endif %}
+                </div>
 
-         <h2>简介</h2>
+                <h2>简介</h2>
 
-         <div class='author-introduction'>{{ author.intro }}</div>
+                <div class='author-introduction'>{{ author.intro }}</div>
 
-         <h2>
-            作品
+                <h2>
+                    作品
             <span class="works-num-wap">
                <span data-work-type="all" class="active">全部</span>
-               {% for t in work_types %}
-                  {% if t.type_num != 0 %}
-                     <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
-                  {% endif %}
-               {% endfor %}
+                {% for t in work_types %}
+                    {% if t.type_num != 0 %}
+                        <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
+                    {% endif %}
+                {% endfor %}
             </span>
-         </h2>
+                </h2>
 
-         <div class="clearfix">
-            {% for work in author.works %}
-               {% set show = admin_permission and work.highlight %}
-               <a href="{{ url_for('work.view', work_id=work.id) }}"
-                  data-work-type="{{ work.type.en }}"
-                  class="work-item {% if show %}highlight{% endif %}">
-                  <div class="content-wap">
-                     <div class='work-title'>{{ work.full_title }}</div>
-                     <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
-                  </div>
-               </a>
-            {% endfor %}
-         </div>
-      </div>
-
-      <div class="col-md-4">
-         {% set quotes_count = quotes.count() %}
-         <h2>摘录{% if admin_permission %} / {{ quotes_count }}{% endif %}</h2>
-
-         {% if quotes_count %}
-            <table class="table table-striped table-quotes">
-               <tbody>
-               {% for q in quotes %}
-                  <tr>
-                     <td>
-                        <a class="quote" target="_blank"
-                           title="《{{ q.work.full_title }}》"
-                           href="{{ url_for('work.view', work_id=q.work_id) }}">
-                           {{ q.quote|truncate(18, true) }}
+                <div class="clearfix">
+                    {% for work in author.works %}
+                        {% set show = admin_permission and work.highlight %}
+                        <a href="{{ url_for('work.view', work_id=work.id) }}"
+                           data-work-type="{{ work.type.en }}"
+                           class="work-item {% if show %}highlight{% endif %}">
+                            <div class="content-wap">
+                                <div class='work-title'>{{ work.full_title }}</div>
+                                <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
+                            </div>
                         </a>
-                     </td>
-                  </tr>
-               {% endfor %}
-               </tbody>
-            </table>
-         {% endif %}
-      </div>
-   </div>
+                    {% endfor %}
+                </div>
+            </div>
 
+            <div class="col-md-4">
+                {% set quotes_count = quotes.count() %}
+                <h2>摘录{% if admin_permission %} / {{ quotes_count }}{% endif %}</h2>
+
+                {% if quotes_count %}
+                    <table class="table table-striped table-quotes">
+                        <tbody>
+                        {% for q in quotes %}
+                            <tr>
+                                <td>
+                                    <a class="quote" target="_blank"
+                                       title="《{{ q.work.full_title }}》"
+                                       href="{{ url_for('work.view', work_id=q.work_id) }}">
+                                        {{ q.quote|truncate(18, true) }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% from 'macro/ui.html' import render_users, render_work_reviews, render_work_images, app_panel %}
+
+{% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
+{% block page_css %}
+    <link rel="stylesheet" href="/static/style/work/vertical_work.css">{% endblock %}
+{% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}
+    》正文、注释、点评、相关图片等。{% endblock %}
+{% block page_id %}page-vertical-work{% endblock %}
+
+{% block body %}
+    <div class="work-title">
+        {{ work.title }}
+        {% if permissions.AdminPermission().check() and work.highlight %}
+            <sup><i class="glyphicon glyphicon-ok"></i></sup>
+        {% endif %}
+    </div>
+
+    <div class="work-author">
+        〔<a
+            href="{{ url_for('dynasty.view', uid = work.author.dynasty_id) }}">{{ work.author.dynasty.name }}</a>〕<a
+            href="{{ url_for('author.view', author_id=work.author.id) }}">{{ work.author.name }}</a>
+    </div>
+
+    <!-- TODO: 32 is a experienced value -->
+    {% if work.foreword %}
+        <div class="work-foreword work-{{ work.type.en }}-foreward
+               {% if work.foreword|length < 32 %}single-line{% endif %}">
+            {{ work.foreword }}
+        </div>
+    {% endif %}
+
+    <div class="work-content work-type-{{ work.type.en }} work-layout-{{ work.layout }}">
+        {{ work.content|markdown_work|safe }}
+    </div>
+
+
+    {% if work.intro %}
+        <div class="divider"></div>
+
+        <div class="work-introduction">{{ work.intro|markdown|safe }}</div>
+    {% endif %}
+
+    <script type="text/javascript">
+        {#        $('#main-wap').s2t();#}
+
+        $('.work-content sup').detach();
+
+        var mouseWheelEvt = function (event) {
+            if (document.body.doScroll)
+                document.body.doScroll(event.wheelDelta > 0 ? "left" : "right");
+            else if ((event.wheelDelta || event.detail) > 0)
+                document.body.scrollLeft -= 10;
+            else
+                document.body.scrollLeft += 10;
+
+            return false;
+        };
+
+        document.body.addEventListener("mousewheel", mouseWheelEvt);
+    </script>
+{% endblock %}

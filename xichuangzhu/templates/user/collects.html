@@ -5,35 +5,35 @@
 {% block page_id %}page-user-collects{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>
+                    作品收藏
+                    {#            <span class='link-more'>#}
+                    {#               <a href="{{ url_for('user.collect_works') }}">#}
+                    {#                  全部 / {{ user.collect_works.count() }} »#}
+                    {#               </a>#}
+                    {#            </span>#}
+                </h2>
 
-   <div class="row">
-      <div class="col-md-8">
-         <h2>
-            作品收藏
-            {#            <span class='link-more'>#}
-            {#               <a href="{{ url_for('user.collect_works') }}">#}
-            {#                  全部 / {{ user.collect_works.count() }} »#}
-            {#               </a>#}
-            {#            </span>#}
-         </h2>
+                {{ render_works(paginator.items) }}
 
-         {{ render_works(paginator.items) }}
+                {#         <h2>#}
+                {#            图片收藏#}
+                {#            <span class='link-more'>#}
+                {#               <a href="{{ url_for('user.collect_work_images') }}">#}
+                {#                  全部 / {{ user.collect_work_images.count() }} »#}
+                {#               </a>#}
+                {#            </span>#}
+                {#         </h2>#}
+                {##}
+                {#         {{ render_work_images(collect_work_images) }}#}
 
-         {#         <h2>#}
-         {#            图片收藏#}
-         {#            <span class='link-more'>#}
-         {#               <a href="{{ url_for('user.collect_work_images') }}">#}
-         {#                  全部 / {{ user.collect_work_images.count() }} »#}
-         {#               </a>#}
-         {#            </span>#}
-         {#         </h2>#}
-         {##}
-         {#         {{ render_work_images(collect_work_images) }}#}
+                {{ pagination(paginator) }}
+            </div>
 
-         {{ pagination(paginator) }}
-      </div>
-
-      <div class="col-md-4"></div>
-   </div>
-
+            <div class="col-md-4"></div>
+        </div>
+    </div>
 {% endblock %}

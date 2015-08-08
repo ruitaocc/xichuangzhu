@@ -4,20 +4,20 @@
 {% block page_title %}未加精作品{% endblock %}
 {% block page_id %}page-admin-unhighlight-works{% endblock %}
 {% block meta %}
-   <meta name="robots" content="noindex"/>{% endblock %}
+    <meta name="robots" content="noindex"/>{% endblock %}
 {% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>未加精 / {{ works.total }}</h2>
 
-   <div class="row">
-      <div class="col-md-8">
-         <h2>未加精 / {{ works.total }}</h2>
+                {{ render_works(works.items) }}
 
-         {{ render_works(works.items) }}
+                {{ pagination(works) }}
+            </div>
 
-         {{ pagination(works) }}
-      </div>
-
-      <div class="col-md-4">
-      </div>
-   </div>
-
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
 {% endblock %}

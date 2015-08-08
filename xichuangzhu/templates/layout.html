@@ -17,6 +17,7 @@
     {{ css('style/bootstrap.theme.css') }}
     {{ css('style/component.css') }}
     {{ css('style/page.css') }}
+    {% block page_css %}{% endblock %}
     {{ css('bower_components/font-awesome/css/font-awesome.min.css') }}
     {{ js('bower_components/respond/dest/respond.min.js') }}
     {{ js('bower_components/jquery/dist/jquery.min.js') }}
@@ -189,7 +190,7 @@
     </div>
 </nav>
 
-<div id="main-wap" class="container">
+<div id="main-wap">
     {% block body %}{% endblock %}
 </div>
 

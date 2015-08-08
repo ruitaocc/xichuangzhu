@@ -29,6 +29,20 @@ def view(work_id):
     return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num,
                            images=images, collectors=collectors, other_works=other_works)
 
+@bp.route('/<int:work_id>/vertical')
+def vertical_view(work_id):
+    """文学作品"""
+    work = Work.query.get_or_404(work_id)
+    query = work.reviews.filter(WorkReview.is_publish == True)
+    reviews = query.limit(4)
+    reviews_num = query.count()
+    images = work.images.limit(16)
+    other_works = Work.query.filter(Work.author_id == work.author_id).filter(
+        Work.id != work_id).limit(5)
+    collectors = User.query.join(CollectWork).join(Work).filter(Work.id == work_id).limit(4)
+    return render_template('work/vertical_work.html', work=work, reviews=reviews, reviews_num=reviews_num,
+                           images=images, collectors=collectors, other_works=other_works)
+
 
 @bp.route('/<int:work_id>/collect', methods=['GET'])
 @UserPermission()

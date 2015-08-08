@@ -5,59 +5,59 @@
 {% block page_id %}page-admin-authors{% endblock %}
 
 {% block body %}
+    <div class="container">
+        <div class='row'>
+            <div class='col-md-12'>
+                <h2>管理文学家</h2>
 
-   <div class='row'>
-      <div class='col-md-12'>
-         <h2>管理文学家</h2>
+                <table class='table table-striped'>
+                    <thead>
+                    <tr>
+                        <th>文学家</th>
+                        <th>朝代</th>
+                        <th>作品</th>
+                        <th>摘录</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
 
-         <table class='table table-striped'>
-            <thead>
-            <tr>
-               <th>文学家</th>
-               <th>朝代</th>
-               <th>作品</th>
-               <th>摘录</th>
-               <th>操作</th>
-            </tr>
-            </thead>
+                    <tbody>
+                    {% for a in paginator.items %}
+                        {% set works_count = a.works.count() %}
+                        {% set quotes_count = a.quotes.count() %}
+                        {% if works_count <= 1 or quotes_count <= 1 or works_count > 2 * quotes_count %}
+                            <tr>
+                                <td>
+                                    <a target="_blank" href="{{ url_for('author.view', author_id=a.id) }}">
+                                        {{ a.name }}
+                                    </a>
+                                </td>
 
-            <tbody>
-            {% for a in paginator.items %}
-               {% set works_count = a.works.count() %}
-               {% set quotes_count = a.quotes.count() %}
-               {% if works_count <= 1 or quotes_count <= 1 or works_count > 2 * quotes_count %}
-                  <tr>
-                     <td>
-                        <a target="_blank" href="{{ url_for('author.view', author_id=a.id) }}">
-                           {{ a.name }}
-                        </a>
-                     </td>
+                                <td>{{ a.dynasty.name }}</td>
 
-                     <td>{{ a.dynasty.name }}</td>
+                                <td {% if works_count <= 1 %}class='danger'{% endif %}>
+                                    {{ works_count }}
+                                </td>
 
-                     <td {% if works_count <= 1 %}class='danger'{% endif %}>
-                        {{ works_count }}
-                     </td>
+                                <td {% if quotes_count <= 1 or works_count > 2 * quotes_count %}class='danger'{% endif %}>
+                                    {{ quotes_count }}
+                                </td>
 
-                     <td {% if quotes_count <= 1 or works_count > 2 * quotes_count %}class='danger'{% endif %}>
-                        {{ quotes_count }}
-                     </td>
+                                <td>
+                                    <a class='btn btn-sm btn-default' target="_blank"
+                                       title='为{{ a.name }}添加作品'
+                                       href="{{ url_for('work.add', author_id=a.id) }}">
+                                        <span class='glyphicon glyphicon-file'></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
 
-                     <td>
-                        <a class='btn btn-sm btn-default' target="_blank"
-                           title='为{{ a.name }}添加作品'
-                           href="{{ url_for('work.add', author_id=a.id) }}">
-                           <span class='glyphicon glyphicon-file'></span>
-                        </a>
-                     </td>
-                  </tr>
-               {% endif %}
-            {% endfor %}
-            </tbody>
-         </table>
-
-         {{ pagination(paginator) }}
-      </div>
-   </div>
-
+                {{ pagination(paginator) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
