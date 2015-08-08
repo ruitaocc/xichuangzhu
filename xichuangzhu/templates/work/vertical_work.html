@@ -41,6 +41,10 @@
         <div class="work-introduction">{{ work.intro|markdown|safe }}</div>
     {% endif %}
 
+    <div class="logo">
+        <a href="http://www.xichuangzhu.com" target="_blank"><img src="/static/img/favicon.png" alt=""></a>
+    </div>
+
     <script type="text/javascript">
         {#        $('#main-wap').s2t();#}
 
@@ -75,7 +79,7 @@
 
             if (windowHeight < 600 + 60 * 2) {
                 $('#main-wap').height(windowHeight - 60 * 2);
-            } else{
+            } else {
                 $('#main-wap').height(600);
             }
         }

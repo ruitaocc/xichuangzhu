@@ -66,6 +66,7 @@ body {
   line-height: 1.4;
   letter-spacing: 1px;
   font-family: "FangSong", "FangSong_GB2312", "STFangsong", "CWTEX\-F";
+  margin-left: 20px;
 }
 #page-vertical-work .work-content p {
   margin-bottom: 0;
@@ -98,4 +99,8 @@ body {
 }
 #page-vertical-work .work-introduction p {
   margin: 0 0 0 10px;
+}
+#page-vertical-work .logo img {
+  width: 20px;
+  height: 20px;
 }
