@@ -58,9 +58,6 @@ body {
   font-size: 18px;
   font-family: "FangSong", "FangSong_GB2312", "STFangsong", "CWTEX\-F";
 }
-#page-vertical-work .work-foreword {
-  display: none;
-}
 #page-vertical-work .work-content {
   font-size: 24px;
   line-height: 1.4;

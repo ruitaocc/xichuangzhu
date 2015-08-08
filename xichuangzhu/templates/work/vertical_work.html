@@ -11,9 +11,6 @@
 {% block body %}
     <div class="work-title">
         {{ work.title }}
-        {% if permissions.AdminPermission().check() and work.highlight %}
-            <sup><i class="glyphicon glyphicon-ok"></i></sup>
-        {% endif %}
     </div>
 
     <div class="work-author">
@@ -21,14 +18,6 @@
             href="{{ url_for('dynasty.view', uid = work.author.dynasty_id) }}">{{ work.author.dynasty.name }}</a>〕<a
             href="{{ url_for('author.view', author_id=work.author.id) }}">{{ work.author.name }}</a>
     </div>
-
-    <!-- TODO: 32 is a experienced value -->
-    {% if work.foreword %}
-        <div class="work-foreword work-{{ work.type.en }}-foreward
-               {% if work.foreword|length < 32 %}single-line{% endif %}">
-            {{ work.foreword }}
-        </div>
-    {% endif %}
 
     <div class="work-content work-type-{{ work.type.en }} work-layout-{{ work.layout }}">
         {{ work.content|markdown_work|safe }}
