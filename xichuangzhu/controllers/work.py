@@ -29,6 +29,7 @@ def view(work_id):
     return render_template('work/work.html', work=work, reviews=reviews, reviews_num=reviews_num,
                            images=images, collectors=collectors, other_works=other_works)
 
+
 @bp.route('/<int:work_id>/vertical')
 def vertical_view(work_id):
     """文学作品"""

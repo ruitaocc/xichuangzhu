@@ -2,6 +2,8 @@
 {% from 'macro/ui.html' import render_users, render_work_reviews, render_work_images, app_panel %}
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
+{% block page_css %}
+    <link rel="stylesheet" href="/static/style/work/work.css">{% endblock %}
 {% block description %}{{ work.author.name }}{{ work.type.cn }}《{{ work.title }}
     》正文、注释、点评、相关图片等。{% endblock %}
 {% block page_id %}page-work{% endblock %}
@@ -167,13 +169,13 @@
 
                 <h2>其他版本</h2>
 
-                <span class="mobile-tag">{% if work.highlight %}有移动版{% else %}无移动版{% endif %}</span>
+                <a href="{{ url_for('work.vertical_view', work_id=work.id) }}" class="vertical-work-link"
+                   target="_blank">竖版</a>
 
                 {% if work.highlight %}
                     <a class="download-ios-app"
                        href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104" target="_blank">
-                        下载 iPhone 应用
-                    </a>
+                        移动版</a>
                 {% endif %}
 
                 <h2>作者简介</h2>
