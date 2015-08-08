@@ -46,12 +46,13 @@
     </div>
 
     <script type="text/javascript">
-        {#        $('#main-wap').s2t();#}
+        var left = $(document).outerWidth() - $(window).width();
+
+        // $('#main-wap').s2t();
 
         adjustHeight();
-
+        $('body, html').scrollLeft(left);
         $('.work-content sup').detach();
-
         $('body').on("mousewheel", mouseWheelEvt);
 
         $(window).resize(function () {
@@ -78,9 +79,9 @@
             var windowHeight = $(window).height();
 
             if (windowHeight < 600 + 60 * 2) {
-                $('#main-wap').height(windowHeight - 60 * 2);
+                $('#main-wap').height(windowHeight - 60 * 2).css('paddingRight', 60);
             } else {
-                $('#main-wap').height(600);
+                $('#main-wap').height(600).css('paddingRight', 100);
             }
         }
     </script>
