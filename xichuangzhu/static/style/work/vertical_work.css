@@ -47,6 +47,7 @@ body {
   font-size: 36px;
   line-height: 35px;
   margin-bottom: 12px;
+  margin-top: -2px;
   clear: both;
   font-family: "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW", "AR PL UKai TW MBE", "AR PL KaitiM GB", "TW\-Kai", "KaiTi", "KaiTi_GB2312", "STKaiti";
 }
@@ -93,7 +94,7 @@ body {
 #page-vertical-work .work-introduction {
   color: #444;
   font-family: "arial", "NSimSun", "SimSun", "STSong", "AR PL SungtiL GB", "TW\-Sung", "WenQuanYi Bitmap Song";
-  margin-bottom: 200px;
+  max-height: 385px;
 }
 #page-vertical-work .work-introduction p {
   margin: 0 0 0 10px;

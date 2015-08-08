@@ -44,9 +44,22 @@
     <script type="text/javascript">
         {#        $('#main-wap').s2t();#}
 
+        adjustHeight();
+
         $('.work-content sup').detach();
 
-        var mouseWheelEvt = function (event) {
+        $('body').on("mousewheel", mouseWheelEvt);
+
+        $(window).resize(function () {
+            adjustHeight();
+        });
+
+        /**
+         * 滚动鼠标滚轮时窗口左右滑动
+         * @param event
+         * @returns {boolean}
+         */
+        function mouseWheelEvt(event) {
             if (document.body.doScroll)
                 document.body.doScroll(event.wheelDelta > 0 ? "left" : "right");
             else if ((event.wheelDelta || event.detail) > 0)
@@ -55,8 +68,14 @@
                 document.body.scrollLeft += 10;
 
             return false;
-        };
+        }
 
-        document.body.addEventListener("mousewheel", mouseWheelEvt);
+        function adjustHeight() {
+            var windowHeight = $(window).height();
+
+            if (windowHeight < 600 + 60 * 2) {
+                $('#main-wap').height(windowHeight - 60 * 2);
+            }
+        }
     </script>
 {% endblock %}
