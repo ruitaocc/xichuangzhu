@@ -1,7 +1,7 @@
 # coding: utf-8
 from flask import render_template, Blueprint, request, url_for
 from jinja2 import Markup
-from ..models import db, Quote, Work, WorkType
+from ..models import db, Quote, Work, WorkType, Author
 from ..utils import jsonify, absolute_url_for
 from ..filters import markdown_work, markdown
 
@@ -23,8 +23,7 @@ def get_random_quote():
 @bp.route('/get_random_work')
 @jsonify
 def get_random_work():
-    work = Work.query.filter(Work.type.has(WorkType.en.in_(['shi', 'ci']))). \
-        order_by(db.func.random()).first()
+    work = Work.query.order_by(db.func.random()).first()
     content = work.content if not work.mobile_content else work.mobile_content
     return {
         'id': work.id,
@@ -35,4 +34,18 @@ def get_random_work():
         'author_id': work.author_id,
         'dynasty': work.author.dynasty.name,
         'dynasty_id': work.author.dynasty_id
+    }
+
+
+@bp.route('/get_author/<int:uid>')
+@jsonify
+def get_author(uid):
+    author = Author.query.get_or_404(uid)
+    return {
+        'id': uid,
+        'name': author.name,
+        'dynasty': author.dynasty.name,
+        'dynasty_id': author.dynasty_id,
+        'intro': author.intro,
+        'works': [{'id': work.id, 'title': work.title} for work in author.works]
     }
