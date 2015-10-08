@@ -137,6 +137,7 @@ def sqlite(tr=False):
                 work_full_title = "%s · %s" % (work_title, work.title_suffix)
             else:
                 work_full_title = work_title.replace('-', ' · ')
+            work_title = work_title.replace('-', ' · ')
             work_content = work.mobile_content or work.content
 
             # 处理content，去掉注释，将%转换为空格
