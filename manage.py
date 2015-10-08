@@ -134,9 +134,9 @@ def sqlite(tr=False):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
             if work.title_suffix and '-' not in work.title:
-                work_full_title = "%s-%s" % (work_title, work.title_suffix)
+                work_full_title = "%s · %s" % (work_title, work.title_suffix)
             else:
-                work_full_title = work_title
+                work_full_title = work_title.replace('-', ' · ')
             work_content = work.mobile_content or work.content
 
             # 处理content，去掉注释，将%转换为空格
@@ -244,6 +244,12 @@ def generate_like_db():
             return '<Like %s>' % self.work_id
 
     Base.metadata.create_all(engine)
+
+@manager.command
+def convert_title():
+    with app.app_context():
+        for work in Work.query:
+            work.title = work.title.replace('-', ' · ')
 
 
 def _s2t_work(work):
