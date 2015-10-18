@@ -47,3 +47,12 @@ def sqlite_tr():
         with shell_env(MODE='PRODUCTION'):
             with prefix('source venv/bin/activate'):
                 run('python manage.py sqlite -t')
+
+
+def convert_title():
+    """转换标题"""
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/xichuangzhu'):
+        with shell_env(MODE='PRODUCTION'):
+            with prefix('source venv/bin/activate'):
+                run('python manage.py convert_title')

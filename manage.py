@@ -246,11 +246,14 @@ def generate_like_db():
 
     Base.metadata.create_all(engine)
 
+
 @manager.command
 def convert_title():
     with app.app_context():
         for work in Work.query:
             work.title = work.title.replace('-', ' · ')
+            db.session.add(work)
+        db.session.commit()
 
 
 def _s2t_work(work):
