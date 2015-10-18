@@ -80,14 +80,14 @@
 
                 <h2>
                     作品
-            <span class="works-num-wap">
-               <span data-work-type="all" class="active">全部</span>
-                {% for t in work_types %}
-                    {% if t.type_num != 0 %}
-                        <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
-                    {% endif %}
-                {% endfor %}
-            </span>
+                    <span class="works-num-wap">
+                       <span data-work-type="all" class="active">全部</span>
+                        {% for t in work_types %}
+                            {% if t.type_num != 0 %}
+                                <span data-work-type="{{ t.WorkType.en }}">{{ t.WorkType.cn }}{{ t.type_num }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
                 </h2>
 
                 <div class="clearfix">
@@ -97,7 +97,7 @@
                            data-work-type="{{ work.type.en }}"
                            class="work-item {% if show %}highlight{% endif %}">
                             <div class="content-wap">
-                                <div class='work-title'>{{ work.full_title }}</div>
+                                <div class='work-title'>{{ work.full_title|replace(' ', '') }}</div>
                                 <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
                             </div>
                         </a>
