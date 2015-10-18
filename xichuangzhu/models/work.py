@@ -12,6 +12,7 @@ class Work(db.Model):
     foreword = db.Column(db.Text())
     content = db.Column(db.Text())
     intro = db.Column(db.Text())
+    baidu_wiki = db.Column(db.String(200))
     layout = db.Column(db.String(10))
     highlight = db.Column(db.Boolean, default=False)
     create_time = db.Column(db.DateTime, default=datetime.datetime.now)

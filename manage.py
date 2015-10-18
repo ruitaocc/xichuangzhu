@@ -148,7 +148,7 @@ def sqlite(tr=False):
             # 处理评析
             work_intro = work.intro.replace('\r\n\r\n', '\n')
             _work = _Work(id=work.id, show_order=index, title=work_title,
-                          full_title=work_full_title,
+                          full_title=work_full_title, baidu_wiki=work.baidu_wiki,
                           author_id=work.author_id, author=work.author.name,
                           dynasty=work.author.dynasty.name,
                           kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,

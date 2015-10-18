@@ -169,13 +169,18 @@
 
                 <h2>其他版本</h2>
 
-                <a href="{{ url_for('work.vertical_view', work_id=work.id) }}" class="vertical-work-link"
+                <a href="{{ url_for('work.vertical_view', work_id=work.id) }}"
+                   class="vertical-work-link work-version-link"
                    target="_blank">竖版</a>
 
                 {% if work.highlight %}
-                    <a class="download-ios-app"
+                    <a class="download-ios-app work-version-link"
                        href="https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104" target="_blank">
                         移动版</a>
+                {% endif %}
+
+                {% if work.baidu_wiki %}
+                    <a href="{{ work.baidu_wiki }}" target="_blank" class="work-version-link">百科</a>
                 {% endif %}
 
                 <h2>作者简介</h2>

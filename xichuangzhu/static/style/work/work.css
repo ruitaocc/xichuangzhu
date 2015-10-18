@@ -102,8 +102,7 @@
   vertical-align: text-bottom;
   color: darkred;
 }
-.vertical-work-link,
-.download-ios-app {
+.work-version-link {
   background: white;
   color: #888;
   border: 1px solid #AAAAAA;
@@ -114,10 +113,8 @@
   line-height: 1;
   font-family: "Hiragino Sans GB", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Micro Hei Mono", "WenQuanYi Zen Hei", "WenQuanYi Zen Hei", "Apple LiGothic Medium", "SimHei", "ST Heiti", "WenQuanYi Zen Hei Sharp";
 }
-.vertical-work-link:hover,
-.download-ios-app:hover,
-.vertical-work-link:focus,
-.download-ios-app:focus {
+.work-version-link:hover,
+.work-version-link:focus {
   color: #8b0000;
   border-color: #8b0000;
   text-decoration: none;
