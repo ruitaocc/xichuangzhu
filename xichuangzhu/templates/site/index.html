@@ -42,20 +42,20 @@
                     {{ render_index_works(works) }}
                 </div>
 
-                <h2>
-                    点评
-            <span class='link-more'>
-               <a href="{{ url_for('work.all_reviews') }}">更多»</a>
-            </span>
-                </h2>
-
-                {{ render_work_reviews(work_reviews) }}
+                {#                <h2>#}
+                {#                    点评#}
+                {#                    <span class='link-more'>#}
+                {#                       <a href="{{ url_for('work.all_reviews') }}">更多»</a>#}
+                {#                    </span>#}
+                {#                </h2>#}
+                {##}
+                {#                {{ render_work_reviews(work_reviews) }}#}
 
                 <h2>
                     图片
-            <span class='link-more'>
-               <a href="{{ url_for('work.all_images') }}">更多»</a>
-            </span>
+                    <span class='link-more'>
+                       <a href="{{ url_for('work.all_images') }}">更多»</a>
+                    </span>
                 </h2>
 
                 {{ render_work_images(work_images) }}
