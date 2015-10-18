@@ -133,11 +133,10 @@ def sqlite(tr=False):
         for index, work in enumerate(works):
             # 优先使用mobile版title和content
             work_title = work.mobile_title or work.title
-            if work.title_suffix and '-' not in work.title:
+            if work.title_suffix and '·' not in work.title:
                 work_full_title = "%s · %s" % (work_title, work.title_suffix)
             else:
-                work_full_title = work_title.replace('-', ' · ')
-            work_title = work_title.replace('-', ' · ')
+                work_full_title = work_title
             work_content = work.mobile_content or work.content
 
             # 处理content，去掉注释，将%转换为空格
