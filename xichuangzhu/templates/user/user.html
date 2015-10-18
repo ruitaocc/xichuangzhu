@@ -11,34 +11,34 @@
             <div class="col-md-8">
                 {{ user_profile(user) }}
 
-                <h2>
-                    点评
-            <span class='link-more'>
-               <a href="{{ url_for('user.work_reviews', user_abbr=user.abbr) }}">
-                   全部 / {{ work_reviews_num }} »</a>
-            </span>
-                </h2>
-
-                {{ render_work_reviews(work_reviews) }}
-
-                <h2>
-                    话题
-            <span class='link-more'>
-               <a href="{{ url_for('user.topics', user_abbr=user.abbr) }}">
-                   全部 / {{ user.topics.count() }} »
-               </a>
-            </span>
-                </h2>
-
-                {{ render_topics(topics) }}
+{#                <h2>#}
+{#                    点评#}
+{#                    <span class='link-more'>#}
+{#                       <a href="{{ url_for('user.work_reviews', user_abbr=user.abbr) }}">#}
+{#                           全部 / {{ work_reviews_num }} »</a>#}
+{#                    </span>#}
+{#                </h2>#}
+{##}
+{#                {{ render_work_reviews(work_reviews) }}#}
+{##}
+{#                <h2>#}
+{#                    话题#}
+{#                    <span class='link-more'>#}
+{#                       <a href="{{ url_for('user.topics', user_abbr=user.abbr) }}">#}
+{#                           全部 / {{ user.topics.count() }} »#}
+{#                       </a>#}
+{#                    </span>#}
+{#                </h2>#}
+{##}
+{#                {{ render_topics(topics) }}#}
 
                 <h2>
                     图片
-            <span class='link-more'>
-               <a href="{{ url_for('user.work_images', user_abbr=user.abbr) }}">
-                   全部 / {{ user.work_images.count() }} »
-               </a>
-            </span>
+                    <span class='link-more'>
+                       <a href="{{ url_for('user.work_images', user_abbr=user.abbr) }}">
+                           全部 / {{ user.work_images.count() }} »
+                       </a>
+                    </span>
                 </h2>
 
                 {{ render_work_images(work_images) }}

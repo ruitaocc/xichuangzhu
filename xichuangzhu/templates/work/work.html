@@ -28,7 +28,7 @@
                 <!-- TODO: 32 is a experienced value -->
                 {% if work.foreword %}
                     <div class="work-foreword work-{{ work.type.en }}-foreward
-               {% if work.foreword|length < 32 %}single-line{% endif %}">
+                        {% if work.foreword|length < 32 %}single-line{% endif %}">
                         {{ work.foreword }}
                     </div>
                 {% endif %}
@@ -55,16 +55,16 @@
                                 </a>
                             {% endif %}
 
-                            <a class="btn btn-default" title="点评作品"
+                            <a class="btn btn-default" title="添加摘录"
                                href="{{ url_for('work.add_quote', work_id=work.id) }}">
                                 <span class="fa fa-plus"></span> 添加摘录
                             </a>
                         {% endif %}
 
-                        <a class="btn btn-default" target="_blank" title="点评作品"
-                           href="{{ url_for('work.add_review', work_id=work.id) }}">
-                            <span class="glyphicon glyphicon-pencil"></span> 点评
-                        </a>
+                        {#                        <a class="btn btn-default" target="_blank" title="点评作品"#}
+                        {#                           href="{{ url_for('work.add_review', work_id=work.id) }}">#}
+                        {#                            <span class="glyphicon glyphicon-pencil"></span> 点评#}
+                        {#                        </a>#}
 
                         <a class="btn btn-default" title='上传图片'
                            href="{{ url_for('work.add_image', work_id=work.id) }}">
@@ -126,18 +126,18 @@
                     <div class="work-introduction">{{ work.intro|markdown|safe }}</div>
                 {% endif %}
 
-                {% if reviews_num %}
-                    <h2>
-                        点评
-               <span class='link-more'>
-                  <a href="{{ url_for('work.reviews', work_id=work.id) }}">
-                      全部 / {{ reviews_num }} »
-                  </a>
-               </span>
-                    </h2>
-
-                    {{ render_work_reviews(reviews) }}
-                {% endif %}
+                {#                {% if reviews_num %}#}
+                {#                    <h2>#}
+                {#                        点评#}
+                {#                        <span class='link-more'>#}
+                {#                           <a href="{{ url_for('work.reviews', work_id=work.id) }}">#}
+                {#                               全部 / {{ reviews_num }} »#}
+                {#                           </a>#}
+                {#                        </span>#}
+                {#                    </h2>#}
+                {##}
+                {#                    {{ render_work_reviews(reviews) }}#}
+                {#                {% endif %}#}
 
                 {% set images_count = work.images.count() %}
                 {% if images_count %}
@@ -187,9 +187,9 @@
 
                 <div>
                     {{ work.author.intro|truncate(55, True) }}
-            <span class='link-more'>
-               <a href="{{ url_for('author.view', author_id=work.author.id) }}">更多»</a>
-            </span>
+                    <span class='link-more'>
+                       <a href="{{ url_for('author.view', author_id=work.author.id) }}">更多»</a>
+                    </span>
                 </div>
 
                 {% if other_works.count() %}
@@ -199,9 +199,9 @@
                         <div class="other-work-item">
                             <a class="other-work-title" href="{{ url_for('work.view', work_id=work.id) }}">
                                 {{ work.full_title|truncate(12, True, '') }}</a>
-               <span class="other-work-content">
-                  {{ work.content|clean_work|truncate(8, True) }}
-               </span>
+                           <span class="other-work-content">
+                              {{ work.content|clean_work|truncate(8, True) }}
+                           </span>
                         </div>
                     {% endfor %}
                 {% endif %}
