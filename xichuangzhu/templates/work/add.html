@@ -41,7 +41,19 @@
 
                 {{ horizontal_field(form.author_id, length=3, label=False) }}
 
-                {{ horizontal_field(form.baidu_wiki, length=6) }}
+               <div class="form-group">
+                    {{ form.baidu_wiki.label(class="col-md-2 control-label") }}
+
+                    <div class="col-md-6">
+                        <div class="position-relative">
+                            {{ form.baidu_wiki(class="form-control") }}
+
+                            <button class="btn btn-default embed-btn btn-search-wiki" type="button">
+                                <span class='glyphicon glyphicon-search'></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 {{ horizontal_field(form.foreword, rows=5) }}
 
@@ -59,4 +71,15 @@
             </fieldset>
         </form>
     </div>
+
+    <script>
+        $('.btn-search-wiki').click(function () {
+            var title = $.trim($("#title").val());
+            var title_suffix = $.trim($("#title_suffix").val());
+            if (title_suffix) {
+                title += " " + title_suffix;
+            }
+            window.open("http://baike.baidu.com/search?word=" + title);
+        });
+    </script>
 {% endblock %}
