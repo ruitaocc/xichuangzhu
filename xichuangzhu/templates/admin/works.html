@@ -73,6 +73,11 @@
                         {#                        </td>#}
 
                         <td {% if not w.baidu_wiki %}class="danger"{% endif %}>
+                            {% if w.baidu_wiki %}
+                                <a href="{{ w.baidu_wiki }}" target="_blank">
+                                    <span class="fa fa-external-link"></span>
+                                </a>
+                            {% endif %}
                         </td>
 
                         <td {% if not w.intro %}class='danger'{% endif %}>
