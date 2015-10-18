@@ -13,12 +13,14 @@
             <tr>
                 <th>作品</th>
                 <th>作者</th>
-                <th>标签</th>
+                {#                <th>标签</th>#}
                 <th>摘录</th>
-                <th>注释</th>
+                <th>百科</th>
+                {#                <th>注释</th>#}
                 <th>评析</th>
                 <!-- <th>点评</th>
                 <th>图片</th> -->
+                <th>操作</th>
             </tr>
             </thead>
 
@@ -38,44 +40,48 @@
 
                         <td>{{ w.author.name }}</td>
 
-                        <td {% if not w.tags %}class='danger'{% endif %}>
-                            <ul class="work-tags">
-                                {% if not w.tags %}
-                                    <a title="为《{{ w.full_title }}》添加标签" target="_blank"
-                                       class="btn btn-sm btn-default" href="#">
-                                        <span class="glyphicon glyphicon-tags"></span>
-                                    </a>
-                                {% else %}
-                                    {% for t in w.tags %}
-                                        <li>
-                                            <a href="{{ url_for('work.tag', tag_id=t.tag.id) }}">
-                                                {{ t.tag.title }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                {% endif %}
-                            </ul>
-                        </td>
+                        {#                        <td {% if not w.tags %}class='danger'{% endif %}>#}
+                        {#                            <ul class="work-tags">#}
+                        {#                                {% if not w.tags %}#}
+                        {#                                    <a title="为《{{ w.full_title }}》添加标签" target="_blank"#}
+                        {#                                       class="btn btn-sm btn-default" href="#">#}
+                        {#                                        <span class="glyphicon glyphicon-tags"></span>#}
+                        {#                                    </a>#}
+                        {#                                {% else %}#}
+                        {#                                    {% for t in w.tags %}#}
+                        {#                                        <li>#}
+                        {#                                            <a href="{{ url_for('work.tag', tag_id=t.tag.id) }}">#}
+                        {#                                                {{ t.tag.title }}#}
+                        {#                                            </a>#}
+                        {#                                        </li>#}
+                        {#                                    {% endfor %}#}
+                        {#                                {% endif %}#}
+                        {#                            </ul>#}
+                        {#                        </td>#}
 
                         {% set quotes_num = w.quotes.count() %}
                         <td {% if not quotes_num %}class='danger'{% endif %}>
                             {{ quotes_num }}
                         </td>
 
-                        <td {% if '<' not in w.content %}class='danger'{% endif %}>
-                            {% if '<' not in w.content %}
-                                <a title="编辑《{{ w.full_title }}》" target="_blank" class="btn btn-sm btn-default"
-                                   href="{{ url_for('work.edit', work_id=w.id) }}"><span
-                                        class="glyphicon glyphicon-edit"></span></a>
-                            {% endif %}
+                        {#                        <td {% if '<' not in w.content %}class='danger'{% endif %}>#}
+                        {#                            {% if '<' not in w.content %}#}
+                        {#                                <a title="编辑《{{ w.full_title }}》" target="_blank" class="btn btn-sm btn-default"#}
+                        {#                                   href="{{ url_for('work.edit', work_id=w.id) }}"><span#}
+                        {#                                        class="glyphicon glyphicon-edit"></span></a>#}
+                        {#                            {% endif %}#}
+                        {#                        </td>#}
+
+                        <td {% if not w.baidu_wiki %}class="danger"{% endif %}>
                         </td>
 
-                        <td {% if w.intro == '' %}class='danger'{% endif %}>
-                            {% if w.intro == '' %}
-                                <a title="编辑《{{ w.full_title }}》" target="_blank" class="btn btn-sm btn-default"
-                                   href="{{ url_for('work.edit', work_id=w.id) }}"><span
-                                        class="glyphicon glyphicon-edit"></span></a>
-                            {% endif %}
+                        <td {% if not w.intro %}class='danger'{% endif %}>
+                        </td>
+
+                        <td>
+                            <a title="编辑《{{ w.full_title }}》" target="_blank" class="btn btn-sm btn-default"
+                               href="{{ url_for('work.edit', work_id=w.id) }}"><span
+                                    class="glyphicon glyphicon-edit"></span></a>
                         </td>
 
                         <!-- <td {% if w.reviews.count() == 0 %}class='danger'{% endif %}>
