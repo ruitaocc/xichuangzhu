@@ -83,6 +83,7 @@ def sqlite(tr=False):
         dynasty = Column(String(10))
         kind = Column(Enum('shi', 'ci', 'qu', 'fu', 'wen'))
         kind_cn = Column(String(20))
+        baidu_wiki = Column(String(200))
         foreword = Column(Text)
         content = Column(Text)
         intro = Column(Text)
