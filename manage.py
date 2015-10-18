@@ -1,6 +1,8 @@
 # coding: utf-8
 import os
 import re
+import requests
+from lxml import html
 from werkzeug.security import gen_salt
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -254,6 +256,27 @@ def convert_title():
             db.session.add(work)
         db.session.commit()
 
+
+@manager.command
+def find_wiki():
+    with app.app_context():
+        for work in Work.query:
+            if work.baidu_wiki:
+                continue
+
+            title = work.title
+            if work.title_suffix:
+                title += '' + work.title_suffix
+            print(title)
+
+            r = requests.get('http://baike.baidu.com/search?word=%s&pn=0&rn=0&enc=utf8' % title)
+            tree = html.fromstring(r.text)
+            results = tree.cssselect('.search-list dd a')
+            if len(results) > 0:
+                work.baidu_wiki = results[0].get('href')
+                print(work.baidu_wiki)
+                db.session.add(work)
+                db.session.commit()
 
 def _s2t_work(work):
     work.title = s2t(work.title)

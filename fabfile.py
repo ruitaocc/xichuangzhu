@@ -56,3 +56,12 @@ def convert_title():
         with shell_env(MODE='PRODUCTION'):
             with prefix('source venv/bin/activate'):
                 run('python manage.py convert_title')
+
+
+def find_wiki():
+    """寻找wiki url"""
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/xichuangzhu'):
+        with shell_env(MODE='PRODUCTION'):
+            with prefix('source venv/bin/activate'):
+                run('python manage.py find_wiki')
