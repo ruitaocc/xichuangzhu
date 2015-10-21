@@ -196,8 +196,8 @@ def sqlite(tr=False):
 
         # 转存摘录
         for quote in Quote.query.filter(Quote.work.has(Work.highlight)):
-            _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.author_id,
-                            author=quote.author.name, work_id=quote.work_id, work=quote.work.title,
+            _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.work.author_id,
+                            author=quote.work.author.name, work_id=quote.work_id, work=quote.work.title,
                             updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
             if tr:
                 _s2t_quote(_quote)
