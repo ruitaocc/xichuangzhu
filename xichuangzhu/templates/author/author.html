@@ -6,41 +6,6 @@
 
 {% block body %}
     <div class="container">
-        <script type="text/javascript">
-            $(function () {
-                $('.works-num-wap span').click(function () {
-                    $('.works-num-wap span').removeClass('active');
-                    $(this).addClass('active');
-
-                    // show works of certain type
-                    var type = $(this).attr('data-work-type');
-                    if (type == 'all') {
-                        $('.work-item').show();
-                    } else {
-                        $('.work-item').each(function () {
-                            if ($(this).attr('data-work-type') === type) {
-                                $(this).show();
-                            } else {
-                                $(this).hide();
-                            }
-                        });
-                    }
-                });
-
-                $('.author-quote').tooltip({
-                    placement: 'right'
-                });
-
-                $('.quote').tooltip();
-
-                $('.btn-rm-quote').click(function () {
-                    if (!confirm('确认删除此摘录？')) {
-                        return false;
-                    }
-                });
-            });
-        </script>
-
         <div class="row">
             <div class="col-md-8">
                 {% set admin_permission = permissions.AdminPermission().check() %}
@@ -104,7 +69,7 @@
                            data-work-type="{{ work.type.en }}"
                            class="work-item {% if show %}highlight{% endif %}">
                             <div class="content-wap">
-                                <div class='work-title'>{{ work.full_title|replace(' ', '') }}</div>
+                                <div class='work-title'>{{ work.full_title }}</div>
                                 <div class='work-content'>{{ work.content|clean_work|truncate(22, True) }}</div>
                             </div>
                         </a>
@@ -135,5 +100,45 @@
                 {% endif %}
             </div>
         </div>
+
+        <script>
+            var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            if (isMac) {
+                $('.work-title').each(function () {
+                    $(this).text($(this).text().replace(/ /g, ''));
+                });
+            }
+
+            $('.works-num-wap span').click(function () {
+                $('.works-num-wap span').removeClass('active');
+                $(this).addClass('active');
+
+                // show works of certain type
+                var type = $(this).attr('data-work-type');
+                if (type == 'all') {
+                    $('.work-item').show();
+                } else {
+                    $('.work-item').each(function () {
+                        if ($(this).attr('data-work-type') === type) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+
+            $('.author-quote').tooltip({
+                placement: 'right'
+            });
+
+            $('.quote').tooltip();
+
+            $('.btn-rm-quote').click(function () {
+                if (!confirm('确认删除此摘录？')) {
+                    return false;
+                }
+            });
+        </script>
     </div>
 {% endblock %}
