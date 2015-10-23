@@ -103,6 +103,7 @@ def sqlite(tr=False):
         birth_year = Column(String(20))
         death_year = Column(String(20))
         updated_at = Column(String(30))
+        baidu_wiki = Column(String(200))
 
     class _Dynasty(Base):
         __tablename__ = 'dynasties'
@@ -179,7 +180,7 @@ def sqlite(tr=False):
 
             _author = _Author(id=author.id, name=author.name, intro=author.intro,
                               dynasty=author.dynasty.name, birth_year=birth_year,
-                              death_year=death_year,
+                              death_year=death_year, baidu_wiki=author.baidu_wiki,
                               updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
             if tr:
                 _s2t_author(_author)
