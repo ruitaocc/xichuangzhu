@@ -76,7 +76,14 @@
 
                 <h2>简介</h2>
 
-                <div class='author-introduction'>{{ author.intro }}</div>
+                <div class='author-introduction'>
+                    {{ author.intro }}
+                    {% if author.baidu_wiki %}
+                        <a href="{{ author.baidu_wiki }}" target="_blank" class="wiki-link" title="百度百科">
+                            <span class="fa fa-external-link"></span>
+                        </a>
+                    {% endif %}
+                </div>
 
                 <h2>
                     作品
