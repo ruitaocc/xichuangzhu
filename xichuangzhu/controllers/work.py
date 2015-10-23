@@ -123,6 +123,9 @@ def edit(work_id):
     form.author_id.choices = [(a.id, '〔%s〕%s' % (a.dynasty.name, a.name)) for a in Author.query]
     form.type_id.choices = [(t.id, t.cn) for t in WorkType.query]
     if form.validate_on_submit():
+        for quote in work.quotes:
+            quote.author_id = form.author_id.data
+            db.session.add(quote)
         form.populate_obj(work)
         work.updated_at = datetime.datetime.now()
         db.session.add(work)
