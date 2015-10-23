@@ -7,7 +7,9 @@ http://www.xichuangzhu.com
 
 Lovely build with Flask & Bootstrap3.
 
-移动版：[iOS App](https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104)
+移动版：
+
+* [iOS App](https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104) ([source code](https://github.com/hustlzp/xichuangzhu-ios))
 
 # 本地环境搭建
 
