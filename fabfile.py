@@ -58,10 +58,19 @@ def convert_title():
                 run('python manage.py convert_title')
 
 
-def find_wiki():
-    """寻找wiki url"""
+def find_works_wiki():
+    """寻找作品wiki url"""
     env.host_string = config.HOST_STRING
     with cd('/var/www/xichuangzhu'):
         with shell_env(MODE='PRODUCTION'):
             with prefix('source venv/bin/activate'):
-                run('python manage.py find_wiki')
+                run('python manage.py find_works_wiki')
+
+
+def find_authors_wiki():
+    """寻找作者wiki url"""
+    env.host_string = config.HOST_STRING
+    with cd('/var/www/xichuangzhu'):
+        with shell_env(MODE='PRODUCTION'):
+            with prefix('source venv/bin/activate'):
+                run('python manage.py find_authors_wiki')

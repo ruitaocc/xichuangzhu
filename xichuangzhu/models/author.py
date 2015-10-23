@@ -7,6 +7,7 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     intro = db.Column(db.Text())
+    baidu_wiki = db.Column(db.String(300))
     birth_year = db.Column(db.String(20))
     death_year = db.Column(db.String(20))
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)

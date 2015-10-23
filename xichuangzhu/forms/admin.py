@@ -26,6 +26,7 @@ class AuthorForm(Form):
     dynasty_id = SelectField('朝代', [DataRequired('朝代不能为空')], coerce=int)
     birth_year = TextField('生年', [DataRequired('生年不能为空')])
     death_year = TextField('卒年')
+    baidu_wiki = TextField('百科')
     intro = TextAreaField('简介', [DataRequired('简介不能为空')])
 
 

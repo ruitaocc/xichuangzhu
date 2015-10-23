@@ -259,7 +259,7 @@ def convert_title():
 
 
 @manager.command
-def find_wiki():
+def find_works_wiki():
     with app.app_context():
         for work in Work.query:
             if work.baidu_wiki:
@@ -278,6 +278,25 @@ def find_wiki():
                 print(work.baidu_wiki)
                 db.session.add(work)
                 db.session.commit()
+
+
+@manager.command
+def find_authors_wiki():
+    with app.app_context():
+        for author in Author.query:
+            if author.baidu_wiki:
+                continue
+            print(author.name)
+
+            r = requests.get('http://baike.baidu.com/search?word=%s&pn=0&rn=0&enc=utf8' % author.name)
+            tree = html.fromstring(r.text)
+            results = tree.cssselect('.search-list dd a')
+            if len(results) > 0:
+                author.baidu_wiki = results[0].get('href')
+                print(author.baidu_wiki)
+                db.session.add(author)
+                db.session.commit()
+
 
 def _s2t_work(work):
     work.title = s2t(work.title)
