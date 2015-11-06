@@ -13,19 +13,19 @@ fis.config.set('pack', {
         "/static/js/libs/imagesloaded.js",
         "/static/js/libs/plupload.full.min.js",
         "/static/js/libs/zh_CN.js",
-        'static/js/init.js'
+        '/static/js/init.js'
     ],
     'pkg/layout.js': [
-        'static/js/layout.js',
-        'static/output/macros.js'
+        '/static/js/layout.js',
+        '/static/output/macros.js'
     ],
     'pkg/libs.css': [
-        'static/css/libs/*.css'
+        '/static/css/libs/*.css'
     ],
     'pkg/layout.css': [
-        'static/css/bootstrap.theme.css',
-        'static/css/common.css',
-        'static/output/macros.css',
-        'static/css/layout.css'
+        '/static/css/bootstrap.theme.css',
+        '/static/css/common.css',
+        '/static/output/macros.css',
+        '/static/css/layout.css'
     ]
 });
