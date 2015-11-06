@@ -233,7 +233,7 @@ def sqlite(tr=False):
 
         # 将数据库文件以邮件的形式发送
         from flask_mail import Message
-        from application.mails import mail
+        from application.utils.mails import mail
 
         config = app.config
         msg = Message("SQLite File", recipients=[config.get('MAIL_ADMIN_ADDR')])
