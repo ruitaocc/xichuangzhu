@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "_utils.html" import pagination %}
 {% from "topic/topics/_topics.html" import render_topics %}
-{% from "user/user_profile/_user_profile.html" import user_profile %}
+{% from "user/user_profile/_user_profile.html" import render_user_profile %}
 
 {% block page_title %}{{ user.name }}的话题{% endblock %}
 {% block page_js %}
@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                {{ user_profile(user) }}
+                {{ render_user_profile(user) }}
 
                 <h2>话题 / {{ paginator.total }}</h2>
 

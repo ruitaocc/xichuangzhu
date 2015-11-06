@@ -1,4 +1,6 @@
 {% extends "layout.html" %}
+{% from "_utils.html" import render_app_panel %}
+{% from "user/users/_users.html" import render_users %}
 
 {% block page_title %}{{ work.title }} - {{ work.author.name }}{% endblock %}
 {% block page_js %}
@@ -209,7 +211,7 @@
                     {{ render_users(collectors) }}
                 {% endif %}
 
-                {{ app_panel() }}
+                {{ render_app_panel() }}
             </div>
         </div>
     </div>

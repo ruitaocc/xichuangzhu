@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from '_utils.html' import app_panel %}
+{% from '_utils.html' import render_app_panel %}
 {% from 'work/works/_works.html' import render_works %}
 {% from 'work/work_images/_work_images.html' import render_work_images %}
 {% from 'work/work_reviews/_work_reviews.html' import render_work_reviews %}
@@ -69,7 +69,7 @@
                     {% endfor %}
                 </ul>
 
-                {{ app_panel() }}
+                {{ render_app_panel() }}
             </div>
         </div>
     </div>

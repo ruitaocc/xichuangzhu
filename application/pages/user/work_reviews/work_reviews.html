@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% from "_utils.html" import pagination %}
 {% from "work/work_reviews/_work_reviews.html" import render_work_reviews %}
-{% from "user/user_profile/_user_profile.html" import user_profile %}
+{% from "user/user_profile/_user_profile.html" import render_user_profile %}
 
 {% block page_title %}{{ user.name }}的点评{% endblock %}
 {% block page_js %}
@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                {{ user_profile(user) }}
+                {{ render_user_profile(user) }}
 
                 <h2>点评 / {{ paginator.total }}</h2>
 

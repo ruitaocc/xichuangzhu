@@ -1,4 +1,4 @@
-{% macro user_profile(user, suffix) %}
+{% macro render_user_profile(user, suffix) %}
     <div class="media user-profile">
         <a class="pull-left" id="user-avatar"
            href="{{ url_for('user.view', user_abbr=user.abbr) }}">

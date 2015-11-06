@@ -4,6 +4,11 @@
 
 {% block page_title %}编辑作品{% endblock %}
 {% block page_js %}
+    <script>
+        registerContext({
+            searchKeyWord: "{{ work.title }}{% if work.title_suffix %}{{ work.title_suffix }}{% endif %}"
+        });
+    </script>
     <script src="/pages/work/edit/edit.js"></script>{% endblock %}
 {% block page_css %}
     <link rel="stylesheet" href="/pages/work/edit/edit.css"/>{% endblock %}

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from '_utils.html' import app_panel %}
+{% from '_utils.html' import render_app_panel %}
 
 {% block page_title %}关于西窗烛{% endblock %}
 {% block page_js %}
@@ -34,7 +34,7 @@
             </div>
 
             <div class="col-md-4">
-                {{ app_panel() }}
+                {{ render_app_panel() }}
             </div>
         </div>
     </div>
