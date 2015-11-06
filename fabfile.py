@@ -13,7 +13,7 @@ def deploy():
             run('git pull')
             run('bower install')
             with prefix('source venv/bin/activate'):
-                run('pip install -r requirements.txt')
+                run('pip install -U -r requirements.txt')
                 run('python manage.py db upgrade')
             run('sudo supervisorctl restart xcz')
 
