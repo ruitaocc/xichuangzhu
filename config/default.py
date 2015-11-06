@@ -11,6 +11,8 @@ class Config(object):
     PERMANENT_SESSION_LIFETIME = 3600 * 24 * 7
     SESSION_COOKIE_NAME = 'xcz_session'
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     # Root path of project
     PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
