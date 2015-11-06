@@ -1,6 +1,7 @@
 # coding: utf-8
 import os
 import re
+import glob2
 import requests
 from lxml import html
 from werkzeug.security import gen_salt
@@ -10,6 +11,9 @@ from fabric.api import run as fabrun, env
 from application import create_app
 from application.models import db, Work, Author, Dynasty, Quote
 from application.utils.helpers import s2t
+
+# Used by app debug & livereload
+PORT = 5000
 
 app = create_app()
 manager = Manager(app)
@@ -22,7 +26,28 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def run():
     """启动app"""
-    app.run(debug=True)
+    app.run(debug=True, port=PORT)
+
+
+@manager.command
+def build():
+    """Use FIS to compile assets."""
+    os.chdir('application')
+    os.system('fis release -d ../output -opmD')
+
+
+@manager.command
+def live():
+    """Run livereload server"""
+    from livereload import Server
+
+    server = Server(app)
+
+    map(server.watch, glob2.glob("application/pages/**/*.*"))  # pages
+    map(server.watch, glob2.glob("application/macros/**/*.html"))  # macros
+    map(server.watch, glob2.glob("application/static/**/*.*"))  # public assets
+
+    server.serve(port=PORT)
 
 
 @manager.command
@@ -208,7 +233,7 @@ def sqlite(tr=False):
 
         # 将数据库文件以邮件的形式发送
         from flask_mail import Message
-        from xichuangzhu.mails import mail
+        from application.mails import mail
 
         config = app.config
         msg = Message("SQLite File", recipients=[config.get('MAIL_ADMIN_ADDR')])
