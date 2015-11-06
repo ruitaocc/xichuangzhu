@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% from "_form.html" import field_errors, horizontal_field %}
-{% from "_js.html" import search_authors_script %}
+{% from "author/search_authors/_search_authors.html" import render_search_authors %}
 
 {% block page_title %}添加作品{% endblock %}
 {% block page_js %}
@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="/pages/work/add/add.css"/>{% endblock %}
 {% block page_content %}
     <div class="container">
-        {{ search_authors_script() }}
-
         <form id="form-add-work" class="form-horizontal" method="post"
               action="{{ url_for('work.add') }}">
             <fieldset>
@@ -72,5 +70,7 @@
                 </div>
             </fieldset>
         </form>
+
+        {{ render_search_authors() }}
     </div>
 {% endblock %}
