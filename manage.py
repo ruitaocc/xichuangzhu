@@ -7,9 +7,9 @@ from werkzeug.security import gen_salt
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
-from xichuangzhu import create_app
-from xichuangzhu.models import db, Work, Author, Dynasty, Quote
-from xichuangzhu.utils import s2t
+from application import create_app
+from application.models import db, Work, Author, Dynasty, Quote
+from application.utils.helpers import s2t
 
 app = create_app()
 manager = Manager(app)
