@@ -10,11 +10,13 @@ def deploy():
     env.host_string = config.HOST_STRING
     with cd('/var/www/xichuangzhu'):
         with shell_env(MODE='PRODUCTION'):
+            run('git reset --hard HEAD')
             run('git pull')
-            run('bower install')
+            run('npm install')
             with prefix('source venv/bin/activate'):
-                run('pip install -U -r requirements.txt')
+                run('pip install -r requirements.txt')
                 run('python manage.py db upgrade')
+                run('python manage.py build')
             run('sudo supervisorctl restart xcz')
 
 
