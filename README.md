@@ -11,7 +11,7 @@ Lovely build with Flask & Bootstrap3.
 
 * [iOS App](https://itunes.apple.com/cn/app/xi-chuang-zhu/id912139104) ([source code](https://github.com/hustlzp/xichuangzhu-ios))
 
-# 本地环境搭建
+## 本地环境搭建
 
 ```
 git clone https://github.com/hustlzp/xichuangzhu.git
