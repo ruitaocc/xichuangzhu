@@ -12,8 +12,10 @@
         <table class='table table-striped'>
             <tbody>
             {% for collection_kind in collection_kinds %}
+
                 <tr>
-                    <td colspan="2"><strong>「{{ collection_kind.name }}」</strong></td>
+                    <td colspan="4">
+                        <strong>{{ collection_kind.max_collecton_order }}「{{ collection_kind.name }}」</strong></td>
                 </tr>
 
                 {% for collection in collection_kind.collections %}
@@ -23,6 +25,19 @@
                                 {{ collection.name }}</a>
                         </td>
                         <td>{{ collection.works.count() }} 篇</td>
+                        <td>次序 {{ collection.order }}</td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <a class="btn btn-default"
+                                   title="编辑选集" href="{{ url_for('collection.edit', uid=collection.id) }}">
+                                    <span class="fa fa-edit"></span>
+                                </a>
+                                <a class='btn btn-default' target="_blank"
+                                   title='添加作品' href="#">
+                                    <span class='fa fa-plus'></span>
+                                </a>
+                            </div>
+                        </td>
                     </tr>
                 {% endfor %}
             {% endfor %}

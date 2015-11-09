@@ -1,13 +1,13 @@
 # coding: utf-8
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField, HiddenField
+from wtforms import StringField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, Email
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 class TopicForm(Form):
     """Form for add and edit topic"""
-    title = TextField('标题', [DataRequired(message="标题不能为空")])
+    title = StringField('标题', [DataRequired(message="标题不能为空")])
     content = TextAreaField('内容', [DataRequired(message="内容不能为空")])
 
 

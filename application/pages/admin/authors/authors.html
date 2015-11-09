@@ -54,16 +54,18 @@
                             </td>
 
                             <td>
-                                <a class='btn btn-sm btn-default' target="_blank"
-                                   title='为{{ a.name }}添加作品'
-                                   href="{{ url_for('work.add', author_id=a.id) }}">
-                                    <span class='glyphicon glyphicon-file'></span>
-                                </a>
+                                <div class="btn-group btn-group-xs">
+                                    <a class="btn btn-default" target="_blank"
+                                       title="编辑文学家" href="{{ url_for('author.edit', author_id=a.id) }}">
+                                        <span class="fa fa-edit"></span>
+                                    </a>
 
-                                <a class="btn btn-sm btn-default" target="_blank"
-                                   title="编辑文学家" href="{{ url_for('author.edit', author_id=a.id) }}">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
+                                    <a class='btn btn-default' target="_blank"
+                                       title='为{{ a.name }}添加作品'
+                                       href="{{ url_for('work.add', author_id=a.id) }}">
+                                        <span class='fa fa-plus'></span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}

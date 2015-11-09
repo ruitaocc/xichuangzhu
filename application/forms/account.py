@@ -1,14 +1,14 @@
 # coding: utf-8
 from flask_wtf import Form
-from wtforms import TextField, TextAreaField
+from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired, Email
 from ..models import User
 
 
 class SignupForm(Form):
     """Form for send email"""
-    email = TextField('邮箱', [DataRequired(message="邮箱不能为空"), Email(message="无效的邮箱")],
-                      description='你常用的邮箱')
+    email = StringField('邮箱', [DataRequired(message="邮箱不能为空"), Email(message="无效的邮箱")],
+                        description='你常用的邮箱')
 
     def validate_email(self, field):
         if User.query.filter(User.email == field.data).count() > 0:

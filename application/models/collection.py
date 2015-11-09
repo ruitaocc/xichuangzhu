@@ -26,6 +26,11 @@ class CollectionKind(db.Model):
     name = db.Column(db.String(50), unique=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
 
+    @property
+    def max_collection_order(self):
+        return Collection.query.filter(Collection.kind_id == self.id). \
+            order_by(Collection.order.desc()).first().order
+
 
 class CollectionWork(db.Model):
     id = db.Column(db.Integer, primary_key=True)
