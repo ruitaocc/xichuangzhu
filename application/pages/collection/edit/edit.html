@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="/pages/collection/edit/edit.css"/>{% endblock %}
 {% block page_content %}
     <div class="container">
-    <form id="form-add-author" class="form-horizontal" role="form" method="post">
+        <form id="form-add-author" class="form-horizontal" role="form" method="post">
             <fieldset>
                 <legend>编辑选集</legend>
 
                 {{ form.csrf_token }}
 
                 {{ horizontal_field(form.name, length=3) }}
+
+                {{ horizontal_field(form.full_name, length=3) }}
+
+                {{ horizontal_field(form.abbr, length=3) }}
 
                 {{ horizontal_field(form.kind_id) }}
 
