@@ -101,3 +101,22 @@ def update_works_order():
     db.session.commit()
     return {'result': True}
 
+
+@bp.route('/collection/update_order', methods=['POST'])
+@AdminPermission()
+@jsonify
+def update_order():
+    orders = request.form.get('orders')
+    if not orders:
+        return {'result': False}
+    orders = json.loads(orders)
+    for item in orders:
+        id = item['id']
+        order = item['order']
+        collection = Collection.query.get(id)
+        if not collection:
+            continue
+        collection.order = order
+        db.session.add(collection)
+    db.session.commit()
+    return {'result': True}

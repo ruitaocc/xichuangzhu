@@ -71,7 +71,7 @@
             }).done(function (response) {
                 if (response.result) {
                     $worksList.find('tr').each(function (index) {
-                        $(this).attr('data-id', index);
+                        $(this).attr('data-order', index);
                     });
                 }
             });
@@ -83,5 +83,5 @@
             $(this).width($(this).width());
         });
         return ui;
-    };
+    }
 })();

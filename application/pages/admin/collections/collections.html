@@ -9,27 +9,23 @@
     <div class="container">
         <h2>管理选集</h2>
 
-        <table class='table table-striped'>
-            <thead>
-            <tr>
-                <th>选集</th>
-                <th>缩写</th>
-                <th>全称</th>
-                <th>篇目</th>
-                <th>次序</th>
-                <th>操作</th>
-            </tr>
-            </thead>
+        {% for collection_kind in collection_kinds %}
+            <p><span class="label label-primary">{{ collection_kind.name }}</span></p>
 
-            <tbody>
-            {% for collection_kind in collection_kinds %}
+            <table class='table table-striped'>
+                <thead>
                 <tr>
-                    <td colspan="6">
-                        <strong>{{ collection_kind.max_collecton_order }}「{{ collection_kind.name }}」</strong></td>
+                    <th>选集</th>
+                    <th>缩写</th>
+                    <th>全称</th>
+                    <th>篇目</th>
+                    <th>操作</th>
                 </tr>
+                </thead>
 
+                <tbody class="collections-list">
                 {% for collection in collection_kind.collections %}
-                    <tr>
+                    <tr data-order="{{ collection.order }}" data-id="{{ collection.id }}">
                         <td>
                             <a href="{{ url_for('admin.collection_works', uid=collection.id) }}">
                                 {{ collection.name }}</a>
@@ -37,23 +33,18 @@
                         <td>{{ collection.abbr or "" }}</td>
                         <td>{{ collection.full_name or "" }}</td>
                         <td>{{ collection.works.count() }} 篇</td>
-                        <td>{{ collection.order }}</td>
                         <td>
                             <div class="btn-group btn-group-xs">
                                 <a class="btn btn-default"
                                    title="编辑选集" href="{{ url_for('collection.edit', uid=collection.id) }}">
                                     <span class="fa fa-edit"></span>
                                 </a>
-                                {#                                <a class='btn btn-default' target="_blank"#}
-                                {#                                   title='添加作品' href="#">#}
-                                {#                                    <span class='fa fa-plus'></span>#}
-                                {#                                </a>#}
                             </div>
                         </td>
                     </tr>
                 {% endfor %}
-            {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        {% endfor %}
     </div>
 {% endblock %}
