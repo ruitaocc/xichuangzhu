@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('kind_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['kind_id'], ['collection_kind.id'], ),
-    sa.PrimaryKeyConstraint('id', 'kind_id'),
+    sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
     op.create_table('collection_work',
@@ -42,7 +42,7 @@ def upgrade():
     sa.Column('collection_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['collection_id'], ['collection.id'], ),
     sa.ForeignKeyConstraint(['work_id'], ['work.id'], ),
-    sa.PrimaryKeyConstraint('id', 'work_id', 'collection_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.drop_constraint(u'collect_work_image_ibfk_4', 'collect_work_image', type_='foreignkey')
     op.create_foreign_key(None, 'collect_work_image', 'work_image', ['work_image_id'], ['id'])
