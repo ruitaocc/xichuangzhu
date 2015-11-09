@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint, request
-from ..models import Work, Author, Dynasty, WorkType, Quote
+from ..models import Work, Author, Dynasty, WorkType, Quote, CollectionKind, Collection
 from application.utils.permissions import AdminPermission
 
 bp = Blueprint('admin', __name__)
@@ -74,9 +74,13 @@ def quotes(page):
 
 @bp.route('/admin/collections')
 def collections():
-    return render_template('admin/collections/collections.html')
+    """管理选集"""
+    collection_kinds = CollectionKind.query.order_by(CollectionKind.order.asc())
+    return render_template('admin/collections/collections.html', collection_kinds=collection_kinds)
 
 
-@bp.route('/admin/collection_works')
-def collection_works():
-    return render_template('admin/collection_works/collection_works.html')
+@bp.route('/admin/collection/<int:uid>/works')
+def collection_works(uid):
+    """管理选集作品"""
+    collection = Collection.query.get_or_404(uid)
+    return render_template('admin/collection_works/collection_works.html', collection=collection)

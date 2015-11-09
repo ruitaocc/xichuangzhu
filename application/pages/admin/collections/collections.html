@@ -1,12 +1,32 @@
 {% extends "layout.html" %}
 
-{% block page_title %}Collections{% endblock %}
+{% block page_title %}管理选集{% endblock %}
 {% block page_js %}
     <script src="/pages/admin/collections/collections.js"></script>{% endblock %}
 {% block page_css %}
     <link rel="stylesheet" href="/pages/admin/collections/collections.css"/>{% endblock %}
 {% block page_content %}
     <div class="container">
-        <h1>Collections</h1>
+        <h2>管理选集</h2>
+
+        <table class='table table-striped'>
+            <tbody>
+            {% for collection_kind in collection_kinds %}
+                <tr>
+                    <td colspan="2"><strong>「{{ collection_kind.name }}」</strong></td>
+                </tr>
+
+                {% for collection in collection_kind.collections %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('admin.collection_works', uid=collection.id) }}">
+                                {{ collection.name }}</a>
+                        </td>
+                        <td>{{ collection.works.count() }} 篇</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

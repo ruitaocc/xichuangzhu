@@ -1,7 +1,7 @@
 # coding: utf-8
 import os
-from xichuangzhu import create_app
-from xichuangzhu.models import db
+from application import create_app
+from application.models import db
 
 
 class BaseSuite(object):
