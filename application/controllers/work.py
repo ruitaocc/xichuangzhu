@@ -1,7 +1,6 @@
 # coding: utf-8
 from __future__ import division
 import datetime
-
 from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, current_app
 from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment, Quote
@@ -11,6 +10,7 @@ from application.utils.permissions import UserPermission, AdminPermission, WorkI
 from ..forms import WorkImageForm, WorkReviewCommentForm, WorkReviewForm, WorkForm, WorkQuoteForm
 from application.utils.helpers import random_filename, save_to_oss
 from application.utils.uploadsets import workimages
+from ..utils.decorators import jsonify
 
 bp = Blueprint('work', __name__)
 
@@ -402,3 +402,16 @@ def delete_review(review_id):
     db.session.delete(review)
     db.session.commit()
     return redirect(url_for('.view', work_id=review.work_id))
+
+
+@bp.route('/work/search', methods=['POST'])
+@jsonify
+def search():
+    title = request.form.get('title')
+    if not title:
+        return {'works': [], 'result': True}
+    works = Work.query.filter(Work.title.like('%%%s%%' % title))
+    return {
+        'works': [{'id': work.id, 'title': work.full_title, 'author': work.author.name} for work in works],
+        'result': True
+    }

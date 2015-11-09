@@ -18,6 +18,13 @@ class Collection(db.Model):
     kind = db.relationship('CollectionKind', backref=db.backref('collections', lazy='dynamic',
                                                                 order_by="asc(Collection.order)"))
 
+    @property
+    def max_work_order(self):
+        if self.works.count() == 0:
+            return 0
+        return CollectionWork.query.filter(CollectionWork.collection_id == self.id). \
+            order_by(CollectionWork.order.desc()).first().order
+
     def __repr__(self):
         return '<Collection %s>' % self.name
 
@@ -30,6 +37,8 @@ class CollectionKind(db.Model):
 
     @property
     def max_collection_order(self):
+        if self.collections.count() == 0:
+            return 0
         return Collection.query.filter(Collection.kind_id == self.id). \
             order_by(Collection.order.desc()).first().order
 

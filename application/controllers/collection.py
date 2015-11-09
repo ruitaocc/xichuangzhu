@@ -1,8 +1,9 @@
 # coding: utf-8
-from flask import Blueprint, render_template, url_for, redirect
+from flask import Blueprint, render_template, url_for, redirect, request
 from ..utils.permissions import AdminPermission
-from ..models import db, Collection, CollectionKind
+from ..models import db, Collection, CollectionKind, Work, CollectionWork
 from ..forms import CollectionForm
+from ..utils.decorators import jsonify
 
 bp = Blueprint('collection', __name__)
 
@@ -53,3 +54,29 @@ def collections():
     """全部选集"""
     collection_kinds = CollectionKind.query.order_by(CollectionKind.order.asc())
     return render_template('collection/collections/collections.html', collection_kinds=collection_kinds)
+
+
+@bp.route('/collection/<int:uid>/add_work')
+@AdminPermission()
+def add_work(uid):
+    collection = Collection.query.get_or_404(uid)
+    return render_template('collection/add_work/add_work.html', collection=collection)
+
+
+@bp.route('/collection/<int:uid>/do_add_work', methods=['POST'])
+@AdminPermission()
+@jsonify
+def do_add_work(uid):
+    collection = Collection.query.get_or_404(uid)
+    work_id = request.form.get('work_id', type=int)
+    if not work_id:
+        return {'result': False}
+    work = Work.query.get_or_404(work_id)
+    collection_work = CollectionWork.query.filter(CollectionWork.collection_id == uid,
+                                                  CollectionWork.work_id == work_id).first()
+    if collection_work:
+        return {'result': True}
+    collection_work = CollectionWork(collection_id=uid, work_id=work_id, order=collection.max_work_order + 1)
+    db.session.add(collection_work)
+    db.session.commit()
+    return {'result': True}
