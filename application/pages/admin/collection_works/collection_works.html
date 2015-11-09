@@ -34,10 +34,10 @@
             </tr>
             </thead>
 
-            <tbody>
+            <tbody class="works-list">
             {% for collection_work in collection.works %}
                 {% set work = collection_work.work %}
-                <tr>
+                <tr data-order="{{ collection_work.order }}" data-id="{{ collection_work.id }}">
                     <td>
                         [{{ work.type.cn }}]
                         <a target="_blank" href="{{ url_for('work.view', work_id=work.id) }}">
@@ -69,7 +69,7 @@
                     </td>
 
                     <td>
-                        <a title="编辑《{{ work.full_title }}》" target="_blank" class="btn btn-sm btn-default"
+                        <a title="编辑《{{ work.full_title }}》" target="_blank" class="btn btn-xs btn-default"
                            href="{{ url_for('work.edit', work_id=work.id) }}"><span
                                 class="glyphicon glyphicon-edit"></span></a>
                     </td>

@@ -4,6 +4,7 @@
     var $workInput = $page('.input-work-title').first();
     var $btnAddWork = $page('.btn-add-work').first();
     var $workSelect = $page('.work-select').first();
+    var $worksList = $page('.works-list').first();
 
     $workInput.keyup(function (event) {
         if (event.keyCode == 13) {
@@ -42,4 +43,45 @@
             }
         });
     });
+
+    $worksList.sortable({
+        helper: fixHelper,
+        stop: function () {
+            var orders = [];
+
+            $worksList.find('tr').each(function (index) {
+                var order = parseInt($(this).attr('data-order'));
+                var id = parseInt($(this).attr('data-id'));
+
+                if (order !== index) {
+                    orders.push({'id': id, 'order': index});
+                }
+            });
+
+            if (orders.length === 0) {
+                return;
+            }
+
+            $.ajax({
+                url: urlFor('collection.update_works_order'),
+                method: 'POST',
+                data: {
+                    'orders': JSON.stringify(orders)
+                }
+            }).done(function (response) {
+                if (response.result) {
+                    $worksList.find('tr').each(function (index) {
+                        $(this).attr('data-id', index);
+                    });
+                }
+            });
+        }
+    }).disableSelection();
+
+    function fixHelper(e, ui) {
+        ui.children().each(function () {
+            $(this).width($(this).width());
+        });
+        return ui;
+    };
 })();

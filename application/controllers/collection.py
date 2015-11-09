@@ -1,5 +1,5 @@
 # coding: utf-8
-from flask import Blueprint, render_template, url_for, redirect, request
+from flask import Blueprint, render_template, url_for, redirect, request, json
 from ..utils.permissions import AdminPermission
 from ..models import db, Collection, CollectionKind, Work, CollectionWork
 from ..forms import CollectionForm
@@ -80,3 +80,24 @@ def do_add_work(uid):
     db.session.add(collection_work)
     db.session.commit()
     return {'result': True}
+
+
+@bp.route('/collection/update_works_order', methods=['POST'])
+@AdminPermission()
+@jsonify
+def update_works_order():
+    orders = request.form.get('orders')
+    if not orders:
+        return {'result': False}
+    orders = json.loads(orders)
+    for item in orders:
+        id = item['id']
+        order = item['order']
+        collection_work = CollectionWork.query.get(id)
+        if not collection_work:
+            continue
+        collection_work.order = order
+        db.session.add(collection_work)
+    db.session.commit()
+    return {'result': True}
+

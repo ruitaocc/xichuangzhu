@@ -11,6 +11,7 @@ fis.config.set('pack', {
         "/static/js/libs/EventEmitter.min.js",
         "/static/js/libs/eventie.js",
         "/static/js/libs/imagesloaded.js",
+        '/static/js/libs/jquery-ui.min.js',
         "/static/js/libs/plupload.full.min.js",
         "/static/js/libs/zh_CN.js",
         '/static/js/init.js'
