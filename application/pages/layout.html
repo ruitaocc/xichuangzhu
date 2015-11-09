@@ -79,6 +79,8 @@
 
                 <li><a href="{{ url_for('author.authors') }}">文学家</a></li>
 
+                <li><a href="{{ url_for('collection.collections') }}">选集</a></li>
+
                 {# <li><a href="{{ url_for('work.tags') }}">标签</a></li>#}
 
                 {#                {% if g.user %}#}
@@ -139,6 +141,7 @@
 
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url_for('work.add') }}">作品</a></li>
+                                <li><a href="{{ url_for('collection.add') }}">选集</a></li>
                                 <li><a href="{{ url_for('author.add') }}">文学家</a></li>
                                 <li><a href="{{ url_for('dynasty.add') }}">朝代</a></li>
                             </ul>
@@ -152,6 +155,7 @@
                             </a>
 
                             <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('admin.collections') }}">选集</a></li>
                                 <li><a href="{{ url_for('admin.works') }}">作品</a></li>
                                 <li><a href="{{ url_for('admin.highlight_works') }}">加精作品</a></li>
                                 <li><a href="{{ url_for('admin.unhighlight_works') }}">未加精作品</a></li>

@@ -5,3 +5,4 @@ from .work import *
 from .user import *
 from .collect import *
 from .topic import *
+from .collection import *

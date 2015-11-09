@@ -70,3 +70,13 @@ def quotes(page):
     """管理摘录"""
     paginator = Quote.query.order_by(Quote.created_at.desc()).paginate(page, 20)
     return render_template('admin/quotes/quotes.html', paginator=paginator)
+
+
+@bp.route('/admin/collections')
+def collections():
+    return render_template('admin/collections/collections.html')
+
+
+@bp.route('/admin/collection_works')
+def collection_works():
+    return render_template('admin/collection_works/collection_works.html')
