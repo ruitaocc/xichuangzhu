@@ -5,6 +5,7 @@
     var $btnAddWork = $page('.btn-add-work').first();
     var $workSelect = $page('.work-select').first();
     var $worksList = $page('.works-list').first();
+    var $addWorkModal = $page('#add-work-modal');
 
     $workInput.keyup(function (event) {
         if (event.keyCode == 13) {
@@ -77,6 +78,10 @@
             });
         }
     }).disableSelection();
+
+    $addWorkModal.on('shown.bs.modal', function (event) {
+        $workInput.focus();
+    });
 
     function fixHelper(e, ui) {
         ui.children().each(function () {
