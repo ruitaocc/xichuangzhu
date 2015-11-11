@@ -40,7 +40,10 @@
             }
         }).done(function (response) {
             if (response.result) {
-                location.reload(true);
+                $workInput.val('').focus();
+                $workSelect.empty();
+            } else {
+                alert("出错啦!");
             }
         });
     });
@@ -81,6 +84,8 @@
 
     $addWorkModal.on('shown.bs.modal', function (event) {
         $workInput.focus();
+    }).on('hidden.bs.modal', function (event) {
+        location.reload(true);
     });
 
     function fixHelper(e, ui) {
