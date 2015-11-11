@@ -13,7 +13,7 @@
 {% block page_content %}
     <div class="container">
         <h2>
-            选集「{{ collection.name }}」
+            选集「{{ collection.name }}」- {{ collection.works.count() }} 篇
             <a href="javascript: void(0)" class="btn btn-xs pull-right btn-default" data-toggle="modal"
                data-target="#add-work-modal">
                 <span class="fa fa-plus"></span> 添加作品
