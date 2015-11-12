@@ -57,8 +57,8 @@
                 var order = parseInt($(this).attr('data-order'));
                 var id = parseInt($(this).attr('data-id'));
 
-                if (order !== index) {
-                    orders.push({'id': id, 'order': index});
+                if (order !== index + 1) {
+                    orders.push({'id': id, 'order': index + 1});
                 }
             });
 
@@ -75,7 +75,7 @@
             }).done(function (response) {
                 if (response.result) {
                     $worksList.find('tr').each(function (index) {
-                        $(this).attr('data-order', index);
+                        $(this).attr('data-order', index + 1);
                     });
                 }
             });
