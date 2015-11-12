@@ -6,6 +6,7 @@
     var $workSelect = $page('.work-select').first();
     var $worksList = $page('.works-list').first();
     var $addWorkModal = $page('#add-work-modal');
+    var $btnRemoveWorkFromCollection = $page('.btn-remove-work-from-collection');
 
     $workInput.keyup(function (event) {
         if (event.keyCode == 13) {
@@ -44,6 +45,25 @@
                 $workSelect.empty();
             } else {
                 alert("出错啦!");
+            }
+        });
+    });
+
+    $btnRemoveWorkFromCollection.click(function () {
+        var workId = parseInt($(this).data('id'));
+        var workTitle = $(this).data('title');
+        var _this = $(this);
+
+        if (!confirm('确定将《' + workTitle +'》从该合集中移除？')) {
+            return false;
+        }
+
+        $.ajax({
+            url: urlFor('collection.remove_work', {uid: g.collectionId, work_id: workId}),
+            method: 'POST'
+        }).done(function (response) {
+            if (response.result) {
+                _this.parents('tr').first().detach();
             }
         });
     });

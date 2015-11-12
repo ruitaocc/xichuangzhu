@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, Blueprint, request
-from ..models import Work, Author, Dynasty, WorkType, Quote, CollectionKind, Collection
+from ..models import Work, Author, Dynasty, WorkType, Quote, CollectionKind, Collection, CollectionWork
 from application.utils.permissions import AdminPermission
 
 bp = Blueprint('admin', __name__)

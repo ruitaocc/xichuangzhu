@@ -69,9 +69,15 @@
                     </td>
 
                     <td>
-                        <a title="编辑《{{ work.full_title }}》" target="_blank" class="btn btn-xs btn-default"
-                           href="{{ url_for('work.edit', work_id=work.id) }}"><span
-                                class="glyphicon glyphicon-edit"></span></a>
+                        <div class="btn-group btn-group-xs">
+                            <a title="编辑《{{ work.full_title }}》" target="_blank" class="btn btn-default"
+                               href="{{ url_for('work.edit', work_id=work.id) }}"><span
+                                    class="fa fa-edit"></span></a>
+                            <a title="删除《{{ work.full_title }}》" target="_blank"
+                               class="btn btn-default btn-remove-work-from-collection"
+                               data-id="{{ work.id }}" data-title="{{ work.title }}"
+                               href="javascript: void(0)"><span class="fa fa-trash"></span></a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

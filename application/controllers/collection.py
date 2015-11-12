@@ -120,3 +120,15 @@ def update_order():
         db.session.add(collection)
     db.session.commit()
     return {'result': True}
+
+
+@bp.route('/admin/collection/<int:uid>/remove_work/<int:work_id>', methods=['POST'])
+@AdminPermission()
+@jsonify
+def remove_work(uid, work_id):
+    collection = Collection.query.get_or_404(uid)
+    work = Work.query.get_or_404(work_id)
+    collection_work = collection.works.filter(CollectionWork.work_id == work_id)
+    map(db.session.delete, collection_work)
+    db.session.commit()
+    return {'result': True}
