@@ -7,29 +7,16 @@
     var $worksList = $page('.works-list').first();
     var $addWorkModal = $page('#add-work-modal');
     var $btnRemoveWorkFromCollection = $page('.btn-remove-work-from-collection');
+    var $btnSearchWork = $page('.btn-search-work');
 
     $workInput.keyup(function (event) {
         if (event.keyCode == 13) {
-            var workTitle = $.trim($workInput.val());
-
-            $.ajax({
-                url: urlFor('work.search'),
-                method: 'POST',
-                data: {
-                    'title': workTitle
-                }
-            }).done(function (response) {
-                if (response.result) {
-                    $workSelect.empty();
-
-                    $.each(response.works, function (index, work) {
-                        var option = "<option value=" + work['id'] + ">〔" + work['author'] + '〕'
-                            + work['title'] + "</option>";
-                        $(option).appendTo($workSelect);
-                    });
-                }
-            });
+            searchWork();
         }
+    });
+
+    $btnSearchWork.click(function () {
+        searchWork();
     });
 
     $btnAddWork.click(function () {
@@ -54,7 +41,7 @@
         var workTitle = $(this).data('title');
         var _this = $(this);
 
-        if (!confirm('确定将《' + workTitle +'》从该合集中移除？')) {
+        if (!confirm('确定将《' + workTitle + '》从该合集中移除？')) {
             return false;
         }
 
@@ -113,5 +100,27 @@
             $(this).width($(this).width());
         });
         return ui;
+    }
+
+    function searchWork() {
+        var workTitle = $.trim($workInput.val());
+
+        $.ajax({
+            url: urlFor('work.search'),
+            method: 'POST',
+            data: {
+                'title': workTitle
+            }
+        }).done(function (response) {
+            if (response.result) {
+                $workSelect.empty();
+
+                $.each(response.works, function (index, work) {
+                    var option = "<option value=" + work['id'] + ">〔" + work['author'] + '〕'
+                        + work['title'] + "</option>";
+                    $(option).appendTo($workSelect);
+                });
+            }
+        });
     }
 })();
