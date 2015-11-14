@@ -155,9 +155,9 @@ def sqlite(tr=False):
         __tablename__ = 'collections'
 
         id = Column(Integer, primary_key=True)
-        order = Column(Integer, default=0)
-        name = Column(String(200), unique=True)
-        full_name = Column(String(200), unique=True)
+        order = Column(Integer)
+        name = Column(String(200))
+        full_name = Column(String(200))
         abbr = Column(String(50))
         desc = Column(Text())
         cover = Column(String(200))
@@ -169,14 +169,14 @@ def sqlite(tr=False):
         __tablename__ = 'collection_kinds'
 
         id = Column(Integer, primary_key=True)
-        order = Column(Integer, default=0)
-        name = Column(String(100), unique=True)
+        order = Column(Integer)
+        name = Column(String(100))
 
     class _CollectionWork(db.Model):
         __tablename__ = 'collection_works'
 
         id = Column(Integer, primary_key=True)
-        order = Column(Integer, default=0)
+        order = Column(Integer)
         work_id = Column(Integer)
         work = Column(String(100))
         collection_id = Column(Integer)
@@ -272,7 +272,7 @@ def sqlite(tr=False):
             _collection = _Collection(id=collection.id, order=collection.order,
                                       name=collection.name, full_name=collection.full_name,
                                       abbr=collection.abbr, desc=collection.desc,
-                                      cover=collection.cover, link=collection,
+                                      cover=collection.cover, link=collection.link,
                                       kind=collection.kind.name, kind_id=collection.kind_id)
             session.add(_collection)
 
