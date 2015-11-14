@@ -270,7 +270,7 @@ def sqlite(tr=False):
             session.add(_collection_kind)
 
         # 转存集合
-        for collection in CollectionKind.query:
+        for collection in Collection.query:
             _collection = _Collection(id=collection.id, order=collection.order,
                                       name=collection.name, full_name=collection.fullname,
                                       abbr=collection.abbr, desc=collection.desc,
