@@ -172,7 +172,7 @@ def sqlite(tr=False):
         order = Column(Integer)
         name = Column(String(100))
 
-    class _CollectionWork(db.Model):
+    class _CollectionWork(Base):
         __tablename__ = 'collection_works'
 
         id = Column(Integer, primary_key=True)
