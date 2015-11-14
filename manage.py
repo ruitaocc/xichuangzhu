@@ -261,8 +261,6 @@ def sqlite(tr=False):
                 _s2t_quote(_quote)
             session.add(_quote)
 
-
-
         # 转存集合类型
         for collection_kind in CollectionKind.query:
             _collection_kind = _CollectionKind(id=collection_kind.id, order=collection_kind.order,
@@ -272,7 +270,7 @@ def sqlite(tr=False):
         # 转存集合
         for collection in Collection.query:
             _collection = _Collection(id=collection.id, order=collection.order,
-                                      name=collection.name, full_name=collection.fullname,
+                                      name=collection.name, full_name=collection.full_name,
                                       abbr=collection.abbr, desc=collection.desc,
                                       cover=collection.cover, link=collection,
                                       kind=collection.kind.name, kind_id=collection.kind_id)
