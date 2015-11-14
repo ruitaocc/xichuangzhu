@@ -144,7 +144,7 @@ def sqlite(tr=False):
         __tablename__ = 'quotes'
 
         id = Column(Integer, primary_key=True)
-        quote = Column(db.Text)
+        quote = Column(Text)
         author_id = Column(Integer)
         author = Column(String(10))
         work_id = Column(Integer)
@@ -157,7 +157,7 @@ def sqlite(tr=False):
         id = Column(Integer, primary_key=True)
         order = Column(Integer, default=0)
         name = Column(String(200), unique=True)
-        full_name = Column(db.String(200), unique=True)
+        full_name = Column(String(200), unique=True)
         abbr = Column(String(50))
         desc = Column(Text())
         cover = Column(String(200))
