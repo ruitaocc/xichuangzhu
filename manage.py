@@ -9,7 +9,7 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from application import create_app
-from application.models import db, Work, Author, Dynasty, Quote
+from application.models import db, Work, Author, Dynasty, Quote, Collection, CollectionKind, CollectionWork
 from application.utils.helpers import s2t
 
 # Used by app debug & livereload
@@ -151,6 +151,37 @@ def sqlite(tr=False):
         work = Column(String(50))
         updated_at = Column(String(30))
 
+    class _Collection(Base):
+        __tablename__ = 'collections'
+
+        id = Column(Integer, primary_key=True)
+        order = Column(Integer, default=0)
+        name = Column(String(200), unique=True)
+        full_name = Column(db.String(200), unique=True)
+        abbr = Column(String(50))
+        desc = Column(Text())
+        cover = Column(String(200))
+        link = Column(String(300))
+        kind_id = Column(Integer)
+        kind = Column(String(100))
+
+    class _CollectionKind(Base):
+        __tablename__ = 'collection_kinds'
+
+        id = Column(Integer, primary_key=True)
+        order = Column(Integer, default=0)
+        name = Column(String(100), unique=True)
+
+    class _CollectionWork(db.Model):
+        __tablename__ = 'collection_works'
+
+        id = Column(Integer, primary_key=True)
+        order = Column(Integer, default=0)
+        work_id = Column(Integer)
+        work = Column(String(100))
+        collection_id = Column(Integer)
+        collection = Column(String(100))
+
     Base.metadata.create_all(engine)
 
     with app.app_context():
@@ -229,6 +260,31 @@ def sqlite(tr=False):
             if tr:
                 _s2t_quote(_quote)
             session.add(_quote)
+
+
+
+        # 转存集合类型
+        for collection_kind in CollectionKind.query:
+            _collection_kind = _CollectionKind(id=collection_kind.id, order=collection_kind.order,
+                                               name=collection_kind.name)
+            session.add(_collection_kind)
+
+        # 转存集合
+        for collection in CollectionKind.query:
+            _collection = _Collection(id=collection.id, order=collection.order,
+                                      name=collection.name, full_name=collection.fullname,
+                                      abbr=collection.abbr, desc=collection.desc,
+                                      cover=collection.cover, link=collection,
+                                      kind=collection.kind.name, kind_id=collection.kind_id)
+            session.add(_collection)
+
+        # 转存集合作品
+        for collection_work in CollectionWork.query:
+            _collection_work = _CollectionWork(id=collection_work.id, order=collection_work.order,
+                                               work_id=collection_work.work_id, work=collection_work.work.title,
+                                               collection_id=collection_work.collection_id,
+                                               collection=collection_work.collection.name)
+            session.add(_collection_work)
 
         session.commit()
 
