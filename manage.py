@@ -155,7 +155,7 @@ def sqlite(tr=False):
         __tablename__ = 'collections'
 
         id = Column(Integer, primary_key=True)
-        order = Column(Integer)
+        show_order = Column(Integer)
         name = Column(String(200))
         full_name = Column(String(200))
         abbr = Column(String(50))
@@ -169,14 +169,14 @@ def sqlite(tr=False):
         __tablename__ = 'collection_kinds'
 
         id = Column(Integer, primary_key=True)
-        order = Column(Integer)
+        show_order = Column(Integer)
         name = Column(String(100))
 
     class _CollectionWork(Base):
         __tablename__ = 'collection_works'
 
         id = Column(Integer, primary_key=True)
-        order = Column(Integer)
+        show_order = Column(Integer)
         work_id = Column(Integer)
         work = Column(String(100))
         collection_id = Column(Integer)
@@ -263,13 +263,13 @@ def sqlite(tr=False):
 
         # 转存集合类型
         for collection_kind in CollectionKind.query:
-            _collection_kind = _CollectionKind(id=collection_kind.id, order=collection_kind.order,
+            _collection_kind = _CollectionKind(id=collection_kind.id, show_order=collection_kind.order,
                                                name=collection_kind.name)
             session.add(_collection_kind)
 
         # 转存集合
         for collection in Collection.query:
-            _collection = _Collection(id=collection.id, order=collection.order,
+            _collection = _Collection(id=collection.id, show_order=collection.order,
                                       name=collection.name, full_name=collection.full_name,
                                       abbr=collection.abbr, desc=collection.desc,
                                       cover=collection.cover, link=collection.link,
@@ -278,7 +278,7 @@ def sqlite(tr=False):
 
         # 转存集合作品
         for collection_work in CollectionWork.query:
-            _collection_work = _CollectionWork(id=collection_work.id, order=collection_work.order,
+            _collection_work = _CollectionWork(id=collection_work.id, show_order=collection_work.order,
                                                work_id=collection_work.work_id, work=collection_work.work.title,
                                                collection_id=collection_work.collection_id,
                                                collection=collection_work.collection.name)
