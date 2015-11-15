@@ -9,5 +9,6 @@ class CollectionForm(Form):
     full_name = StringField('全称', validators=[Optional()])
     abbr = StringField('缩写', validators=[DataRequired('缩写不能为空')])
     desc = TextAreaField('简介', validators=[Optional()])
+    cover = StringField('封面', validators=[Optional()])
     link = StringField('链接', validators=[Optional()])
     kind_id = SelectField('类别', [DataRequired('类别不能为空')], coerce=int)

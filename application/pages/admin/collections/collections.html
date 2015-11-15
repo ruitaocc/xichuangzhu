@@ -16,7 +16,8 @@
                 <thead>
                 <tr>
                     <th>选集</th>
-                    <th>缩写</th>
+                    <th>封面</th>
+                    {#                    <th>缩写</th>#}
                     <th>全称</th>
                     <th>篇目</th>
                     <th>操作</th>
@@ -29,6 +30,11 @@
                         <td>
                             <a href="{{ url_for('admin.collection_works', uid=collection.id) }}">
                                 {{ collection.name }}</a>
+                        </td>
+                        <td>
+                            <img class="collection-cover img-circle"
+                                 src="{{ collection.cover or "http://7xobyn.com1.z0.glb.clouddn.com/default.png" }}"
+                                 alt="">
                         </td>
                         <td>{{ collection.abbr or "" }}</td>
                         <td>{{ collection.full_name or "" }}</td>
