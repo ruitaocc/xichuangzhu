@@ -204,12 +204,8 @@ def sqlite(tr=False):
                 work_full_title = "%s · %s" % (work_title, work.title_suffix)
             else:
                 work_full_title = work_title
-            work_content = work.mobile_content or work.content
 
-            # 处理content，去掉注释，将%转换为空格
-            work_content = re.sub(r'<([^<]+)>', '', work_content)
-            work_content = work_content.replace('%', "    ")
-            work_content = work_content.replace('\r\n\r\n', '\n')
+            work_content = _get_work_content(work)
 
             # 处理评析
             work_intro = work.intro.replace('\r\n\r\n', '\n')
@@ -289,7 +285,7 @@ def sqlite(tr=False):
                                                work_full_title=collection_work.work.full_title,
                                                work_author=collection_work.work.author.name,
                                                work_dynasty=collection_work.work.author.dynasty.name,
-                                               work_content=collection_work.work.content,
+                                               work_content=_get_work_content(collection_work.work),
                                                collection_id=collection_work.collection_id,
                                                collection=collection_work.collection.name)
             session.add(_collection_work)
@@ -414,6 +410,14 @@ def _s2t_author(author):
     author.name = s2t(author.name)
     author.intro = s2t(author.intro)
     author.dynasty = s2t(author.dynasty)
+
+
+def _get_work_content(work):
+    work_content = work.mobile_content or work.content
+    work_content = re.sub(r'<([^<]+)>', '', work_content)
+    work_content = work_content.replace('%', "    ")
+    work_content = work_content.replace('\r\n\r\n', '\n')
+    return work_content
 
 
 if __name__ == "__main__":
