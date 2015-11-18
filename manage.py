@@ -177,8 +177,14 @@ def sqlite(tr=False):
 
         id = Column(Integer, primary_key=True)
         show_order = Column(Integer)
+
         work_id = Column(Integer)
-        work = Column(String(100))
+        work_title = Column(String(100))
+        work_full_title = Column(String(50))
+        work_author = Column(String(50))
+        work_dynasty = Column(String(10))
+        work_content = Column(Text)
+
         collection_id = Column(Integer)
         collection = Column(String(100))
 
@@ -279,7 +285,11 @@ def sqlite(tr=False):
         # 转存集合作品
         for collection_work in CollectionWork.query:
             _collection_work = _CollectionWork(id=collection_work.id, show_order=collection_work.order,
-                                               work_id=collection_work.work_id, work=collection_work.work.title,
+                                               work_id=collection_work.work_id, work_title=collection_work.work.title,
+                                               work_full_title=collection_work.work.full_title,
+                                               work_author=collection_work.work.author.name,
+                                               work_dynasty=collection_work.work.author.dynasty.name,
+                                               work_content=collection_work.work.content,
                                                collection_id=collection_work.collection_id,
                                                collection=collection_work.collection.name)
             session.add(_collection_work)
