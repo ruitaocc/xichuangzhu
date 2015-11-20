@@ -125,6 +125,7 @@ def sqlite(tr=False):
         id = Column(Integer, primary_key=True)
         name = Column(String(50))
         intro = Column(Text)
+        works_count = Column(Integer)
         dynasty = Column(String(10))
         birth_year = Column(String(20))
         death_year = Column(String(20))
@@ -240,7 +241,8 @@ def sqlite(tr=False):
             _author = _Author(id=author.id, name=author.name, intro=author.intro,
                               dynasty=author.dynasty.name, birth_year=birth_year,
                               death_year=death_year, baidu_wiki=author.baidu_wiki,
-                              updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
+                              updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+                              works_count=author.works.filter(Work.highlight).count())
             if tr:
                 _s2t_author(_author)
             session.add(_author)
