@@ -124,6 +124,7 @@ def sqlite(tr=False):
 
         id = Column(Integer, primary_key=True)
         name = Column(String(50))
+        first_char = Column(String(10))
         intro = Column(Text)
         works_count = Column(Integer)
         dynasty = Column(String(10))
@@ -242,7 +243,8 @@ def sqlite(tr=False):
                               dynasty=author.dynasty.name, birth_year=birth_year,
                               death_year=death_year, baidu_wiki=author.baidu_wiki,
                               updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
-                              works_count=author.works.filter(Work.highlight).count())
+                              works_count=author.works.filter(Work.highlight).count(),
+                              first_char=_get_first_char(author.name))
             if tr:
                 _s2t_author(_author)
             session.add(_author)
@@ -420,6 +422,12 @@ def _get_work_content(work):
     work_content = work_content.replace('%', "    ")
     work_content = work_content.replace('\r\n\r\n', '\n')
     return work_content
+
+
+def _get_first_char(text):
+    from pypinyin import lazy_pinyin
+
+    return lazy_pinyin(text)[0][0].upper()
 
 
 if __name__ == "__main__":
