@@ -354,10 +354,23 @@ def detect_whitespace():
     with app.app_context():
         for work in Work.query:
             if ' ' in work.content:
-                print("work %d" % work.id)
+                print("work %d - %d" % (work.id, work.content.index(' ')))
         for quote in Quote.query:
             if ' ' in quote.quote:
-                print("quote %d" % quote.id)
+                print("quote %d - %d" % (quote.id, quote.quote.index(' ')))
+
+
+@manager.command
+def detect_illegal_punctuation():
+    with app.app_context():
+        for work in Work.query:
+            for letter in ',()?-':
+                if letter in work.content:
+                    print("work %d %s" % (work.id, letter))
+        for quote in Quote.query:
+            for letter in ',()?-':
+                if letter in quote.quote:
+                    print("work %d %s" % (quote.id, letter))
 
 
 @manager.command
