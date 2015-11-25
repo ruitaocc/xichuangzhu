@@ -350,6 +350,17 @@ def convert_title():
 
 
 @manager.command
+def detect_whitespace():
+    with app.app_context():
+        for work in Work.query:
+            if ' ' in work.content:
+                print("work %d" % work.id)
+        for quote in Quote.query:
+            if ' ' in quote.quote:
+                print("quote %d" % quote.id)
+
+
+@manager.command
 def find_works_wiki():
     with app.app_context():
         for work in Work.query:
