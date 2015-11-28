@@ -19,6 +19,15 @@ class WorkForm(Form):
     content = TextAreaField('内容', [DataRequired('内容不能为空')])
     mobile_content = TextAreaField('移动版内容')
 
+    # 繁体
+    title_tr = StringField('标题')
+    title_suffix_tr = StringField('标题后缀')
+    foreword_tr = TextAreaField('序')
+    content_tr = TextAreaField('内容')
+    intro_tr = TextAreaField('评析')
+    mobile_title_tr = StringField('移动版标题')
+    mobile_content_tr = TextAreaField('移动版内容')
+
 
 class AuthorForm(Form):
     """Form for add & edit author"""
@@ -29,16 +38,26 @@ class AuthorForm(Form):
     baidu_wiki = StringField('百科')
     intro = TextAreaField('简介', [DataRequired('简介不能为空')])
 
+    # 繁体
+    name_tr = StringField('姓名')
+    intro_tr = TextAreaField('简介')
+
 
 class AuthorQuoteForm(Form):
     """Form for add & edit author quote"""
     quote = StringField('摘录', [DataRequired('摘录不能为空')])
     work_id = IntegerField('出处', [DataRequired('出处不能为空')])
 
+    # 繁体
+    quote_tr = StringField('摘录')
+
 
 class WorkQuoteForm(Form):
     """Form for add & edit quote for work"""
     quote = StringField('摘录', [DataRequired('摘录不能为空')])
+
+    # 繁体
+    quote_tr = StringField('摘录')
 
 
 class DynastyForm(Form):
@@ -47,3 +66,7 @@ class DynastyForm(Form):
     intro = TextAreaField('简介', [DataRequired('简介不能为空')])
     start_year = IntegerField('起始年', [DataRequired('起始年不能为空')])
     end_year = IntegerField('结束年', [DataRequired('结束年不能为空')])
+
+    # 繁体
+    name_tr = StringField('朝代')
+    intro_tr = TextAreaField('简介')

@@ -12,3 +12,8 @@ class CollectionForm(Form):
     cover = StringField('封面', validators=[Optional()])
     link = StringField('链接', validators=[Optional()])
     kind_id = SelectField('类别', [DataRequired('类别不能为空')], coerce=int)
+
+    # 繁体
+    name_tr = StringField('名称')
+    full_name_tr = StringField('全称')
+    desc_tr = TextAreaField('简介')
