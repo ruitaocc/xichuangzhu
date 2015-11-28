@@ -13,5 +13,11 @@ class Dynasty(db.Model):
     name_tr = db.Column(db.String(50))
     intro_tr = db.Column(db.Text())
 
+    def populate_tr_fields(self):
+        import opencc
+
+        self.name_tr = opencc.convert(self.name or "", config='s2t.json')
+        self.intro_tr = opencc.convert(self.intro or "", config='s2t.json')
+
     def __repr__(self):
         return '<Dynasty %s>' % self.name

@@ -22,6 +22,13 @@ class Collection(db.Model):
     full_name_tr = db.Column(db.String(200), unique=True)
     desc_tr = db.Column(db.Text())
 
+    def populate_tr_fields(self):
+        import opencc
+
+        self.name_tr = opencc.convert(self.name or "", config='s2t.json')
+        self.full_name_tr = opencc.convert(self.full_name or "", config='s2t.json')
+        self.desc_tr = opencc.convert(self.desc or "", config='s2t.json')
+
     @property
     def max_work_order(self):
         if self.works.count() == 0:
@@ -41,6 +48,11 @@ class CollectionKind(db.Model):
 
     # 繁体
     name_tr = db.Column(db.String(50), unique=True)
+
+    def populate_tr_fields(self):
+        import opencc
+
+        self.name_tr = opencc.convert(self.name or "", config='s2t.json')
 
     @property
     def max_collection_order(self):

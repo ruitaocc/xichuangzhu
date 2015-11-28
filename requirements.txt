@@ -8,6 +8,7 @@ Flask-Script==2.0.5
 Flask-Migrate==1.6.0
 
 pypinyin==0.9.3
+OpenCC==0.2
 permission==0.3.0
 requests==2.8.1
 markdown2==2.3.0

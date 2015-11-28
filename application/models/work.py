@@ -37,6 +37,17 @@ class Work(db.Model):
     mobile_title_tr = db.Column(db.String(50))
     mobile_content_tr = db.Column(db.Text())
 
+    def populate_tr_fields(self):
+        import opencc
+
+        self.title_tr = opencc.convert(self.title or "", config='s2t.json')
+        self.title_suffix_tr = opencc.convert(self.title_suffix or "", config='s2t.json')
+        self.foreword_tr = opencc.convert(self.foreword or "", config='s2t.json')
+        self.content_tr = opencc.convert(self.content or "", config='s2t.json')
+        self.intro_tr = opencc.convert(self.intro or "", config='s2t.json')
+        self.mobile_title_tr = opencc.convert(self.mobile_title or "", config='s2t.json')
+        self.mobile_content_tr = opencc.convert(self.mobile_content or "", config='s2t.json')
+
     @property
     def full_title(self):
         if self.title_suffix and '·' not in self.title:

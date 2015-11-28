@@ -350,6 +350,41 @@ def convert_title():
 
 
 @manager.command
+def convert_tr():
+    with app.app_context():
+        for work in Work.query:
+            print("work - %d" % work.id)
+            work.populate_tr_fields()
+            db.session.add(work)
+            db.session.commit()
+        for quote in Quote.query:
+            print("quote - %d" % quote.id)
+            quote.populate_tr_fields()
+            db.session.add(quote)
+            db.session.commit()
+        for author in Author.query:
+            print("author - %d" % author.id)
+            author.populate_tr_fields()
+            db.session.add(author)
+            db.session.commit()
+        for dynasty in Dynasty.query:
+            print("dynasty - %d" % dynasty.id)
+            dynasty.populate_tr_fields()
+            db.session.add(dynasty)
+            db.session.commit()
+        for collection in Collection.query:
+            print("collection - %d" % collection.id)
+            collection.populate_tr_fields()
+            db.session.add(collection)
+            db.session.commit()
+        for collection_kind in CollectionKind.query:
+            print("collection kind - %d" % collection_kind.id)
+            collection_kind.populate_tr_fields()
+            db.session.add(collection_kind)
+            db.session.commit()
+
+
+@manager.command
 def detect_whitespace():
     with app.app_context():
         for work in Work.query:

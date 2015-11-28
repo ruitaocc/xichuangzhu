@@ -20,6 +20,12 @@ class Author(db.Model):
     name_tr = db.Column(db.String(50))
     intro_tr = db.Column(db.Text())
 
+    def populate_tr_fields(self):
+        import opencc
+
+        self.name_tr = opencc.convert(self.name or "", config='s2t.json')
+        self.intro_tr = opencc.convert(self.intro or "", config='s2t.json')
+
     def __repr__(self):
         return '<Author %s>' % self.name
 
@@ -43,6 +49,11 @@ class Quote(db.Model):
 
     # 繁体
     quote_tr = db.Column(db.Text())
+
+    def populate_tr_fields(self):
+        import opencc
+
+        self.quote_tr = opencc.convert(self.quote or "", config='s2t.json')
 
     def __repr__(self):
         return '<Quote %s>' % self.quote
