@@ -10,7 +10,6 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from fabric.api import run as fabrun, env
 from application import create_app
 from application.models import db, Work, Author, Dynasty, Quote, Collection, CollectionKind, CollectionWork
-from application.utils.helpers import s2t
 
 # Used by app debug & livereload
 PORT = 5000
