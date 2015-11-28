@@ -376,6 +376,31 @@ def detect_illegal_punctuation():
 
 
 @manager.command
+def uniform_content():
+    with app.app_context():
+        for work in Work.query:
+            print("work %d", work.id)
+            work.content = _uniform_content(work.content)
+            work.mobile_content = _uniform_content(work.mobile_content)
+            work.foreword = _uniform_content(work.foreword)
+            work.intro = _uniform_content(work.intro)
+            db.session.add(work)
+            db.session.commit()
+
+        for quote in Quote.query:
+            print("quote %d", quote.id)
+            quote.quote = _uniform_content(quote.quote)
+            db.session.add(quote)
+            db.session.commit()
+
+        for author in Author.query:
+            print("author %d", author.id)
+            author.intro = _uniform_content(author.intro)
+            db.session.add(author)
+            db.session.commit()
+
+
+@manager.command
 def find_works_wiki():
     with app.app_context():
         for work in Work.query:
@@ -454,6 +479,19 @@ def _get_first_char(text):
     from pypinyin import lazy_pinyin
 
     return lazy_pinyin(text)[0][0].upper()
+
+
+def _uniform_content(content):
+    if not content:
+        return ""
+    return content \
+        .replace(' ', '') \
+        .replace(',', '，') \
+        .replace('(', '（') \
+        .replace(')', '）') \
+        .replace('?', '？') \
+        .replace('-', '·') \
+        .replace(':', '：')
 
 
 if __name__ == "__main__":
