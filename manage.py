@@ -355,11 +355,11 @@ def detect_whitespace():
         for work in Work.query:
             if ' ' in work.content:
                 index = work.content.index(' ')
-                print("work %d - %d - %s" % (work.id, index, work.content[index + 1]))
+                print("work %d - %d" % (work.id, index))
         for quote in Quote.query:
             if ' ' in quote.quote:
                 index = quote.quote.index(' ')
-                print("quote %d - %d - %s" % (quote.id, index, quote.quote[index + 1]))
+                print("quote %d - %d" % (quote.id, index))
 
 
 @manager.command
