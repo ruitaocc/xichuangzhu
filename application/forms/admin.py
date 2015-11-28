@@ -43,15 +43,6 @@ class AuthorForm(Form):
     intro_tr = TextAreaField('简介')
 
 
-class AuthorQuoteForm(Form):
-    """Form for add & edit author quote"""
-    quote = StringField('摘录', [DataRequired('摘录不能为空')])
-    work_id = IntegerField('出处', [DataRequired('出处不能为空')])
-
-    # 繁体
-    quote_tr = StringField('摘录')
-
-
 class WorkQuoteForm(Form):
     """Form for add & edit quote for work"""
     quote = StringField('摘录', [DataRequired('摘录不能为空')])

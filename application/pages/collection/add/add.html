@@ -17,17 +17,25 @@
 
                 {{ horizontal_field(form.name, length=3) }}
 
-                {{ horizontal_field(form.full_name, length=3) }}
+                {#                {{ horizontal_field(form.full_name, length=3) }}#}
 
-{#                {{ horizontal_field(form.abbr, length=3) }}#}
+                {#                {{ horizontal_field(form.abbr, length=3) }}#}
 
                 {{ horizontal_field(form.kind_id) }}
 
-                {{ horizontal_field(form.desc, rows=3) }}
+                {{ horizontal_field(form.desc, rows=2) }}
 
                 {{ horizontal_field(form.cover) }}
 
-                {{ horizontal_field(form.link) }}
+                {#                {{ horizontal_field(form.link) }}#}
+
+                <legend>繁体</legend>
+
+                {{ horizontal_field(form.name_tr, length=3) }}
+
+                {#                {{ horizontal_field(form.full_name_tr, length=3) }}#}
+
+                {{ horizontal_field(form.desc_tr, rows=2) }}
 
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-2">
