@@ -9,5 +9,9 @@ class Dynasty(db.Model):
     start_year = db.Column(db.Integer)
     end_year = db.Column(db.Integer)
 
+    # 繁体
+    name_tr = db.Column(db.String(50))
+    intro_tr = db.Column(db.Text())
+
     def __repr__(self):
         return '<Dynasty %s>' % self.name

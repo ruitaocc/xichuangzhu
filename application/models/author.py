@@ -16,6 +16,10 @@ class Author(db.Model):
     dynasty = db.relationship('Dynasty', backref=db.backref('authors', lazy='dynamic',
                                                             order_by="asc(Author.birth_year)"))
 
+    # 繁体
+    name_tr = db.Column(db.String(50))
+    intro_tr = db.Column(db.Text())
+
     def __repr__(self):
         return '<Author %s>' % self.name
 
@@ -36,6 +40,9 @@ class Quote(db.Model):
 
     work_id = db.Column(db.Integer, db.ForeignKey('work.id'))
     work = db.relationship('Work', backref=db.backref('quotes', lazy='dynamic'))
+
+    # 繁体
+    quote_tr = db.Column(db.Text())
 
     def __repr__(self):
         return '<Quote %s>' % self.quote

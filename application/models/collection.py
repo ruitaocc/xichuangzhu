@@ -8,15 +8,19 @@ class Collection(db.Model):
     order = db.Column(db.Integer, default=0)
     name = db.Column(db.String(200), unique=True)
     full_name = db.Column(db.String(200), unique=True)
-    abbr = db.Column(db.String(50))
     desc = db.Column(db.Text())
     cover = db.Column(db.String(200))
     link = db.Column(db.String(300))
+    abbr = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=datetime.now)
-
     kind_id = db.Column(db.Integer, db.ForeignKey('collection_kind.id'))
     kind = db.relationship('CollectionKind', backref=db.backref('collections', lazy='dynamic',
                                                                 order_by="asc(Collection.order)"))
+
+    # 繁体
+    name_tr = db.Column(db.String(200), unique=True)
+    full_name_tr = db.Column(db.String(200), unique=True)
+    desc_tr = db.Column(db.Text())
 
     @property
     def max_work_order(self):
@@ -34,6 +38,9 @@ class CollectionKind(db.Model):
     order = db.Column(db.Integer, default=0)
     name = db.Column(db.String(50), unique=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
+
+    # 繁体
+    name_tr = db.Column(db.String(50), unique=True)
 
     @property
     def max_collection_order(self):

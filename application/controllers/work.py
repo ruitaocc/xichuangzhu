@@ -2,7 +2,7 @@
 from __future__ import division
 import datetime
 from flask import render_template, request, redirect, url_for, json, Blueprint, abort, g, current_app
-from ..models import db, Work, WorkType, WorkTag, WorkImage, WorkReview, Tag, Dynasty, Author, \
+from ..models import db, Work, WorkType, WorkImage, WorkReview, Dynasty, Author, \
     User, CollectWork, CollectWorkImage, WorkReviewComment, Quote
 from application.utils.helpers import check_is_me
 from application.utils.permissions import UserPermission, AdminPermission, WorkImageAdminPermission, \

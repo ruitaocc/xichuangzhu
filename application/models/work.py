@@ -28,6 +28,15 @@ class Work(db.Model):
     type_id = db.Column(db.Integer, db.ForeignKey('work_type.id'))
     type = db.relationship('WorkType', backref=db.backref('works', lazy='dynamic'))
 
+    # 繁体
+    title_tr = db.Column(db.String(50))
+    title_suffix_tr = db.Column(db.String(50))
+    foreword_tr = db.Column(db.Text())
+    content_tr = db.Column(db.Text())
+    intro_tr = db.Column(db.Text())
+    mobile_title_tr = db.Column(db.String(50))
+    mobile_content_tr = db.Column(db.Text())
+
     @property
     def full_title(self):
         if self.title_suffix and '·' not in self.title:
@@ -44,28 +53,11 @@ class WorkType(db.Model):
     en = db.Column(db.String(50))
     cn = db.Column(db.String(50))
 
+    # 繁体
+    cn_tr = db.Column(db.String(50))
+
     def __repr__(self):
         return '<WorkType %s>' % self.cn
-
-
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50))
-    desc = db.Column(db.String(200))
-    icon = db.Column(db.String(200))
-
-
-class WorkTag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-
-    work_id = db.Column(db.Integer, db.ForeignKey('work.id'), primary_key=True)
-    work = db.relationship('Work', backref=db.backref('tags'))
-
-    tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'), primary_key=True)
-    tag = db.relationship('Tag', backref=db.backref('works'))
-
-    def __repr__(self):
-        return '<WorkTag %s>' % self.tag
 
 
 class WorkImage(db.Model):
