@@ -42,15 +42,6 @@ def sqlite():
                 run('python manage.py sqlite')
 
 
-def sqlite_tr():
-    """生成sqlite文件（繁体），并通过邮件发送"""
-    env.host_string = config.HOST_STRING
-    with cd('/var/www/xichuangzhu'):
-        with shell_env(MODE='PRODUCTION'):
-            with prefix('source venv/bin/activate'):
-                run('python manage.py sqlite -t')
-
-
 def convert_title():
     """转换标题"""
     env.host_string = config.HOST_STRING

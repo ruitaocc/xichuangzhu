@@ -64,24 +64,20 @@ def backdb():
 
 
 @manager.command
-def sqlite(tr=False):
+def sqlite():
     """生成SQLite3数据库文件"""
     from sqlalchemy import create_engine
-    from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.orm import sessionmaker
-    from sqlalchemy import Column, Integer, String, Enum, Text
+    from app_models import _Author, _Collection, _CollectionKind, _CollectionWork, _Dynasty, _Quote, _Version, _Work, \
+        Base
 
-    if tr:
-        db_file = "xcz_tr.db"
-    else:
-        db_file = "/xcz.db"
+    db_file = "/xcz.db"
     db_file_path = "/tmp/%s" % db_file
 
     if os.path.isfile(db_file_path):
         os.remove(db_file_path)
 
     engine = create_engine('sqlite:///%s' % db_file_path)
-    Base = declarative_base()
     Session = sessionmaker(bind=engine)
     session = Session()
     # 如果没有这一行，会报：
@@ -90,105 +86,6 @@ def sqlite(tr=False):
     # http://stackoverflow.com/questions/20201809/sqlalchemy-flask-attributeerror-session-object
     # -has-no-attribute-model-chan
     session._model_changes = {}
-
-    class _Version(Base):
-        __tablename__ = 'version'
-
-        version = Column(String(20), primary_key=True)
-
-    class _Work(Base):
-        __tablename__ = 'works'
-
-        id = Column(Integer, primary_key=True)
-        title = Column(String(50))
-        full_title = Column(String(50))
-        show_order = Column(Integer)
-        author = Column(String(50))
-        author_id = Column(Integer)
-        dynasty = Column(String(10))
-        kind = Column(Enum('shi', 'ci', 'qu', 'fu', 'wen'))
-        kind_cn = Column(String(20))
-        baidu_wiki = Column(String(200))
-        foreword = Column(Text)
-        content = Column(Text)
-        intro = Column(Text)
-        layout = Column(String(10))
-        updated_at = Column(String(30))
-
-        def __repr__(self):
-            return '<Work %s>' % self.title
-
-    class _Author(Base):
-        __tablename__ = 'authors'
-
-        id = Column(Integer, primary_key=True)
-        name = Column(String(50))
-        first_char = Column(String(10))
-        intro = Column(Text)
-        works_count = Column(Integer)
-        dynasty = Column(String(10))
-        birth_year = Column(String(20))
-        death_year = Column(String(20))
-        updated_at = Column(String(30))
-        baidu_wiki = Column(String(200))
-
-    class _Dynasty(Base):
-        __tablename__ = 'dynasties'
-
-        id = Column(Integer, primary_key=True)
-        name = Column(String(10))
-        intro = Column(db.Text)
-        start_year = Column(Integer)
-        end_year = Column(Integer)
-
-    class _Quote(Base):
-        __tablename__ = 'quotes'
-
-        id = Column(Integer, primary_key=True)
-        quote = Column(Text)
-        author_id = Column(Integer)
-        author = Column(String(10))
-        work_id = Column(Integer)
-        work = Column(String(50))
-        updated_at = Column(String(30))
-
-    class _Collection(Base):
-        __tablename__ = 'collections'
-
-        id = Column(Integer, primary_key=True)
-        show_order = Column(Integer)
-        name = Column(String(200))
-        full_name = Column(String(200))
-        abbr = Column(String(50))
-        desc = Column(Text())
-        cover = Column(String(200))
-        link = Column(String(300))
-        kind_id = Column(Integer)
-        kind = Column(String(100))
-
-    class _CollectionKind(Base):
-        __tablename__ = 'collection_kinds'
-
-        id = Column(Integer, primary_key=True)
-        show_order = Column(Integer)
-        name = Column(String(100))
-
-    class _CollectionWork(Base):
-        __tablename__ = 'collection_works'
-
-        id = Column(Integer, primary_key=True)
-        show_order = Column(Integer)
-
-        work_id = Column(Integer)
-        work_title = Column(String(100))
-        work_full_title = Column(String(50))
-        work_author = Column(String(50))
-        work_dynasty = Column(String(10))
-        work_content = Column(Text)
-
-        collection_id = Column(Integer)
-        collection = Column(String(100))
-
     Base.metadata.create_all(engine)
 
     with app.app_context():
@@ -199,32 +96,32 @@ def sqlite(tr=False):
         # 转存作品
         works = Work.query.filter(Work.highlight).order_by(db.func.random())
         for index, work in enumerate(works):
-            if tr:
-                work_title = work.mobile_title_tr or work.title_tr
-                work_full_title = _get_work_full_title(work, tr=True)
-                work_content = _get_work_content(work, tr=True)
-                work_intro = work.intro_tr.replace('\r\n\r\n', '\n')
+            _work = _Work()
 
-                _work = _Work(id=work.id, show_order=index, title=work_title,
-                              full_title=work_full_title, baidu_wiki=work.baidu_wiki,
-                              author_id=work.author_id, author=work.author.name_tr,
-                              dynasty=work.author.dynasty.name_tr,
-                              kind=work.type.en, kind_cn=work.type.cn_tr, foreword=work.foreword_tr,
-                              content=work_content, intro=work_intro, layout=work.layout,
-                              updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            else:
-                work_title = work.mobile_title or work.title
-                work_full_title = _get_work_full_title(work)
-                work_content = _get_work_content(work)
-                work_intro = work.intro.replace('\r\n\r\n', '\n')
+            _work.id = work.id
+            _work.show_order = index
+            _work.baidu_wiki = work.baidu_wiki
+            _work.author_id = work.author_id
+            _work.author = work.author.name
+            _work.author_tr = work.author.name_tr
+            _work.dynasty = work.author.dynasty.name
+            _work.dynasty_tr = work.author.dynasty.name_tr
+            _work.kind = work.type.en
+            _work.kind_cn = work.type.cn
+            _work.kind_cn_tr = work.type.cn_tr
+            _work.foreword = work.foreword
+            _work.foreword_tr = work.foreword_tr
+            _work.title = work.mobile_title or work.title
+            _work.title_tr = work.mobile_title_tr or work.title_tr
+            _work.full_title = _get_work_full_title(work)
+            _work.full_title_tr = _get_work_full_title(work, tr=True)
+            _work.content = _get_work_content(work)
+            _work.content_tr = _get_work_content(work, tr=True)
+            _work.intro = work.intro.replace('\r\n\r\n', '\n')
+            _work.intro_tr = work.intro_tr.replace('\r\n\r\n', '\n')
+            _work.layout = work.layout
+            _work.updated_at = work.updated_at.strftime('%Y-%m-%d %H:%M:%S')
 
-                _work = _Work(id=work.id, show_order=index, title=work_title,
-                              full_title=work_full_title, baidu_wiki=work.baidu_wiki,
-                              author_id=work.author_id, author=work.author.name,
-                              dynasty=work.author.dynasty.name,
-                              kind=work.type.en, kind_cn=work.type.cn, foreword=work.foreword,
-                              content=work_content, intro=work_intro, layout=work.layout,
-                              updated_at=work.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
             session.add(_work)
 
         # 转存文学家
@@ -244,91 +141,106 @@ def sqlite(tr=False):
             if '-' in death_year:
                 death_year = death_year.replace('-', '前')
 
-            if tr:
-                _author = _Author(id=author.id, name=author.name_tr, intro=author.intro_tr,
-                                  dynasty=author.dynasty.name_tr, birth_year=birth_year,
-                                  death_year=death_year, baidu_wiki=author.baidu_wiki,
-                                  updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
-                                  works_count=author.works.filter(Work.highlight).count(),
-                                  first_char=_get_first_char(author.name))
-            else:
-                _author = _Author(id=author.id, name=author.name, intro=author.intro,
-                                  dynasty=author.dynasty.name, birth_year=birth_year,
-                                  death_year=death_year, baidu_wiki=author.baidu_wiki,
-                                  updated_at=author.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
-                                  works_count=author.works.filter(Work.highlight).count(),
-                                  first_char=_get_first_char(author.name))
+            _author = _Author()
+            _author.id = author.id
+            _author.name = author.name
+            _author.name_tr = author.name_tr
+            _author.intro = author.intro
+            _author.intro_tr = author.intro_tr
+            _author.dynasty = author.dynasty.name
+            _author.dynasty_tr = author.dynasty.name_tr
+            _author.birth_year = birth_year
+            _author.death_year = death_year
+            _author.baidu_wiki = author.baidu_wiki
+            _author.updated_at = author.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+            _author.works_count = author.works.filter(Work.highlight).count()
+            _author.first_char = _get_first_char(author.name)
+
             session.add(_author)
 
         # 转存朝代
-        for dynasty in Dynasty.query.filter(
-                Dynasty.authors.any(Author.works.any(Work.highlight))):
-            if tr:
-                _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name_tr, intro=dynasty.intro_tr,
-                                    start_year=dynasty.start_year, end_year=dynasty.end_year)
-            else:
-                _dynasty = _Dynasty(id=dynasty.id, name=dynasty.name, intro=dynasty.intro,
-                                    start_year=dynasty.start_year, end_year=dynasty.end_year)
+        for dynasty in Dynasty.query.filter(Dynasty.authors.any(Author.works.any(Work.highlight))):
+            _dynasty = _Dynasty()
+
+            _dynasty.id = dynasty.id
+            _dynasty.name = dynasty.name
+            _dynasty.name_tr = dynasty.name_tr
+            _dynasty.intro = dynasty.intro
+            _dynasty.intro_tr = dynasty.intro_tr
+            _dynasty.start_year = dynasty.start_year
+            _dynasty.end_year = dynasty.end_year
+
             session.add(_dynasty)
 
         # 转存摘录
         for quote in Quote.query.filter(Quote.work.has(Work.highlight)):
-            if tr:
-                _quote = _Quote(id=quote.id, quote=quote.quote_tr, author_id=quote.work.author_id,
-                                author=quote.work.author.name_tr, work_id=quote.work_id, work=quote.work.title_tr,
-                                updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
-            else:
-                _quote = _Quote(id=quote.id, quote=quote.quote, author_id=quote.work.author_id,
-                                author=quote.work.author.name, work_id=quote.work_id, work=quote.work.title,
-                                updated_at=quote.updated_at.strftime('%Y-%m-%d %H:%M:%S'))
+            _quote = _Quote()
+
+            _quote.id = quote.id
+            _quote.quote = quote.quote
+            _quote.quote_tr = quote.quote_tr
+            _quote.author_id = quote.work.author_id
+            _quote.author = quote.work.author.name
+            _quote.author_tr = quote.work.author.name_tr
+            _quote.work_id = quote.work_id
+            _quote.work = quote.work.title
+            _quote.work_tr = quote.work.title_tr
+            _quote.updated_at = quote.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+
             session.add(_quote)
 
         # 转存集合类型
         for collection_kind in CollectionKind.query:
-            if tr:
-                _collection_kind = _CollectionKind(id=collection_kind.id, show_order=collection_kind.order,
-                                                   name=collection_kind.name_tr)
-            else:
-                _collection_kind = _CollectionKind(id=collection_kind.id, show_order=collection_kind.order,
-                                                   name=collection_kind.name)
+            _collection_kind = _CollectionKind()
+
+            _collection_kind.id = collection_kind.id
+            _collection_kind.show_order = collection_kind.order
+            _collection_kind.name = collection_kind.name
+            _collection_kind.name_tr = collection_kind.name
+
             session.add(_collection_kind)
 
         # 转存集合
         for collection in Collection.query:
-            if tr:
-                _collection = _Collection(id=collection.id, show_order=collection.order,
-                                          name=collection.name_tr, full_name=collection.full_name_tr,
-                                          desc=collection.desc_tr, cover=collection.cover, link=collection.link,
-                                          kind=collection.kind.name_tr, kind_id=collection.kind_id)
-            else:
-                _collection = _Collection(id=collection.id, show_order=collection.order,
-                                          name=collection.name, full_name=collection.full_name,
-                                          desc=collection.desc, cover=collection.cover, link=collection.link,
-                                          kind=collection.kind.name, kind_id=collection.kind_id)
+            _collection = _Collection()
+
+            _collection.id = collection.id
+            _collection.show_order = collection.order
+            _collection.name = collection.name
+            _collection.name_tr = collection.name_tr
+            _collection.full_name = collection.full_name
+            _collection.full_name_tr = collection.full_name_tr
+            _collection.desc = collection.desc
+            _collection.desc_tr = collection.desc_tr
+            _collection.cover = collection.cover
+            _collection.link = collection.link
+            _collection.kind = collection.kind.name
+            _collection.kind_tr = collection.kind.name_tr
+            _collection.kind_id = collection.kind_id
+
             session.add(_collection)
 
         # 转存集合作品
         for collection_work in CollectionWork.query:
-            if tr:
-                _collection_work = _CollectionWork(id=collection_work.id, show_order=collection_work.order,
-                                                   work_id=collection_work.work_id,
-                                                   work_title=collection_work.work.title_tr,
-                                                   work_full_title=_get_work_full_title(collection_work.work, tr=True),
-                                                   work_author=collection_work.work.author.name_tr,
-                                                   work_dynasty=collection_work.work.author.dynasty.name_tr,
-                                                   work_content=_get_work_content(collection_work.work, tr=True),
-                                                   collection_id=collection_work.collection_id,
-                                                   collection=collection_work.collection.name_tr)
-            else:
-                _collection_work = _CollectionWork(id=collection_work.id, show_order=collection_work.order,
-                                                   work_id=collection_work.work_id,
-                                                   work_title=collection_work.work.title,
-                                                   work_full_title=_get_work_full_title(collection_work.work),
-                                                   work_author=collection_work.work.author.name,
-                                                   work_dynasty=collection_work.work.author.dynasty.name,
-                                                   work_content=_get_work_content(collection_work.work),
-                                                   collection_id=collection_work.collection_id,
-                                                   collection=collection_work.collection.name)
+            _collection_work = _CollectionWork()
+
+            _collection_work.id = collection_work.id
+            _collection_work.show_order = collection_work.order
+            _collection_work.work_id = collection_work.work_id
+            _collection_work.work_title = collection_work.work.title
+            _collection_work.work_title_tr = collection_work.work.title_tr
+            _collection_work.work_full_title = _get_work_full_title(collection_work.work)
+            _collection_work.work_full_title_tr = _get_work_full_title(collection_work.work, tr=True)
+            _collection_work.work_author = collection_work.work.author.name
+            _collection_work.work_author_tr = collection_work.work.author.name_tr
+            _collection_work.work_dynasty = collection_work.work.author.dynasty.name
+            _collection_work.work_dynasty_tr = collection_work.work.author.dynasty.name_tr
+            _collection_work.work_content = _get_work_content(collection_work.work)
+            _collection_work.work_content_tr = _get_work_content(collection_work.work, tr=True)
+            _collection_work.collection_id = collection_work.collection_id
+            _collection_work.collection = collection_work.collection.name
+            _collection_work.collection_tr = collection_work.collection.name_tr
+
             session.add(_collection_work)
 
         session.commit()
