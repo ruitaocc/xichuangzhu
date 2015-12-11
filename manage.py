@@ -196,7 +196,7 @@ def sqlite():
             _collection_kind.id = collection_kind.id
             _collection_kind.show_order = collection_kind.order
             _collection_kind.name = collection_kind.name
-            _collection_kind.name_tr = collection_kind.name
+            _collection_kind.name_tr = collection_kind.name_tr
 
             session.add(_collection_kind)
 
