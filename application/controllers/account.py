@@ -39,7 +39,10 @@ def signin():
         'grant_type': 'authorization_code',
         'code': code
     }
-    res = requests.post(url, data=data).json()
+    headers = {
+        'User-Agent': 'request'
+    }
+    res = requests.post(url, data=data, headers=headers).json()
     if 'douban_user_id' not in res:
         return redirect(url_for('site.index'))
     user_id = int(res['douban_user_id'])
