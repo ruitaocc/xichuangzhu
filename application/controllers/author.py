@@ -53,6 +53,7 @@ def add():
     form.dynasty_id.choices = [(d.id, d.name) for d in Dynasty.query.order_by(Dynasty.start_year)]
     if form.validate_on_submit():
         author = Author(**form.data)
+        author.populate_tr_fields()
         db.session.add(author)
         db.session.commit()
         return redirect(url_for('.view', author_id=author.id))
@@ -69,6 +70,7 @@ def edit(author_id):
     if form.validate_on_submit():
         form.populate_obj(author)
         author.updated_at = datetime.datetime.now()
+        author.populate_tr_fields()
         db.session.add(author)
         db.session.commit()
         return redirect(url_for('.view', author_id=author.id))

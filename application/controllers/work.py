@@ -108,6 +108,7 @@ def add():
     form.type_id.choices = [(t.id, t.cn) for t in WorkType.query]
     if form.validate_on_submit():
         work = Work(**form.data)
+        work.populate_tr_fields()
         db.session.add(work)
         db.session.commit()
         return redirect(url_for('.view', work_id=work.id))
@@ -128,6 +129,7 @@ def edit(work_id):
             db.session.add(quote)
         form.populate_obj(work)
         work.updated_at = datetime.datetime.now()
+        work.populate_tr_fields()
         db.session.add(work)
         db.session.commit()
         return redirect(url_for('.view', work_id=work_id))
@@ -142,6 +144,7 @@ def add_quote(work_id):
     form = WorkQuoteForm()
     if form.validate_on_submit():
         quote = Quote(author_id=work.author_id, work_id=work_id, quote=form.quote.data)
+        quote.populate_tr_fields()
         db.session.add(quote)
         db.session.commit()
         return redirect(url_for('work.view', work_id=work_id))
@@ -157,6 +160,7 @@ def edit_quote(quote_id):
     if form.validate_on_submit():
         quote.quote = form.quote.data
         quote.updated_at = datetime.datetime.now()
+        quote.populate_tr_fields()
         db.session.add(quote)
         db.session.commit()
         return redirect(url_for('work.view', work_id=quote.work_id))
