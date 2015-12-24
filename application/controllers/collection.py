@@ -18,6 +18,7 @@ def add():
         collection = Collection(**form.data)
         collection_kind = CollectionKind.query.get_or_404(form.kind_id.data)
         collection.order = collection_kind.max_collection_order + 1
+        collection.populate_tr_fields()
         db.session.add(collection)
         db.session.commit()
         return redirect(url_for('admin.collection_works', uid=collection.id))
@@ -36,6 +37,7 @@ def edit(uid):
             collection_kind = CollectionKind.query.get_or_404(form.kind_id.data)
             collection.order = collection_kind.max_collection_order + 1
         form.populate_obj(collection)
+        collection.populate_tr_fields()
         db.session.add(collection)
         db.session.commit()
         return redirect(url_for('admin.collections'))
