@@ -7,7 +7,7 @@ class Collection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order = db.Column(db.Integer, default=0)
     name = db.Column(db.String(200), unique=True)
-    full_name = db.Column(db.String(200), unique=True)
+    full_name = db.Column(db.String(200))
     desc = db.Column(db.Text())
     cover = db.Column(db.String(200))
     link = db.Column(db.String(300))
@@ -19,7 +19,7 @@ class Collection(db.Model):
 
     # 繁体
     name_tr = db.Column(db.String(200), unique=True)
-    full_name_tr = db.Column(db.String(200), unique=True)
+    full_name_tr = db.Column(db.String(200))
     desc_tr = db.Column(db.Text())
 
     def populate_tr_fields(self):
