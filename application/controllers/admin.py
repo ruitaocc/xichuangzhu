@@ -1,7 +1,8 @@
 # coding: utf-8
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, send_file
 from ..models import Work, Author, Dynasty, WorkType, Quote, CollectionKind, Collection, CollectionWork
 from application.utils.permissions import AdminPermission
+from application.utils.mobile import generate_main_db as _generate_main_db, generate_user_db as _generate_user_db
 
 bp = Blueprint('admin', __name__)
 
@@ -73,6 +74,7 @@ def quotes(page):
 
 
 @bp.route('/admin/collections')
+@AdminPermission()
 def collections():
     """管理选集"""
     collection_kinds = CollectionKind.query.order_by(CollectionKind.order.asc())
@@ -80,7 +82,22 @@ def collections():
 
 
 @bp.route('/admin/collection/<int:uid>/works')
+@AdminPermission()
 def collection_works(uid):
     """管理选集作品"""
     collection = Collection.query.get_or_404(uid)
     return render_template('admin/collection_works/collection_works.html', collection=collection)
+
+
+@bp.route('/admin/generate_main_db')
+@AdminPermission()
+def generate_main_db():
+    db_path = _generate_main_db()
+    return send_file(db_path, as_attachment=True)
+
+
+@bp.route('/admin/generate_user_dbs')
+@AdminPermission()
+def generate_user_db():
+    db_path = _generate_user_db()
+    return send_file(db_path, as_attachment=True)
