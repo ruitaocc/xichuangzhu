@@ -156,7 +156,7 @@ def add_quote(work_id):
 def edit_quote(quote_id):
     """编辑摘录"""
     quote = Quote.query.get_or_404(quote_id)
-    form = WorkQuoteForm(quote=quote.quote)
+    form = WorkQuoteForm(quote=quote.quote, quote_tr=quote.quote_tr)
     if form.validate_on_submit():
         quote.quote = form.quote.data
         quote.updated_at = datetime.datetime.now()
