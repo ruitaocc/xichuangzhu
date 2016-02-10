@@ -26,6 +26,7 @@ class _Work(Base):
     baidu_wiki = Column(String(200))
     foreword = Column(Text)
     content = Column(Text)
+    compress_content = Column(Text)
     intro = Column(Text)
     layout = Column(String(10))
     updated_at = Column(String(30))
@@ -38,6 +39,7 @@ class _Work(Base):
     kind_cn_tr = Column(String(20))
     foreword_tr = Column(Text)
     content_tr = Column(Text)
+    compress_content_tr = Column(Text)
     intro_tr = Column(Text)
 
     def __repr__(self):

@@ -55,6 +55,8 @@ def generate_main_db():
         _work.full_title_tr = _get_work_full_title(work, tr=True)
         _work.content = _get_work_content(work)
         _work.content_tr = _get_work_content(work, tr=True)
+        _work.compress_content = re.sub(r'[\s+]', '', _work.content)
+        _work.compress_content = re.sub(r'[\s+]', '', _work.content_tr)
         _work.intro = work.intro.replace('\r\n\r\n', '\n')
         _work.intro_tr = work.intro_tr.replace('\r\n\r\n', '\n')
         _work.layout = work.layout
