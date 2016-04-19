@@ -102,6 +102,7 @@ class _Collection(Base):
 
     id = Column(Integer, primary_key=True)
     show_order = Column(Integer)
+    works_count = Column(Integer)
     name = Column(String(200))
     full_name = Column(String(200))
     abbr = Column(String(50))

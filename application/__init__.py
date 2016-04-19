@@ -1,8 +1,6 @@
 # coding: utf-8
 import sys
-
 import os
-
 
 # 将project目录加入sys.path
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
