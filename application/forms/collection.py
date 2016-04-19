@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Optional
 
 class CollectionForm(Form):
     name = StringField('名称', validators=[DataRequired('集合名称不能为空')])
-    full_name = StringField('全称', validators=[Optional()])
+    # full_name = StringField('全称', validators=[Optional()])
     # abbr = StringField('缩写', validators=[DataRequired('缩写不能为空')])
     desc = TextAreaField('简介', validators=[Optional()])
     cover = StringField('封面', validators=[Optional()])
@@ -15,5 +15,5 @@ class CollectionForm(Form):
 
     # 繁体
     name_tr = StringField('名称')
-    full_name_tr = StringField('全称')
+    # full_name_tr = StringField('全称')
     desc_tr = TextAreaField('简介')

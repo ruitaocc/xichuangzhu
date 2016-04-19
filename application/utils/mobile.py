@@ -149,8 +149,6 @@ def generate_main_db():
         _collection.works_count = collection.works.count()
         _collection.name = collection.name
         _collection.name_tr = collection.name_tr
-        _collection.full_name = collection.full_name
-        _collection.full_name_tr = collection.full_name_tr
         _collection.desc = collection.desc
         _collection.desc_tr = collection.desc_tr
         _collection.cover = collection.cover

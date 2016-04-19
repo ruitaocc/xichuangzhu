@@ -104,7 +104,7 @@ class _Collection(Base):
     show_order = Column(Integer)
     works_count = Column(Integer)
     name = Column(String(200))
-    full_name = Column(String(200))
+    # full_name = Column(String(200))
     abbr = Column(String(50))
     desc = Column(Text())
     cover = Column(String(200))
@@ -113,7 +113,7 @@ class _Collection(Base):
     kind = Column(String(100))
 
     name_tr = Column(String(200))
-    full_name_tr = Column(String(200))
+    # full_name_tr = Column(String(200))
     abbr_tr = Column(String(50))
     desc_tr = Column(Text())
     kind_tr = Column(String(100))
